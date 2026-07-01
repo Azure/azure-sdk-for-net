@@ -7,47 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// Dimension of a resource metric. For e.g. instance specific HTTP requests for a web app,
     /// where instance name is dimension of the metric HTTP request
-    /// Serialized Name: Dimension
     /// </summary>
     public partial class MetricDimension
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         internal MetricDimension()
@@ -55,30 +26,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
-        /// <param name="name"> Serialized Name: Dimension.name. </param>
-        /// <param name="displayName"> Serialized Name: Dimension.displayName. </param>
-        /// <param name="internalName"> Serialized Name: Dimension.internalName. </param>
-        /// <param name="isToBeExportedForShoebox"> Serialized Name: Dimension.toBeExportedForShoebox. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="internalName"></param>
+        /// <param name="isToBeExportedForShoebox"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
             InternalName = internalName;
             IsToBeExportedForShoebox = isToBeExportedForShoebox;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: Dimension.name. </summary>
+        /// <summary> Gets the Name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Serialized Name: Dimension.displayName. </summary>
+
+        /// <summary> Gets the DisplayName. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> Serialized Name: Dimension.internalName. </summary>
+
+        /// <summary> Gets the InternalName. </summary>
         [WirePath("internalName")]
         public string InternalName { get; }
-        /// <summary> Serialized Name: Dimension.toBeExportedForShoebox. </summary>
+
+        /// <summary> Gets the IsToBeExportedForShoebox. </summary>
         [WirePath("toBeExportedForShoebox")]
         public bool? IsToBeExportedForShoebox { get; }
     }

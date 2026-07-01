@@ -41,6 +41,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _keyIdentifier = DefineProperty<Uri>(nameof(KeyIdentifier), new string[] { "keyIdentifier" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for KeyVaultProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

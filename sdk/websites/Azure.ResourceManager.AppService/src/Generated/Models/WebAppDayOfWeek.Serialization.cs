@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WebAppDayOfWeekExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebAppDayOfWeek value) => value switch
         {
             WebAppDayOfWeek.Sunday => "Sunday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppDayOfWeek value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WebAppDayOfWeek ToWebAppDayOfWeek(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return WebAppDayOfWeek.Sunday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return WebAppDayOfWeek.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return WebAppDayOfWeek.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return WebAppDayOfWeek.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return WebAppDayOfWeek.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return WebAppDayOfWeek.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return WebAppDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return WebAppDayOfWeek.Sunday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return WebAppDayOfWeek.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return WebAppDayOfWeek.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return WebAppDayOfWeek.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return WebAppDayOfWeek.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return WebAppDayOfWeek.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return WebAppDayOfWeek.Saturday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppDayOfWeek value.");
         }
     }

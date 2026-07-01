@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Compute.Models
     // compatibility we re-introduce the bag type here and add forwarding
     // overloads on ComputeExtensions / MockableComputeSubscriptionResource that
     // accept the bag and call the multi-parameter generated method.
+    /// <summary> The options for the <c>GetVirtualMachineImages</c> method. </summary>
     public partial class SubscriptionResourceGetVirtualMachineImagesOptions
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesOptions"/>. </summary>

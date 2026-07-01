@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 GuestSubscriptionListResult result = GuestSubscriptionListResult.FromResponse(response);
-                yield return Page<ComputeLimitGuestSubscriptionData>.FromValues((IReadOnlyList<ComputeLimitGuestSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ComputeLimitGuestSubscriptionData>.FromValues((IReadOnlyList<ComputeLimitGuestSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

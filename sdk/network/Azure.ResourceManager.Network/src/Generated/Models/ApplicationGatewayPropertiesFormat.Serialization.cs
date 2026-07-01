@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EntraJWTValidationConfigs))
+            if (Optional.IsCollectionDefined(EntraJwtValidationConfigs))
             {
                 writer.WritePropertyName("entraJWTValidationConfigs"u8);
                 writer.WriteStartArray();
-                foreach (ApplicationGatewayEntraJwtValidationConfig item in EntraJWTValidationConfigs)
+                foreach (ApplicationGatewayEntraJwtValidationConfig item in EntraJwtValidationConfigs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
             bool? forceFirewallPolicyAssociation = default;
             IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default;
-            IList<ApplicationGatewayEntraJwtValidationConfig> entraJWTValidationConfigs = default;
+            IList<ApplicationGatewayEntraJwtValidationConfig> entraJwtValidationConfigs = default;
             ApplicationGatewayGlobalConfiguration globalConfiguration = default;
             ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(ApplicationGatewayEntraJwtValidationConfig.DeserializeApplicationGatewayEntraJwtValidationConfig(item, options));
                     }
-                    entraJWTValidationConfigs = array;
+                    entraJwtValidationConfigs = array;
                     continue;
                 }
                 if (prop.NameEquals("globalConfiguration"u8))
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Network.Models
                 customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
                 forceFirewallPolicyAssociation,
                 loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(),
-                entraJWTValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>(),
+                entraJwtValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>(),
                 globalConfiguration,
                 defaultPredefinedSslPolicy,
                 additionalBinaryDataProperties);

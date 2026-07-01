@@ -204,18 +204,27 @@ namespace Extensions.Plugin.Visitors
             return base.VisitType(type);
         }
 
+        private static bool _visited = false;
         protected override MethodProvider VisitMethod(MethodProvider method)
         {
-            //if (string.Equals(method.Signature.Name, "CodeBasedEvaluatorDefinition"))
-            //{
-            //    throw new InvalidOperationException($"================================================\n" +
-            //        $"Is already experimental: {method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))}\n" +
-            //        $"Return type is experimental: {SupportedPackages.IsExperimental(method.Signature.ReturnType?.FullyQualifiedName)}\n" +
-            //        $"Parameters were previously marked as experimental (include renames): {method.Signature.Parameters.Any(x => _attributedTypes.Contains(x.Type.FullyQualifiedName))}\n" +
-            //        $"Parameters are explicitly marked as experimental: {method.Signature.Parameters.Any(x => SupportedPackages.IsExperimental(x.Type.FullyQualifiedName))}\n" +
-            //        $"{(method.Signature.Attributes[0].Arguments[0] as ScopedApi).Original}.\n" +
-            //        $"================================================\n");
-            //}
+            // Diagnostics code for troubleshooting.
+            if (string.Equals(method.Signature.Name, "CodeBasedEvaluatorDefinition"))
+            {
+                if (_visited)
+                {
+                    throw new InvalidOperationException($"================================================\n" +
+                        $"Is already experimental: {method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))}\n" +
+                        $"Return type is experimental: {SupportedPackages.IsExperimental(method.Signature.ReturnType?.FullyQualifiedName)}\n" +
+                        $"Parameters were previously marked as experimental (include renames): {method.Signature.Parameters.Any(x => _attributedTypes.Contains(x.Type.FullyQualifiedName))}\n" +
+                        $"Parameters are explicitly marked as experimental: {method.Signature.Parameters.Any(x => SupportedPackages.IsExperimental(x.Type.FullyQualifiedName))}\n" +
+                        $"{(method.Signature.Attributes[0].Arguments[0] as ScopedApi).Original}.\n" +
+                        $"================================================\n");
+                }
+                else
+                {
+                    _visited = true;
+                }
+            }
             if (!method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute))) && (
                 method.Signature.Parameters.Any(x => _attributedTypes.Contains(x.Type.FullyQualifiedName) || SupportedPackages.IsExperimental(x.Type.FullyQualifiedName))
                 || _attributedTypes.Contains(method.Signature.ReturnType?.FullyQualifiedName)

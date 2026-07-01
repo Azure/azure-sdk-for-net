@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The list of tags associated with the public IP prefix. </summary>
         [WirePath("properties.ipTags")]
-        public IList<IPTag> IpTags
+        public IList<IPTag> IPTags
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new PublicIPPrefixPropertiesFormat();
                 }
-                return Properties.IpTags;
+                return Properties.IPTags;
             }
         }
 
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The allocated Prefix. </summary>
         [WirePath("properties.ipPrefix")]
-        public string IpPrefix
+        public string IPPrefix
         {
             get
             {
-                return Properties is null ? default : Properties.IpPrefix;
+                return Properties is null ? default : Properties.IPPrefix;
             }
         }
 
@@ -149,16 +149,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new PublicIPPrefixPropertiesFormat();
                 }
                 Properties.NatGateway = value;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.loadBalancerFrontendIpConfiguration.id")]
-        public ResourceIdentifier LoadBalancerFrontendIpConfigurationId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LoadBalancerFrontendIpConfigurationId;
             }
         }
 

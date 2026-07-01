@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a LogsSiteConfig along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogsSiteConfigResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLogsSiteConfigResource method.
+    /// A class representing a LogsSiteConfig along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogsSiteConfigResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetLogsSiteConfig method.
     /// </summary>
     public partial class LogsSiteConfigResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LogsSiteConfigResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _logsSiteConfigWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _logsSiteConfigWebAppsRestClient;
+        private readonly ClientDiagnostics _siteLogsConfigsClientDiagnostics;
+        private readonly SiteLogsConfigs _siteLogsConfigsRestClient;
         private readonly SiteLogsConfigData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config";
 
-        /// <summary> Initializes a new instance of the <see cref="LogsSiteConfigResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LogsSiteConfigResource for mocking. </summary>
         protected LogsSiteConfigResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogsSiteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsSiteConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogsSiteConfigResource(ArmClient client, SiteLogsConfigData data) : this(client, data.Id)
@@ -53,117 +43,50 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogsSiteConfigResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsSiteConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogsSiteConfigResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _logsSiteConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string logsSiteConfigWebAppsApiVersion);
-            _logsSiteConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logsSiteConfigWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string logsSiteConfigApiVersion);
+            _siteLogsConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _siteLogsConfigsRestClient = new SiteLogsConfigs(_siteLogsConfigsClientDiagnostics, Pipeline, Endpoint, logsSiteConfigApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SiteLogsConfigData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Description for Gets the logging configuration of an app.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetDiagnosticLogsConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogsSiteConfigResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogsSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _logsSiteConfigWebAppsRestClient.GetDiagnosticLogsConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogsSiteConfigResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Gets the logging configuration of an app.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetDiagnosticLogsConfiguration</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogsSiteConfigResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogsSiteConfigResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _logsSiteConfigWebAppsRestClient.GetDiagnosticLogsConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogsSiteConfigResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -171,20 +94,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Updates the logging configuration of an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_UpdateDiagnosticLogsConfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteLogsConfigs_UpdateDiagnosticLogsConfig. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogsSiteConfigResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogsSiteConfigResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,16 +119,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
+            using DiagnosticScope scope = _siteLogsConfigsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _logsSiteConfigWebAppsRestClient.UpdateDiagnosticLogsConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _logsSiteConfigWebAppsRestClient.CreateUpdateDiagnosticLogsConfigRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteLogsConfigsRestClient.CreateUpdateDiagnosticLogsConfigRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteLogsConfigData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteLogsConfigData> response = Response.FromValue(SiteLogsConfigData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<LogsSiteConfigResource> operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -219,20 +150,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Updates the logging configuration of an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_UpdateDiagnosticLogsConfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteLogsConfigs_UpdateDiagnosticLogsConfig. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogsSiteConfigResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogsSiteConfigResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,17 +175,121 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
+            using DiagnosticScope scope = _siteLogsConfigsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _logsSiteConfigWebAppsRestClient.UpdateDiagnosticLogsConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var uri = _logsSiteConfigWebAppsRestClient.CreateUpdateDiagnosticLogsConfigRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteLogsConfigsRestClient.CreateUpdateDiagnosticLogsConfigRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteLogsConfigData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteLogsConfigData> response = Response.FromValue(SiteLogsConfigData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<LogsSiteConfigResource> operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets the logging configuration of an app.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SiteLogsConfigs_GetDiagnosticLogsConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogsSiteConfigResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LogsSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _siteLogsConfigsClientDiagnostics.CreateScope("LogsSiteConfigResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteLogsConfigsRestClient.CreateGetDiagnosticLogsConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteLogsConfigData> response = Response.FromValue(SiteLogsConfigData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new LogsSiteConfigResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets the logging configuration of an app.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SiteLogsConfigs_GetDiagnosticLogsConfiguration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogsSiteConfigResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LogsSiteConfigResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _siteLogsConfigsClientDiagnostics.CreateScope("LogsSiteConfigResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteLogsConfigsRestClient.CreateGetDiagnosticLogsConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteLogsConfigData> response = Response.FromValue(SiteLogsConfigData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new LogsSiteConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

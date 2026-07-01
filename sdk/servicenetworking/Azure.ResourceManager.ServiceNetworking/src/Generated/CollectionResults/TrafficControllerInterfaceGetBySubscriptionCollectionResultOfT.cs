@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                     yield break;
                 }
                 TrafficControllerListResult result = TrafficControllerListResult.FromResponse(response);
-                yield return Page<TrafficControllerData>.FromValues((IReadOnlyList<TrafficControllerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TrafficControllerData>.FromValues((IReadOnlyList<TrafficControllerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

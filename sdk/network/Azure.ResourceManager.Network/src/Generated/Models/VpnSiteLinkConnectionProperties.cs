@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         public VpnSiteLinkConnectionProperties()
         {
             VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
-            IpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             IngressNatRules = new ChangeTrackingList<WritableSubResource>();
             EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableBgp"> EnableBgp flag. </param>
         /// <param name="vpnGatewayCustomBgpAddresses"> vpnGatewayCustomBgpAddresses used by this connection. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
-        /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
+        /// <param name="iPsecPolicies"> The IPSec Policies to be considered by this connection. </param>
         /// <param name="enableRateLimiting"> EnableBgp flag. </param>
-        /// <param name="useLocalAzureIpAddress"> Use local azure ip to initiate connection. </param>
+        /// <param name="useLocalAzureIPAddress"> Use local azure ip to initiate connection. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
         /// <param name="ingressNatRules"> List of ingress NatRules. </param>
         /// <param name="egressNatRules"> List of egress NatRules. </param>
         /// <param name="dpdTimeoutSeconds"> Dead Peer Detection timeout in seconds for VpnLink connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnSiteLinkConnectionProperties(NetworkSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIpAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, int? dpdTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnSiteLinkConnectionProperties(NetworkSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, int? dpdTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnSiteLink = vpnSiteLink;
             RoutingWeight = routingWeight;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Network.Models
             EnableBgp = enableBgp;
             VpnGatewayCustomBgpAddresses = vpnGatewayCustomBgpAddresses;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
-            IpsecPolicies = ipsecPolicies;
+            IPsecPolicies = iPsecPolicies;
             EnableRateLimiting = enableRateLimiting;
-            UseLocalAzureIpAddress = useLocalAzureIpAddress;
+            UseLocalAzureIPAddress = useLocalAzureIPAddress;
             ProvisioningState = provisioningState;
             IngressNatRules = ingressNatRules;
             EgressNatRules = egressNatRules;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
         [WirePath("ipsecPolicies")]
-        public IList<IPsecPolicy> IpsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
+        public IList<IPsecPolicy> IPsecPolicies { get; } = new ChangeTrackingList<IPsecPolicy>();
 
         /// <summary> EnableBgp flag. </summary>
         [WirePath("enableRateLimiting")]
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Use local azure ip to initiate connection. </summary>
         [WirePath("useLocalAzureIpAddress")]
-        public bool? UseLocalAzureIpAddress { get; set; }
+        public bool? UseLocalAzureIPAddress { get; set; }
 
         /// <summary> The provisioning state of the VPN site link connection resource. </summary>
         [WirePath("provisioningState")]

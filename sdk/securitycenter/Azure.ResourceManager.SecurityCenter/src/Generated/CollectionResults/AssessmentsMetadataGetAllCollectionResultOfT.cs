@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 SecurityAssessmentMetadataResponseList result = SecurityAssessmentMetadataResponseList.FromResponse(response);
-                yield return Page<SecurityAssessmentMetadataData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityAssessmentMetadataData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

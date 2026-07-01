@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 ProvisionedNetworkListResult result = ProvisionedNetworkListResult.FromResponse(response);
-                yield return Page<AvsProvisionedNetworkData>.FromValues((IReadOnlyList<AvsProvisionedNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvsProvisionedNetworkData>.FromValues((IReadOnlyList<AvsProvisionedNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

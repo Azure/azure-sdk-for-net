@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NatGatewayPropertiesFormat"/>. </summary>
         public NatGatewayPropertiesFormat()
         {
-            PublicIpAddresses = new ChangeTrackingList<NetworkSubResource>();
-            PublicIpAddressesV6 = new ChangeTrackingList<NetworkSubResource>();
-            PublicIpPrefixes = new ChangeTrackingList<NetworkSubResource>();
-            PublicIpPrefixesV6 = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPAddressesV6 = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
+            PublicIPPrefixesV6 = new ChangeTrackingList<NetworkSubResource>();
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NatGatewayPropertiesFormat"/>. </summary>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIpAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
-        /// <param name="publicIpAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
-        /// <param name="publicIpPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
-        /// <param name="publicIpPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="sourceVirtualNetwork"> A reference to the source virtual network using this nat gateway resource. </param>
         /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NatGatewayPropertiesFormat(int? idleTimeoutInMinutes, IList<NetworkSubResource> publicIpAddresses, IList<NetworkSubResource> publicIpAddressesV6, IList<NetworkSubResource> publicIpPrefixes, IList<NetworkSubResource> publicIpPrefixesV6, IReadOnlyList<WritableSubResource> subnets, NetworkSubResource sourceVirtualNetwork, NetworkSubResource serviceGateway, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NatGatewayPropertiesFormat(int? idleTimeoutInMinutes, IList<NetworkSubResource> publicIPAddresses, IList<NetworkSubResource> publicIPAddressesV6, IList<NetworkSubResource> publicIPPrefixes, IList<NetworkSubResource> publicIPPrefixesV6, IReadOnlyList<WritableSubResource> subnets, NetworkSubResource sourceVirtualNetwork, NetworkSubResource serviceGateway, Nat64State? nat64, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            PublicIpAddresses = publicIpAddresses;
-            PublicIpAddressesV6 = publicIpAddressesV6;
-            PublicIpPrefixes = publicIpPrefixes;
-            PublicIpPrefixesV6 = publicIpPrefixesV6;
+            PublicIPAddresses = publicIPAddresses;
+            PublicIPAddressesV6 = publicIPAddressesV6;
+            PublicIPPrefixes = publicIPPrefixes;
+            PublicIPPrefixesV6 = publicIPPrefixesV6;
             Subnets = subnets;
             SourceVirtualNetwork = sourceVirtualNetwork;
             ServiceGateway = serviceGateway;
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
         [WirePath("publicIpAddresses")]
-        public IList<NetworkSubResource> PublicIpAddresses { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> PublicIPAddresses { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
         [WirePath("publicIpAddressesV6")]
-        public IList<NetworkSubResource> PublicIpAddressesV6 { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> PublicIPAddressesV6 { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
         [WirePath("publicIpPrefixes")]
-        public IList<NetworkSubResource> PublicIpPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> PublicIPPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
         [WirePath("publicIpPrefixesV6")]
-        public IList<NetworkSubResource> PublicIpPrefixesV6 { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> PublicIPPrefixesV6 { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
         [WirePath("subnets")]

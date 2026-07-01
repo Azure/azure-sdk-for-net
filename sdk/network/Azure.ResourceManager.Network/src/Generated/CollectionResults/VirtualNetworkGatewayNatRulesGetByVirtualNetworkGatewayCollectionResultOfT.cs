@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVirtualNetworkGatewayNatRulesResult result = ListVirtualNetworkGatewayNatRulesResult.FromResponse(response);
-                yield return Page<VirtualNetworkGatewayNatRuleData>.FromValues((IReadOnlyList<VirtualNetworkGatewayNatRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualNetworkGatewayNatRuleData>.FromValues((IReadOnlyList<VirtualNetworkGatewayNatRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

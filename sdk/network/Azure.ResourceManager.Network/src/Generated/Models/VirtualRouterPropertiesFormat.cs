@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPropertiesFormat"/>. </summary>
         public VirtualRouterPropertiesFormat()
         {
-            VirtualRouterIps = new ChangeTrackingList<string>();
+            VirtualRouterIPs = new ChangeTrackingList<string>();
             Peerings = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPropertiesFormat"/>. </summary>
         /// <param name="virtualRouterAsn"> VirtualRouter ASN. </param>
-        /// <param name="virtualRouterIps"> VirtualRouter IPs. </param>
+        /// <param name="virtualRouterIPs"> VirtualRouter IPs. </param>
         /// <param name="hostedSubnet"> The Subnet on which VirtualRouter is hosted. </param>
         /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualRouterPropertiesFormat(long? virtualRouterAsn, IList<string> virtualRouterIps, NetworkSubResource hostedSubnet, NetworkSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualRouterPropertiesFormat(long? virtualRouterAsn, IList<string> virtualRouterIPs, NetworkSubResource hostedSubnet, NetworkSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualRouterAsn = virtualRouterAsn;
-            VirtualRouterIps = virtualRouterIps;
+            VirtualRouterIPs = virtualRouterIPs;
             HostedSubnet = hostedSubnet;
             HostedGateway = hostedGateway;
             Peerings = peerings;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> VirtualRouter IPs. </summary>
         [WirePath("virtualRouterIps")]
-        public IList<string> VirtualRouterIps { get; } = new ChangeTrackingList<string>();
+        public IList<string> VirtualRouterIPs { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The Subnet on which VirtualRouter is hosted. </summary>
         [WirePath("hostedSubnet")]

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 SecurityConnectorsList result = SecurityConnectorsList.FromResponse(response);
-                yield return Page<SecurityConnectorData>.FromValues((IReadOnlyList<SecurityConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityConnectorData>.FromValues((IReadOnlyList<SecurityConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

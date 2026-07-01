@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 ResourceSkuResults result = ResourceSkuResults.FromResponse(response);
-                yield return Page<AvailableApiManagementServiceSkuResult>.FromValues((IReadOnlyList<AvailableApiManagementServiceSkuResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<AvailableApiManagementServiceSkuResult>.FromValues((IReadOnlyList<AvailableApiManagementServiceSkuResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

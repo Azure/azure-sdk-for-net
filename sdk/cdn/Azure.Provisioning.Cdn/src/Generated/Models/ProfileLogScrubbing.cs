@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _state = DefineProperty<ProfileScrubbingState>(nameof(State), new string[] { "state" });
             _scrubbingRules = DefineListProperty<ProfileScrubbingRules>(nameof(ScrubbingRules), new string[] { "scrubbingRules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProfileLogScrubbing that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

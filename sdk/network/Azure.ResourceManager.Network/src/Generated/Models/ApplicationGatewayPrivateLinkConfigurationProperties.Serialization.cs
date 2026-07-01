@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (ApplicationGatewayPrivateLinkIPConfiguration item in IpConfigurations)
+                foreach (ApplicationGatewayPrivateLinkIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

@@ -39,7 +39,7 @@
     "dist/generator/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260625.6"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260701.4"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.42",
@@ -70,7 +70,7 @@
     "eslint": "^8.57.0",
     "prettier": "~3.0.3",
     "rimraf": "~6.0.1",
-    "typescript": "~5.8.2",
+    "typescript": "~6.0.3",
     "typescript-eslint": "^7.8.0",
     "vitest": "^3.0.5"
   },

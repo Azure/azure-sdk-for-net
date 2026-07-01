@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _sourcePattern = DefineProperty<string>(nameof(SourcePattern), new string[] { "sourcePattern" }, isRequired: true);
             _destination = DefineProperty<string>(nameof(Destination), new string[] { "destination" }, isRequired: true);
             _preserveUnmatchedPath = DefineProperty<bool>(nameof(PreserveUnmatchedPath), new string[] { "preserveUnmatchedPath" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UriRewriteActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

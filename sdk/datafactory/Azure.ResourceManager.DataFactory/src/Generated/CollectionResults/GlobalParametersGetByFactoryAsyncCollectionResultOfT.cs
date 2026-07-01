@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DataFactory
                     yield break;
                 }
                 DataFactoryGlobalParameterListResult result = DataFactoryGlobalParameterListResult.FromResponse(response);
-                yield return Page<DataFactoryGlobalParameterData>.FromValues((IReadOnlyList<DataFactoryGlobalParameterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataFactoryGlobalParameterData>.FromValues((IReadOnlyList<DataFactoryGlobalParameterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

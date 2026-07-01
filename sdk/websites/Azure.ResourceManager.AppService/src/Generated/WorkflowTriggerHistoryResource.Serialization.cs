@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WorkflowTriggerHistoryResource : IJsonModel<WorkflowTriggerHistoryData>
     {
-        private static WorkflowTriggerHistoryData s_dataDeserializationInstance;
-        private static WorkflowTriggerHistoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkflowTriggerHistoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkflowTriggerHistoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkflowTriggerHistoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkflowTriggerHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowTriggerHistoryData>)Data).Write(writer, options);
 
-        WorkflowTriggerHistoryData IJsonModel<WorkflowTriggerHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowTriggerHistoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkflowTriggerHistoryData IJsonModel<WorkflowTriggerHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkflowTriggerHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowTriggerHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkflowTriggerHistoryData IPersistableModel<WorkflowTriggerHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowTriggerHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowTriggerHistoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkflowTriggerHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -5,12 +5,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
+    [Experimental("AAIP001")]
     public partial class A2APreviewTool : ProjectsAgentTool, IJsonModel<A2APreviewTool>
     {
         /// <param name="data"> The data to parse. </param>
@@ -48,6 +50,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         A2APreviewTool IPersistableModel<A2APreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (A2APreviewTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -96,6 +99,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         A2APreviewTool IJsonModel<A2APreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (A2APreviewTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -113,6 +117,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         internal static A2APreviewTool DeserializeA2APreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

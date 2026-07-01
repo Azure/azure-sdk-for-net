@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SyncAgentListResult result = SyncAgentListResult.FromResponse(response);
-                yield return Page<SyncAgentData>.FromValues((IReadOnlyList<SyncAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SyncAgentData>.FromValues((IReadOnlyList<SyncAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

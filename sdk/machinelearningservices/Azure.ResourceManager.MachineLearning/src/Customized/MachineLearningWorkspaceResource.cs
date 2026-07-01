@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Deletes this workspace. </summary>
         [ForwardsClientCalls]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken) => Delete(waitUntil, default(bool?), cancellationToken);
+        /// <summary> Gets a collection of MachineLearningCodeContainerResources in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
         public virtual MachineLearningCodeContainerCollection GetMachineLearningCodeContainers() => new MachineLearningCodeContainerCollection(Client, Id);
         /// <summary> Gets a code container. </summary>
         [ForwardsClientCalls]

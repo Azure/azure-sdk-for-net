@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ServerConnectionPolicyListResult result = ServerConnectionPolicyListResult.FromResponse(response);
-                yield return Page<SqlServerConnectionPolicyData>.FromValues((IReadOnlyList<SqlServerConnectionPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerConnectionPolicyData>.FromValues((IReadOnlyList<SqlServerConnectionPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

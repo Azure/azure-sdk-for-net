@@ -70,6 +70,8 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("PagedEvaluationTaxonomy")] internal partial class PagedEvaluationTaxonomy { }
 [CodeGenType("PagedEvaluatorVersion")] internal partial class PagedEvaluatorVersion { }
 [CodeGenType("PagedRedTeam")] internal partial class PagedRedTeam { }
+/// <summary> Represents an insight produced by a project insight run. </summary>
+[CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
 [CodeGenType("PagedSchedule")] internal partial class PagedSchedule { }
 [CodeGenType("PagedScheduleRun")] internal partial class PagedScheduleRun { }
 /// <summary> Represents an insight produced by a project insight run. </summary>

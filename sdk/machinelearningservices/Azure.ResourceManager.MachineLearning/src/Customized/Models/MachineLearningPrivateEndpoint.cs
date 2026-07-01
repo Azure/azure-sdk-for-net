@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     // Customized: preserve the shipped SubnetArmId property for MachineLearningPrivateEndpoint.
     // The generated ARM common private endpoint model only carries Id, but the previous SDK exposed
     // the workspace private endpoint shape with SubnetArmId as well.
+    /// <summary> The private endpoint resource of a workspace. </summary>
     public partial class MachineLearningPrivateEndpoint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

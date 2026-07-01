@@ -658,7 +658,7 @@ export function resolveResourceApiVersions(
   const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
   const primaryMethod = createMethod ?? readMethod;
   return primaryMethod
-    ? methodMap.get(primaryMethod.methodId)?.apiVersions ?? []
+    ? (methodMap.get(primaryMethod.methodId)?.apiVersions ?? [])
     : [];
 }
 
@@ -1515,7 +1515,7 @@ export function expandDynamicParentResourcesInSchema(
       );
 
       const expandedResourceType = expandedIdPattern
-        ? expandedIdPattern.resourceType ?? ""
+        ? (expandedIdPattern.resourceType ?? "")
         : "";
 
       const overrideName = overrideMap?.get(enumValue);

@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 CodeVersionResourceArmPaginatedResult result = CodeVersionResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningCodeVersionData>.FromValues((IReadOnlyList<MachineLearningCodeVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningCodeVersionData>.FromValues((IReadOnlyList<MachineLearningCodeVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 NotificationChannelList result = NotificationChannelList.FromResponse(response);
-                yield return Page<DevTestLabNotificationChannelData>.FromValues((IReadOnlyList<DevTestLabNotificationChannelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabNotificationChannelData>.FromValues((IReadOnlyList<DevTestLabNotificationChannelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

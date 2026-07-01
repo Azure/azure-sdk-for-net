@@ -36,6 +36,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _provisioningError = DefineProperty<ResponseError>(nameof(ProvisioningError), new string[] { "provisioningError" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

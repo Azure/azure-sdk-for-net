@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _contentType = DefineProperty<string>(nameof(ContentType), new string[] { "contentType" });
             _nullableValue = DefineProperty<string>(nameof(NullableValue), new string[] { "nullableValue" });
             _attributes = DefineModelProperty<ItemAttributes>(nameof(Attributes), new string[] { "attributes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ItemProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

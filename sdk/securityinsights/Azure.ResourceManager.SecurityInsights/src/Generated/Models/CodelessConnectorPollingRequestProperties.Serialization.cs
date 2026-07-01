@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CodelessConnectorPollingRequestProperties : IUtf8JsonSerializable, IJsonModel<CodelessConnectorPollingRequestProperties>
+    /// <summary> Describe the request properties needed to successfully pull from the server. </summary>
+    public partial class CodelessConnectorPollingRequestProperties : IJsonModel<CodelessConnectorPollingRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodelessConnectorPollingRequestProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingRequestProperties"/> for deserialization. </summary>
+        internal CodelessConnectorPollingRequestProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingRequestProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCodelessConnectorPollingRequestProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CodelessConnectorPollingRequestProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingRequestProperties IPersistableModel<CodelessConnectorPollingRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CodelessConnectorPollingRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CodelessConnectorPollingRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("apiEndpoint"u8);
             writer.WriteStringValue(ApiEndpoint);
             if (Optional.IsDefined(RateLimitQps))
@@ -62,9 +106,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Headers);
+                writer.WriteRawValue(Headers);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Headers, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Headers))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -74,9 +118,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("queryParameters"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(QueryParameters);
+                writer.WriteRawValue(QueryParameters);
 #else
-                using (JsonDocument document = JsonDocument.Parse(QueryParameters, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(QueryParameters))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -97,15 +141,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("endTimeAttributeName"u8);
                 writer.WriteStringValue(EndTimeAttributeName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -114,22 +158,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        CodelessConnectorPollingRequestProperties IJsonModel<CodelessConnectorPollingRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingRequestProperties IJsonModel<CodelessConnectorPollingRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingRequestProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCodelessConnectorPollingRequestProperties(document.RootElement, options);
         }
 
-        internal static CodelessConnectorPollingRequestProperties DeserializeCodelessConnectorPollingRequestProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CodelessConnectorPollingRequestProperties DeserializeCodelessConnectorPollingRequestProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,96 +195,94 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string queryParametersTemplate = default;
             string startTimeAttributeName = default;
             string endTimeAttributeName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("apiEndpoint"u8))
+                if (prop.NameEquals("apiEndpoint"u8))
                 {
-                    apiEndpoint = property.Value.GetString();
+                    apiEndpoint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rateLimitQps"u8))
+                if (prop.NameEquals("rateLimitQps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rateLimitQps = property.Value.GetInt32();
+                    rateLimitQps = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("queryWindowInMin"u8))
+                if (prop.NameEquals("queryWindowInMin"u8))
                 {
-                    queryWindowInMin = property.Value.GetInt32();
+                    queryWindowInMin = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpMethod"u8))
+                if (prop.NameEquals("httpMethod"u8))
                 {
-                    httpMethod = property.Value.GetString();
+                    httpMethod = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryTimeFormat"u8))
+                if (prop.NameEquals("queryTimeFormat"u8))
                 {
-                    queryTimeFormat = property.Value.GetString();
+                    queryTimeFormat = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retryCount"u8))
+                if (prop.NameEquals("retryCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retryCount = property.Value.GetInt32();
+                    retryCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeoutInSeconds"u8))
+                if (prop.NameEquals("timeoutInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeoutInSeconds = property.Value.GetInt32();
+                    timeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("headers"u8))
+                if (prop.NameEquals("headers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    headers = BinaryData.FromString(property.Value.GetRawText());
+                    headers = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("queryParameters"u8))
+                if (prop.NameEquals("queryParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryParameters = BinaryData.FromString(property.Value.GetRawText());
+                    queryParameters = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("queryParametersTemplate"u8))
+                if (prop.NameEquals("queryParametersTemplate"u8))
                 {
-                    queryParametersTemplate = property.Value.GetString();
+                    queryParametersTemplate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeAttributeName"u8))
+                if (prop.NameEquals("startTimeAttributeName"u8))
                 {
-                    startTimeAttributeName = property.Value.GetString();
+                    startTimeAttributeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endTimeAttributeName"u8))
+                if (prop.NameEquals("endTimeAttributeName"u8))
                 {
-                    endTimeAttributeName = property.Value.GetString();
+                    endTimeAttributeName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CodelessConnectorPollingRequestProperties(
                 apiEndpoint,
                 rateLimitQps,
@@ -249,280 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 queryParametersTemplate,
                 startTimeAttributeName,
                 endTimeAttributeName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiEndpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiEndpoint))
-                {
-                    builder.Append("  apiEndpoint: ");
-                    if (ApiEndpoint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiEndpoint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiEndpoint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RateLimitQps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rateLimitQps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RateLimitQps))
-                {
-                    builder.Append("  rateLimitQps: ");
-                    builder.AppendLine($"{RateLimitQps.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryWindowInMin), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryWindowInMin: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  queryWindowInMin: ");
-                builder.AppendLine($"{QueryWindowInMin}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpMethod), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  httpMethod: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpMethod))
-                {
-                    builder.Append("  httpMethod: ");
-                    if (HttpMethod.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HttpMethod}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HttpMethod}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryTimeFormat), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryTimeFormat: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryTimeFormat))
-                {
-                    builder.Append("  queryTimeFormat: ");
-                    if (QueryTimeFormat.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QueryTimeFormat}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QueryTimeFormat}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  retryCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RetryCount))
-                {
-                    builder.Append("  retryCount: ");
-                    builder.AppendLine($"{RetryCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutInSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timeoutInSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TimeoutInSeconds))
-                {
-                    builder.Append("  timeoutInSeconds: ");
-                    builder.AppendLine($"{TimeoutInSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  headers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Headers))
-                {
-                    builder.Append("  headers: ");
-                    builder.AppendLine($"'{Headers.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryParameters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryParameters))
-                {
-                    builder.Append("  queryParameters: ");
-                    builder.AppendLine($"'{QueryParameters.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParametersTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  queryParametersTemplate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryParametersTemplate))
-                {
-                    builder.Append("  queryParametersTemplate: ");
-                    if (QueryParametersTemplate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QueryParametersTemplate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QueryParametersTemplate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTimeAttributeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTimeAttributeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartTimeAttributeName))
-                {
-                    builder.Append("  startTimeAttributeName: ");
-                    if (StartTimeAttributeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StartTimeAttributeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StartTimeAttributeName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTimeAttributeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endTimeAttributeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndTimeAttributeName))
-                {
-                    builder.Append("  endTimeAttributeName: ");
-                    if (EndTimeAttributeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EndTimeAttributeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EndTimeAttributeName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CodelessConnectorPollingRequestProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CodelessConnectorPollingRequestProperties IPersistableModel<CodelessConnectorPollingRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCodelessConnectorPollingRequestProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingRequestProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CodelessConnectorPollingRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

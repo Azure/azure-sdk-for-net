@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.FrontDoor
                     yield break;
                 }
                 FrontDoorListResult result = FrontDoorListResult.FromResponse(response);
-                yield return Page<FrontDoorData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

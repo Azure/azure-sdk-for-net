@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 LogicalDatabaseTransparentDataEncryptionListResult result = LogicalDatabaseTransparentDataEncryptionListResult.FromResponse(response);
-                yield return Page<LogicalDatabaseTransparentDataEncryptionData>.FromValues((IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LogicalDatabaseTransparentDataEncryptionData>.FromValues((IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("nextHopType"u8);
             writer.WriteStringValue(NextHopType.ToString());
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             if (Optional.IsDefined(NextHop))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string addressPrefix = default;
             RouteNextHopType nextHopType = default;
-            string nextHopIpAddress = default;
+            string nextHopIPAddress = default;
             RouteNextHopEcmp nextHop = default;
             NetworkProvisioningState? provisioningState = default;
             bool? hasBgpOverride = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("nextHopIpAddress"u8))
                 {
-                    nextHopIpAddress = prop.Value.GetString();
+                    nextHopIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("nextHop"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Models
             return new RoutePropertiesFormat(
                 addressPrefix,
                 nextHopType,
-                nextHopIpAddress,
+                nextHopIPAddress,
                 nextHop,
                 provisioningState,
                 hasBgpOverride,

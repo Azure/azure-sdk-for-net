@@ -7,112 +7,152 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Network security perimeter profile access rule. </summary>
     public partial class NetworkSecurityPerimeterProfileAccessRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileAccessRule"/>. </summary>
         public NetworkSecurityPerimeterProfileAccessRule()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<WritableSubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeterInfo>();
-            FullyQualifiedDomainNames = new ChangeTrackingList<string>();
-            EmailAddresses = new ChangeTrackingList<string>();
-            PhoneNumbers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileAccessRule"/>. </summary>
         /// <param name="fullyQualifiedArmId"> Fully Qualified Arm id for network security perimeter profile access rule. </param>
         /// <param name="name"> Name for nsp access rule. </param>
         /// <param name="networkSecurityPerimeterProfileAccessRuleType"> nsp access rule type. </param>
-        /// <param name="direction"> NSP access rule direction. </param>
-        /// <param name="addressPrefixes"> Address prefixes. </param>
-        /// <param name="subscriptions"> List of subscriptions. </param>
-        /// <param name="networkSecurityPerimeters"> Network security perimeters. </param>
-        /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names. </param>
-        /// <param name="emailAddresses"> List of email addresses. </param>
-        /// <param name="phoneNumbers"> List of phone numbers. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> NSP access rule properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterProfileAccessRule(string fullyQualifiedArmId, string name, string networkSecurityPerimeterProfileAccessRuleType, NetworkSecurityPerimeterProfileAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FullyQualifiedArmId = fullyQualifiedArmId;
             Name = name;
             NetworkSecurityPerimeterProfileAccessRuleType = networkSecurityPerimeterProfileAccessRuleType;
-            Direction = direction;
-            AddressPrefixes = addressPrefixes;
-            Subscriptions = subscriptions;
-            NetworkSecurityPerimeters = networkSecurityPerimeters;
-            FullyQualifiedDomainNames = fullyQualifiedDomainNames;
-            EmailAddresses = emailAddresses;
-            PhoneNumbers = phoneNumbers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Fully Qualified Arm id for network security perimeter profile access rule. </summary>
         [WirePath("fullyQualifiedArmId")]
         public string FullyQualifiedArmId { get; set; }
+
         /// <summary> Name for nsp access rule. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> nsp access rule type. </summary>
         [WirePath("type")]
         public string NetworkSecurityPerimeterProfileAccessRuleType { get; set; }
+
+        /// <summary> NSP access rule properties. </summary>
+        [WirePath("properties")]
+        internal NetworkSecurityPerimeterProfileAccessRuleProperties Properties { get; set; }
+
         /// <summary> NSP access rule direction. </summary>
         [WirePath("properties.direction")]
-        public NetworkSecurityPerimeterProfileAccessRuleDirection? Direction { get; set; }
+        public NetworkSecurityPerimeterProfileAccessRuleDirection? Direction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Direction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                Properties.Direction = value;
+            }
+        }
+
         /// <summary> Address prefixes. </summary>
         [WirePath("properties.addressPrefixes")]
-        public IList<string> AddressPrefixes { get; }
+        public IList<string> AddressPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                return Properties.AddressPrefixes;
+            }
+        }
+
         /// <summary> List of subscriptions. </summary>
         [WirePath("properties.subscriptions")]
-        public IList<WritableSubResource> Subscriptions { get; }
+        public IList<NetworkSecurityPerimeterSubscription> Subscriptions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                return Properties.Subscriptions;
+            }
+        }
+
         /// <summary> Network security perimeters. </summary>
         [WirePath("properties.networkSecurityPerimeters")]
-        public IList<NetworkSecurityPerimeterInfo> NetworkSecurityPerimeters { get; }
+        public IList<NetworkSecurityPerimeterInfo> NetworkSecurityPerimeters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                return Properties.NetworkSecurityPerimeters;
+            }
+        }
+
         /// <summary> Fully qualified domain names. </summary>
         [WirePath("properties.fullyQualifiedDomainNames")]
-        public IList<string> FullyQualifiedDomainNames { get; }
+        public IList<string> FullyQualifiedDomainNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                return Properties.FullyQualifiedDomainNames;
+            }
+        }
+
         /// <summary> List of email addresses. </summary>
         [WirePath("properties.emailAddresses")]
-        public IList<string> EmailAddresses { get; }
+        public IList<string> EmailAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                return Properties.EmailAddresses;
+            }
+        }
+
         /// <summary> List of phone numbers. </summary>
         [WirePath("properties.phoneNumbers")]
-        public IList<string> PhoneNumbers { get; }
+        public IList<string> PhoneNumbers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterProfileAccessRuleProperties();
+                }
+                return Properties.PhoneNumbers;
+            }
+        }
     }
 }

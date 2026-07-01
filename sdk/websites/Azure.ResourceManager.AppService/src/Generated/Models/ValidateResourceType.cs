@@ -7,60 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Resource type used for verification.
-    /// Serialized Name: ValidateResourceTypes
-    /// </summary>
+    /// <summary> Resource type used for verification. </summary>
     public readonly partial struct ValidateResourceType : IEquatable<ValidateResourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ValidateResourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ValidateResourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ServerFarmValue = "ServerFarm";
         private const string WebSiteValue = "Site";
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
 
-        /// <summary>
-        /// ServerFarm
-        /// Serialized Name: ValidateResourceTypes.ServerFarm
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ValidateResourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ServerFarm. </summary>
         public static ValidateResourceType ServerFarm { get; } = new ValidateResourceType(ServerFarmValue);
-        /// <summary>
-        /// Site
-        /// Serialized Name: ValidateResourceTypes.Site
-        /// </summary>
+
+        /// <summary> Gets the WebSite. </summary>
         public static ValidateResourceType WebSite { get; } = new ValidateResourceType(WebSiteValue);
-        /// <summary>
-        /// Microsoft.Web/hostingEnvironments
-        /// Serialized Name: ValidateResourceTypes.Microsoft.Web/hostingEnvironments
-        /// </summary>
+
+        /// <summary> Gets the MicrosoftWebHostingEnvironments. </summary>
         public static ValidateResourceType MicrosoftWebHostingEnvironments { get; } = new ValidateResourceType(MicrosoftWebHostingEnvironmentsValue);
+
         /// <summary> Determines if two <see cref="ValidateResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ValidateResourceType left, ValidateResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ValidateResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ValidateResourceType left, ValidateResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidateResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ValidateResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ValidateResourceType(string value) => new ValidateResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ValidateResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ValidateResourceType?(string value) => value == null ? null : new ValidateResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ValidateResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ValidateResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

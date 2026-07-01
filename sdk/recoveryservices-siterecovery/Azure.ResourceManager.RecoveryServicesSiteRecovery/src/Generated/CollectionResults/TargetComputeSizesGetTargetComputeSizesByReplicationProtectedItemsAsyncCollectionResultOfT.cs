@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     yield break;
                 }
                 TargetComputeSizeListResult result = TargetComputeSizeListResult.FromResponse(response);
-                yield return Page<TargetComputeSize>.FromValues((IReadOnlyList<TargetComputeSize>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TargetComputeSize>.FromValues((IReadOnlyList<TargetComputeSize>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -103,6 +103,10 @@ namespace Azure.Provisioning.Kubernetes
             _systemComponents = DefineListProperty<ConnectedClusterSystemComponent>(nameof(SystemComponents), new string[] { "systemComponents" });
             _agentErrors = DefineListProperty<ConnectedClusterAgentError>(nameof(AgentErrors), new string[] { "agentErrors" });
             _agentState = DefineProperty<string>(nameof(AgentState), new string[] { "agentState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterArcAgentProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

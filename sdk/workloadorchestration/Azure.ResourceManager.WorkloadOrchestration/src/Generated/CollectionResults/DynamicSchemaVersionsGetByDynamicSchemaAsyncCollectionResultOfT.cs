@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 DynamicSchemaVersionListResult result = DynamicSchemaVersionListResult.FromResponse(response);
-                yield return Page<EdgeDynamicSchemaVersionData>.FromValues((IReadOnlyList<EdgeDynamicSchemaVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeDynamicSchemaVersionData>.FromValues((IReadOnlyList<EdgeDynamicSchemaVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

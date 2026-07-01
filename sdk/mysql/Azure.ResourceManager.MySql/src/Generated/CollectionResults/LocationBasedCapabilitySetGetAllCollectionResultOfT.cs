@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     yield break;
                 }
                 CapabilitySetsList result = CapabilitySetsList.FromResponse(response);
-                yield return Page<MySqlFlexibleServersCapabilityData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MySqlFlexibleServersCapabilityData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -40,6 +40,10 @@ namespace Azure.Provisioning.CostManagement
         {
             base.DefineProvisionableProperties();
             _preferContainerTags = DefineProperty<bool>(nameof(PreferContainerTags), new string[] { "preferContainerTags" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TagInheritanceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

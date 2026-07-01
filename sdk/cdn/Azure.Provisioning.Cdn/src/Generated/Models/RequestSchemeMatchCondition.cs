@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Cdn
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _transforms = DefineListProperty<PreTransformCategory>(nameof(Transforms), new string[] { "transforms" });
             _matchValues = DefineListProperty<RequestSchemeMatchConditionMatchValue>(nameof(MatchValues), new string[] { "matchValues" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RequestSchemeMatchCondition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

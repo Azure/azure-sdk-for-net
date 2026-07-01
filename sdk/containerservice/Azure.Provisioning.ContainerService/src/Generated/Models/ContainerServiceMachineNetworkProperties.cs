@@ -35,6 +35,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _ipAddresses = DefineListProperty<ContainerServiceMachineIPAddress>(nameof(IPAddresses), new string[] { "ipAddresses" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMachineNetworkProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

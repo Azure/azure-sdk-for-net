@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 WorkloadProfileStatesCollection result = WorkloadProfileStatesCollection.FromResponse(response);
-                yield return Page<ContainerAppWorkloadProfileState>.FromValues((IReadOnlyList<ContainerAppWorkloadProfileState>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppWorkloadProfileState>.FromValues((IReadOnlyList<ContainerAppWorkloadProfileState>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

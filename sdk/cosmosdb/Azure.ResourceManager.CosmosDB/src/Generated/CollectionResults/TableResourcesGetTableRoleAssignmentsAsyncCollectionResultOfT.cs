@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 TableRoleAssignmentListResult result = TableRoleAssignmentListResult.FromResponse(response);
-                yield return Page<CosmosDBTableRoleAssignmentData>.FromValues((IReadOnlyList<CosmosDBTableRoleAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CosmosDBTableRoleAssignmentData>.FromValues((IReadOnlyList<CosmosDBTableRoleAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

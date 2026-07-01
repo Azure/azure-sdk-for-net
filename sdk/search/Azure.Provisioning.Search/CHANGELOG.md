@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2026-07-02)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Migrated resource definitions to TypeSpec-based generation and updated to use API version `2025-05-01`.
 
 ## 1.1.0-beta.1 (2025-06-16)
 

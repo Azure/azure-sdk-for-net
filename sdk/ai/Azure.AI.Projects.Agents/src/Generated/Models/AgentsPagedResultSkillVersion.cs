@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
+    [Experimental("AAIP001")]
     internal partial class AgentsPagedResultSkillVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,7 +32,6 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        [Experimental("AAIP001")]
         internal AgentsPagedResultSkillVersion(IList<SkillVersion> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
