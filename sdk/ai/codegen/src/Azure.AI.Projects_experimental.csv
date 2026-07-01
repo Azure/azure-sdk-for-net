@@ -88,7 +88,6 @@ class;Azure.AI.Projects.GitHubIssueEvent
 class;Azure.AI.Projects.GitHubIssueRoutineTrigger
 class;Azure.AI.Projects.HourlyRecurrenceSchedule
 class;Azure.AI.Projects.HumanEvaluationPreviewRuleAction
-class;Azure.AI.Projects.Insight
 class;Azure.AI.Projects.InsightCluster
 class;Azure.AI.Projects.InsightModelConfiguration
 class;Azure.AI.Projects.InsightRequest
@@ -128,6 +127,7 @@ class;Azure.AI.Projects.ModelVersion
 class;Azure.AI.Projects.MonthlyRecurrenceSchedule
 class;Azure.AI.Projects.OneTimeTrigger
 class;Azure.AI.Projects.ProceduralMemoryItem
+class;Azure.AI.Projects.ProjectsInsight
 class;Azure.AI.Projects.ProjectsRoutine
 class;Azure.AI.Projects.ProjectsSchedule
 class;Azure.AI.Projects.PromptBasedEvaluatorDefinition
@@ -138,7 +138,6 @@ class;Azure.AI.Projects.RecurrenceTrigger
 class;Azure.AI.Projects.RecurrenceType
 class;Azure.AI.Projects.RedTeam
 class;Azure.AI.Projects.RedTeamTargetConfig
-class;Azure.AI.Projects.ReminderPreviewTool
 class;Azure.AI.Projects.RiskCategory
 class;Azure.AI.Projects.RoutineAction
 class;Azure.AI.Projects.RoutineActionKind

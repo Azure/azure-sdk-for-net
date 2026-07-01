@@ -33,7 +33,6 @@ class;Azure.AI.Projects.Agents.OptimizationJobResult
 class;Azure.AI.Projects.Agents.OptimizationOptions
 class;Azure.AI.Projects.Agents.OptimizationReferenceDatasetInput
 class;Azure.AI.Projects.Agents.PromotionInfo
-class;Azure.AI.Projects.Agents.ReminderPreviewTool
 class;Azure.AI.Projects.Agents.ReminderPreviewToolboxTool
 class;Azure.AI.Projects.Agents.SharePointGroundingToolOptions
 class;Azure.AI.Projects.Agents.SharepointPreviewTool

@@ -219,9 +219,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(PromotionInfo))]
     [ModelReaderWriterBuildable(typeof(ProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ReminderPreviewTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewTool is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReminderPreviewToolboxTool))]
     [ModelReaderWriterBuildable(typeof(ResponsesProtocolConfiguration))]

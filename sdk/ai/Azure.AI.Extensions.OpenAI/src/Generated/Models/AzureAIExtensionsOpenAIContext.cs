@@ -355,9 +355,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ResponsesOpenApiProjectConnectionAuthDetails))]
     [ModelReaderWriterBuildable(typeof(ResponsesOpenApiProjectConnectionSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(ResponsesOpenApiTool))]
-#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponsesReminderPreviewTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponsesSharepointGroundingToolParameters))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters is experimental and may change in future versions.

@@ -27,7 +27,6 @@ class;Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool
 class;Azure.AI.Extensions.OpenAI.MemorySearchToolCall
 class;Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool
 class;Azure.AI.Extensions.OpenAI.ProceduralMemoryItem
-class;Azure.AI.Extensions.OpenAI.ReminderPreviewTool
 class;Azure.AI.Extensions.OpenAI.SharepointGroundingToolCall
 class;Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput
 class;Azure.AI.Extensions.OpenAI.SharepointGroundingToolParameters

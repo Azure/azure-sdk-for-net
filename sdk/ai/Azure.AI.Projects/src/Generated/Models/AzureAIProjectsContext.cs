@@ -584,9 +584,6 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.RedTeam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RedTeam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.RedTeam is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ReminderPreviewTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ReminderPreviewTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ReminderPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseUsageInputTokensDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseUsageOutputTokensDetails))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.RoutineAction is experimental and may change in future versions.

@@ -149,8 +149,6 @@ namespace Azure.AI.Projects
                         return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
-                    case "reminder_preview":
-                        return ReminderPreviewTool.DeserializeReminderPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "file_search":
