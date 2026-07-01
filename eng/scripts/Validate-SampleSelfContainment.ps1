@@ -10,8 +10,9 @@
     This static analysis flags, for every project under /samples:
       SAMPLE-001: A ProjectReference or Import whose path escapes the sample's own
                   directory (e.g. reaches into sdk/ or another sample).
-      SAMPLE-002: A ProjectReference or Import that relies on an MSBuild property
-                  ($(...)) to locate a project, which cannot be resolved standalone.
+      SAMPLE-002: A ProjectReference or Import path that uses an MSBuild property
+                  ($(...)). Property expansion in reference paths is disallowed so
+                  samples stay portable when downloaded standalone.
 
     References that stay within the sample's own directory (for example a tests project
     referencing a sibling src project) are allowed.
@@ -96,7 +97,7 @@ foreach ($project in $projectFiles) {
         $rel = Get-RelativePath $project.FullName
 
         if ($ref.Path -match '\$\(') {
-            LogError "SAMPLE-002: $($ref.Kind) '$($ref.Path)' in $rel relies on an MSBuild property and cannot be resolved when the sample is downloaded standalone."
+            LogError "SAMPLE-002: $($ref.Kind) '$($ref.Path)' in $rel uses an MSBuild property. Property expansion in reference paths is not allowed in samples so they stay portable when downloaded standalone."
             continue
         }
 
