@@ -49,16 +49,13 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 #endif
 
             #region Snippet:CreateConfigurationSetting
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             var settingToCreate = new ConfigurationSetting("some_key", "some_value");
             ConfigurationSetting setting = client.SetConfigurationSetting(settingToCreate);
             #endregion Snippet:CreateConfigurationSetting
@@ -69,20 +66,17 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a setting exists.
-            var setupClient = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var setupClient = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             setupClient.SetConfigurationSetting("some_key", "some_value");
 #endif
 
             #region Snippet:GetConfigurationSetting
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             ConfigurationSetting setting = client.GetConfigurationSetting("some_key");
             #endregion Snippet:GetConfigurationSetting
         }
@@ -92,16 +86,13 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 #endif
 
             #region Snippet:UpdateConfigurationSetting
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             ConfigurationSetting setting = client.SetConfigurationSetting("some_key", "new_value");
             #endregion Snippet:UpdateConfigurationSetting
         }
@@ -111,16 +102,13 @@ namespace Azure.Data.AppConfiguration.Samples
         {
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 #endif
 
             #region Snippet:DeleteConfigurationSetting
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             client.DeleteConfigurationSetting("some_key");
             #endregion Snippet:DeleteConfigurationSetting
         }
@@ -131,12 +119,11 @@ namespace Azure.Data.AppConfiguration.Samples
             #region Snippet:ThrowNotFoundError
 #if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
-#else
-            string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 #endif
+#if SNIPPET
+            string endpoint = "<endpoint>";
+#endif
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
 
             try
             {
@@ -170,132 +157,12 @@ namespace Azure.Data.AppConfiguration.Samples
             #endregion Snippet:ThrowAuthenticationError
         }
 
-        [Test]
-        public void SetFeatureFlag()
-        {
-#if !SNIPPET
-            var endpoint = TestEnvironment.Endpoint;
-            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
-#endif
-
-            #region Snippet:SetFeatureFlag
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-#endif
-            FeatureFlag flag = client.SetFeatureFlag("some_feature", enabled: true);
-            Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
-            #endregion Snippet:SetFeatureFlag
-        }
-
-        [Test]
-        public void GetFeatureFlag()
-        {
-#if !SNIPPET
-            var endpoint = TestEnvironment.Endpoint;
-            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
-
-            // Make sure a feature flag exists.
-            var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-            setupClient.SetFeatureFlag("some_feature", enabled: true);
-#endif
-
-            #region Snippet:GetFeatureFlag
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-#endif
-            FeatureFlag flag = client.GetFeatureFlag("some_feature");
-            Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
-            #endregion Snippet:GetFeatureFlag
-        }
-
-        [Test]
-        public void GetFeatureFlags()
-        {
-#if !SNIPPET
-            var endpoint = TestEnvironment.Endpoint;
-            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
-
-            // Make sure a feature flag exists.
-            var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-            setupClient.SetFeatureFlag("some_feature", enabled: true);
-#endif
-
-            #region Snippet:GetFeatureFlags
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-#endif
-            var selector = new FeatureFlagSelector { NameFilter = "some_*" };
-            foreach (FeatureFlag flag in client.GetFeatureFlags(selector))
-            {
-                Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
-            }
-            #endregion Snippet:GetFeatureFlags
-        }
-
-        [Test]
-        public void DeleteFeatureFlag()
-        {
-#if !SNIPPET
-            var endpoint = TestEnvironment.Endpoint;
-            var options = new FeatureFlagClientOptions { Audience = TestEnvironment.GetAudience() };
-
-            // Make sure a feature flag exists.
-            var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-            setupClient.SetFeatureFlag("some_feature", enabled: true);
-#endif
-
-            #region Snippet:DeleteFeatureFlag
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
-#endif
-            client.DeleteFeatureFlag("some_feature");
-            #endregion Snippet:DeleteFeatureFlag
-        }
-
-        [Test]
-        public void GetLabelsByResourceType()
-        {
-#if !SNIPPET
-            var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
-#endif
-
-            #region Snippet:GetLabelsByResourceType
-#if SNIPPET
-            string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-#else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
-#endif
-            // Only retrieve labels that are associated with feature flags.
-            var selector = new SettingLabelSelector { ResourceType = SettingLabelResourceType.FeatureFlag };
-            foreach (SettingLabel label in client.GetLabels(selector))
-            {
-                Console.WriteLine($"Label: {label.Name}");
-            }
-            #endregion Snippet:GetLabelsByResourceType
-        }
-
         [OneTimeTearDown]
         public async Task CleanUp()
         {
             var endpoint = TestEnvironment.Endpoint;
-            var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
-            ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             await client.DeleteConfigurationSettingAsync("some_key");
-            await client.GetFeatureFlagClient().DeleteFeatureFlagAsync("some_feature");
         }
     }
 }
