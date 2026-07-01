@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ContainerEndpoint
     {
         // Customized: restore legacy casing alias.
+        /// <summary> The host IP address over which the application is exposed from the container. </summary>
         [WirePath("hostIp")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string HostIP

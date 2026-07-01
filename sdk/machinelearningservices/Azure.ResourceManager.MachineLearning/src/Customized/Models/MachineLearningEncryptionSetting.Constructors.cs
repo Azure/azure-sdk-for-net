@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     // Customized: preserve the legacy public constructor after TypeSpec generated a more
     // explicit internal constructor including identity and raw-data parameters.
+    /// <summary> The encryption settings of a workspace. </summary>
     public partial class MachineLearningEncryptionSetting : IJsonModel<MachineLearningEncryptionSetting>
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
@@ -28,10 +29,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Gets or sets status. </summary>
         [WirePath("status")]
         public MachineLearningEncryptionStatus Status { get; set; }
+        /// <summary> KeyVault details to do the encryption. </summary>
         [WirePath("keyVaultProperties")]
         public MachineLearningEncryptionKeyVaultProperties KeyVaultProperties { get; set; }
+        /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
         [WirePath("identity.userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity { get; set; }
 
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningEncryptionSetting(default, default);
         }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
