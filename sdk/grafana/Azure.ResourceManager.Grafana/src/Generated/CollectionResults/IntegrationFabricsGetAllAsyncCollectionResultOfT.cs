@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 IntegrationFabricListResponse result = IntegrationFabricListResponse.FromResponse(response);
-                yield return Page<GrafanaIntegrationFabricData>.FromValues((IReadOnlyList<GrafanaIntegrationFabricData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GrafanaIntegrationFabricData>.FromValues((IReadOnlyList<GrafanaIntegrationFabricData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

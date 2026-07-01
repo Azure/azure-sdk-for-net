@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.FrontDoor
                     yield break;
                 }
                 WebApplicationFirewallPolicyList result = WebApplicationFirewallPolicyList.FromResponse(response);
-                yield return Page<FrontDoorWebApplicationFirewallPolicyData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorWebApplicationFirewallPolicyData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

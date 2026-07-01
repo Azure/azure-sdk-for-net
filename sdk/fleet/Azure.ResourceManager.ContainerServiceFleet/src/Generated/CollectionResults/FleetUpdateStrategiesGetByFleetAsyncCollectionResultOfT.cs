@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     yield break;
                 }
                 FleetUpdateStrategyListResult result = FleetUpdateStrategyListResult.FromResponse(response);
-                yield return Page<FleetUpdateStrategyData>.FromValues((IReadOnlyList<FleetUpdateStrategyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FleetUpdateStrategyData>.FromValues((IReadOnlyList<FleetUpdateStrategyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

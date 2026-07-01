@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 LicenseProfilesListResult result = LicenseProfilesListResult.FromResponse(response);
-                yield return Page<HybridComputeLicenseProfileData>.FromValues((IReadOnlyList<HybridComputeLicenseProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HybridComputeLicenseProfileData>.FromValues((IReadOnlyList<HybridComputeLicenseProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
