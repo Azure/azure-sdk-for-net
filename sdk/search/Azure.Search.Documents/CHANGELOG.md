@@ -1,5 +1,19 @@
 # Release History
 
+## 12.1.0 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+- Changed the `CancellationToken` parameter from optional to required in the `string`-based `Delete*` convenience overloads on `SearchIndexClient` (`DeleteIndex`, `DeleteIndexAsync`, `DeleteSynonymMap`, `DeleteSynonymMapAsync`) and `SearchIndexerClient` (`DeleteIndexer`, `DeleteIndexerAsync`, `DeleteDataSourceConnection`, `DeleteDataSourceConnectionAsync`, `DeleteSkillset`, `DeleteSkillsetAsync`) to resolve method overload ambiguity with the generated overloads that accept `MatchConditions`.
+
+### Bugs Fixed
+
+- Fixed `System.Text.Json.JsonException` / `InvalidOperationException: Cannot skip tokens on partial JSON` thrown when asynchronously deserializing a `SearchDocument` (for example `SearchAsync<SearchDocument>`) whose result elements are large and contain OData (`@search.*`) properties. The internal converter now uses `Utf8JsonReader.TrySkip()` instead of `Skip()` so these properties can be skipped even when the converter is invoked over a non-final JSON block. ([#40768](https://github.com/Azure/azure-sdk-for-net/issues/40768))
+
+### Other Changes
+
 ## 12.0.0 (2026-05-01)
 
 ### Features Added
