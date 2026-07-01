@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 EnvironmentContainerResourceArmPaginatedResult result = EnvironmentContainerResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningEnvironmentContainerData>.FromValues((IReadOnlyList<MachineLearningEnvironmentContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningEnvironmentContainerData>.FromValues((IReadOnlyList<MachineLearningEnvironmentContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
