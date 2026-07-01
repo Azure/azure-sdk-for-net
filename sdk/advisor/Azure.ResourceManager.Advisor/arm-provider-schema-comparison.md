@@ -15,7 +15,7 @@ The Advisor resource detection result is mostly equivalent between the legacy de
 | Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
 | Resource model for matching patterns | Same `resourceModelId` and `resourceType` for every matching resource ID pattern. |
 | CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
-| List/action operations for matching patterns | One extra list operation is attached by `resolveArmResources`. All other list/action operations match. |
+| List/action operations for matching patterns | `resolveArmResources` correctly attaches one additional subscription-scoped list operation. All other list/action operations match. |
 
 ## 1. Resource ID pattern coverage
 
@@ -82,7 +82,7 @@ CRUD means `Create`, `Read`, `Update`, and `Delete`. The CRUD operation set is t
 
 ### 4.2 List and action operations
 
-**Differences:** one. For `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `resolveArmResources` adds `Microsoft.Advisor.ResourceRecommendationBases.list` with request path `/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations`; all other list/action operation sets are identical.
+**Differences:** one valid improvement from `resolveArmResources`. For `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`, `resolveArmResources` adds `Microsoft.Advisor.ResourceRecommendationBases.list` with request path `/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations`; all other list/action operation sets are identical.
 
 List/action operations match except for one extra list operation in `resolveArmResources`.
 
@@ -105,7 +105,7 @@ List/action operations match except for one extra list operation in `resolveArmR
 | --- | --- | --- | --- | --- |
 | `Microsoft.Advisor.ResourceRecommendationBases.list` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations` | Missing. | Present. |
 
-The legacy schema only attaches `Microsoft.Advisor.ResourceRecommendationBases.listByTenant` to this resource, with request path `/{resourceUri}/providers/Microsoft.Advisor/recommendations`. The added `resolveArmResources` operation is subscription-scoped, so this should be reviewed to decide whether it is a valid additional list operation for the same resource or should remain separate from this extension-resource pattern.
+The legacy schema only attaches `Microsoft.Advisor.ResourceRecommendationBases.listByTenant` to this resource, with request path `/{resourceUri}/providers/Microsoft.Advisor/recommendations`. The added `resolveArmResources` operation is subscription-scoped and appears to be a valid additional list operation for the same resource.
 
 ## Secondary observations
 
@@ -118,4 +118,4 @@ These differences are outside the requested comparison axes but may still be use
 
 ## Initial assessment
 
-For Advisor, `resolveArmResources` matches the legacy detector on resource ID pattern coverage, hierarchy, resource model selection, and CRUD operations. The only requested-axis gap is the extra subscription-scoped recommendation list operation attached by `resolveArmResources`. The main non-axis concern is SDK-facing resource name normalization.
+For Advisor, `resolveArmResources` matches the legacy detector on resource ID pattern coverage, hierarchy, resource model selection, and CRUD operations. The only requested-axis difference is a valid extra subscription-scoped recommendation list operation attached by `resolveArmResources`. The main non-axis concern is SDK-facing resource name normalization.
