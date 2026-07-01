@@ -25,9 +25,9 @@ namespace Azure.Storage.Blobs.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(blob, true);
+            uri.AppendPath(blob, false);
             if (_snapshot != null)
             {
                 uri.AppendQuery("snapshot", _snapshot, true);
@@ -84,9 +84,9 @@ namespace Azure.Storage.Blobs.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(blob, true);
+            uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "tier", true);
             if (_snapshot != null)
             {

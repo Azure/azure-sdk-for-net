@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Batch
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(containerName, true);
+            uri.AppendPath(containerName, false);
             uri.AppendQuery("restype", "container", true);
             uri.AppendQuery("comp", "batch", true);
             if (timeout != null)
