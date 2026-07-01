@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 AvailableQuotaArmPaginatedResult result = AvailableQuotaArmPaginatedResult.FromResponse(response);
-                yield return Page<AvailableQuota>.FromValues((IReadOnlyList<AvailableQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvailableQuota>.FromValues((IReadOnlyList<AvailableQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

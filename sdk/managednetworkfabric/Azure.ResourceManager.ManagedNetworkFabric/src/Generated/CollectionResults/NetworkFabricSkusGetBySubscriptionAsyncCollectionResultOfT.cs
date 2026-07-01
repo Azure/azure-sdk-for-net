@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 NetworkFabricSkusListResult result = NetworkFabricSkusListResult.FromResponse(response);
-                yield return Page<NetworkFabricSkuData>.FromValues((IReadOnlyList<NetworkFabricSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkFabricSkuData>.FromValues((IReadOnlyList<NetworkFabricSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
