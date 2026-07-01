@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.EdgeOrder
                     yield break;
                 }
                 ProductFamilies result = ProductFamilies.FromResponse(response);
-                yield return Page<ProductFamily>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProductFamily>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.DurableTask
                     yield break;
                 }
                 SchedulerListResult result = SchedulerListResult.FromResponse(response);
-                yield return Page<DurableTaskSchedulerData>.FromValues((IReadOnlyList<DurableTaskSchedulerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DurableTaskSchedulerData>.FromValues((IReadOnlyList<DurableTaskSchedulerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
