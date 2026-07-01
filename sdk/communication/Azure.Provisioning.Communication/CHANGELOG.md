@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Regenerated with the TypeSpec-based provisioning generator.
+- Updated default API version to `2026-03-18`.
+
 ### Breaking Changes
+
+- Renamed generated resource types to align with the management SDK naming, for example `CommunicationServiceResource`, `EmailServiceResource`, `CommunicationDomainResource`, and `SenderUsernameResource`.
 
 ### Bugs Fixed
 
