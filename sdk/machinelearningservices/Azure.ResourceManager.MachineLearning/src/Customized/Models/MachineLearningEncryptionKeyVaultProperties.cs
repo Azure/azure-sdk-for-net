@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Currently, we support only SystemAssigned MSI. We need this when we support UserAssignedIdentities </summary>
         [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
-        /// <summary> Gets the KeyIdentifier. </summary>
+        /// <summary> Gets or sets the KeyIdentifier. </summary>
         [WirePath("keyIdentifier")]
         public string KeyIdentifier { get; set; }
         /// <summary> KeyVault Arm Id that contains the data encryption key. </summary>

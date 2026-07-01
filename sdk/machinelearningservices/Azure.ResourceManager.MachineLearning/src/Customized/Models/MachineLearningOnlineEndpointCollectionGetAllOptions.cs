@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The options for the corresponding <c>GetAll</c> method. </summary>
     public partial class MachineLearningOnlineEndpointCollectionGetAllOptions
     {
-        /// <summary> Gets the Count. </summary>
+        /// <summary> Gets or sets the Count. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> The type of compute. </summary>

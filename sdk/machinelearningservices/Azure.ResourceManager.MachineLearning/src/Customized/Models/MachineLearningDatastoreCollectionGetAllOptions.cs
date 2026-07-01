@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The options for the corresponding <c>GetAll</c> method. </summary>
     public partial class MachineLearningDatastoreCollectionGetAllOptions
     {
-        /// <summary> Gets the Count. </summary>
+        /// <summary> Gets or sets the Count. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> Readonly property to indicate if datastore is the workspace default datastore. </summary>
