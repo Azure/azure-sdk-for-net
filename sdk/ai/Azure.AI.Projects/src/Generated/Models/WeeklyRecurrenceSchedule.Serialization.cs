@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Evaluation
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return WeeklyRecurrenceSchedule.DeserializeWeeklyRecurrenceSchedule(document.RootElement, options);
+                        return DeserializeWeeklyRecurrenceSchedule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WeeklyRecurrenceSchedule)} does not support reading '{options.Format}' format.");
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Evaluation
                 throw new FormatException($"The model {nameof(WeeklyRecurrenceSchedule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return WeeklyRecurrenceSchedule.DeserializeWeeklyRecurrenceSchedule(document.RootElement, options);
+            return DeserializeWeeklyRecurrenceSchedule(document.RootElement, options);
         }
     }
 }
