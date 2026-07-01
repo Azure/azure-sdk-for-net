@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 ApplicationStackListResult result = ApplicationStackListResult.FromResponse(response);
-                yield return Page<ApplicationStackResource>.FromValues((IReadOnlyList<ApplicationStackResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ApplicationStackResource>.FromValues((IReadOnlyList<ApplicationStackResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

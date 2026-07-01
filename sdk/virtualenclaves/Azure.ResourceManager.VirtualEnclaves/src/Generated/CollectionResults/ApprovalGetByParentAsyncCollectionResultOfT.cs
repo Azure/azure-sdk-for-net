@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.VirtualEnclaves
                     yield break;
                 }
                 ApprovalResourceListResult result = ApprovalResourceListResult.FromResponse(response);
-                yield return Page<VirtualEnclaveApprovalData>.FromValues((IReadOnlyList<VirtualEnclaveApprovalData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualEnclaveApprovalData>.FromValues((IReadOnlyList<VirtualEnclaveApprovalData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
