@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.AgriculturePlatform
                     yield break;
                 }
                 AgriServiceResourceListResult result = AgriServiceResourceListResult.FromResponse(response);
-                yield return Page<AgricultureServiceData>.FromValues((IReadOnlyList<AgricultureServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AgricultureServiceData>.FromValues((IReadOnlyList<AgricultureServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
