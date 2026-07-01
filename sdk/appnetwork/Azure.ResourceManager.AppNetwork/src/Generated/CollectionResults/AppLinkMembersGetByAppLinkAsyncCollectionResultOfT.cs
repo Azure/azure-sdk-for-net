@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppNetwork
                     yield break;
                 }
                 AppLinkMemberListResult result = AppLinkMemberListResult.FromResponse(response);
-                yield return Page<AppLinkMemberData>.FromValues((IReadOnlyList<AppLinkMemberData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppLinkMemberData>.FromValues((IReadOnlyList<AppLinkMemberData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

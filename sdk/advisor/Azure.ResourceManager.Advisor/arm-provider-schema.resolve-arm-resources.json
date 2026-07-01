@@ -1,0 +1,484 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Advisor.AdvisorScoreEntity",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/advisorScore/{name}",
+      "resourceType": "Microsoft.Advisor/advisorScore",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.AdvisorScoreEntities.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/advisorScore/{name}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/advisorScore/{name}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.AdvisorScoreEntities.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/advisorScore",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "AdvisorScoreEntity",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.ResiliencyReview",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}",
+      "resourceType": "Microsoft.Advisor/resiliencyReviews",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.ResiliencyReviews.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.ResiliencyReviews.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "ResiliencyReview",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.TriageRecommendation",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+      "resourceType": "Microsoft.Advisor/triageRecommendations",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.TriageRecommendations.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+            "scopeResourceType": "Microsoft.Advisor/resiliencyReviews"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.TriageRecommendations.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}",
+            "scopeResourceType": "Microsoft.Advisor/resiliencyReviews"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.TriageRecommendations.approveTriageRecommendation",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/approve",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+            "scopeResourceType": "Microsoft.Advisor/resiliencyReviews"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.TriageRecommendations.rejectTriageRecommendation",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/reject",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+            "scopeResourceType": "Microsoft.Advisor/resiliencyReviews"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.TriageRecommendations.resetTriageRecommendation",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/reset",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+            "scopeResourceType": "Microsoft.Advisor/resiliencyReviews"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}",
+        "scopeResourceType": "Microsoft.Advisor/resiliencyReviews"
+      },
+      "resourceName": "TriageRecommendations",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.TriageResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/providers/Microsoft.Advisor/triageResources/{recommendationResourceId}",
+      "resourceType": "Microsoft.Advisor/triageResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.TriageResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/providers/Microsoft.Advisor/triageResources/{recommendationResourceId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/providers/Microsoft.Advisor/triageResources/{recommendationResourceId}",
+            "scopeResourceType": "Microsoft.Advisor/triageRecommendations"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.TriageResources.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}/providers/Microsoft.Advisor/triageResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+            "scopeResourceType": "Microsoft.Advisor/triageRecommendations"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}/providers/Microsoft.Advisor/triageRecommendations/{recommendationId}",
+        "scopeResourceType": "Microsoft.Advisor/triageRecommendations"
+      },
+      "resourceName": "TriageResources",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.AssessmentResult",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+      "resourceType": "Microsoft.Advisor/assessments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.AssessmentResults.put",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.AssessmentResults.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.AssessmentResults.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments/{assessmentName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.AssessmentResults.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessments",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "AssessmentResult",
+      "nameConstraints": {
+        "pattern": "^[-0-9a-zA-Z_]{1,63}$"
+      },
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.MetadataEntity",
+      "resourceIdPattern": "/providers/Microsoft.Advisor/metadata/{name}",
+      "resourceType": "Microsoft.Advisor/metadata",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.MetadataEntities.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Advisor/metadata/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Advisor/metadata/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.MetadataEntities.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Advisor/metadata",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "MetadataEntity",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.ResourceRecommendationBase",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}",
+      "resourceType": "Microsoft.Advisor/recommendations",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.ResourceRecommendationBases.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.ResourceRecommendationBases.patch",
+          "kind": "Update",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.ResourceRecommendationBases.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.ResourceRecommendationBases.listByTenant",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "resourceName": "ResourceRecommendationBase",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Advisor.SuppressionContract",
+      "resourceIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}",
+      "resourceType": "Microsoft.Advisor/recommendations/suppressions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Advisor.SuppressionContracts.create",
+          "kind": "Create",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.SuppressionContracts.get",
+          "kind": "Read",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Advisor.SuppressionContracts.delete",
+          "kind": "Delete",
+          "operationPath": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      },
+      "parentResourceId": "/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}",
+      "resourceName": "SuppressionContract",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
+      "operationPath": "/providers/Microsoft.Advisor/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.ConfigurationsOperationGroup.listBySubscription",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.ConfigurationsOperationGroup.createInSubscription",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.ConfigurationsOperationGroup.listByResourceGroup",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.ConfigurationsOperationGroup.createInResourceGroup",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.RecommendationsOperationGroup.generate",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.RecommendationsOperationGroup.getGenerateStatus",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/generateRecommendations/{operationId}",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.SuppressionsOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.AssessmentTypesOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/assessmentTypes",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.WorkloadsOperationGroup.list",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/workloads",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Advisor.predict",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/predict",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}

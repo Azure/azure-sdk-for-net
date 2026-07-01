@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 CertificateCollection result = CertificateCollection.FromResponse(response);
-                yield return Page<ApiManagementCertificateData>.FromValues((IReadOnlyList<ApiManagementCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<ApiManagementCertificateData>.FromValues((IReadOnlyList<ApiManagementCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
