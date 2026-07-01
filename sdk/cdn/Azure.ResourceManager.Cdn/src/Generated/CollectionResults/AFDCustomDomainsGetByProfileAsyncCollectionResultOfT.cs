@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 AFDDomainListResult result = AFDDomainListResult.FromResponse(response);
-                yield return Page<FrontDoorCustomDomainData>.FromValues((IReadOnlyList<FrontDoorCustomDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorCustomDomainData>.FromValues((IReadOnlyList<FrontDoorCustomDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
