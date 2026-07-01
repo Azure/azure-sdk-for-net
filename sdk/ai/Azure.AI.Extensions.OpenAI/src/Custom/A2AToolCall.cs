@@ -16,7 +16,7 @@ public partial class A2AToolCall
     /// <param name="name"> The name of the A2A agent card being called. </param>
     /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
     /// <param name="status"> The status of the tool call. </param>
-    internal A2AToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(ResponseItemKind.A2APreviewCall)
+    public A2AToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(ResponseItemKind.A2APreviewCall)
     {
         CallId = callId;
         Name = name;

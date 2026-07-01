@@ -14,24 +14,6 @@ namespace Azure.AI.Extensions.OpenAI
     public static partial class ExtensionsOpenAIModelFactory
     {
 
-        /// <summary> Input text. </summary>
-        /// <param name="text"> The text input to the model. </param>
-        /// <returns> A new <see cref="Internal.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default)
-        {
-            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input image. </summary>
-        /// <param name="imageUrl"></param>
-        /// <param name="fileId"></param>
-        /// <param name="detail"></param>
-        /// <returns> A new <see cref="Internal.InputImageContentParamAutoParam"/> instance for mocking. </returns>
-        public static InputImageContentParamAutoParam InputImageContentParamAutoParam(Uri imageUrl = default, string fileId = default, ImageDetailLevel? detail = default)
-        {
-            return new InputImageContentParamAutoParam("input_image", imageUrl, fileId, detail, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Input file. </summary>
         /// <param name="fileId"></param>
         /// <param name="filename"></param>
@@ -683,30 +665,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Comparison Filter. </summary>
-        /// <param name="type">
-        /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
-        /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
-        /// </param>
-        /// <param name="key"> The key to compare against the value. </param>
-        /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
-        /// <returns> A new <see cref="Internal.ComparisonFilter"/> instance for mocking. </returns>
-        public static ComparisonFilter ComparisonFilter(FileSearchToolFiltersType @type = default, string key = default, BinaryData value = default)
-        {
-            return new ComparisonFilter(@type, key, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Compound Filter. </summary>
-        /// <param name="type"> Type of operation: `and` or `or`. </param>
-        /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
-        /// <returns> A new <see cref="Internal.CompoundFilter"/> instance for mocking. </returns>
-        public static CompoundFilter CompoundFilter(FileSearchToolFiltersType1 @type = default, IEnumerable<BinaryData> filters = default)
-        {
-            filters ??= new ChangeTrackingList<BinaryData>();
-
-            return new CompoundFilter(@type, filters.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Web search approximate location. </summary>
         /// <param name="country"></param>
         /// <param name="region"></param>
@@ -900,22 +858,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static ResponsesToolSearchToolParam ResponsesToolSearchToolParam(ResponsesToolSearchExecutionType? execution = default, string description = default, ResponsesEmptyModelParam parameters = default)
         {
             return new ResponsesToolSearchToolParam("tool_search", execution, description, parameters, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Code interpreter output logs. </summary>
-        /// <param name="logs"> The logs output from the code interpreter. </param>
-        /// <returns> A new <see cref="Internal.CodeInterpreterOutputLogs"/> instance for mocking. </returns>
-        public static CodeInterpreterOutputLogs CodeInterpreterOutputLogs(string logs = default)
-        {
-            return new CodeInterpreterOutputLogs("logs", logs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Code interpreter output image. </summary>
-        /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        /// <returns> A new <see cref="Internal.CodeInterpreterOutputImage"/> instance for mocking. </returns>
-        public static CodeInterpreterOutputImage CodeInterpreterOutputImage(Uri url = default)
-        {
-            return new CodeInterpreterOutputImage("image", url, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>
@@ -1548,23 +1490,6 @@ namespace Azure.AI.Extensions.OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"> The name of the file to be sent to the model. </param>
-        /// <param name="fileData"> The content of the file to be sent to the model. </param>
-        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
-        /// <returns> A new <see cref="Internal.InputFileContent"/> instance for mocking. </returns>
-        public static InputFileContent InputFileContent(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
-        {
-            return new InputFileContent(
-                "input_file",
-                fileId,
-                filename,
-                fileData,
-                fileUrl,
-                additionalBinaryDataProperties: null);
         }
     }
 }

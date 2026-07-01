@@ -2913,6 +2913,11 @@
       "isFlags": false,
       "usage": "External",
       "decorators": [],
+      "external": {
+        "identity": "OpenAI.Responses.ResponseImageDetailLevel",
+        "package": "OpenAI",
+        "minVersion": "2.11.0"
+      },
       "isExactName": false
     },
     {
@@ -4753,6 +4758,11 @@
       "isFlags": false,
       "usage": "External",
       "decorators": [],
+      "external": {
+        "identity": "OpenAI.Responses.ImageGenerationToolInputFidelity",
+        "package": "OpenAI",
+        "minVersion": "2.11.0"
+      },
       "isExactName": false
     },
     {
@@ -4816,6 +4826,11 @@
       "isFlags": false,
       "usage": "External",
       "decorators": [],
+      "external": {
+        "identity": "OpenAI.Responses.ImageGenerationToolAction",
+        "package": "OpenAI",
+        "minVersion": "2.11.0"
+      },
       "isExactName": false
     },
     {
@@ -9635,6 +9650,9 @@
       "isFlags": false,
       "usage": "External",
       "decorators": [],
+      "external": {
+        "identity": "System.Object"
+      },
       "isExactName": false
     },
     {
@@ -10545,7 +10563,7 @@
       "kind": "constant",
       "name": "WebSearchActionSearchType",
       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
-      "usage": "Output,Json,External",
+      "usage": "External",
       "valueType": {
         "$id": "798",
         "kind": "string",
@@ -10562,7 +10580,7 @@
       "kind": "constant",
       "name": "WebSearchActionSearchSourcesType",
       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
-      "usage": "Output,Json,External",
+      "usage": "External",
       "valueType": {
         "$id": "800",
         "kind": "string",
@@ -10579,7 +10597,7 @@
       "kind": "constant",
       "name": "WebSearchActionOpenPageType",
       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
-      "usage": "Output,Json,External",
+      "usage": "External",
       "valueType": {
         "$id": "802",
         "kind": "string",
@@ -10596,7 +10614,7 @@
       "kind": "constant",
       "name": "WebSearchActionFindType",
       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
-      "usage": "Output,Json,External",
+      "usage": "External",
       "valueType": {
         "$id": "804",
         "kind": "string",
@@ -10834,7 +10852,7 @@
       "kind": "constant",
       "name": "CodeInterpreterOutputLogsType",
       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
-      "usage": "Output,Json,External",
+      "usage": "External",
       "valueType": {
         "$id": "832",
         "kind": "string",
@@ -10851,7 +10869,7 @@
       "kind": "constant",
       "name": "CodeInterpreterOutputImageType",
       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
-      "usage": "Output,Json,External",
+      "usage": "External",
       "valueType": {
         "$id": "834",
         "kind": "string",
@@ -12975,10 +12993,15 @@
               "name": "LogProb",
               "namespace": "Azure.AI.Extensions.OpenAI.Internal",
               "crossLanguageDefinitionId": "OpenAI.LogProb",
-              "usage": "Output,Json,External",
+              "usage": "External",
               "doc": "The log probability of a token.",
               "summary": "Log probability",
               "decorators": [],
+              "external": {
+                "identity": "OpenAI.Responses.ResponseTokenLogProbabilityDetails",
+                "package": "OpenAI",
+                "minVersion": "2.11.0"
+              },
               "serializationOptions": {
                 "json": {
                   "name": "LogProb"
@@ -13086,10 +13109,15 @@
                       "name": "TopLogProb",
                       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                       "crossLanguageDefinitionId": "OpenAI.TopLogProb",
-                      "usage": "Output,Json,External",
+                      "usage": "External",
                       "doc": "The top log probability of a token.",
                       "summary": "Top log probability",
                       "decorators": [],
+                      "external": {
+                        "identity": "OpenAI.Responses.ResponseTokenTopLogProbabilityDetails",
+                        "package": "OpenAI",
+                        "minVersion": "2.11.0"
+                      },
                       "serializationOptions": {
                         "json": {
                           "name": "TopLogProb"
@@ -14263,9 +14291,12 @@
                         "name": "VectorStoreFileAttributes",
                         "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                         "crossLanguageDefinitionId": "OpenAI.VectorStoreFileAttributes",
-                        "usage": "Output,Json,External",
+                        "usage": "External",
                         "doc": "Set of 16 key-value pairs that can be attached to an object. This can be\nuseful for storing additional information about the object in a structured\nformat, and querying for objects via API or the dashboard. Keys are strings\nwith a maximum length of 64 characters. Values are strings with a maximum\nlength of 512 characters, booleans, or numbers.",
                         "decorators": [],
+                        "external": {
+                          "identity": "System.Object"
+                        },
                         "serializationOptions": {
                           "json": {
                             "name": "VectorStoreFileAttributes"
@@ -16435,10 +16466,13 @@
                 "name": "WebSearchActionSearch",
                 "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                 "crossLanguageDefinitionId": "OpenAI.WebSearchActionSearch",
-                "usage": "Output,Json,External",
+                "usage": "External",
                 "doc": "Action type \"search\" - Performs a web search query.",
                 "summary": "Search action",
                 "decorators": [],
+                "external": {
+                  "identity": "System.Object"
+                },
                 "serializationOptions": {
                   "json": {
                     "name": "WebSearchActionSearch"
@@ -16537,7 +16571,7 @@
                         "name": "WebSearchActionSearchSources",
                         "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                         "crossLanguageDefinitionId": "OpenAI.WebSearchActionSearchSources",
-                        "usage": "Output,Json,External",
+                        "usage": "External",
                         "decorators": [],
                         "serializationOptions": {
                           "json": {
@@ -16621,10 +16655,13 @@
                 "name": "WebSearchActionOpenPage",
                 "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                 "crossLanguageDefinitionId": "OpenAI.WebSearchActionOpenPage",
-                "usage": "Output,Json,External",
+                "usage": "External",
                 "doc": "Action type \"open_page\" - Opens a specific URL from search results.",
                 "summary": "Open page action",
                 "decorators": [],
+                "external": {
+                  "identity": "System.Object"
+                },
                 "serializationOptions": {
                   "json": {
                     "name": "WebSearchActionOpenPage"
@@ -16695,10 +16732,13 @@
                 "name": "WebSearchActionFind",
                 "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                 "crossLanguageDefinitionId": "OpenAI.WebSearchActionFind",
-                "usage": "Output,Json,External",
+                "usage": "External",
                 "doc": "Action type \"find_in_page\": Searches for a pattern within a loaded page.",
                 "summary": "Find action",
                 "decorators": [],
+                "external": {
+                  "identity": "System.Object"
+                },
                 "serializationOptions": {
                   "json": {
                     "name": "WebSearchActionFind"
@@ -17183,6 +17223,9 @@
                       "doc": "A text input to the model.",
                       "summary": "Input text",
                       "decorators": [],
+                      "external": {
+                        "identity": "System.Object"
+                      },
                       "serializationOptions": {
                         "json": {
                           "name": "InputTextContentParam"
@@ -17252,6 +17295,9 @@
                       "doc": "An image input to the model. Learn about [image inputs](/docs/guides/vision)",
                       "summary": "Input image",
                       "decorators": [],
+                      "external": {
+                        "identity": "System.Object"
+                      },
                       "serializationOptions": {
                         "json": {
                           "name": "InputImageContentParamAutoParam"
@@ -22959,6 +23005,9 @@
       "summary": "Code interpreter",
       "discriminatorValue": "code_interpreter",
       "decorators": [],
+      "external": {
+        "identity": "System.Object"
+      },
       "serializationOptions": {
         "json": {
           "name": "CodeInterpreterTool"
@@ -23722,6 +23771,9 @@
             "crossLanguageDefinitionId": "OpenAI.RankingOptions",
             "usage": "External",
             "decorators": [],
+            "external": {
+              "identity": "System.Object"
+            },
             "serializationOptions": {
               "json": {
                 "name": "RankingOptions"
@@ -23909,6 +23961,9 @@
                   "doc": "A filter used to compare a specified attribute key to a given value using a defined comparison operation.",
                   "summary": "Comparison Filter",
                   "decorators": [],
+                  "external": {
+                    "identity": "System.Object"
+                  },
                   "serializationOptions": {
                     "json": {
                       "name": "ComparisonFilter"
@@ -24060,6 +24115,9 @@
                   "doc": "Combine multiple filters using `and` or `or`.",
                   "summary": "Compound Filter",
                   "decorators": [],
+                  "external": {
+                    "identity": "System.Object"
+                  },
                   "serializationOptions": {
                     "json": {
                       "name": "CompoundFilter"
@@ -24783,6 +24841,9 @@
       "summary": "MCP tool",
       "discriminatorValue": "mcp",
       "decorators": [],
+      "external": {
+        "identity": "System.Object"
+      },
       "serializationOptions": {
         "json": {
           "name": "MCPTool"
@@ -25514,6 +25575,11 @@
       "summary": "Image generation tool",
       "discriminatorValue": "image_generation",
       "decorators": [],
+      "external": {
+        "identity": "OpenAI.Responses.ImageGenerationTool",
+        "package": "OpenAI",
+        "minVersion": "2.11.0"
+      },
       "serializationOptions": {
         "json": {
           "name": "ImageGenTool"
@@ -27257,6 +27323,9 @@
       "summary": "Web search preview",
       "discriminatorValue": "web_search_preview",
       "decorators": [],
+      "external": {
+        "identity": "System.Object"
+      },
       "serializationOptions": {
         "json": {
           "name": "WebSearchPreviewTool"
@@ -27317,6 +27386,11 @@
               "crossLanguageDefinitionId": "OpenAI.ApproximateLocation",
               "usage": "External",
               "decorators": [],
+              "external": {
+                "identity": "OpenAI.Responses.WebSearchToolApproximateLocation",
+                "package": "OpenAI",
+                "minVersion": "2.11.0"
+              },
               "serializationOptions": {
                 "json": {
                   "name": "ApproximateLocation"
@@ -30051,10 +30125,15 @@
                     "name": "CodeInterpreterOutputLogs",
                     "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                     "crossLanguageDefinitionId": "OpenAI.CodeInterpreterOutputLogs",
-                    "usage": "Output,Json,External",
+                    "usage": "External",
                     "doc": "The logs output from the code interpreter.",
                     "summary": "Code interpreter output logs",
                     "decorators": [],
+                    "external": {
+                      "identity": "OpenAI.Responses.CodeInterpreterCallLogsOutput",
+                      "package": "OpenAI",
+                      "minVersion": "2.11.0"
+                    },
                     "serializationOptions": {
                       "json": {
                         "name": "CodeInterpreterOutputLogs"
@@ -30120,10 +30199,15 @@
                     "name": "CodeInterpreterOutputImage",
                     "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                     "crossLanguageDefinitionId": "OpenAI.CodeInterpreterOutputImage",
-                    "usage": "Output,Json,External",
+                    "usage": "External",
                     "doc": "The image output from the code interpreter.",
                     "summary": "Code interpreter output image",
                     "decorators": [],
+                    "external": {
+                      "identity": "OpenAI.Responses.CodeInterpreterCallImageOutput",
+                      "package": "OpenAI",
+                      "minVersion": "2.11.0"
+                    },
                     "serializationOptions": {
                       "json": {
                         "name": "CodeInterpreterOutputImage"
@@ -32662,10 +32746,13 @@
               "name": "MCPListToolsTool",
               "namespace": "Azure.AI.Extensions.OpenAI.Internal",
               "crossLanguageDefinitionId": "OpenAI.MCPListToolsTool",
-              "usage": "Output,Json,External",
+              "usage": "External",
               "doc": "A tool available on an MCP server.",
               "summary": "MCP list tools tool",
               "decorators": [],
+              "external": {
+                "identity": "System.Object"
+              },
               "serializationOptions": {
                 "json": {
                   "name": "MCPListToolsTool"
@@ -32743,7 +32830,7 @@
                     "name": "MCPListToolsToolInputSchema",
                     "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                     "crossLanguageDefinitionId": "OpenAI.MCPListToolsToolInputSchema",
-                    "usage": "Output,Json,External",
+                    "usage": "External",
                     "decorators": [],
                     "serializationOptions": {
                       "json": {
@@ -32781,7 +32868,7 @@
                       "name": "MCPListToolsToolAnnotations",
                       "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                       "crossLanguageDefinitionId": "OpenAI.MCPListToolsToolAnnotations",
-                      "usage": "Output,Json,External",
+                      "usage": "External",
                       "decorators": [],
                       "serializationOptions": {
                         "json": {
@@ -53523,6 +53610,11 @@
                     "doc": "**gpt-5 and o-series models only**\nConfiguration options for\n[reasoning models](https://platform.openai.com/docs/guides/reasoning).",
                     "summary": "Reasoning",
                     "decorators": [],
+                    "external": {
+                      "identity": "OpenAI.Responses.ResponseReasoningOptions",
+                      "package": "OpenAI",
+                      "minVersion": "2.11.0"
+                    },
                     "serializationOptions": {
                       "json": {
                         "name": "Reasoning"
@@ -54256,6 +54348,9 @@
                                 "doc": "A file input to the model.",
                                 "summary": "Input file",
                                 "decorators": [],
+                                "external": {
+                                  "identity": "System.Object"
+                                },
                                 "serializationOptions": {
                                   "json": {
                                     "name": "InputFileContent"
@@ -54621,6 +54716,11 @@
                     "usage": "External",
                     "doc": "An error object returned when the model fails to generate a Response.",
                     "decorators": [],
+                    "external": {
+                      "identity": "OpenAI.Responses.ResponseError",
+                      "package": "OpenAI",
+                      "minVersion": "2.11.0"
+                    },
                     "serializationOptions": {
                       "json": {
                         "name": "ResponseError"
@@ -56779,6 +56879,9 @@
             "doc": "The schema for the response format, described as a JSON Schema object.\nLearn how to build JSON schemas [here](https://json-schema.org/).",
             "summary": "JSON schema",
             "decorators": [],
+            "external": {
+              "identity": "System.Object"
+            },
             "serializationOptions": {
               "json": {
                 "name": "ResponseFormatJsonSchemaSchema"
