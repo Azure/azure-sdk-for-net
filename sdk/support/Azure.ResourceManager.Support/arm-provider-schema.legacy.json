@@ -1,0 +1,678 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Support.FileWorkspaceDetails",
+      "resourceIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+      "resourceType": "Microsoft.Support/fileWorkspaces",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.FileWorkspacesNoSubscription.create",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.FileWorkspacesNoSubscription.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantFileWorkspace",
+      "nameConstraints": {
+        "pattern": "^[0-9a-zA-Z_\\-. ]+$"
+      },
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.FileDetails",
+      "resourceIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+      "resourceType": "Microsoft.Support/fileWorkspaces/files",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.FilesNoSubscription.create",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.FilesNoSubscription.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.FilesNoSubscription.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.FilesNoSubscription.upload",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}/upload",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+      "resourceName": "SupportTicketNoSubFile",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.Service",
+      "resourceIdPattern": "/providers/Microsoft.Support/services/{serviceName}",
+      "resourceType": "Microsoft.Support/services",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.Services.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/services/{serviceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/services/{serviceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.Services.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Support/services",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.ClassifyProblemsNoSubscription.classifyProblems",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/services/{serviceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "SupportAzureService",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.ProblemClassification",
+      "resourceIdPattern": "/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}",
+      "resourceType": "Microsoft.Support/services/problemClassifications",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.ProblemClassifications.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.ProblemClassifications.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Support/services/{serviceName}/problemClassifications",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/services/{serviceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Support/services/{serviceName}",
+      "resourceName": "ProblemClassification",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.SupportTicketDetails",
+      "resourceIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+      "resourceType": "Microsoft.Support/supportTickets",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.SupportTicketsNoSubscription.create",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTicketsNoSubscription.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTicketsNoSubscription.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTicketsNoSubscription.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Support/supportTickets",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTicketsNoSubscription.checkNameAvailability",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/checkNameAvailability",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantSupportTicket",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.ChatTranscriptDetails",
+      "resourceIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}",
+      "resourceType": "Microsoft.Support/supportTickets/chatTranscripts",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.ChatTranscriptsNoSubscription.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.ChatTranscriptsNoSubscription.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+      "resourceName": "SupportTicketNoSubChatTranscript",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.CommunicationDetails",
+      "resourceIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+      "resourceType": "Microsoft.Support/supportTickets/communications",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.CommunicationsNoSubscription.create",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.CommunicationsNoSubscription.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.CommunicationsNoSubscription.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+      "resourceName": "SupportTicketNoSubCommunication",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.FileWorkspaceDetails",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+      "resourceType": "Microsoft.Support/fileWorkspaces",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.FileWorkspaces.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.FileWorkspaces.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "SubscriptionFileWorkspace",
+      "nameConstraints": {
+        "pattern": "^[0-9a-zA-Z_\\-. ]+$"
+      },
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.FileDetails",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+      "resourceType": "Microsoft.Support/fileWorkspaces/files",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.Files.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.Files.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.Files.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.Files.upload",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}/upload",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}",
+      "resourceName": "SupportTicketFile",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.SupportTicketDetails",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+      "resourceType": "Microsoft.Support/supportTickets",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.SupportTickets.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTickets.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTickets.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTickets.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.SupportTickets.checkNameAvailability",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/checkNameAvailability",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "SubscriptionSupportTicket",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.ChatTranscriptDetails",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}",
+      "resourceType": "Microsoft.Support/supportTickets/chatTranscripts",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.ChatTranscripts.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.ChatTranscripts.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+      "resourceName": "SupportTicketChatTranscript",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Support.CommunicationDetails",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+      "resourceType": "Microsoft.Support/supportTickets/communications",
+      "methods": [
+        {
+          "methodId": "Microsoft.Support.Communications.create",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.Communications.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications/{communicationName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Support.Communications.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/communications",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}",
+      "resourceName": "SupportTicketCommunication",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01",
+        "2025-06-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Support/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Support.ClassifyServices.classifyServices",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/classifyServices",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Support.ClassifyServicesNoSubscription.classifyServices",
+      "operationPath": "/providers/Microsoft.Support/classifyServices",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Support.ClassifyProblems.classifyProblems",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Support.SupportTickets.lookUpResourceId",
+      "operationPath": "/providers/Microsoft.Support/lookUpResourceId",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Support.SupportTicketsOperationGroup.checkNameAvailability",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.Support.SupportTicketsNoSubscriptionOperationGroup.checkNameAvailability",
+      "operationPath": "/providers/Microsoft.Support/checkNameAvailability",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}
