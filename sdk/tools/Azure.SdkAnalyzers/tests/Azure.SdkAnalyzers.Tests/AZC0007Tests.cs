@@ -267,6 +267,32 @@ namespace RandomNamespace
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        // Regression: overload matching must distinguish generic parameter types by their full
+        // identity, not just metadata name + arity. Two generic types with the same name and arity
+        // in different namespaces (NsA.Wrapper<string> vs NsB.Wrapper<string>) must NOT be treated
+        // as equivalent, otherwise the analyzer wrongly pairs the constructors and suppresses the
+        // AZC0006/AZC0007 diagnostics that should fire.
+        [Test]
+        public async Task AZC0007AndAZC0006ProducedWhenGenericParametersDifferOnlyByNamespace()
+        {
+            const string code = @"
+namespace NsA { public class Wrapper<T> { } }
+namespace NsB { public class Wrapper<T> { } }
+
+namespace RandomNamespace
+{
+    public class SomeClientOptions : Azure.Core.ClientOptions { }
+
+    public class SomeClient
+    {
+        protected SomeClient() {}
+        public {|AZC0007:SomeClient|}(NsA.Wrapper<string> w) {}
+        public {|AZC0006:SomeClient|}(NsB.Wrapper<string> w, SomeClientOptions options) {}
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
 #endif
     }
 }

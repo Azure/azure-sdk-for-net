@@ -205,7 +205,10 @@ namespace Azure.SdkAnalyzers
                             return false;
                         }
 
-                        if (!namedX.MetadataName.Equals(namedY.MetadataName) || namedX.TypeArguments.Length != namedY.TypeArguments.Length)
+                        // Compare the generic type definitions by full symbol identity (namespace,
+                        // containing type, assembly) rather than metadata name + arity, which would
+                        // conflate same-named generics from different namespaces/assemblies.
+                        if (!SymbolEqualityComparer.Default.Equals(namedX.OriginalDefinition, namedY.OriginalDefinition) || namedX.TypeArguments.Length != namedY.TypeArguments.Length)
                         {
                             return false;
                         }
