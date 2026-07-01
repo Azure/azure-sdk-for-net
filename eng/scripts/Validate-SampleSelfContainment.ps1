@@ -50,7 +50,9 @@ function LogInfo([string]$message) {
 }
 
 function Get-RelativePath([string]$fullPath) {
-    return $fullPath.Substring($RepoRoot.Length + 1).Replace('\', '/')
+    # Use the framework helper so callers passing an absolute path outside the repo
+    # (or a path equal to $RepoRoot) don't trip a Substring out-of-range error.
+    return [System.IO.Path]::GetRelativePath($RepoRoot, $fullPath).Replace('\', '/')
 }
 
 # The sample's own directory is samples/<service>/<sample>. A project file deeper than
