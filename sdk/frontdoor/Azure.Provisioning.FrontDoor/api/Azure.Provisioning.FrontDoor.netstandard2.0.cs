@@ -47,6 +47,27 @@ namespace Azure.Provisioning.FrontDoor
         Enabled = 0,
         Disabled = 1,
     }
+    public enum ExceptionMatchVariable
+    {
+        RequestUri = 0,
+        SocketAddr = 1,
+        RequestHeaderNames = 2,
+    }
+    public enum ExceptionSelectorMatchOperator
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Equals")]
+        EqualsValue = 0,
+    }
+    public enum ExceptionValueMatchOperator
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Equals")]
+        EqualsValue = 0,
+        Contains = 1,
+        StartsWith = 2,
+        EndsWith = 3,
+        EqualsAny = 4,
+        IPMatch = 5,
+    }
     public partial class ForwardingConfiguration : Azure.Provisioning.FrontDoor.RouteConfiguration
     {
         public ForwardingConfiguration() { }
@@ -82,7 +103,7 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> LoadBalancingSettingsId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FrontDoorCacheConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -110,7 +131,7 @@ namespace Azure.Provisioning.FrontDoor
     }
     public partial class FrontDoorExperiment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorExperiment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorExperiment(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorExperimentState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.FrontDoor.FrontDoorExperimentEndpointProperties ExperimentEndpointA { get { throw null; } set { } }
@@ -118,18 +139,18 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.FrontDoor.FrontDoorNetworkExperimentProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.FrontDoor.FrontDoorNetworkExperimentProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.NetworkExperimentResourceState> ResourceState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> ScriptFileUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.FrontDoor.FrontDoorExperiment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.FrontDoor.FrontDoorExperiment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2019_11_01;
+            public static readonly string V2025_10_01;
+            public static readonly string V2025_11_01;
         }
     }
     public partial class FrontDoorExperimentEndpointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -168,7 +189,7 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FrontDoorLoadBalancingSettingsData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -178,28 +199,47 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> SampleSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SuccessfulSamplesRequired { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FrontDoorManagedRuleSetException : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FrontDoorManagedRuleSetException() { }
+        public Azure.Provisioning.BicepList<string> MatchValues { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.ExceptionMatchVariable> MatchVariable { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorManagedRuleSetScope> Scopes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Selector { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.ExceptionSelectorMatchOperator> SelectorMatchOperator { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.ExceptionValueMatchOperator> ValueMatchOperator { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FrontDoorManagedRuleSetScope : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FrontDoorManagedRuleSetScope() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorRuleGroupScope> RuleGroupScopes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RuleSetType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RuleSetVersion { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FrontDoorNetworkExperimentProfile : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorNetworkExperimentProfile(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorNetworkExperimentProfile(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorExperimentState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.NetworkExperimentResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.FrontDoor.FrontDoorNetworkExperimentProfile FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.FrontDoor.FrontDoorNetworkExperimentProfile FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2019_11_01;
+            public static readonly string V2025_10_01;
+            public static readonly string V2025_11_01;
         }
     }
     public enum FrontDoorProtocol
@@ -230,13 +270,13 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorRequiredMinimumTlsVersion
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.0")]
-        Tls1_0 = 0,
+        _10 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
-        Tls1_2 = 1,
+        _12 = 1,
     }
     public partial class FrontDoorResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorResource(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorBackendPool> BackendPools { get { throw null; } set { } }
         public Azure.Provisioning.FrontDoor.BackendPoolsSettings BackendPoolsSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Cname { get { throw null; } }
@@ -244,7 +284,7 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepDictionary<string> ExtendedProperties { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FriendlyName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> FrontdoorId { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontendEndpointData> FrontendEndpoints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontendEndpoint> FrontendEndpoints { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorHealthProbeSettingsData> HealthProbeSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorLoadBalancingSettingsData> LoadBalancingSettings { get { throw null; } set { } }
@@ -254,22 +294,14 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.RoutingRuleData> RoutingRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorRulesEngine> RulesEngines { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.FrontDoor.FrontDoorResource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.FrontDoor.FrontDoorResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2018_08_01;
-            public static readonly string V2019_04_01;
-            public static readonly string V2019_05_01;
-            public static readonly string V2019_08_01;
-            public static readonly string V2020_01_01;
-            public static readonly string V2020_04_01;
-            public static readonly string V2020_05_01;
-            public static readonly string V2020_07_01;
-            public static readonly string V2021_06_01;
+            public static readonly string V2025_10_01;
+            public static readonly string V2025_11_01;
         }
     }
     public enum FrontDoorResourceState
@@ -283,30 +315,41 @@ namespace Azure.Provisioning.FrontDoor
         Migrating = 6,
         Migrated = 7,
     }
+    public partial class FrontDoorRuleGroupScope : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FrontDoorRuleGroupScope() { }
+        public Azure.Provisioning.BicepValue<string> RuleGroupName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorRuleScope> RuleScopes { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FrontDoorRuleScope : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FrontDoorRuleScope() { }
+        public Azure.Provisioning.BicepValue<string> RuleId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class FrontDoorRulesEngine : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorRulesEngine(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorRulesEngine(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.FrontDoor.FrontDoorResource? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.FrontDoor.FrontDoorResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.RulesEngineRule> Rules { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.FrontDoor.FrontDoorRulesEngine FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.FrontDoor.FrontDoorRulesEngine FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2018_08_01;
-            public static readonly string V2019_04_01;
-            public static readonly string V2019_05_01;
-            public static readonly string V2019_08_01;
-            public static readonly string V2020_01_01;
-            public static readonly string V2020_04_01;
-            public static readonly string V2020_05_01;
-            public static readonly string V2020_07_01;
-            public static readonly string V2021_06_01;
+            public static readonly string V2025_10_01;
+            public static readonly string V2025_11_01;
         }
+    }
+    public enum FrontDoorSensitivityType
+    {
+        Low = 0,
+        Medium = 1,
+        High = 2,
     }
     public enum FrontDoorSkuName
     {
@@ -323,8 +366,9 @@ namespace Azure.Provisioning.FrontDoor
     }
     public partial class FrontDoorWebApplicationFirewallPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontDoorWebApplicationFirewallPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontDoorWebApplicationFirewallPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.FrontDoorManagedRuleSetException> Exceptions { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> FrontendEndpointLinks { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -337,21 +381,14 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.WebApplicationCustomRule> Rules { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> SecurityPolicyLinks { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorSkuName> SkuName { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.FrontDoor.FrontDoorWebApplicationFirewallPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.FrontDoor.FrontDoorWebApplicationFirewallPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2018_08_01;
-            public static readonly string V2019_03_01;
-            public static readonly string V2019_10_01;
-            public static readonly string V2020_04_01;
-            public static readonly string V2020_11_01;
-            public static readonly string V2022_05_01;
-            public static readonly string V2024_02_01;
-            public static readonly string V2025_03_01;
+            public static readonly string V2025_10_01;
+            public static readonly string V2025_11_01;
         }
     }
     public partial class FrontDoorWebApplicationFirewallPolicyGroupByVariable : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -395,6 +432,29 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.WebApplicationFirewallScrubbingState> State { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class FrontendEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.FrontDoor.CustomHttpsConfiguration CustomHttpsConfiguration { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.FrontDoor.FrontDoorResource Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.SessionAffinityEnabledState> SessionAffinityEnabledState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> SessionAffinityTtlInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.FrontDoor.FrontendEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_01;
+            public static readonly string V2025_11_01;
+        }
+    }
     public enum FrontendEndpointCustomHttpsProvisioningState
     {
         Enabling = 0,
@@ -416,22 +476,6 @@ namespace Azure.Provisioning.FrontDoor
         CertificateDeployed = 7,
         DeletingCertificate = 8,
         CertificateDeleted = 9,
-    }
-    public partial class FrontendEndpointData : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public FrontendEndpointData() { }
-        public Azure.Provisioning.FrontDoor.CustomHttpsConfiguration CustomHttpsConfiguration { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.SessionAffinityEnabledState> SessionAffinityEnabledState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> SessionAffinityTtlInSeconds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public enum HealthProbeEnabled
     {
@@ -483,6 +527,7 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.ManagedRuleEnabledState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.FrontDoor.ManagedRuleExclusion> Exclusions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RuleId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorSensitivityType> Sensitivity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedRuleSet : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -551,9 +596,9 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> PatternsToMatch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.FrontDoor.RouteConfiguration RouteConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RulesEngineId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -736,6 +781,9 @@ namespace Azure.Provisioning.FrontDoor
         EndsWith = 10,
         [System.Runtime.Serialization.DataMemberAttribute(Name="RegEx")]
         RegEX = 11,
+        ServiceTagMatch = 12,
+        AsnMatch = 13,
+        ClientFingerprint = 14,
     }
     public enum WebApplicationRuleMatchTransformType
     {
@@ -759,6 +807,7 @@ namespace Azure.Provisioning.FrontDoor
         RequestBody = 6,
         Cookies = 7,
         SocketAddr = 8,
+        JA4 = 9,
     }
     public enum WebApplicationRuleType
     {

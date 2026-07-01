@@ -70,14 +70,14 @@ public class BasicFrontDoorTests
                 infra.Add(backendPoolName);
 
                 FrontDoorResource frontDoor =
-                    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2021_06_01)
+                    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2025_11_01)
                     {
                         Name = frontDoorName,
                         Location = new AzureLocation("global"),
                         EnabledState = FrontDoorEnabledState.Enabled,
                         FrontendEndpoints =
                         {
-                            new FrontendEndpointData
+                            new FrontendEndpoint(frontEndEndpointName.BicepIdentifier)
                             {
                                 Name = frontEndEndpointName,
                                 HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
@@ -182,14 +182,14 @@ public class BasicFrontDoorTests
                 infra.Add(backendAddress);
 
                 FrontDoorResource frontDoor =
-                    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2020_05_01)
+                    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2025_11_01)
                     {
                         Name = frontDoorName,
                         Location = new AzureLocation("global"),
                         EnabledState = FrontDoorEnabledState.Enabled,
                         FrontendEndpoints =
                         {
-                            new FrontendEndpointData
+                            new FrontendEndpoint("frontendEndpoint1")
                             {
                                 Name = "frontendEndpoint1",
                                 HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
@@ -290,63 +290,10 @@ public class BasicFrontDoorTests
 
             var backendPoolName = 'backendPool'
 
-            resource frontDoor 'Microsoft.Network/frontDoors@2021-06-01' = {
+            resource frontDoor 'Microsoft.Network/frontDoors@2025-11-01' = {
               name: frontDoorName
               location: 'global'
               properties: {
-                backendPools: [
-                  {
-                    properties: {
-                      backends: [
-                        {
-                          address: backendAddress
-                          httpPort: 80
-                          httpsPort: 443
-                          enabledState: 'Enabled'
-                          priority: 1
-                          weight: 50
-                          backendHostHeader: backendAddress
-                        }
-                      ]
-                      loadBalancingSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, loadBalancingSettingsName)
-                      }
-                      healthProbeSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, healthProbeSettingsName)
-                      }
-                    }
-                    name: backendPoolName
-                  }
-                ]
-                enabledState: 'Enabled'
-                frontendEndpoints: [
-                  {
-                    properties: {
-                      hostName: '${frontDoorName}.azurefd.net'
-                      sessionAffinityEnabledState: 'Disabled'
-                    }
-                    name: frontEndEndpointName
-                  }
-                ]
-                healthProbeSettings: [
-                  {
-                    properties: {
-                      path: '/'
-                      protocol: 'Http'
-                      intervalInSeconds: 120
-                    }
-                    name: healthProbeSettingsName
-                  }
-                ]
-                loadBalancingSettings: [
-                  {
-                    properties: {
-                      sampleSize: 4
-                      successfulSamplesRequired: 2
-                    }
-                    name: loadBalancingSettingsName
-                  }
-                ]
                 routingRules: [
                   {
                     properties: {
@@ -374,6 +321,59 @@ public class BasicFrontDoorTests
                     name: routingRuleName
                   }
                 ]
+                loadBalancingSettings: [
+                  {
+                    properties: {
+                      sampleSize: 4
+                      successfulSamplesRequired: 2
+                    }
+                    name: loadBalancingSettingsName
+                  }
+                ]
+                healthProbeSettings: [
+                  {
+                    properties: {
+                      path: '/'
+                      protocol: 'Http'
+                      intervalInSeconds: 120
+                    }
+                    name: healthProbeSettingsName
+                  }
+                ]
+                backendPools: [
+                  {
+                    properties: {
+                      backends: [
+                        {
+                          address: backendAddress
+                          httpPort: 80
+                          httpsPort: 443
+                          enabledState: 'Enabled'
+                          priority: 1
+                          weight: 50
+                          backendHostHeader: backendAddress
+                        }
+                      ]
+                      loadBalancingSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, loadBalancingSettingsName)
+                      }
+                      healthProbeSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, healthProbeSettingsName)
+                      }
+                    }
+                    name: backendPoolName
+                  }
+                ]
+                frontendEndpoints: [
+                  {
+                    name: frontEndEndpointName
+                    properties: {
+                      hostName: '${frontDoorName}.azurefd.net'
+                      sessionAffinityEnabledState: 'Disabled'
+                    }
+                  }
+                ]
+                enabledState: 'Enabled'
               }
             }
 
@@ -398,63 +398,10 @@ public class BasicFrontDoorTests
             @description('The hostname of the backend. Must be an IP address or FQDN.')
             param backendAddress string
 
-            resource frontDoor 'Microsoft.Network/frontDoors@2020-05-01' = {
+            resource frontDoor 'Microsoft.Network/frontDoors@2025-11-01' = {
               name: frontDoorName
               location: 'global'
               properties: {
-                backendPools: [
-                  {
-                    properties: {
-                      backends: [
-                        {
-                          address: backendAddress
-                          httpPort: 80
-                          httpsPort: 443
-                          enabledState: 'Enabled'
-                          priority: 1
-                          weight: 50
-                          backendHostHeader: backendAddress
-                        }
-                      ]
-                      loadBalancingSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, 'loadBalancingSettings1')
-                      }
-                      healthProbeSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, 'healthProbeSettings1')
-                      }
-                    }
-                    name: 'backendPool1'
-                  }
-                ]
-                enabledState: 'Enabled'
-                frontendEndpoints: [
-                  {
-                    properties: {
-                      hostName: '${frontDoorName}.azurefd.net'
-                      sessionAffinityEnabledState: 'Disabled'
-                    }
-                    name: 'frontendEndpoint1'
-                  }
-                ]
-                healthProbeSettings: [
-                  {
-                    properties: {
-                      path: '/'
-                      protocol: 'Http'
-                      intervalInSeconds: 120
-                    }
-                    name: 'healthProbeSettings1'
-                  }
-                ]
-                loadBalancingSettings: [
-                  {
-                    properties: {
-                      sampleSize: 4
-                      successfulSamplesRequired: 2
-                    }
-                    name: 'loadBalancingSettings1'
-                  }
-                ]
                 routingRules: [
                   {
                     properties: {
@@ -479,6 +426,59 @@ public class BasicFrontDoorTests
                     name: 'httptohttps'
                   }
                 ]
+                loadBalancingSettings: [
+                  {
+                    properties: {
+                      sampleSize: 4
+                      successfulSamplesRequired: 2
+                    }
+                    name: 'loadBalancingSettings1'
+                  }
+                ]
+                healthProbeSettings: [
+                  {
+                    properties: {
+                      path: '/'
+                      protocol: 'Http'
+                      intervalInSeconds: 120
+                    }
+                    name: 'healthProbeSettings1'
+                  }
+                ]
+                backendPools: [
+                  {
+                    properties: {
+                      backends: [
+                        {
+                          address: backendAddress
+                          httpPort: 80
+                          httpsPort: 443
+                          enabledState: 'Enabled'
+                          priority: 1
+                          weight: 50
+                          backendHostHeader: backendAddress
+                        }
+                      ]
+                      loadBalancingSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, 'loadBalancingSettings1')
+                      }
+                      healthProbeSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, 'healthProbeSettings1')
+                      }
+                    }
+                    name: 'backendPool1'
+                  }
+                ]
+                frontendEndpoints: [
+                  {
+                    name: 'frontendEndpoint1'
+                    properties: {
+                      hostName: '${frontDoorName}.azurefd.net'
+                      sessionAffinityEnabledState: 'Disabled'
+                    }
+                  }
+                ]
+                enabledState: 'Enabled'
               }
             }
             """);
