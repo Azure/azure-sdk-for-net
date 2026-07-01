@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics MetricAlertsClientDiagnostics => _metricAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(MetricAlertsClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(MetricAlertsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
 
         private ClientDiagnostics ScheduledQueryRulesClientDiagnostics => _scheduledQueryRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
