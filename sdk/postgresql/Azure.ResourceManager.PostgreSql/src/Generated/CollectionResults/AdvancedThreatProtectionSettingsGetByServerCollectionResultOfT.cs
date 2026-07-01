@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 AdvancedThreatProtectionSettingsList result = AdvancedThreatProtectionSettingsList.FromResponse(response);
-                yield return Page<ServerThreatProtectionSettingsModelData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServerThreatProtectionSettingsModelData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

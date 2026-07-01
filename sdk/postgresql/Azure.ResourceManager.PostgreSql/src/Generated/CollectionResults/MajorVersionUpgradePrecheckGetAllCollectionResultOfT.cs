@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 MajorVersionUpgradePrecheckResourceListResult result = MajorVersionUpgradePrecheckResourceListResult.FromResponse(response);
-                yield return Page<MajorVersionUpgradePrecheckData>.FromValues((IReadOnlyList<MajorVersionUpgradePrecheckData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MajorVersionUpgradePrecheckData>.FromValues((IReadOnlyList<MajorVersionUpgradePrecheckData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
