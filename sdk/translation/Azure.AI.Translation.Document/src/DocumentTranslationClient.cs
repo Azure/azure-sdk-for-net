@@ -210,6 +210,79 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
+        /// </summary>
+        /// <param name="inputs">Sets the inputs for the translation operation
+        /// including source and target containers for documents to be translated. </param>
+        /// <param name="translateTextWithinImage">Whether to translate text embedded within images in the documents.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual DocumentTranslationOperation StartTranslation(IEnumerable<DocumentTranslationInput> inputs, bool? translateTextWithinImage, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            var startTranslationDetails = CreateBatch(inputs, translateTextWithinImage);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            scope.Start();
+
+            try
+            {
+                var operation = GetDocumentTranslationClient().StartTranslation(WaitUntil.Started, startTranslationDetails, cancellationToken);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
+                return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
+        /// </summary>
+        /// <param name="inputs">Sets the inputs for the translation operation
+        /// including source and target containers for documents to be translated. </param>
+        /// <param name="translateTextWithinImage">Whether to translate text embedded within images in the documents.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<DocumentTranslationInput> inputs, bool? translateTextWithinImage, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            var startTranslationDetails = CreateBatch(inputs, translateTextWithinImage);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            scope.Start();
+
+            try
+            {
+                var operation = await GetDocumentTranslationClient().StartTranslationAsync(WaitUntil.Started, startTranslationDetails, cancellationToken).ConfigureAwait(false);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
+                return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static TranslationBatch CreateBatch(IEnumerable<DocumentTranslationInput> inputs, bool? translateTextWithinImage)
+        {
+            var batch = new TranslationBatch(inputs);
+            if (translateTextWithinImage.HasValue)
+            {
+                batch.Options = new BatchOptions { TranslateTextWithinImage = translateTextWithinImage };
+            }
+
+            return batch;
+        }
+
+        /// <summary>
         /// Get the status results for submitted translation operations.
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>
