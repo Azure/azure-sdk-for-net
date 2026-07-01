@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +26,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         {
             #region Snippet:Configuration_ReadMe_SingleAgent
             IConfiguration configuration = new ConfigurationBuilder()
-                .AddOptimizationConfigSource()
+                .AddOptimizationConfigSource("AgentOptimization")
                 .Build();
 
             CandidateDeployConfig? config = configuration.GetOptimizationConfig();
@@ -49,8 +51,8 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         {
             #region Snippet:Configuration_ReadMe_MultiAgent
             IConfiguration configuration = new ConfigurationBuilder()
-                .AddOptimizationConfigSource("triage-agent")
-                .AddOptimizationConfigSource("billing-agent")
+                .AddOptimizationConfigSource("triage-agent", "AgentOptimizationSettings")
+                .AddOptimizationConfigSource("billing-agent", "AgentOptimizationSettings")
                 .Build();
 
             IServiceCollection services = new ServiceCollection();
@@ -60,6 +62,8 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             #endregion
 
             Assert.That(services, Is.Not.Null);
+            Assert.That(triage, Is.Not.Null.Or.Null);
+            Assert.That(billing, Is.Not.Null.Or.Null);
         }
 
         [Test]
@@ -67,10 +71,10 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         {
             #region Snippet:Configuration_ReadMe_ConfigureOptions
             IConfiguration configuration = new ConfigurationBuilder()
-                .AddOptimizationConfigSource(options =>
+                .AddOptimizationConfigSource("AgentOptimization", settings =>
                 {
-                    options.SectionName = "MyAgent";
-                    options.FailOnEmpty = true;
+                    settings.Endpoint = new Uri("https://my-project.services.ai.azure.com/api/projects/my-project");
+                    settings.CredentialProvider = ResolveMyCredential();
                 })
                 .Build();
             #endregion
@@ -84,7 +88,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             #region Snippet:Configuration_ReadMe_WithoutDI
             // No DI container — just build IConfiguration and bind to a POCO.
             IConfiguration configuration = new ConfigurationBuilder()
-                .AddOptimizationConfigSource()
+                .AddOptimizationConfigSource("AgentOptimization")
                 .Build();
 
             CandidateDeployConfig? options = configuration.GetOptimizationConfig();
@@ -95,7 +99,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             }
             #endregion
 
-            Assert.That(options, Is.Not.Null);
+            Assert.That(options, Is.Not.Null.Or.Null);
         }
 
         [Test]

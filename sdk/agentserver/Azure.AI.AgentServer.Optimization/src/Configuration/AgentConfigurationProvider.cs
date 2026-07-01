@@ -4,142 +4,68 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure;
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
 #nullable enable
 
 namespace Azure.AI.AgentServer.Optimization.Configuration;
 
-/// <summary>
-/// Runs the optimization config waterfall at <see cref="Load"/> time and projects the
-/// resulting <see cref="CandidateDeployConfig"/> into the <see cref="IConfiguration"/> tree.
-/// </summary>
-/// <remarks>
-/// <para>
-/// Keys are emitted under <see cref="AgentConfigurationOptions.SectionName"/> (or the
-/// derived default — <c>Agent</c> for single-agent, <c>Agents:&lt;AgentKey&gt;</c> for
-/// multi-agent), using the standard colon separator and indexed array element notation
-/// used by <see cref="Microsoft.Extensions.Configuration.ConfigurationBinder"/>:
-/// </para>
-/// <code>
-/// Agent:Instructions             = "..."
-/// Agent:Model                    = "gpt-4o"
-/// Agent:Temperature              = "0.7"
-/// Agent:Skills:0:Name            = "..."
-/// Agent:Skills:0:Description     = "..."
-/// </code>
-/// <para>
-/// Reload is supported via <see cref="ConfigurationProvider.Load"/>. The provider
-/// builds the new key/value set in a local dictionary and only swaps <see cref="ConfigurationProvider.Data"/>
-/// after the load succeeds so a failed reload never wipes the previously-loaded values.
-/// </para>
-/// </remarks>
-public class AgentConfigurationProvider : ConfigurationProvider
+internal class AgentConfigurationProvider : ConfigurationProvider
 {
-    private readonly AgentConfigurationOptions _options;
+    private readonly string _agentKey;
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+    private readonly AgentOptimizationClientSettings _settings;
+#pragma warning restore SCME0002
 
-#nullable enable
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+    internal AgentConfigurationProvider(string agentKey, AgentOptimizationClientSettings settings)
+#pragma warning restore SCME0002
+    {
+        _agentKey = agentKey ?? throw new ArgumentNullException(nameof(agentKey));
+        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+    }
 
     internal CandidateDeployConfig? ResolvedConfig { get; private set; }
 
-    internal string SectionName => ResolveSectionName(_options);
+    internal string SectionName => _agentKey;
 
-    /// <summary>
-    /// Creates a new <see cref="AgentConfigurationProvider"/>.
-    /// </summary>
-    /// <param name="options">Options controlling resolution and projection. Required.</param>
-    public AgentConfigurationProvider(AgentConfigurationOptions options)
-    {
-        _options = options ?? throw new ArgumentNullException(nameof(options));
-    }
-
-    /// <summary>
-    /// Resolves the optimization configuration and projects it into <see cref="ConfigurationProvider.Data"/>.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown when <see cref="AgentConfigurationOptions.SectionName"/> is invalid, or when
-    /// <see cref="AgentConfigurationOptions.FailOnEmpty"/> is <c>true</c> and no config
-    /// source was resolved.
-    /// </exception>
     public override void Load()
     {
-        string section = SectionName;
         string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
-        CandidateDeployConfig? options = new LocalFallbackAgentOptimizationClient().ResolveOptions(candidateId);
+        AgentOptimizationClient client = CreateClient();
+        Response<CandidateDeployConfig>? response = client.ResolveOptions(candidateId);
+        CandidateDeployConfig? options = response?.Value;
 
         if (options is null)
         {
-            if (_options.FailOnEmpty)
-            {
-                string agentScope = _options.AgentKey is null
-                    ? string.Empty
-                    : $" for agent '{_options.AgentKey}'";
-
-                throw new InvalidOperationException(
-                    $"AgentConfigurationProvider could not resolve an optimization config{agentScope}. " +
-                    "No source matched (GetCandidateConfigFlat, OPTIMIZATION_CONFIG).");
-            }
-
-            // Non-failing empty result: clear any previously-loaded data so a stale
-            // reload does not keep zombie values around.
             Data = CreateEmptyDataDictionary();
             ResolvedConfig = null;
             return;
         }
 
-        // Build into a local dictionary first so a partial / failing load does not
-        // mutate Data. Only swap on success.
         var newData = CreateEmptyDataDictionary();
-        Flatten(options, section, newData);
+        Flatten(options, _agentKey, newData);
         Data = newData;
         ResolvedConfig = options;
     }
 
-    /// <summary>
-    /// Resolves the configuration section that this provider writes into. Exposed
-    /// internally so the <see cref="AgentOptimizationClientHostExtensions"/> helpers
-    /// can stay in sync with provider behavior.
-    /// </summary>
-    internal static string ResolveSectionName(AgentConfigurationOptions options)
+    private AgentOptimizationClient CreateClient()
     {
-        if (!string.IsNullOrEmpty(options.SectionName))
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+        if (_settings.Endpoint != null && _settings.CredentialProvider is TokenCredential)
         {
-            ValidateSectionName(options.SectionName!);
-            return options.SectionName!;
+            return new AgentOptimizationClient(_settings);
         }
+#pragma warning restore SCME0002
 
-        if (string.IsNullOrEmpty(options.AgentKey))
-        {
-            return "Agent";
-        }
-
-        // Validate the key with the canonicalizer rules — same charset, fail fast.
-        // We use the raw (non-canonical) key in the section path for readability;
-        // M.E.Configuration's case-insensitive key comparison guarantees that
-        // "Agents:Triage-Agent" and "Agents:triage-agent" resolve to the same node.
-        _ = AgentKeyCanonicalizer.Canonicalize(options.AgentKey!, nameof(options.AgentKey));
-        return "Agents:" + options.AgentKey;
-    }
-
-    private static void ValidateSectionName(string sectionName)
-    {
-        if (sectionName.StartsWith(":", StringComparison.Ordinal) ||
-            sectionName.EndsWith(":", StringComparison.Ordinal))
-        {
-            throw new ArgumentException(
-                $"{nameof(AgentConfigurationOptions.SectionName)} '{sectionName}' must not start or end with ':'.",
-                nameof(sectionName));
-        }
+        return new LocalFallbackAgentOptimizationClient();
     }
 
     private static Dictionary<string, string?> CreateEmptyDataDictionary()
         => new(StringComparer.OrdinalIgnoreCase);
 
-    /// <summary>
-    /// Flattens <paramref name="options"/> into <paramref name="data"/> under
-    /// <paramref name="section"/> using the standard <see cref="ConfigurationPath.KeyDelimiter"/>
-    /// for nested sections and indexed array element notation for collections.
-    /// </summary>
     private static void Flatten(CandidateDeployConfig options, string section, IDictionary<string, string?> data)
     {
         Set(data, section, nameof(CandidateDeployConfig.Instructions), options.Instructions);
@@ -158,6 +84,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
             {
                 continue;
             }
+
             string skillPrefix = ConfigurationPath.Combine(section, nameof(CandidateDeployConfig.Skills), i.ToString(CultureInfo.InvariantCulture));
             Set(data, skillPrefix, nameof(OptimizationAgentSkill.Name), skill.Name);
             Set(data, skillPrefix, nameof(OptimizationAgentSkill.Description), skill.Description);
@@ -173,6 +100,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
 
         data[ConfigurationPath.Combine(prefix, key)] = value;
     }
+
     private sealed class LocalFallbackAgentOptimizationClient : AgentOptimizationClient
     {
     }

@@ -8,31 +8,47 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AgentServer.Optimization.Configuration;
 
-/// <summary>
-/// <see cref="IConfigurationSource"/> that projects optimization configuration
-/// into the <see cref="IConfiguration"/> tree.
-/// </summary>
-public class AgentConfigurationSource : IConfigurationSource
+internal class AgentConfigurationSource : IConfigurationSource
 {
-    /// <summary>
-    /// The options used to build the provider. Exposed for inspection by tests
-    /// and diagnostic helpers; treat as read-only after the source is added to
-    /// the configuration builder.
-    /// </summary>
-    public AgentConfigurationOptions Options { get; }
+    private readonly string _agentKey;
+    private readonly string _sectionName;
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+    private readonly Action<AgentOptimizationClientSettings>? _configureSettings;
+#pragma warning restore SCME0002
 
-    /// <summary>
-    /// Creates a new <see cref="AgentConfigurationSource"/>.
-    /// </summary>
-    /// <param name="options">Options controlling resolution and projection. Required.</param>
-    public AgentConfigurationSource(AgentConfigurationOptions options)
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+    internal AgentConfigurationSource(string agentKey, string sectionName, Action<AgentOptimizationClientSettings>? configureSettings)
+#pragma warning restore SCME0002
     {
-        Options = options ?? throw new ArgumentNullException(nameof(options));
+        _agentKey = agentKey ?? throw new ArgumentNullException(nameof(agentKey));
+        _sectionName = sectionName ?? throw new ArgumentNullException(nameof(sectionName));
+        _configureSettings = configureSettings;
     }
 
-    /// <inheritdoc />
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return new AgentConfigurationProvider(Options);
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+
+        var tempBuilder = new ConfigurationBuilder();
+        foreach (IConfigurationSource source in builder.Sources)
+        {
+            if (ReferenceEquals(source, this))
+            {
+                break;
+            }
+
+            tempBuilder.Add(source);
+        }
+
+        IConfigurationRoot config = tempBuilder.Build();
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+        var settings = new AgentOptimizationClientSettings();
+        settings.Bind(config.GetSection(_sectionName));
+        _configureSettings?.Invoke(settings);
+#pragma warning restore SCME0002
+        return new AgentConfigurationProvider(_agentKey, settings);
     }
 }

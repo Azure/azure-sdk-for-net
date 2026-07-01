@@ -9,20 +9,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AgentServer.Optimization;
 
-/// <summary>
-/// Extension methods on <see cref="IConfiguration"/> for retrieving resolved
-/// <see cref="CandidateDeployConfig"/> instances from <see cref="AgentConfigurationProvider"/>.
-/// </summary>
 public static partial class AgentOptimizationClientHostExtensions
 {
-    private const string SingleAgentSection = "Agent";
-    private const string MultiAgentSectionPrefix = "Agents";
+    private const string DefaultSection = "AgentOptimization";
 
     /// <summary>
-    /// Gets the single-agent <see cref="CandidateDeployConfig"/> resolved for the
-    /// <c>Agent</c> section, if present.
+    /// Gets the resolved optimization config projected into the default <c>AgentOptimization</c> section.
     /// </summary>
-    /// <param name="configuration">The configuration to read from. Required.</param>
+    /// <param name="configuration">The configuration to read from.</param>
     /// <returns>The resolved config, or <c>null</c> when none is available.</returns>
     public static CandidateDeployConfig? GetOptimizationConfig(this IConfiguration configuration)
     {
@@ -31,15 +25,14 @@ public static partial class AgentOptimizationClientHostExtensions
             throw new ArgumentNullException(nameof(configuration));
         }
 
-        return GetOptimizationConfigForSection(configuration, SingleAgentSection);
+        return GetOptimizationConfigForSection(configuration, DefaultSection);
     }
 
     /// <summary>
-    /// Gets the multi-agent <see cref="CandidateDeployConfig"/> resolved for the
-    /// <c>Agents:&lt;agentKey&gt;</c> section, if present.
+    /// Gets the resolved optimization config projected into <paramref name="agentKey"/>.
     /// </summary>
-    /// <param name="configuration">The configuration to read from. Required.</param>
-    /// <param name="agentKey">The agent key. Required, non-empty.</param>
+    /// <param name="configuration">The configuration to read from.</param>
+    /// <param name="agentKey">The section that contains the resolved optimization config.</param>
     /// <returns>The resolved config, or <c>null</c> when none is available.</returns>
     public static CandidateDeployConfig? GetOptimizationConfig(this IConfiguration configuration, string agentKey)
     {
@@ -47,13 +40,13 @@ public static partial class AgentOptimizationClientHostExtensions
         {
             throw new ArgumentNullException(nameof(configuration));
         }
+
         if (string.IsNullOrEmpty(agentKey))
         {
             throw new ArgumentException("Agent key must not be null or empty.", nameof(agentKey));
         }
 
-        string section = ConfigurationPath.Combine(MultiAgentSectionPrefix, agentKey);
-        return GetOptimizationConfigForSection(configuration, section);
+        return GetOptimizationConfigForSection(configuration, agentKey);
     }
 
     private static CandidateDeployConfig? GetOptimizationConfigForSection(IConfiguration configuration, string section)

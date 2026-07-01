@@ -16,9 +16,10 @@ using Microsoft.Extensions.DependencyInjection;
 // by Azure.AI.AgentServer.Optimization.Configuration.
 //
 // Instead of calling AgentOptimizationClient.ResolveOptionsAsync() procedurally,
-// it registers AddOptimizationConfigSource() on the IConfigurationBuilder
-// and reads the resolved CandidateDeployConfig from IConfiguration. This gives
-// you first-class integration with ASP.NET's configuration pipeline:
+// it registers AddOptimizationConfigSource("AgentOptimization") on the
+// IConfigurationBuilder and reads the resolved CandidateDeployConfig from
+// IConfiguration. This gives you first-class integration with ASP.NET's
+// configuration pipeline:
 //   - Reload semantics via IConfiguration source reloads
 //   - Layering with other configuration sources (appsettings, env, etc.)
 //   - Consistent with the rest of the DI container
@@ -27,10 +28,10 @@ using Microsoft.Extensions.DependencyInjection;
 ResponsesServer.Run<TravelHandler>(args, builder =>
 {
     // ── 1. Add the optimization configuration source ────────────
-    // AddOptimizationConfigSource() requires IConfigurationBuilder.
+    // AddOptimizationConfigSource(sectionName) requires IConfigurationBuilder.
     // AgentHostBuilder.WebApplicationBuilder.Configuration is a ConfigurationManager
     // which implements both IConfiguration and IConfigurationBuilder.
-    builder.WebApplicationBuilder.Configuration.AddOptimizationConfigSource();
+    builder.WebApplicationBuilder.Configuration.AddOptimizationConfigSource("AgentOptimization");
 
     // ── 2. Read the resolved config from IConfiguration ─────────
     CandidateDeployConfig? config = builder.Configuration.GetOptimizationConfig();

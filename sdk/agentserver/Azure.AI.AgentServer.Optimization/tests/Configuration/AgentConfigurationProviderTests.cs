@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SCME0002 // Type is for evaluation purposes only
+
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Optimization;
@@ -12,6 +14,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests;
 [TestFixture]
 public class AgentConfigurationProviderTests
 {
+    private const string DefaultSection = "AgentOptimization";
     private readonly Dictionary<string, string?> _savedEnvVars = new();
 
     private static readonly string[] s_envVars =
@@ -23,61 +26,58 @@ public class AgentConfigurationProviderTests
     [SetUp]
     public void SetUp()
     {
-        foreach (var v in s_envVars)
+        foreach (string variable in s_envVars)
         {
-            _savedEnvVars[v] = Environment.GetEnvironmentVariable(v);
-            Environment.SetEnvironmentVariable(v, null);
+            _savedEnvVars[variable] = Environment.GetEnvironmentVariable(variable);
+            Environment.SetEnvironmentVariable(variable, null);
         }
     }
 
     [TearDown]
     public void TearDown()
     {
-        foreach (KeyValuePair<string, string?> kv in _savedEnvVars)
+        foreach (KeyValuePair<string, string?> pair in _savedEnvVars)
         {
-            Environment.SetEnvironmentVariable(kv.Key, kv.Value);
+            Environment.SetEnvironmentVariable(pair.Key, pair.Value);
         }
     }
 
     [Test]
-    public void SingleAgent_FlattensIntoAgentSection()
+    public void DefaultAgentKey_FlattensIntoAgentOptimizationSection()
     {
-        string json = "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7," +
-                      "\"skills\":[{\"name\":\"greet\",\"description\":\"Say hi\"}]}";
-        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
+        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG",
+            "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7,\"skills\":[{\"name\":\"greet\",\"description\":\"Say hi\"}]}");
 
-        var builder = new ConfigurationBuilder();
-        builder.AddOptimizationConfigSource();
-        IConfigurationRoot config = builder.Build();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddOptimizationConfigSource(DefaultSection)
+            .Build();
 
-        Assert.That(config["Agent:Instructions"], Is.EqualTo("Be helpful."));
-        Assert.That(config["Agent:Model"], Is.EqualTo("gpt-4o"));
-        Assert.That(config["Agent:Temperature"], Is.EqualTo("0.7"));
-        Assert.That(config["Agent:Skills:0:Name"], Is.EqualTo("greet"));
-        Assert.That(config["Agent:Skills:0:Description"], Is.EqualTo("Say hi"));
+        Assert.That(config[$"{DefaultSection}:Instructions"], Is.EqualTo("Be helpful."));
+        Assert.That(config[$"{DefaultSection}:Model"], Is.EqualTo("gpt-4o"));
+        Assert.That(config[$"{DefaultSection}:Temperature"], Is.EqualTo("0.7"));
+        Assert.That(config[$"{DefaultSection}:Skills:0:Name"], Is.EqualTo("greet"));
+        Assert.That(config[$"{DefaultSection}:Skills:0:Description"], Is.EqualTo("Say hi"));
     }
 
     [Test]
-    public void SingleAgent_GetOptimizationConfig_ReturnsResolvedConfig()
+    public void DefaultAgentKey_GetOptimizationConfig_ReturnsResolvedConfig()
     {
-        string json = "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7," +
-                      "\"skills\":[{\"name\":\"greet\",\"description\":\"Say hi\"}," +
-                                  "{\"name\":\"bye\",\"description\":\"Say bye\"}]}";
-        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
+        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG",
+            "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7,\"skills\":[{\"name\":\"greet\",\"description\":\"Say hi\"},{\"name\":\"bye\",\"description\":\"Say bye\"}]}");
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource()
+            .AddOptimizationConfigSource(DefaultSection)
             .Build();
 
-        CandidateDeployConfig? opts = config.GetOptimizationConfig();
+        CandidateDeployConfig? options = config.GetOptimizationConfig();
 
-        Assert.That(opts, Is.Not.Null);
-        Assert.That(opts!.Instructions, Is.EqualTo("Be helpful."));
-        Assert.That(opts.Model, Is.EqualTo("gpt-4o"));
-        Assert.That(opts.Temperature, Is.EqualTo(0.7f));
-        Assert.That(opts.Skills.Count, Is.EqualTo(2));
-        Assert.That(opts.Skills[0].Name, Is.EqualTo("greet"));
-        Assert.That(opts.Skills[1].Name, Is.EqualTo("bye"));
+        Assert.That(options, Is.Not.Null);
+        Assert.That(options!.Instructions, Is.EqualTo("Be helpful."));
+        Assert.That(options.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(options.Temperature, Is.EqualTo(0.7f));
+        Assert.That(options.Skills.Count, Is.EqualTo(2));
+        Assert.That(options.Skills[0].Name, Is.EqualTo("greet"));
+        Assert.That(options.Skills[1].Name, Is.EqualTo("bye"));
     }
 
     [Test]
@@ -87,14 +87,14 @@ public class AgentConfigurationProviderTests
             "{\"instructions\":\"Shared instructions\",\"model\":\"gpt-4o\"}");
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource("triage-agent")
-            .AddOptimizationConfigSource("booking-agent")
+            .AddOptimizationConfigSource("triage-agent", "OptimizationSettings")
+            .AddOptimizationConfigSource("booking-agent", "OptimizationSettings")
             .Build();
 
-        Assert.That(config["Agents:triage-agent:Instructions"], Is.EqualTo("Shared instructions"));
-        Assert.That(config["Agents:triage-agent:Model"], Is.EqualTo("gpt-4o"));
-        Assert.That(config["Agents:booking-agent:Instructions"], Is.EqualTo("Shared instructions"));
-        Assert.That(config["Agents:booking-agent:Model"], Is.EqualTo("gpt-4o"));
+        Assert.That(config["triage-agent:Instructions"], Is.EqualTo("Shared instructions"));
+        Assert.That(config["triage-agent:Model"], Is.EqualTo("gpt-4o"));
+        Assert.That(config["booking-agent:Instructions"], Is.EqualTo("Shared instructions"));
+        Assert.That(config["booking-agent:Model"], Is.EqualTo("gpt-4o"));
     }
 
     [Test]
@@ -104,8 +104,8 @@ public class AgentConfigurationProviderTests
             "{\"instructions\":\"Shared instructions\"}");
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource("triage-agent")
-            .AddOptimizationConfigSource("booking-agent")
+            .AddOptimizationConfigSource("triage-agent", "OptimizationSettings")
+            .AddOptimizationConfigSource("booking-agent", "OptimizationSettings")
             .Build();
 
         Assert.That(config.GetOptimizationConfig("triage-agent")?.Instructions, Is.EqualTo("Shared instructions"));
@@ -119,77 +119,39 @@ public class AgentConfigurationProviderTests
             "{\"instructions\":\"You triage.\"}");
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource("Triage-Agent")
+            .AddOptimizationConfigSource("Triage-Agent", "OptimizationSettings")
             .Build();
 
-        // Visual section path uses the raw key as supplied.
-        Assert.That(config["Agents:Triage-Agent:Instructions"], Is.EqualTo("You triage."));
-        // M.E.Configuration is case-insensitive: lowercased form resolves too.
-        Assert.That(config["agents:triage-agent:instructions"], Is.EqualTo("You triage."));
+        Assert.That(config["Triage-Agent:Instructions"], Is.EqualTo("You triage."));
+        Assert.That(config["triage-agent:instructions"], Is.EqualTo("You triage."));
     }
 
     [Test]
-    public void Empty_NoEnvVars_FailOnEmptyFalse_ProducesEmptyTree()
-    {
-        IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource()
-            .Build();
-
-        Assert.That(config["Agent:Instructions"], Is.Null);
-        CandidateDeployConfig? opts = config.GetOptimizationConfig();
-        Assert.That(opts, Is.Null);
-    }
-
-    [Test]
-    public void Empty_NoEnvVars_FailOnEmptyTrue_Throws()
-    {
-        var ex = Assert.Throws<InvalidOperationException>(() =>
-        {
-            new ConfigurationBuilder()
-                .AddOptimizationConfigSource(o => o.FailOnEmpty = true)
-                .Build();
-        });
-
-        Assert.That(ex!.Message, Does.Contain("could not resolve"));
-    }
-
-    [Test]
-    public void Empty_NoEnvVars_FailOnEmptyTrue_MultiAgent_IncludesAgentKeyInError()
-    {
-        var ex = Assert.Throws<InvalidOperationException>(() =>
-        {
-            new ConfigurationBuilder()
-                .AddOptimizationConfigSource("triage-agent", o => o.FailOnEmpty = true)
-                .Build();
-        });
-
-        Assert.That(ex!.Message, Does.Contain("triage-agent"));
-    }
-
-    [Test]
-    public void CustomSectionName_OverridesDefault()
+    public void ProjectionSection_CanDifferFromSettingsSection()
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"hi\"}");
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource(o => o.SectionName = "MyAgent:Instance1")
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["OptimizationSettings:Endpoint"] = "https://example.org"
+            })
+            .AddOptimizationConfigSource("travel-agent", "OptimizationSettings")
             .Build();
 
-        Assert.That(config["MyAgent:Instance1:Instructions"], Is.EqualTo("hi"));
-        Assert.That(config["Agent:Instructions"], Is.Null);
+        Assert.That(config["travel-agent:Instructions"], Is.EqualTo("hi"));
+        Assert.That(config["OptimizationSettings:Instructions"], Is.Null);
     }
 
     [Test]
-    public void SectionName_LeadingColon_Throws()
+    public void Empty_NoEnvVars_ProducesEmptyTree()
     {
-        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"hi\"}");
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddOptimizationConfigSource(DefaultSection)
+            .Build();
 
-        Assert.Throws<ArgumentException>(() =>
-        {
-            new ConfigurationBuilder()
-                .AddOptimizationConfigSource(o => o.SectionName = ":bad")
-                .Build();
-        });
+        Assert.That(config[$"{DefaultSection}:Instructions"], Is.Null);
+        Assert.That(config.GetOptimizationConfig(), Is.Null);
     }
 
     [Test]
@@ -199,18 +161,17 @@ public class AgentConfigurationProviderTests
 
         var initial = new Dictionary<string, string?>
         {
-            ["Agent:Instructions"] = "from appsettings",
-            ["Agent:Model"] = "from appsettings",
+            [$"{DefaultSection}:Instructions"] = "from appsettings",
+            [$"{DefaultSection}:Model"] = "from appsettings",
         };
 
         IConfigurationRoot config = new ConfigurationBuilder()
             .AddInMemoryCollection(initial)
-            .AddOptimizationConfigSource()
+            .AddOptimizationConfigSource(DefaultSection)
             .Build();
 
-        Assert.That(config["Agent:Instructions"], Is.EqualTo("from optimization"));
-        // Model wasn't set by optimization, so the earlier provider's value remains visible.
-        Assert.That(config["Agent:Model"], Is.EqualTo("from appsettings"));
+        Assert.That(config[$"{DefaultSection}:Instructions"], Is.EqualTo("from optimization"));
+        Assert.That(config[$"{DefaultSection}:Model"], Is.EqualTo("from appsettings"));
     }
 
     [Test]
@@ -220,15 +181,15 @@ public class AgentConfigurationProviderTests
 
         var overrides = new Dictionary<string, string?>
         {
-            ["Agent:Instructions"] = "from override",
+            [$"{DefaultSection}:Instructions"] = "from override",
         };
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource()
+            .AddOptimizationConfigSource(DefaultSection)
             .AddInMemoryCollection(overrides)
             .Build();
 
-        Assert.That(config["Agent:Instructions"], Is.EqualTo("from override"));
+        Assert.That(config[$"{DefaultSection}:Instructions"], Is.EqualTo("from override"));
     }
 
     [Test]
@@ -237,31 +198,23 @@ public class AgentConfigurationProviderTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"first\"}");
 
         IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource()
+            .AddOptimizationConfigSource(DefaultSection)
             .Build();
 
-        Assert.That(config["Agent:Instructions"], Is.EqualTo("first"));
+        Assert.That(config[$"{DefaultSection}:Instructions"], Is.EqualTo("first"));
 
-        // Clear the source and reload — provider should drop the value rather than
-        // keep the stale "first".
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", null);
         config.Reload();
 
-        Assert.That(config["Agent:Instructions"], Is.Null);
+        Assert.That(config[$"{DefaultSection}:Instructions"], Is.Null);
     }
 
     [Test]
-    public void Reload_FailOnEmpty_AfterPreviouslySuccessfulLoad_Throws()
+    public void Provider_SectionName_ReturnsAgentKey()
     {
-        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"first\"}");
+        var provider = new AgentConfigurationProvider("triage-agent", new AgentOptimizationClientSettings());
 
-        IConfigurationRoot config = new ConfigurationBuilder()
-            .AddOptimizationConfigSource(o => o.FailOnEmpty = true)
-            .Build();
-
-        Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", null);
-
-        Assert.Throws<InvalidOperationException>(() => config.Reload());
+        Assert.That(provider.SectionName, Is.EqualTo("triage-agent"));
     }
 
     [Test]
@@ -269,56 +222,56 @@ public class AgentConfigurationProviderTests
     {
         IConfigurationRoot config = new ConfigurationBuilder().Build();
 
-        CandidateDeployConfig? opts = config.GetOptimizationConfig();
-
-        Assert.That(opts, Is.Null);
+        Assert.That(config.GetOptimizationConfig(), Is.Null);
     }
 
     [Test]
     public void GetOptimizationConfig_NullConfiguration_Throws()
     {
-        Assert.Throws<ArgumentNullException>(() =>
-            ((IConfiguration)null!).GetOptimizationConfig());
-        Assert.Throws<ArgumentNullException>(() =>
-            ((IConfiguration)null!).GetOptimizationConfig("triage-agent"));
+        Assert.Throws<ArgumentNullException>(() => ((IConfiguration)null!).GetOptimizationConfig());
+        Assert.Throws<ArgumentNullException>(() => ((IConfiguration)null!).GetOptimizationConfig("triage-agent"));
     }
 
     [Test]
     public void GetOptimizationConfig_EmptyAgentKey_Throws()
     {
         IConfigurationRoot config = new ConfigurationBuilder().Build();
-        Assert.Throws<ArgumentException>(() => config.GetOptimizationConfig(""));
+
+        Assert.Throws<ArgumentException>(() => config.GetOptimizationConfig(string.Empty));
     }
 
     [Test]
     public void AddOptimizationConfigSource_NullBuilder_Throws()
     {
         Assert.Throws<ArgumentNullException>(() =>
-            ((IConfigurationBuilder)null!).AddOptimizationConfigSource());
+            ((IConfigurationBuilder)null!).AddOptimizationConfigSource(DefaultSection));
     }
 
     [Test]
     public void AddOptimizationConfigSource_NullConfigure_Throws()
     {
         Assert.Throws<ArgumentNullException>(() =>
-            new ConfigurationBuilder().AddOptimizationConfigSource((Action<AgentConfigurationOptions>)null!));
+            new ConfigurationBuilder().AddOptimizationConfigSource(DefaultSection, (Action<AgentOptimizationClientSettings>)null!));
+    }
+
+    [Test]
+    public void AddOptimizationConfigSource_EmptySectionName_Throws()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            new ConfigurationBuilder().AddOptimizationConfigSource(string.Empty));
     }
 
     [Test]
     public void AddOptimizationConfigSource_EmptyAgentKey_Throws()
     {
         Assert.Throws<ArgumentException>(() =>
-            new ConfigurationBuilder().AddOptimizationConfigSource(""));
+            new ConfigurationBuilder().AddOptimizationConfigSource(string.Empty, "OptimizationSettings"));
     }
 
     [Test]
     public void AddOptimizationConfigSource_InvalidAgentKeyChars_Throws()
     {
         Assert.Throws<ArgumentException>(() =>
-        {
-            new ConfigurationBuilder()
-                .AddOptimizationConfigSource("triage agent!")
-                .Build();
-        });
+            new ConfigurationBuilder().AddOptimizationConfigSource("triage agent!", "OptimizationSettings"));
     }
 }
