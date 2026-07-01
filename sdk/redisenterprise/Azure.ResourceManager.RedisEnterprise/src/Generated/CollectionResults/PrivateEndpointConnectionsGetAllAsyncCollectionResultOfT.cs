@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.RedisEnterprise
                     yield break;
                 }
                 RedisEnterprisePrivateEndpointConnectionListResult result = RedisEnterprisePrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<RedisEnterprisePrivateEndpointConnectionData>.FromValues((IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RedisEnterprisePrivateEndpointConnectionData>.FromValues((IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
