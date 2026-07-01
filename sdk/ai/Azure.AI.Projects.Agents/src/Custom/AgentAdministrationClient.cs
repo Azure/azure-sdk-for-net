@@ -87,6 +87,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
     /// <summary> Initializes a new instance of AgentsClient. </summary>
@@ -102,6 +103,7 @@ public partial class AgentAdministrationClient
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
 
