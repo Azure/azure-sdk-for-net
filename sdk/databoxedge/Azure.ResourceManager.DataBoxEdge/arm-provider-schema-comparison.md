@@ -1,0 +1,82 @@
+# ARM provider schema comparison: Azure.ResourceManager.DataBoxEdge
+
+Compared files:
+
+- `arm-provider-schema.legacy.json`
+- `arm-provider-schema.resolve-arm-resources.json`
+
+## Summary
+
+0 legacy-only and 1 resolve-only resource ID patterns.
+
+| Aspect | Result |
+| --- | --- |
+| Resource ID patterns | 19 matching patterns; 0 legacy-only; 1 resolve-only. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
+| List/action operations for matching patterns | Same list/action operation set for every matching resource ID pattern. |
+
+## 1. Resource ID pattern coverage
+
+**Differences:** 0 legacy-only pattern(s), 1 resolve-only pattern(s).
+
+| Category | Count | Details |
+| --- | ---: | --- |
+| In both schemas | 19 | Matching resource ID patterns are compared in the following sections. |
+| Legacy only | 0 | None. |
+| `resolveArmResources` only | 1 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/operationsStatus/{name}` |
+
+## 2. Hierarchy comparison for matching resource ID patterns
+
+**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+
+No hierarchy differences were found for matching resource ID patterns.
+
+## 3. Resource model comparison for matching resource ID patterns
+
+**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+
+No resource model differences were found for matching resource ID patterns.
+
+## 4. Operation comparison for matching resource ID patterns
+
+### 4.1 CRUD operations
+
+**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+
+No CRUD operation differences were found for matching resource ID patterns.
+
+### 4.2 List and action operations
+
+**Differences:** none. For every matching `resourceIdPattern`, the `List` and `Action` operation sets are identical.
+
+No list/action operation differences were found for matching resource ID patterns.
+
+## Secondary observations
+
+These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
+
+- 16 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+
+### Resource name differences
+
+| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| --- | --- | --- |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/alerts/{name}` | `DataBoxEdgeAlert` | `Alert` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityInfo/default` | `DataBoxEdgeDeviceCapacityInfo` | `DeviceCapacityInfo` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticProactiveLogCollectionSettings/default` | `DiagnosticProactiveLogCollectionSetting` | `DiagnosticProactiveLogCollectionSettings` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default` | `DiagnosticRemoteSupportSetting` | `DiagnosticRemoteSupportSettings` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/networkSettings/default` | `DataBoxEdgeDeviceNetworkSettings` | `NetworkSettings` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/orders/default` | `DataBoxEdgeOrder` | `Order` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{name}` | `DataBoxEdgeRole` | `Role` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}` | `DataBoxEdgeRoleAddon` | `RolesAddons` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default` | `MonitoringMetricConfiguration` | `RolesMonitoringConfig` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/shares/{name}` | `DataBoxEdgeShare` | `Share` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}` | `DataBoxEdgeStorageAccountCredential` | `StorageAccountCredential` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}` | `DataBoxEdgeStorageAccount` | `StorageAccount` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}` | `DataBoxEdgeStorageContainer` | `Container` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/triggers/{name}` | `DataBoxEdgeTrigger` | `Trigger` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateSummary/default` | `DataBoxEdgeDeviceUpdateSummary` | `UpdateSummary` |
+| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/users/{name}` | `DataBoxEdgeUser` | `User` |
+
