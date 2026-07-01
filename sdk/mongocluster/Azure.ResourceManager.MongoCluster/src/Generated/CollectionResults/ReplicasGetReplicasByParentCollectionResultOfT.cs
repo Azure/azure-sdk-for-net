@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.MongoCluster
                     yield break;
                 }
                 ReplicaListResult result = ReplicaListResult.FromResponse(response);
-                yield return Page<MongoClusterReplica>.FromValues((IReadOnlyList<MongoClusterReplica>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MongoClusterReplica>.FromValues((IReadOnlyList<MongoClusterReplica>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

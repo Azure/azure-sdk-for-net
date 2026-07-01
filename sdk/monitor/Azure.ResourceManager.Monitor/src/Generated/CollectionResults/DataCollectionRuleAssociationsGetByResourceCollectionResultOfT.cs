@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 DataCollectionRuleAssociationProxyOnlyResourceListResult result = DataCollectionRuleAssociationProxyOnlyResourceListResult.FromResponse(response);
-                yield return Page<DataCollectionRuleAssociationData>.FromValues((IReadOnlyList<DataCollectionRuleAssociationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataCollectionRuleAssociationData>.FromValues((IReadOnlyList<DataCollectionRuleAssociationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
