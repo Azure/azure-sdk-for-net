@@ -47,8 +47,16 @@ The script builds the package, loads the compiled assembly, creates one instance
 
 Compare changed resource shapes against the Azure Bicep reference at `https://learn.microsoft.com/en-us/azure/templates/{provider}/{resource-type}?pivots=deployment-language-bicep`.
 
+MUST NOT:
+
+- A generated `ProvisionableResource` must not expose an ARM resource type that does not exist in the official Azure Bicep reference. If the resource reference page is missing, unavailable, or does not document that resource type, flag it as blocking.
+- A non-singleton generated resource must not expose `Name` as output-only, optional, or non-writable. `Name` is the resource identity and should be writable and required unless the resource is a true singleton with a fixed service-defined name.
+- `Parent` must not be generated as a normal serialized Bicep property. It must be a provisioning metadata property whose C# type is a concrete `ProvisionableResource` subtype for the parent resource.
+- `Scope` must not be generated as a normal serialized Bicep property. It must be a provisioning metadata property whose C# type is `ProvisionableResource` or a concrete `ProvisionableResource` subtype.
+
 Flag blocking issues when:
 
+- Generated resource types are absent from the official Bicep reference.
 - Writable generated properties are absent from the Bicep reference.
 - Bicep-required writable properties are missing or generated as output-only.
 - Generated property names or types do not match Bicep.
