@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Search
     /// <summary> Describes a policy that determines how resources within the search service are to be encrypted with customer managed keys. </summary>
     public partial class SearchEncryptionWithCmk : ProvisionableConstruct
     {
-        private BicepValue<SearchEncryptionWithCmkEnforcement> _enforcement;
+        private BicepValue<Search.SearchEncryptionWithCmkEnforcement> _enforcement;
         private BicepValue<SearchEncryptionComplianceStatus> _encryptionComplianceStatus;
 
         /// <summary> Creates a new SearchEncryptionWithCmk. </summary>
@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets or sets the Enforcement. </summary>
-        public BicepValue<SearchEncryptionWithCmkEnforcement> Enforcement
+        public BicepValue<Search.SearchEncryptionWithCmkEnforcement> Enforcement
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.Search
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _enforcement = DefineProperty<SearchEncryptionWithCmkEnforcement>(nameof(Enforcement), new string[] { "enforcement" });
+            _enforcement = DefineProperty<Search.SearchEncryptionWithCmkEnforcement>(nameof(Enforcement), new string[] { "enforcement" });
             _encryptionComplianceStatus = DefineProperty<SearchEncryptionComplianceStatus>(nameof(EncryptionComplianceStatus), new string[] { "encryptionComplianceStatus" }, isOutput: true);
             DefineAdditionalProperties();
         }
