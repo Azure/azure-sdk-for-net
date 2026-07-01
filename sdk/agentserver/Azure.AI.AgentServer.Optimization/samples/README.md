@@ -4,7 +4,7 @@
 
 | Sample | Description |
 |---|---|
-| [Sample 1: Getting Started](Sample1_GettingStarted.md) | Load optimization options using the priority waterfall, configure authentication, and use the loaded options to build an agent. |
+| [Sample 1: Getting Started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Optimization/samples/Sample1_GettingStarted.md) | Load optimization options using the priority waterfall, configure authentication, and use the loaded options to build an agent. |
 
 ## End-to-end runnable samples
 

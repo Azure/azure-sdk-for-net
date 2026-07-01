@@ -21,4 +21,4 @@ specs/
 .specs/
 
 # Manual local validation tool - not part of CI
-sdk/agentserver/Azure.AI.AgentServer.Optimization/tests/LiveApiTest/
+Azure.AI.AgentServer.Optimization/tests/LiveApiTest/

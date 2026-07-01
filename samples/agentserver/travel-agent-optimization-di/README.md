@@ -20,7 +20,7 @@ except it loads optimization config through `IConfiguration` DI integration.
 ## Key difference
 
 This sample uses
-[`Azure.AI.AgentServer.Optimization.Configuration`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Optimization.Configuration)
+[`Azure.AI.AgentServer.Optimization`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Optimization)
 to wire optimization options through the standard ASP.NET configuration pipeline:
 
 ```csharp
@@ -65,4 +65,4 @@ see the [procedural sample README](https://github.com/Azure/azure-sdk-for-net/tr
 for `azd up`, `azd ai agent optimize`, and the full file map.
 
 [foundry-hosted]: https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents
-[maf]: https://learn.microsoft.com/dotnet/ai/microsoft-agent-framework
+[maf]: https://github.com/microsoft/agents

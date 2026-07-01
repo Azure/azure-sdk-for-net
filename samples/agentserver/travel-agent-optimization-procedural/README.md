@@ -116,4 +116,4 @@ needs to be set (the loader uses the local directory, Priority 3).
 See the [DI sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-di) for `IConfiguration` integration.
 
 [foundry-hosted]: https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents
-[maf]: https://learn.microsoft.com/dotnet/ai/microsoft-agent-framework
+[maf]: https://github.com/microsoft/agents
