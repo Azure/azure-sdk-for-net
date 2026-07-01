@@ -38,6 +38,33 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesEmptyModelParam(additionalBinaryDataProperties: null);
         }
 
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUri"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesA2APreviewTool"/> instance for mocking. </returns>
+        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        {
+            return new ResponsesA2APreviewTool(
+                "a2a_preview",
+                baseUri,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Custom tool. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
@@ -493,33 +520,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesStructuredOutputDefinition(name, description, schema, isStrict, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An agent implementing the A2A protocol. </summary>
-        /// <param name="baseUri"> Base URL of the agent. </param>
-        /// <param name="agentCardPath">
-        /// The path to the agent card relative to the `base_url`.
-        /// If not provided, defaults to  `/.well-known/agent-card.json`
-        /// </param>
-        /// <param name="projectConnectionId">
-        /// The connection ID in the project for the A2A server.
-        /// The connection stores authentication and other connection details needed to connect to the A2A server.
-        /// </param>
-        /// <param name="sendCredentialsForAgentCard">
-        /// When `true`, Foundry sends its credentials when fetching the remote
-        /// agent's Agent Card. The service defaults to `false` if a value is not
-        /// specified by the caller (anonymous fetch).
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesA2APreviewTool"/> instance for mocking. </returns>
-        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
-        {
-            return new ResponsesA2APreviewTool(
-                "a2a_preview",
-                baseUri,
-                agentCardPath,
-                projectConnectionId,
-                sendCredentialsForAgentCard,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A WorkIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesWorkIQPreviewTool"/> instance for mocking. </returns>
@@ -869,24 +869,28 @@ namespace Azure.AI.Extensions.OpenAI
             return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A Bing grounding tool call. </summary>
+        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"></param>
         /// <param name="responseId"></param>
-        /// <param name="callId"></param>
-        /// <param name="arguments"></param>
+        /// <param name="csdlActionKind"></param>
+        /// <param name="actionId"></param>
+        /// <param name="parentActionId"></param>
+        /// <param name="previousActionId"></param>
         /// <param name="status"></param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingToolCall"/> instance for mocking. </returns>
-        public static BingGroundingToolCall BingGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
+        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
         {
-            return new BingGroundingToolCall(
+            return new AgentWorkflowPreviewActionResponseItem(
                 @type,
                 id,
                 agentReference,
                 responseId,
-                callId,
-                arguments,
+                csdlActionKind,
+                actionId,
+                parentActionId,
+                previousActionId,
                 status,
                 additionalBinaryDataProperties: null);
         }
@@ -906,6 +910,48 @@ namespace Azure.AI.Extensions.OpenAI
                 agentReference,
                 responseId,
                 output,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="internalConsentLink"></param>
+        /// <param name="serverLabel"></param>
+        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
+        {
+            return new OAuthConsentRequestResponseItem(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                internalConsentLink,
+                serverLabel,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Bing grounding tool call. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="callId"></param>
+        /// <param name="arguments"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.BingGroundingToolCall"/> instance for mocking. </returns>
+        public static BingGroundingToolCall BingGroundingToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
+        {
+            return new BingGroundingToolCall(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                callId,
+                arguments,
+                status,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1428,52 +1474,6 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 callId,
                 status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="csdlActionKind"></param>
-        /// <param name="actionId"></param>
-        /// <param name="parentActionId"></param>
-        /// <param name="previousActionId"></param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
-        {
-            return new AgentWorkflowPreviewActionResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                csdlActionKind,
-                actionId,
-                parentActionId,
-                previousActionId,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="internalConsentLink"></param>
-        /// <param name="serverLabel"></param>
-        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
-        {
-            return new OAuthConsentRequestResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                internalConsentLink,
-                serverLabel,
                 additionalBinaryDataProperties: null);
         }
 

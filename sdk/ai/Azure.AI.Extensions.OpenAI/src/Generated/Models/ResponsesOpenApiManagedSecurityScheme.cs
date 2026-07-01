@@ -15,8 +15,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedSecurityScheme"/>. </summary>
         /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        internal ResponsesOpenApiManagedSecurityScheme(string audience)
+        /// <exception cref="ArgumentNullException"> <paramref name="audience"/> is null. </exception>
+        public ResponsesOpenApiManagedSecurityScheme(string audience)
         {
+            Argument.AssertNotNull(audience, nameof(audience));
+
             Audience = audience;
         }
 

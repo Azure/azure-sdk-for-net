@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private IDictionary<string, string> _additionalStringProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalMetadataContainer"/>. </summary>
-        internal InternalMetadataContainer()
+        public InternalMetadataContainer()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }

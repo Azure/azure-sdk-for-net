@@ -12,8 +12,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal ResponsesOpenApiManagedAuthDetails(ResponsesOpenApiManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
+        /// <exception cref="ArgumentNullException"> <paramref name="securityScheme"/> is null. </exception>
+        public ResponsesOpenApiManagedAuthDetails(ResponsesOpenApiManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
         {
+            Argument.AssertNotNull(securityScheme, nameof(securityScheme));
+
             SecurityScheme = securityScheme;
         }
 

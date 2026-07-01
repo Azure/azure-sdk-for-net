@@ -41,6 +41,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Output { get; }
+        public BinaryData Output { get; set; }
     }
 }

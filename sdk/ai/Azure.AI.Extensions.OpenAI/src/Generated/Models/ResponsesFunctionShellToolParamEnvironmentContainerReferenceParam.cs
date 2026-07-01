@@ -13,8 +13,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
-        internal ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(FunctionShellToolParamEnvironmentType.ContainerReference)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
+        public ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(FunctionShellToolParamEnvironmentType.ContainerReference)
         {
+            Argument.AssertNotNull(containerId, nameof(containerId));
+
             ContainerId = containerId;
         }
 
@@ -28,6 +31,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the referenced container. </summary>
-        public string ContainerId { get; }
+        public string ContainerId { get; set; }
     }
 }

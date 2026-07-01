@@ -12,8 +12,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesSkillReferenceParam"/>. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>
-        internal ResponsesSkillReferenceParam(string skillId) : base(ContainerSkillType.SkillReference)
+        /// <exception cref="ArgumentNullException"> <paramref name="skillId"/> is null. </exception>
+        public ResponsesSkillReferenceParam(string skillId) : base(ContainerSkillType.SkillReference)
         {
+            Argument.AssertNotNull(skillId, nameof(skillId));
+
             SkillId = skillId;
         }
 
@@ -29,9 +32,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the referenced skill. </summary>
-        public string SkillId { get; }
+        public string SkillId { get; set; }
 
         /// <summary> Optional skill version. Use a positive integer or 'latest'. Omit for default. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
     }
 }

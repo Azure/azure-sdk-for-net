@@ -14,8 +14,11 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
-        internal ResponsesContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(ContainerNetworkPolicyParamType.Allowlist)
+        /// <exception cref="ArgumentNullException"> <paramref name="allowedDomains"/> is null. </exception>
+        public ResponsesContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(ContainerNetworkPolicyParamType.Allowlist)
         {
+            Argument.AssertNotNull(allowedDomains, nameof(allowedDomains));
+
             AllowedDomains = allowedDomains.ToList();
             DomainSecrets = new ChangeTrackingList<ResponsesContainerNetworkPolicyDomainSecretParam>();
         }

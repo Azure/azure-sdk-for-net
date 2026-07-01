@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -112,7 +111,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ChangeTrackingDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -127,7 +126,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalMetadataContainer(new ReadOnlyDictionary<string, string>(additionalProperties), additionalBinaryDataProperties);
+            return new InternalMetadataContainer(additionalProperties, additionalBinaryDataProperties);
         }
     }
 }

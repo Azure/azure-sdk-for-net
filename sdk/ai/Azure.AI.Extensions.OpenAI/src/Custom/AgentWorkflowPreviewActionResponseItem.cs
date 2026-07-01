@@ -20,7 +20,7 @@ public partial class AgentWorkflowPreviewActionResponseItem
     /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
     /// <param name="actionId"> Unique identifier for the action. </param>
     /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-    internal AgentWorkflowPreviewActionResponseItem(string kind, string actionId, AgentWorkflowPreviewActionStatus? status) : base(ResponseItemKind.WorkflowAction)
+    public AgentWorkflowPreviewActionResponseItem(string kind, string actionId, AgentWorkflowPreviewActionStatus? status) : base(ResponseItemKind.WorkflowAction)
     {
         CSDLActionKind = kind;
         ActionId = actionId;

@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesCustomTextFormatParam : ResponsesCustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesCustomTextFormatParam"/>. </summary>
-        internal ResponsesCustomTextFormatParam() : base(CustomToolParamFormatType.Text)
+        public ResponsesCustomTextFormatParam() : base(CustomToolParamFormatType.Text)
         {
         }
 

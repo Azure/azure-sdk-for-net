@@ -17,8 +17,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
-        internal LocalSkillParam(string name, string description, string path)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="path"/> is null. </exception>
+        public LocalSkillParam(string name, string description, string path)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(path, nameof(path));
+
             Name = name;
             Description = description;
             Path = path;
@@ -38,12 +43,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> The path to the directory containing the skill. </summary>
-        public string Path { get; }
+        public string Path { get; set; }
     }
 }

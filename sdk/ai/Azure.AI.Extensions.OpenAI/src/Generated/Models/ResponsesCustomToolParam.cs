@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
-        internal ResponsesCustomToolParam(string name) : base("custom")
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ResponsesCustomToolParam(string name) : base("custom")
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             Name = name;
         }
 
@@ -38,15 +41,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Optional description of the custom tool, used to provide more context. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
-        public ResponsesCustomToolParamFormat Format { get; }
+        public ResponsesCustomToolParamFormat Format { get; set; }
 
         /// <summary> Whether this tool should be deferred and discovered via tool search. </summary>
-        public bool? ShouldDeferLoading { get; }
+        public bool? ShouldDeferLoading { get; set; }
     }
 }

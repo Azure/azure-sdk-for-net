@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
-        internal ResponsesA2APreviewTool() : base("a2a_preview")
+        public ResponsesA2APreviewTool() : base("a2a_preview")
         {
         }
 
@@ -46,25 +46,25 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUri { get; }
+        public Uri BaseUri { get; set; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
         /// </summary>
-        public string AgentCardPath { get; }
+        public string AgentCardPath { get; set; }
 
         /// <summary>
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary>
         /// When `true`, Foundry sends its credentials when fetching the remote
         /// agent's Agent Card. The service defaults to `false` if a value is not
         /// specified by the caller (anonymous fetch).
         /// </summary>
-        public bool? SendCredentialsForAgentCard { get; }
+        public bool? SendCredentialsForAgentCard { get; set; }
     }
 }

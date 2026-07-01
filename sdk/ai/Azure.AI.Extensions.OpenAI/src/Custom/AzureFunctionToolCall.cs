@@ -16,7 +16,7 @@ public partial class AzureFunctionToolCall
     /// <param name="name"> The name of the Azure Function being called. </param>
     /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
     /// <param name="status"> The status of the tool call. </param>
-    internal AzureFunctionToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(ResponseItemKind.AzureFunctionCall)
+    public AzureFunctionToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(ResponseItemKind.AzureFunctionCall)
     {
         CallId = callId;
         Name = name;
