@@ -97,6 +97,16 @@ List/action operations match except for one extra list operation in `resolveArmR
 | `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}` | `List: Microsoft.Advisor.ResourceRecommendationBases.listByTenant` | `List: Microsoft.Advisor.ResourceRecommendationBases.listByTenant`; `List: Microsoft.Advisor.ResourceRecommendationBases.list` | Different: `resolveArmResources` adds the subscription-scoped list operation at `/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations`. |
 | `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}` | None | None | Same |
 
+#### Operation difference details: `/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}`
+
+`resolveArmResources` attaches one additional list operation to this resource:
+
+| Operation | Kind | Request path | Legacy | `resolveArmResources` |
+| --- | --- | --- | --- | --- |
+| `Microsoft.Advisor.ResourceRecommendationBases.list` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations` | Missing. | Present. |
+
+The legacy schema only attaches `Microsoft.Advisor.ResourceRecommendationBases.listByTenant` to this resource, with request path `/{resourceUri}/providers/Microsoft.Advisor/recommendations`. The added `resolveArmResources` operation is subscription-scoped, so this should be reviewed to decide whether it is a valid additional list operation for the same resource or should remain separate from this extension-resource pattern.
+
 ## Secondary observations
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output:
