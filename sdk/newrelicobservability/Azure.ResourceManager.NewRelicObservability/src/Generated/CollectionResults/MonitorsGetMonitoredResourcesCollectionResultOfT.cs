@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                     yield break;
                 }
                 MonitoredResourceListResponse result = MonitoredResourceListResponse.FromResponse(response);
-                yield return Page<NewRelicResourceMonitorResult>.FromValues((IReadOnlyList<NewRelicResourceMonitorResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NewRelicResourceMonitorResult>.FromValues((IReadOnlyList<NewRelicResourceMonitorResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

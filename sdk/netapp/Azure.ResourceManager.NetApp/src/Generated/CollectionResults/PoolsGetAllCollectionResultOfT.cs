@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 CapacityPoolList result = CapacityPoolList.FromResponse(response);
-                yield return Page<CapacityPoolData>.FromValues((IReadOnlyList<CapacityPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CapacityPoolData>.FromValues((IReadOnlyList<CapacityPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 DbServerListResult result = DbServerListResult.FromResponse(response);
-                yield return Page<OracleDBServerData>.FromValues((IReadOnlyList<OracleDBServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OracleDBServerData>.FromValues((IReadOnlyList<OracleDBServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.NotificationHubs
                     yield break;
                 }
                 SharedAccessAuthorizationRuleListResult result = SharedAccessAuthorizationRuleListResult.FromResponse(response);
-                yield return Page<NotificationHubAuthorizationRuleData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NotificationHubAuthorizationRuleData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
