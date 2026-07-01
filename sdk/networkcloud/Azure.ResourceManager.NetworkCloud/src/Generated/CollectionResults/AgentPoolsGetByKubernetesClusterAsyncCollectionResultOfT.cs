@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 AgentPoolList result = AgentPoolList.FromResponse(response);
-                yield return Page<NetworkCloudAgentPoolData>.FromValues((IReadOnlyList<NetworkCloudAgentPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudAgentPoolData>.FromValues((IReadOnlyList<NetworkCloudAgentPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
