@@ -9,13 +9,15 @@
     <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
-
-    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Generated\Models\SearchBypass.cs" />
+    <Compile Remove="Generated\Models\SearchEncryptionWithCmkEnforcement.cs" />
   </ItemGroup>
 
   <!-- TODO: Consider adding DataPlane dependencies here like:
