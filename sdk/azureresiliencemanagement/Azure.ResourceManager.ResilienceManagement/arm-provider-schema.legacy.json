@@ -1,0 +1,1098 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.GoalAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/goalAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.recommendCapacity",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/recommendCapacity",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.refreshGoalResources",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/refreshGoalResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalAssignments.updateGoalResources",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/updateGoalResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "resourceName": "GoalAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.GoalTemplate",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/goalTemplates",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalTemplates.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalTemplates.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalTemplates.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalTemplates.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates/{goalTemplateName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalTemplates.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalTemplates",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "resourceName": "GoalTemplate",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.GoalResource",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/goalResources/{goalResourceName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/goalAssignments/goalResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/goalResources/{goalResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/goalResources/{goalResourceName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.GoalResources.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}/goalResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/goalAssignments/{goalAssignmentName}",
+      "resourceName": "GoalMembers",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.RecoveryPlan",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/recoveryPlans",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlans.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlans.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlans.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlans.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlans.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.checkReadiness",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/checkReadiness",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.failover",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/failover",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.failoverCommit",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/failoverCommit",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.finalize",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/finalize",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.reprotect",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/reprotect",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.testFailover",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/testFailover",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.testFailoverCleanup",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/testFailoverCleanup",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.updateResources",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/updateResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForFailover",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForFailover",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForFailoverCommit",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForFailoverCommit",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForOperation",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForOperation",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForReprotect",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForReprotect",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForTestFailover",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForTestFailover",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryPlanActions.validateForTestFailoverCleanup",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/validateForTestFailoverCleanup",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "resourceName": "RecoveryPlan",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{5,24}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.RecoveryResource",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryResources/{recoveryResourceName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/recoveryPlans/recoveryResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryResources/{recoveryResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryResources/{recoveryResourceName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryResources.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+      "resourceName": "RecoveryMembers",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.RecoveryJob",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/recoveryPlans/recoveryJobs",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.cancel",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/cancel",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.resume",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/resume",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobs.retry",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/retry",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}",
+      "resourceName": "RecoveryJob",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.RecoveryJobResource",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryJobResources/{recoveryJobResourceName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/recoveryPlans/recoveryJobs/recoveryJobResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryJobResources/{recoveryJobResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryJobResources/{recoveryJobResourceName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.RecoveryJobResources.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}/recoveryJobResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/recoveryPlans/{recoveryPlanName}/recoveryJobs/{recoveryJobName}",
+      "resourceName": "RecoveryJobTarget",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.Drill",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/drills",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.create",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.addOrUpdateResources",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/addOrUpdateResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.end",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/end",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.resyncReadinessCheck",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/resyncReadinessCheck",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.start",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/start",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Drills.validateForExecution",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/validateForExecution",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "resourceName": "ResilienceManagementDrill",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.DrillResource",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillResources/{drillResourceName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillResources/{drillResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillResources/{drillResourceName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillResources.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+      "resourceName": "DrillTarget",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.DrillRun",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillRuns",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.addNotes",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/addNotes",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.failOver",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/failOver",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.markAsComplete",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/markAsComplete",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.reprotect",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/reprotect",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRuns.resume",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/resume",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}",
+      "resourceName": "DrillRun",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.DrillRunResource",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunResources/{drillRunResourceName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/drills/drillRuns/drillRunResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRunResources.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunResources/{drillRunResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunResources/{drillRunResourceName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.DrillRunResources.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/drillRunResources",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "parentResourceId": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}",
+      "resourceName": "DrillRunTarget",
+      "nameConstraints": {
+        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.UnifiedResilienceItem",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/unifiedResilienceItems/{unifiedResilienceItemName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/unifiedResilienceItems",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UnifiedResilienceItems.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/unifiedResilienceItems/{unifiedResilienceItemName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/unifiedResilienceItems/{unifiedResilienceItemName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UnifiedResilienceItems.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/unifiedResilienceItems",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "resourceName": "UnifiedResilienceItem",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2025-02-01-preview",
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.UsagePlan",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/usagePlans",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UsagePlans.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UsagePlans.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UsagePlans.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UsagePlans.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UsagePlans.listByResourceGroup",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.UsagePlans.listBySubscription",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.AzureResilienceManagement/usagePlans",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "resourceName": "UsagePlan",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.AzureResilienceManagement.Enrollment",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+      "resourceType": "Microsoft.AzureResilienceManagement/usagePlans/enrollments",
+      "methods": [
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Enrollments.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Enrollments.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Enrollments.delete",
+          "kind": "Delete",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments/{enrollmentName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.AzureResilienceManagement.Enrollments.list",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}/enrollments",
+          "scope": {
+            "kind": "ResourceGroup",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+            "scopeResourceType": "Microsoft.Resources/resourceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureResilienceManagement/usagePlans/{usagePlanName}",
+      "resourceName": "UsagePlanEnrollment",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+      },
+      "apiVersions": [
+        "2026-03-01-preview",
+        "2026-04-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.AzureResilienceManagement/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.AzureResilienceManagement.OperationStatus.get",
+      "operationPath": "/providers/Microsoft.AzureResilienceManagement/locations/{location}/operationStatuses/{operationId}",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

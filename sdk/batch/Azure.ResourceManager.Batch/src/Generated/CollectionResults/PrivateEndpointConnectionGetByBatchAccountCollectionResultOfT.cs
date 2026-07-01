@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 ListPrivateEndpointConnectionsResult result = ListPrivateEndpointConnectionsResult.FromResponse(response);
-                yield return Page<BatchPrivateEndpointConnectionData>.FromValues((IReadOnlyList<BatchPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BatchPrivateEndpointConnectionData>.FromValues((IReadOnlyList<BatchPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

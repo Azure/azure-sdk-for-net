@@ -1,0 +1,2816 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Billing.BillingAccount",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceType": "Microsoft.Billing/billingAccounts",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.billingRequestsListByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRequests",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.reservationsListByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.AvailableBalances.getByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/availableBalance/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.addPaymentTerms",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/addPaymentTerms",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.cancelPaymentTerms",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/cancelPaymentTerms",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.checkAccessByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/checkAccess",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.confirmTransition",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/confirmTransition",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.createByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/createBillingRoleAssignment",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.downloadDocumentsByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/downloadDocuments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.listByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.listInvoiceSectionsByCreateSubscriptionPermission",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/listInvoiceSectionsWithCreateSubscriptionPermission",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.resolveByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/resolveBillingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.savingsPlansListByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlans",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccounts.validatePaymentTerms",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/validatePaymentTerms",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "BillingAccount",
+      "nameConstraints": {
+        "pattern": "^([0-9]+|([Pp][Cc][Nn]\\.[A-Za-z0-9]+)|[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}(:[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}_[0-9]{4}(-[0-9]{2}){2})?)$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.SavingsPlanOrderModel",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}",
+      "resourceType": "Microsoft.Billing/billingAccounts/savingsPlanOrders",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.SavingsPlanOrderModels.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.SavingsPlanOrderModels.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "SavingsPlanOrderModel",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.SavingsPlanModel",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+      "resourceType": "Microsoft.Billing/billingAccounts/savingsPlanOrders/savingsPlans",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.SavingsPlanModels.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.SavingsPlanModels.updateByBillingAccount",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.SavingsPlanModels.listBySavingsPlanOrder",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.SavingsPlanModels.validateUpdateByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}",
+      "resourceName": "SavingsPlanModel",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.ReservationOrder",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}",
+      "resourceType": "Microsoft.Billing/billingAccounts/reservationOrders",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.ReservationOrders.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.ReservationOrders.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "ReservationOrder",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Reservation",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}/reservations/{reservationId}",
+      "resourceType": "Microsoft.Billing/billingAccounts/reservationOrders/reservations",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Reservations.getByReservationOrder",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}/reservations/{reservationId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}/reservations/{reservationId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Reservations.updateByBillingAccount",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}/reservations/{reservationId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}/reservations/{reservationId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Reservations.listByReservationOrder",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}/reservations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}",
+      "resourceName": "Reservation",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingProfile",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.billingRequestsListByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRequests",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.invoicesListByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.productsListByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/products",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.reservationsListByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/reservations",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.AvailableBalanceOperationGroup.getByBillingProfile",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/availableBalance/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.checkAccessByBillingProfile",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/checkAccess",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.createByBillingProfile",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/createBillingRoleAssignment",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.listByBillingProfile",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.resolveByBillingProfile",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/resolveBillingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.transactionsListByBillingProfile",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/transactions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfiles.validateDeleteEligibility",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/validateDeleteEligibility",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingProfile",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.PaymentMethodLink",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.PaymentMethodLinks.getByBillingProfile",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PaymentMethodLinks.listByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceName": "BillingProfilesPaymentMethodLinks",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.PaymentMethod",
+      "resourceIdPattern": "/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}",
+      "resourceType": "Microsoft.Billing/paymentMethods",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.PaymentMethodOperationGroup.getByUser",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PaymentMethodOperationGroup.deleteByUser",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PaymentMethodOperationGroup.listByUser",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/paymentMethods",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "BillingPaymentMethod",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.PaymentMethod",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/paymentMethods",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.PaymentMethods.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PaymentMethods.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingAccountPaymentMethod",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingSubscription",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingSubscriptions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.cancel",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/cancel",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.merge",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/merge",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.move",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/move",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.split",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/split",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionOperationGroup.validateMoveEligibility",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}/validateMoveEligibility",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingSubscription",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingSubscription",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/billingSubscriptions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptions.getByBillingProfile",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions/{billingSubscriptionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptions.listByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingSubscriptions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceName": "BillingProfileSubscription",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Agreement",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/agreements/{agreementName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/agreements",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Agreements.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/agreements/{agreementName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/agreements/{agreementName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Agreements.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/agreements",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "Agreement",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{1,12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.AssociatedTenant",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/associatedTenants",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.AssociatedTenants.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.AssociatedTenants.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.AssociatedTenants.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.AssociatedTenants.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "AssociatedTenant",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRequest",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingRequests/{billingRequestName}",
+      "resourceType": "Microsoft.Billing/billingRequests",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRequests.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingRequests/{billingRequestName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingRequests/{billingRequestName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRequests.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingRequests/{billingRequestName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingRequests/{billingRequestName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRequests.listByUser",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingRequests",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "BillingRequest",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingRoleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByBillingAccount.createOrUpdateByBillingAccount",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByBillingAccount.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByBillingAccount.deleteByBillingAccount",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByBillingAccount.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingRoleAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}(_[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})?$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/billingRoleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignments.getByBillingProfile",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignments.deleteByBillingProfile",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignments.listByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceName": "BillingProfileRoleAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}(_[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})?$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/departments/billingRoleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByDepartment.createOrUpdateByDepartment",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByDepartment.getByDepartment",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByDepartment.deleteByDepartment",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByDepartment.listByDepartment",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+      "resourceName": "BillingDepartmentRoleAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}(_[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})?$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/enrollmentAccounts/billingRoleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByEnrollmentAccount.createOrUpdateByEnrollmentAccount",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByEnrollmentAccount.getByEnrollmentAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByEnrollmentAccount.deleteByEnrollmentAccount",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByEnrollmentAccount.listByEnrollmentAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+      "resourceName": "BillingEnrollmentAccountRoleAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}(_[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})?$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleAssignments/{billingRoleAssignmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/customers/billingRoleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByCustomer.getByCustomer",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByCustomer.deleteByCustomer",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByCustomer.listByCustomer",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+      "resourceName": "BillingCustomerRoleAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}(_[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})?$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleAssignment",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections/billingRoleAssignments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByInvoiceSection.getByInvoiceSection",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByInvoiceSection.deleteByInvoiceSection",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleAssignmentByInvoiceSection.listByInvoiceSection",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+      "resourceName": "BillingInvoiceSectionRoleAssignment",
+      "nameConstraints": {
+        "pattern": "^[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12}(_[a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})?$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleDefinition",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions/{roleDefinitionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingRoleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByBillingAccount.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions/{roleDefinitionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions/{roleDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByBillingAccount.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingRoleDefinitions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingRoleDefinition",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleDefinition",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/billingRoleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitions.getByBillingProfile",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions/{roleDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitions.listByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingRoleDefinitions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceName": "BillingProfileRoleDefinition",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleDefinition",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleDefinitions/{roleDefinitionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/departments/billingRoleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByDepartment.getByDepartment",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleDefinitions/{roleDefinitionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleDefinitions/{roleDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByDepartment.listByDepartment",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleDefinitions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+      "resourceName": "BillingDepartmentRoleDefinition",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleDefinition",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/enrollmentAccounts/billingRoleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByEnrollmentAccount.getByEnrollmentAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByEnrollmentAccount.listByEnrollmentAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+      "resourceName": "BillingEnrollmentAccountRoleDefinition",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleDefinition",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleDefinitions/{roleDefinitionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/customers/billingRoleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByCustomer.getByCustomer",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleDefinitions/{roleDefinitionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleDefinitions/{roleDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByCustomer.listByCustomer",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRoleDefinitions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+      "resourceName": "BillingCustomerRoleDefinition",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingRoleDefinition",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleDefinitions/{roleDefinitionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections/billingRoleDefinitions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByInvoiceSection.getByInvoiceSection",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleDefinitions/{roleDefinitionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleDefinitions/{roleDefinitionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingRoleDefinitionByInvoiceSection.listByInvoiceSection",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleDefinitions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+      "resourceName": "BillingInvoiceSectionRoleDefinition",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingSubscriptionAlias",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingSubscriptionAliases",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionAliases.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionAliases.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingSubscriptionAliases.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingAccountsBillingSubscriptionAliases",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Customer",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/customers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.CustomerOperationGroup.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.CustomerOperationGroup.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.CustomerOperationGroup.listByCustomer",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/products",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.CustomerOperationGroup.billingSubscriptionsListByCustomerAtBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingSubscriptions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.CustomerOperationGroup.listByCustomerAtBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.createOrUpdateByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingCustomer",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Customer",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/customers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Customers.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.billingRequestsListByCustomer",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingRequests",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.listByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.billingSubscriptionsListByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingSubscriptions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.checkAccessByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/checkAccess",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.createByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/createBillingRoleAssignment",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.listByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.resolveByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/resolveBillingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Customers.transactionsListByCustomer",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transactions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceName": "BillingProfileCustomer",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Department",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/departments",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Departments.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Departments.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Departments.checkAccessByDepartment",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/checkAccess",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Departments.listByDepartment",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "Department",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.EnrollmentAccount",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/enrollmentAccounts",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccountOperationGroup.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccountOperationGroup.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccountOperationGroup.billingSubscriptionsListByEnrollmentAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingSubscriptions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccountOperationGroup.checkAccessByEnrollmentAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/checkAccess",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccountOperationGroup.listByEnrollmentAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingEnrollmentAccount",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.EnrollmentAccount",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/departments/enrollmentAccounts",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccounts.getByDepartment",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.EnrollmentAccounts.listByDepartment",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}",
+      "resourceName": "BillingDepartmentEnrollmentAccount",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Invoice",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/invoices",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.InvoiceById.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "DefaultBillingInvoice",
+      "nameConstraints": {
+        "pattern": "^(H[0-9]-[A-Z0-9]+)$|^(?:([GHT]|HT){1}[A-Z0-9]{9})$|^(?:[D]{1}[A-Z0-9]{9})$|^(?:E{1}[B-Z0-9]{1}[A-Z0-9]{8})$|^(?:EA[A-Z0-9]{8})$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Invoice",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/invoices",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Invoices.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.amend",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/amend",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.downloadByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/download",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.downloadSummaryByBillingAccount",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/downloadSummary",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.getTransactionSummaryByInvoice",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionSummary",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.listByInvoice",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Invoices.transactionsDownloadByInvoice",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionsDownload",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "BillingInvoice",
+      "nameConstraints": {
+        "pattern": "^(H[0-9]-[A-Z0-9]+)$|^(?:([GHT]|HT){1}[A-Z0-9]{9})$|^(?:[D]{1}[A-Z0-9]{9})$|^(?:E{1}[B-Z0-9]{1}[A-Z0-9]{8})$|^(?:EA[A-Z0-9]{8})$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Invoice",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingSubscriptions/invoices",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.InvoiceByBillingSubscription.getByBillingSubscription",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceByBillingSubscription.listByBillingSubscription",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceByBillingSubscription.downloadByBillingSubscription",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}/download",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}",
+      "resourceName": "SubscriptionBillingInvoice",
+      "nameConstraints": {
+        "pattern": "^(H[0-9]-[A-Z0-9]+)$|^(?:([GHT]|HT){1}[A-Z0-9]{9})$|^(?:[D]{1}[A-Z0-9]{9})$|^(?:E{1}[B-Z0-9]{1}[A-Z0-9]{8})$|^(?:EA[A-Z0-9]{8})$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.InvoiceSection",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.billingRequestsListByInvoiceSection",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRequests",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.listByBillingProfile",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.productsListByInvoiceSection",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/products",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.billingSubscriptionsListByInvoiceSection",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingSubscriptions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.checkAccessByInvoiceSection",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/checkAccess",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.createByInvoiceSection",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/createBillingRoleAssignment",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.listByInvoiceSection",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingPermissions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.resolveByInvoiceSection",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/resolveBillingRoleAssignments",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.transactionsListByInvoiceSection",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transactions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.InvoiceSections.validateDeleteEligibility",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/validateDeleteEligibility",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "resourceName": "InvoiceSection",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z\\d-_]{1,128}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.Product",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/products",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Products.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Products.update",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Products.listByBillingAccount",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Products.move",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/move",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Products.validateMoveEligibility",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/validateMoveEligibility",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "resourceName": "Product",
+      "nameConstraints": {
+        "pattern": "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.PartnerTransferDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/customers/transfers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.PartnerTransfers.initiate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PartnerTransfers.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PartnerTransfers.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.PartnerTransfers.cancel",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}/cancel",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+      "resourceName": "PartnerTransferDetails",
+      "nameConstraints": {
+        "pattern": "^[a-z0-9]*$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.RecipientTransferDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/transfers/{transferName}",
+      "resourceType": "Microsoft.Billing/transfers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.RecipientTransfers.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/transfers/{transferName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.RecipientTransfers.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/transfers",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.RecipientTransfers.accept",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/transfers/{transferName}/accept",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.RecipientTransfers.decline",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/transfers/{transferName}/decline",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.RecipientTransfers.validate",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/transfers/{transferName}/validate",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "RecipientTransferDetails",
+      "nameConstraints": {
+        "pattern": "^[a-z0-9]*$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.TransferDetails",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections/transfers",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Transfers.initiate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Transfers.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Transfers.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Transfers.cancel",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}/cancel",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}",
+      "resourceName": "TransferDetails",
+      "nameConstraints": {
+        "pattern": "^[a-z0-9]*$"
+      },
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingProperty",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default",
+      "resourceType": "Microsoft.Billing/billingProperty",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingProperties.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProperties.update",
+          "kind": "Update",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "BillingProperty",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.CustomerPolicy",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/policies/default",
+      "resourceType": "Microsoft.Billing/billingAccounts/customers/policies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.Policies.createOrUpdateByCustomerAtBillingAccount",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/policies/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.Policies.getByCustomerAtBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/policies/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}",
+      "singletonResourceName": "default",
+      "resourceName": "BillingCustomerPolicy",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.CustomerPolicy",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/policies/{policyName}",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/customers/policies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.CustomerPolicies.getByCustomer",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/policies/{policyName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/policies/{policyName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}",
+      "resourceName": "BillingProfileCustomerPolicy",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingProfilePolicy",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default",
+      "resourceType": "Microsoft.Billing/billingAccounts/billingProfiles/policies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingProfilePolicies.createOrUpdateByBillingProfile",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingProfilePolicies.getByBillingProfile",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+      "singletonResourceName": "default",
+      "resourceName": "BillingProfilePolicy",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.BillingAccountPolicy",
+      "resourceIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/policies/default",
+      "resourceType": "Microsoft.Billing/billingAccounts/policies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.BillingAccountPolicies.createOrUpdateByBillingAccount",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/policies/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Billing.BillingAccountPolicies.getByBillingAccount",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/policies/default",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/policies/default",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}",
+      "singletonResourceName": "default",
+      "resourceName": "BillingAccountPolicy",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Billing.SubscriptionPolicy",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/policies/default",
+      "resourceType": "Microsoft.Billing/policies",
+      "methods": [
+        {
+          "methodId": "Microsoft.Billing.SubscriptionPolicies.getBySubscription",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/policies/default",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/policies/default",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "singletonResourceName": "default",
+      "resourceName": "SubscriptionPolicy",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.Billing.Operations.list",
+      "operationPath": "/providers/Microsoft.Billing/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Billing.AddressOperationGroup.validate",
+      "operationPath": "/providers/Microsoft.Billing/validateAddress",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Billing.InvoicesOperationGroup.downloadDocumentsByBillingSubscription",
+      "operationPath": "/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/downloadDocuments",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

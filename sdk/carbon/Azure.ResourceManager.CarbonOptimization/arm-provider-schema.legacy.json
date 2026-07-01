@@ -1,0 +1,32 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Carbon/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Carbon.CarbonService.queryCarbonEmissionReports",
+      "operationPath": "/providers/Microsoft.Carbon/carbonEmissionReports",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Carbon.CarbonService.queryCarbonEmissionDataAvailableDateRange",
+      "operationPath": "/providers/Microsoft.Carbon/queryCarbonEmissionDataAvailableDateRange",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    }
+  ]
+}

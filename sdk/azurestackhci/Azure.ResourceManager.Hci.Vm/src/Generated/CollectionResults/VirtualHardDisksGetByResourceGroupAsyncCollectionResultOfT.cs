@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 VirtualHardDiskListResult result = VirtualHardDiskListResult.FromResponse(response);
-                yield return Page<HciVmVirtualHardDiskData>.FromValues((IReadOnlyList<HciVmVirtualHardDiskData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciVmVirtualHardDiskData>.FromValues((IReadOnlyList<HciVmVirtualHardDiskData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
