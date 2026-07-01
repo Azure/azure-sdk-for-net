@@ -103,6 +103,7 @@ namespace Azure.Storage.Files.Shares
             set
             {
                 ResetUri();
+                Shared.StorageExtensions.ValidateResourceName(value);
                 _directoryOrFilePath = value;
             }
         }

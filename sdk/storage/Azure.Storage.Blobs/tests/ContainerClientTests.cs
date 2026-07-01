@@ -3452,6 +3452,106 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task GetBlobClient_QuickTest()
+        {
+            // Arrange
+            await using DisposingContainer mycontainer = await GetTestContainerAsync(containerName: "mycontainer");
+            await using DisposingContainer othercontainer = await GetTestContainerAsync(containerName: "othercontainer");
+
+            BlobClient blobClient = mycontainer.Container.GetBlobClient("../othercontainer/secret-blob");
+            var data = GetRandomBuffer(Constants.KB);
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await blobClient.UploadAsync(stream);
+
+            BlobClient blobClient2 = othercontainer.Container.GetBlobClient("secret-blob");
+            await blobClient2.GetPropertiesAsync();
+
+            _ = "breakpoint here to check Azure portal before resources dispose";
+        }
+
+        [RecordedTest]
+        [TestCase("../other-container/secret-blob")]
+        [TestCase("subdir/../../other-container/secret-blob")]
+        [TestCase("../blob")]
+        [TestCase("blob/..")]
+        [TestCase("..")]
+        [TestCase("foo/../myblob")]
+        public async Task GetBlobClient_BlobNameWithDotTraversals_Fail(string blobNameWithDotTraversal)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Act
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => test.Container.GetBlobClient(blobNameWithDotTraversal));
+
+            // Assert
+            Assert.That(ex.Message, Does.Contain("contains '..' as a path segment, which could result in unexpected behaviors."));
+        }
+
+        [RecordedTest]
+        [TestCase("my..blob")]
+        [TestCase("..blob")]
+        [TestCase("blob..")]
+        public async Task GetBlobClient_BlobNameWithDots_Pass(string blobNameWithDots)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blobClient = test.Container.GetBlobClient(blobNameWithDots);
+            Uri blobUri = blobClient.Uri;
+            Assert.AreEqual(test.Container.Uri.ToString() + "/" + blobNameWithDots, blobUri.ToString());
+
+            var data = GetRandomBuffer(Constants.KB);
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await blobClient.UploadAsync(stream);
+        }
+
+        [Test]
+        [TestCase("../other-container")]
+        [TestCase("subdir/../../escape")]
+        [TestCase("..")]
+        public void BlobUriBuilder_SnapshotVersionIdQueryWithDotTraversals_NotResolved(string queryValue)
+        {
+            Uri uri = new Uri($"https://myaccount.blob.core.windows.net/mycontainer/myblob");
+
+            // Snapshot
+            BlobUriBuilder builder = new BlobUriBuilder(uri)
+            {
+                Snapshot = queryValue
+            };
+            Uri resultUri = builder.ToUri();
+            Assert.AreEqual(new Uri($"https://myaccount.blob.core.windows.net/mycontainer/myblob?snapshot={queryValue}"), resultUri);
+            Assert.AreEqual("myaccount", builder.AccountName);
+            Assert.AreEqual("mycontainer", builder.BlobContainerName);
+            Assert.AreEqual("myblob", builder.BlobName);
+            Assert.AreEqual(queryValue, builder.Snapshot);
+
+            // VersionId
+            BlobUriBuilder builder2 = new BlobUriBuilder(uri)
+            {
+                VersionId = queryValue
+            };
+            Uri resultUri2 = builder2.ToUri();
+            Assert.AreEqual(new Uri($"https://myaccount.blob.core.windows.net/mycontainer/myblob?versionid={queryValue}"), resultUri2);
+            Assert.AreEqual("myaccount", builder2.AccountName);
+            Assert.AreEqual("mycontainer", builder2.BlobContainerName);
+            Assert.AreEqual("myblob", builder2.BlobName);
+            Assert.AreEqual(queryValue, builder2.VersionId);
+
+            // Query
+            BlobUriBuilder builder3 = new BlobUriBuilder(uri)
+            {
+                Query = queryValue
+            };
+            Uri resultUri3 = builder3.ToUri();
+            Assert.AreEqual(new Uri($"https://myaccount.blob.core.windows.net/mycontainer/myblob?{queryValue}"), resultUri3);
+            Assert.AreEqual("myaccount", builder3.AccountName);
+            Assert.AreEqual("mycontainer", builder3.BlobContainerName);
+            Assert.AreEqual("myblob", builder3.BlobName);
+            Assert.AreEqual(queryValue, builder3.Query);
+        }
+
+        [RecordedTest]
         [TestCase("!*'();[]:@&%=+$,/?#äÄöÖüÜß")]
         [TestCase("%21%2A%27%28%29%3B%5B%5D%3A%40%26%25%3D%2B%24%2C%2F%3F%23äÄöÖüÜß")]
         [TestCase("my cool blob")]

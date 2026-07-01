@@ -1030,6 +1030,57 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
+        [Test]
+        [TestCase("../otheraccount")]
+        [TestCase("../../otheraccount")]
+        public void GetBlobContainerClient_IPStyle_ContainerNameWithDotTraversals_OverwritesAccount(string containerNameWithDotTraversal)
+        {
+            // Arrange - IP-style URI with account in path
+            var uri = new Uri("http://127.0.0.1:10000/myaccount");
+            BlobServiceClient service = new BlobServiceClient(uri);
+
+            BlobContainerClient container = service.GetBlobContainerClient(containerNameWithDotTraversal);
+            BlobUriBuilder builder = new BlobUriBuilder(container.Uri);
+            Uri containerUri = builder.ToUri();
+
+            // No longer original account and URI
+            Assert.AreNotEqual("myaccount", builder.AccountName);
+            Assert.AreNotEqual(uri, builder.ToUri());
+
+            // Overwritten to new account and URI
+            Assert.AreEqual("otheraccount", builder.AccountName);
+            Assert.AreEqual(new Uri("http://127.0.0.1:10000/otheraccount"), builder.ToUri());
+        }
+
+        [RecordedTest]
+        public async Task GetBlobContainerClient_HostnameStyle_ContainerNameWithDotTraversals_DoesNotOverwritesAccount()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            Uri serviceUri = service.Uri;
+            BlobContainerClient container1 = InstrumentClient(service.GetBlobContainerClient("test"));
+            BlobContainerClient container2 = InstrumentClient(service.GetBlobContainerClient("../other-service"));
+            BlobContainerClient container3 = InstrumentClient(service.GetBlobContainerClient("myservice/../service"));
+
+            Assert.AreEqual(serviceUri.ToString() + "test", container1.Uri.ToString());
+            Assert.AreEqual(serviceUri.ToString() + "other-service", container2.Uri.ToString());
+            Assert.AreEqual(serviceUri.ToString() + "service", container3.Uri.ToString());
+
+            try
+            {
+                await container1.CreateAsync();
+                await container2.CreateAsync();
+                await container3.CreateAsync();
+            }
+            finally
+            {
+                // Cleanup
+                await container1.DeleteAsync();
+                await container2.DeleteAsync();
+                await container3.DeleteAsync();
+            }
+        }
+
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
