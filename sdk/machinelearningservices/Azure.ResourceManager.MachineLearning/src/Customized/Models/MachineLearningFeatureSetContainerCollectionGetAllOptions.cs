@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The page size. </summary>
+        /// <summary> The maximum number of results to return per page. </summary>
         [WirePath("pageSize")]
         public int? PageSize { get; set; }
         /// <summary> Continuation token for pagination. </summary>
