@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     yield break;
                 }
                 StorageClassificationListResult result = StorageClassificationListResult.FromResponse(response);
-                yield return Page<StorageClassificationData>.FromValues((IReadOnlyList<StorageClassificationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageClassificationData>.FromValues((IReadOnlyList<StorageClassificationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

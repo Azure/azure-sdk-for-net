@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 VirtualNetworkSubnetListResult result = VirtualNetworkSubnetListResult.FromResponse(response);
-                yield return Page<HciVmVirtualNetworkSubnetData>.FromValues((IReadOnlyList<HciVmVirtualNetworkSubnetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciVmVirtualNetworkSubnetData>.FromValues((IReadOnlyList<HciVmVirtualNetworkSubnetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

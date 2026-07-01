@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 QuotaRequestDetailsList result = QuotaRequestDetailsList.FromResponse(response);
-                yield return Page<QuotaRequestDetailData>.FromValues((IReadOnlyList<QuotaRequestDetailData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<QuotaRequestDetailData>.FromValues((IReadOnlyList<QuotaRequestDetailData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
