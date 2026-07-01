@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The options for the corresponding <c>GetAll</c> method. </summary>
     public partial class MachineLearningFeatureSetContainerCollectionGetAllOptions
     {
-        /// <summary> who this data mount created by. </summary>
+        /// <summary> The identity that created this entity. </summary>
         [WirePath("createdBy")]
         public string CreatedBy { get; set; }
         /// <summary> The description of this workspace. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> page size. </summary>
+        /// <summary> The page size. </summary>
         [WirePath("pageSize")]
         public int? PageSize { get; set; }
         /// <summary> Continuation token for pagination. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The options for the corresponding <c>GetAll</c> method. </summary>
     public partial class MachineLearningFeatureSetVersionCollectionGetAllOptions
     {
-        /// <summary> who this data mount created by. </summary>
+        /// <summary> The identity that created this entity. </summary>
         [WirePath("createdBy")]
         public string CreatedBy { get; set; }
         /// <summary> The description of this workspace. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> View type for including/excluding (for example) archived entities. </summary>
         [WirePath("listViewType")]
         public MachineLearningListViewType? ListViewType { get; set; }
-        /// <summary> page size. </summary>
+        /// <summary> The page size. </summary>
         [WirePath("pageSize")]
         public int? PageSize { get; set; }
         /// <summary> Continuation token for pagination. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Model version. </summary>
         [WirePath("version")]
         public string Version { get; set; }
-        /// <summary> name for the featureset version. </summary>
+        /// <summary> The name of the feature set version. </summary>
         [WirePath("versionName")]
         public string VersionName { get; set; }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> View type for including/excluding (for example) archived entities. </summary>
         [WirePath("listViewType")]
         public MachineLearningListViewType? ListViewType { get; set; }
-        /// <summary> page size. </summary>
+        /// <summary> The page size. </summary>
         [WirePath("pageSize")]
         public int? PageSize { get; set; }
         /// <summary> Continuation token for pagination. </summary>
