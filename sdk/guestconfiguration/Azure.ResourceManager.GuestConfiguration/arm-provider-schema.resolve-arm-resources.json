@@ -1,0 +1,248 @@
+{
+  "resources": [],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
+      "operationPath": "/providers/Microsoft.GuestConfiguration/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsOperationGroup.rGList",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.createOrUpdate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.delete",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.SubscriptionList",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationHCRPAssignments.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+        "scopeResourceType": "Microsoft.HybridCompute/machines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationHCRPAssignments.createOrUpdate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+        "scopeResourceType": "Microsoft.HybridCompute/machines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationHCRPAssignments.delete",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+        "scopeResourceType": "Microsoft.HybridCompute/machines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationHCRPAssignments.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+        "scopeResourceType": "Microsoft.HybridCompute/machines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsVMSS.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachineScaleSets"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsVMSS.createOrUpdate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachineScaleSets"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsVMSS.delete",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachineScaleSets"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsVMSS.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachineScaleSets"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationConnectedVMwarevSphereAssignments.get",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}",
+        "scopeResourceType": "Microsoft.ConnectedVMwarevSphere/virtualmachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationConnectedVMwarevSphereAssignments.createOrUpdate",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}",
+        "scopeResourceType": "Microsoft.ConnectedVMwarevSphere/virtualmachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationConnectedVMwarevSphereAssignments.delete",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}",
+        "scopeResourceType": "Microsoft.ConnectedVMwarevSphere/virtualmachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationConnectedVMwarevSphereAssignments.list",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}",
+        "scopeResourceType": "Microsoft.ConnectedVMwarevSphere/virtualmachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.guestConfigurationAssignmentReportsList",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignments.guestConfigurationAssignmentReportsGet",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationHCRPAssignments.guestConfigurationHCRPAssignmentReportsList",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+        "scopeResourceType": "Microsoft.HybridCompute/machines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationHCRPAssignments.guestConfigurationHCRPAssignmentReportsGet",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+        "scopeResourceType": "Microsoft.HybridCompute/machines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsVMSS.guestConfigurationAssignmentReportsVMSSList",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachineScaleSets"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsVMSS.guestConfigurationAssignmentReportsVMSSGet",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports/{id}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}",
+        "scopeResourceType": "Microsoft.Compute/virtualMachineScaleSets"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationConnectedVMwarevSphereAssignments.guestConfigurationConnectedVMwarevSphereAssignmentsReportsList",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}",
+        "scopeResourceType": "Microsoft.ConnectedVMwarevSphere/virtualmachines"
+      }
+    },
+    {
+      "methodId": "Microsoft.GuestConfiguration.GuestConfigurationConnectedVMwarevSphereAssignments.guestConfigurationConnectedVMwarevSphereAssignmentsReportsGet",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}",
+        "scopeResourceType": "Microsoft.ConnectedVMwarevSphere/virtualmachines"
+      }
+    }
+  ]
+}
