@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Gets or sets status. </summary>
+        /// <summary> Gets or sets the status of the encryption setting. </summary>
         [WirePath("status")]
         public MachineLearningEncryptionStatus Status { get; set; }
         /// <summary> KeyVault details to do the encryption. </summary>
