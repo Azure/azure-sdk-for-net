@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Redis
                     yield break;
                 }
                 RedisCacheAccessPolicyAssignmentList result = RedisCacheAccessPolicyAssignmentList.FromResponse(response);
-                yield return Page<RedisCacheAccessPolicyAssignmentData>.FromValues((IReadOnlyList<RedisCacheAccessPolicyAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RedisCacheAccessPolicyAssignmentData>.FromValues((IReadOnlyList<RedisCacheAccessPolicyAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
