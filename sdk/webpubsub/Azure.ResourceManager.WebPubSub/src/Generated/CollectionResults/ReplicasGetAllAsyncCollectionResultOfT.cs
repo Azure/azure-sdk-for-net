@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.WebPubSub
                     yield break;
                 }
                 ReplicaList result = ReplicaList.FromResponse(response);
-                yield return Page<WebPubSubReplicaData>.FromValues((IReadOnlyList<WebPubSubReplicaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebPubSubReplicaData>.FromValues((IReadOnlyList<WebPubSubReplicaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

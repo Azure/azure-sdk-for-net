@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AiGatewayListResult result = AiGatewayListResult.FromResponse(response);
-                yield return Page<AiGatewayData>.FromValues((IReadOnlyList<AiGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AiGatewayData>.FromValues((IReadOnlyList<AiGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

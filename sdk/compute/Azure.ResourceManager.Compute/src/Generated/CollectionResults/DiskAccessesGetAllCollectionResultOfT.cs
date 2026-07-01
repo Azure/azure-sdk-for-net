@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 DiskAccessList result = DiskAccessList.FromResponse(response);
-                yield return Page<DiskAccessData>.FromValues((IReadOnlyList<DiskAccessData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DiskAccessData>.FromValues((IReadOnlyList<DiskAccessData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

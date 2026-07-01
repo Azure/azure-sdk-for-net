@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 GallerySoftDeletedResourceList result = GallerySoftDeletedResourceList.FromResponse(response);
-                yield return Page<GallerySoftDeletedResourceDetails>.FromValues((IReadOnlyList<GallerySoftDeletedResourceDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GallerySoftDeletedResourceDetails>.FromValues((IReadOnlyList<GallerySoftDeletedResourceDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

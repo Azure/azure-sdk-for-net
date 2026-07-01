@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WorkflowVersionListResult result = WorkflowVersionListResult.FromResponse(response);
-                yield return Page<WorkflowVersionData>.FromValues((IReadOnlyList<WorkflowVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkflowVersionData>.FromValues((IReadOnlyList<WorkflowVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

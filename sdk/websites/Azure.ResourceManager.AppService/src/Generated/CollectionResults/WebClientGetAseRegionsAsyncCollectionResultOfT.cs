@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AseRegionCollection result = AseRegionCollection.FromResponse(response);
-                yield return Page<AppServiceAseRegion>.FromValues((IReadOnlyList<AppServiceAseRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppServiceAseRegion>.FromValues((IReadOnlyList<AppServiceAseRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
