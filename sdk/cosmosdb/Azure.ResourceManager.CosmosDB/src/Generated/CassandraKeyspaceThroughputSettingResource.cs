@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cassandraKeyspaceThroughputSettingApiVersion);
             _cassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraKeyspaceThroughputSettingApiVersion ?? "2026-04-01-preview");
+            _cassandraResourcesRestClient = new CassandraResources(_cassandraResourcesClientDiagnostics, Pipeline, Endpoint, cassandraKeyspaceThroughputSettingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

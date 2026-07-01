@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="hoursBetweenBackups"> (Deprecated) Number of hours to wait between taking a backup of the cluster. </param>
         /// <param name="isDeallocated"> Whether the cluster and associated data centers has been deallocated. </param>
         /// <param name="isCassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
-        /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
         /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
         /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
         /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, CassandraAutoReplicateForm? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, CassandraAutoReplicateForm? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             HoursBetweenBackups = hoursBetweenBackups;
             IsDeallocated = isDeallocated;
             IsCassandraAuditLoggingEnabled = isCassandraAuditLoggingEnabled;
-            ClusterType = clusterType;
             ProvisionError = provisionError;
             Extensions = extensions;
             BackupSchedules = backupSchedules;
@@ -165,10 +163,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Whether Cassandra audit logging is enabled. </summary>
         [WirePath("cassandraAuditLoggingEnabled")]
         public bool? IsCassandraAuditLoggingEnabled { get; set; }
-
-        /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
-        [WirePath("clusterType")]
-        public CassandraClusterType? ClusterType { get; set; }
 
         /// <summary> Error related to resource provisioning. </summary>
         [WirePath("provisionError")]

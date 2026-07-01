@@ -220,11 +220,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiagnosticLogSettings))
-            {
-                writer.WritePropertyName("diagnosticLogSettings"u8);
-                writer.WriteObjectValue(DiagnosticLogSettings, options);
-            }
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
@@ -234,16 +229,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity, options);
-            }
-            if (Optional.IsDefined(CapacityMode))
-            {
-                writer.WritePropertyName("capacityMode"u8);
-                writer.WriteStringValue(CapacityMode.Value.ToString());
-            }
-            if (Optional.IsDefined(EnableMaterializedViews))
-            {
-                writer.WritePropertyName("enableMaterializedViews"u8);
-                writer.WriteBooleanValue(EnableMaterializedViews.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
@@ -284,16 +269,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("enablePerRegionPerPartitionAutoscale"u8);
                 writer.WriteBooleanValue(EnablePerRegionPerPartitionAutoscale.Value);
-            }
-            if (Optional.IsDefined(EnableAllVersionsAndDeletesChangeFeed))
-            {
-                writer.WritePropertyName("enableAllVersionsAndDeletesChangeFeed"u8);
-                writer.WriteBooleanValue(EnableAllVersionsAndDeletesChangeFeed.Value);
-            }
-            if (Optional.IsDefined(SoftDeleteConfiguration))
-            {
-                writer.WritePropertyName("softDeleteConfiguration"u8);
-                writer.WriteObjectValue(SoftDeleteConfiguration, options);
             }
             if (Optional.IsDefined(EnforceHierarchicalPartitionKeyIdLastLevel))
             {
@@ -364,11 +339,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<CosmosDBAccountCorsPolicy> cors = default;
             NetworkAclBypass? networkAclBypass = default;
             IList<ResourceIdentifier> networkAclBypassResourceIds = default;
-            DiagnosticLogSettings diagnosticLogSettings = default;
             bool? disableLocalAuth = default;
             CosmosDBAccountCapacity capacity = default;
-            CapacityMode? capacityMode = default;
-            bool? enableMaterializedViews = default;
             DatabaseAccountKeysMetadata keysMetadata = default;
             bool? enablePartitionMerge = default;
             bool? enableBurstCapacity = default;
@@ -377,8 +349,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? enablePriorityBasedExecution = default;
             DefaultPriorityLevel? defaultPriorityLevel = default;
             bool? enablePerRegionPerPartitionAutoscale = default;
-            bool? enableAllVersionsAndDeletesChangeFeed = default;
-            SoftDeleteConfiguration softDeleteConfiguration = default;
             bool? enforceHierarchicalPartitionKeyIdLastLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -614,15 +584,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     networkAclBypassResourceIds = array;
                     continue;
                 }
-                if (prop.NameEquals("diagnosticLogSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diagnosticLogSettings = DiagnosticLogSettings.DeserializeDiagnosticLogSettings(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("disableLocalAuth"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -639,24 +600,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("capacityMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacityMode = new CapacityMode(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("enableMaterializedViews"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableMaterializedViews = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("keysMetadata"u8))
@@ -727,24 +670,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     enablePerRegionPerPartitionAutoscale = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("enableAllVersionsAndDeletesChangeFeed"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableAllVersionsAndDeletesChangeFeed = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("softDeleteConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    softDeleteConfiguration = SoftDeleteConfiguration.DeserializeSoftDeleteConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("enforceHierarchicalPartitionKeyIdLastLevel"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -782,11 +707,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
                 networkAclBypass,
                 networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                diagnosticLogSettings,
                 disableLocalAuth,
                 capacity,
-                capacityMode,
-                enableMaterializedViews,
                 keysMetadata,
                 enablePartitionMerge,
                 enableBurstCapacity,
@@ -795,8 +717,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 enablePriorityBasedExecution,
                 defaultPriorityLevel,
                 enablePerRegionPerPartitionAutoscale,
-                enableAllVersionsAndDeletesChangeFeed,
-                softDeleteConfiguration,
                 enforceHierarchicalPartitionKeyIdLastLevel,
                 additionalBinaryDataProperties);
         }

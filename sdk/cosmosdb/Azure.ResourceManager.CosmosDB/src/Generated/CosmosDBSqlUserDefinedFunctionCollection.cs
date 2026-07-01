@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CosmosDBSqlUserDefinedFunctionResource.ResourceType, out string cosmosDBSqlUserDefinedFunctionApiVersion);
             _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBSqlUserDefinedFunctionResource.ResourceType.Namespace, Diagnostics);
-            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlUserDefinedFunctionApiVersion ?? "2026-04-01-preview");
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlUserDefinedFunctionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

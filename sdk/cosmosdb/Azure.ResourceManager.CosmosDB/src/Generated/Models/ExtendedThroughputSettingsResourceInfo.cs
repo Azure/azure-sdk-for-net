@@ -27,12 +27,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="instantMaximumThroughput"> The offer throughput value to instantly scale up without triggering splits. </param>
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
-        /// <param name="throughputBuckets"> Array of throughput bucket limits to be applied to the Cosmos DB container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string instantMaximumThroughput, string softAllowedMaximumThroughput, IList<CosmosDBThroughputBucket> throughputBuckets, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, instantMaximumThroughput, softAllowedMaximumThroughput, throughputBuckets, additionalBinaryDataProperties)
+        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string instantMaximumThroughput, string softAllowedMaximumThroughput, IDictionary<string, BinaryData> additionalBinaryDataProperties, string rid, float? timestamp, ETag? eTag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, instantMaximumThroughput, softAllowedMaximumThroughput, additionalBinaryDataProperties)
         {
             Rid = rid;
             Timestamp = timestamp;
