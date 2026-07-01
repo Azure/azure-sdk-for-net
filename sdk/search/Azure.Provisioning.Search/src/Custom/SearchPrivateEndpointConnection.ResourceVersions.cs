@@ -5,6 +5,8 @@ using System.ComponentModel;
 
 namespace Azure.Provisioning.Search
 {
+    // Preserve previously shipped ResourceVersions values that are not emitted by
+    // the TypeSpec-based provisioning generator for the current API version.
     public partial class SearchPrivateEndpointConnection
     {
         public static partial class ResourceVersions
