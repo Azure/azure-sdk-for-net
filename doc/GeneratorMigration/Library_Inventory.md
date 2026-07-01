@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-07-01 03:09:04 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-07-01 03:18:58 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -23,8 +23,8 @@
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
   - Autorest/Swagger: 35
-  - New Emitter (TypeSpec): 46
-  - Old TypeSpec: 1
+  - New Emitter (TypeSpec): 47
+  - Old TypeSpec: 0
 - Provisioning: 44
   - Reflection-based generator: 33
   - TypeSpec-based generator: 9
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 46 / 47 (97.9%)
+**Migration Status**: 47 / 47 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -67,7 +67,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | healthdataaiservices | Azure.Health.Deidentification | ✅ |  |
 | keyvault | Azure.Security.KeyVault.Administration | ✅ |  |
 | keyvault | Azure.Security.KeyVault.Certificates | ✅ |  |
-| keyvault | Azure.Security.KeyVault.Secrets |  |  |
+| keyvault | Azure.Security.KeyVault.Secrets | ✅ |  |
 | loadtestservice | Azure.Developer.LoadTesting | ✅ |  |
 | monitor | Azure.Monitor.Ingestion | ✅ |  |
 | monitor | Azure.Monitor.OpenTelemetry.Exporter | ✅ |  |
