@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 KnowledgeSourceList result = KnowledgeSourceList.FromResponse(response);
-                yield return Page<CdnWebAgentKnowledgeSourceData>.FromValues((IReadOnlyList<CdnWebAgentKnowledgeSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CdnWebAgentKnowledgeSourceData>.FromValues((IReadOnlyList<CdnWebAgentKnowledgeSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

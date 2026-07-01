@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 MemberCapOverrideListResult result = MemberCapOverrideListResult.FromResponse(response);
-                yield return Page<MemberCapOverrideData>.FromValues((IReadOnlyList<MemberCapOverrideData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MemberCapOverrideData>.FromValues((IReadOnlyList<MemberCapOverrideData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
