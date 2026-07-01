@@ -8,25 +8,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class IndexBatch
+    /// <summary> Contains a batch of document write actions to send to the index. </summary>
+    public static partial class IndexDocumentsBatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexDocumentsBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
-        public IndexBatch(IEnumerable<IndexAction> actions)
+        /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
+        public IndexDocumentsBatch(IEnumerable<IndexAction> actions)
         {
+            Argument.AssertNotNull(actions, nameof(actions));
+
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexBatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexDocumentsBatch"/>. </summary>
         /// <param name="actions"> The actions in the batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexBatch(IList<IndexAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexDocumentsBatch(IList<IndexAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
