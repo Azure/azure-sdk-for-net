@@ -7,7 +7,7 @@ Compared files:
 
 ## Summary
 
-The Advisor resource detection result is mostly equivalent between the legacy detector and `resolveArmResources` when compared by `resourceIdPattern`.
+The Advisor resource detection result is equivalent between the legacy detector and `resolveArmResources` when compared by `resourceIdPattern`, hierarchy, resource model, and CRUD operations. The only requested-axis difference is one additional subscription-scoped list operation from `resolveArmResources`, and that addition makes sense.
 
 | Aspect | Result |
 | --- | --- |
