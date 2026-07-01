@@ -1,0 +1,846 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.CostManagement.GenerateDetailedCostReportOperationStatuses",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}",
+      "resourceType": "Microsoft.CostManagement/operationStatus",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.GenerateDetailedCostReportOperationStatus.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/operationStatus/{operationId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "GenerateDetailedCostReportOperationStatuses",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.Budget",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}",
+      "resourceType": "Microsoft.CostManagement/budgets",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.Budgets.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Budgets.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Budgets.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/budgets/{budgetName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Budgets.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/budgets",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "Budget",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9_-]+$",
+        "minLength": 1,
+        "maxLength": 63
+      },
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.Export",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}",
+      "resourceType": "Microsoft.CostManagement/exports",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.Exports.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Exports.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Exports.delete",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Exports.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/exports",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Exports.execute",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}/run",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Exports.getExecutionHistory",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}/runHistory",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/exports/{exportName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "CostManagementExport",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.GenerateDetailedCostReportOperationResult",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}",
+      "resourceType": "Microsoft.CostManagement/operationResults",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.GenerateDetailedCostReportOperationResults.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "GenerateDetailedCostReportOperationResult",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.View",
+      "resourceIdPattern": "/providers/Microsoft.CostManagement/views/{viewName}",
+      "resourceType": "Microsoft.CostManagement/views",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.Views.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.CostManagement/views/{viewName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/views/{viewName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Views.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.CostManagement/views/{viewName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/views/{viewName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Views.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.CostManagement/views/{viewName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/views/{viewName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Views.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.CostManagement/views",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantsCostManagementViews",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.View",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}",
+      "resourceType": "Microsoft.CostManagement/views",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.ViewOperationGroup.createOrUpdateByScope",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ViewOperationGroup.getByScope",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ViewOperationGroup.deleteByScope",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/views/{viewName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ViewOperationGroup.listByScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/views",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "CostManagementViews",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.Alert",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}",
+      "resourceType": "Microsoft.CostManagement/alerts",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.Alerts.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Alerts.dismiss",
+          "kind": "Update",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Alerts.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/alerts",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "CostManagementAlert",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.ScheduledAction",
+      "resourceIdPattern": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+      "resourceType": "Microsoft.CostManagement/scheduledActions",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActions.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActions.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActions.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActions.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.CostManagement/scheduledActions",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActions.run",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.CostManagement/scheduledActions/{name}/execute",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.CostManagement/scheduledActions/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantScheduledAction",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.ScheduledAction",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}",
+      "resourceType": "Microsoft.CostManagement/scheduledActions",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActionOperationGroup.createOrUpdateByScope",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActionOperationGroup.getByScope",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActionOperationGroup.deleteByScope",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActionOperationGroup.listByScope",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/scheduledActions",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.ScheduledActionOperationGroup.runByScope",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "ScheduledAction",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.Setting",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.CostManagement/settings/{type}",
+      "resourceType": "Microsoft.CostManagement/settings",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.Settings.createOrUpdateByScope",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/settings/{type}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/settings/{type}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Settings.getByScope",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/settings/{type}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/settings/{type}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Settings.deleteByScope",
+          "kind": "Delete",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/settings/{type}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.CostManagement/settings/{type}"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.Settings.list",
+          "kind": "List",
+          "operationPath": "/{scope}/providers/Microsoft.CostManagement/settings",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "CostManagementSetting",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.CostManagement.CostAllocationRuleDefinition",
+      "resourceIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+      "resourceType": "Microsoft.CostManagement/costAllocationRules",
+      "methods": [
+        {
+          "methodId": "Microsoft.CostManagement.CostAllocationRuleDefinitions.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+            "scopeResourceType": "microsoft.Billing/billingAccounts"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.CostAllocationRuleDefinitions.get",
+          "kind": "Read",
+          "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+            "scopeResourceType": "microsoft.Billing/billingAccounts"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.CostAllocationRuleDefinitions.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}",
+            "scopeResourceType": "microsoft.Billing/billingAccounts"
+          }
+        },
+        {
+          "methodId": "Microsoft.CostManagement.CostAllocationRuleDefinitions.list",
+          "kind": "List",
+          "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}",
+            "scopeResourceType": "microsoft.Billing/billingAccounts"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts"
+      },
+      "resourceName": "CostAllocationRule",
+      "nameConstraints": {
+        "pattern": "[A-Za-z0-9\\-_]+"
+      },
+      "apiVersions": [
+        "2025-03-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Legacy.Operations.list",
+      "operationPath": "/providers/Microsoft.CostManagement/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.AlertsOperationGroup.listExternal",
+      "operationPath": "/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/alerts",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.ScheduledActionsOperationGroup.checkNameAvailability",
+      "operationPath": "/providers/Microsoft.CostManagement/checkNameAvailability",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.ScheduledActionsOperationGroup.checkNameAvailabilityByScope",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/checkNameAvailability",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateCostDetailsReport.getOperationResults",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/costDetailsOperationResults/{operationId}",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateCostDetailsReportOperationGroup.createOperation",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/generateCostDetailsReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.CostAllocationRulesOperationGroup.checkNameAvailability",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/checkNameAvailability",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.BenefitRecommendationsOperationGroup.list",
+      "operationPath": "/{billingScope}/providers/Microsoft.CostManagement/benefitRecommendations",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{billingScope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.BenefitUtilizationSummariesOperationGroup.listByBillingAccountId",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.BenefitUtilizationSummariesOperationGroup.listByBillingProfileId",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.BenefitUtilizationSummariesOperationGroup.listBySavingsPlanOrder",
+      "operationPath": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}",
+        "scopeResourceType": "microsoft.BillingBenefits/savingsPlanOrders"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.BenefitUtilizationSummariesOperationGroup.listBySavingsPlanId",
+      "operationPath": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/benefitUtilizationSummaries",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+        "scopeResourceType": "microsoft.BillingBenefits/savingsPlanOrders/savingsPlans"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateBenefitUtilizationSummariesReportOperationGroup.generateByBillingAccount",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateBenefitUtilizationSummariesReportOperationGroup.generateByBillingProfile",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateBenefitUtilizationSummariesReportOperationGroup.generateByReservationOrderId",
+      "operationPath": "/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Capacity/reservationorders/{reservationOrderId}",
+        "scopeResourceType": "microsoft.Capacity/reservationorders"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateBenefitUtilizationSummariesReportOperationGroup.generateByReservationId",
+      "operationPath": "/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Capacity/reservationorders/{reservationOrderId}/reservations/{reservationId}",
+        "scopeResourceType": "microsoft.Capacity/reservationorders/reservations"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateBenefitUtilizationSummariesReportOperationGroup.generateBySavingsPlanOrderId",
+      "operationPath": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}",
+        "scopeResourceType": "microsoft.BillingBenefits/savingsPlanOrders"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateBenefitUtilizationSummariesReportOperationGroup.generateBySavingsPlanId",
+      "operationPath": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}",
+        "scopeResourceType": "microsoft.BillingBenefits/savingsPlanOrders/savingsPlans"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateDetailedCostReportOperationGroup.createOperation",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/generateDetailedCostReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.ForecastOperationGroup.usage",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/forecast",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.ForecastOperationGroup.externalCloudProviderUsage",
+      "operationPath": "/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/forecast",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.DimensionsOperationGroup.list",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/dimensions",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.DimensionsOperationGroup.byExternalCloudProviderType",
+      "operationPath": "/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/dimensions",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.QueryOperationGroup.usage",
+      "operationPath": "/{scope}/providers/Microsoft.CostManagement/query",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.QueryOperationGroup.usageByExternalCloudProviderType",
+      "operationPath": "/providers/Microsoft.CostManagement/{externalCloudProviderType}/{externalCloudProviderId}/query",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateReservationDetailsReportOperationGroup.byBillingAccountId",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.GenerateReservationDetailsReportOperationGroup.byBillingProfileId",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.PriceSheetOperationGroup.downloadByInvoice",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts/billingProfiles/invoices"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.PriceSheetOperationGroup.downloadByBillingProfile",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts/billingProfiles"
+      }
+    },
+    {
+      "methodId": "Microsoft.CostManagement.PriceSheetOperationGroup.downloadByBillingAccount",
+      "operationPath": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.CostManagement/pricesheets/default/download",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}",
+        "scopeResourceType": "microsoft.Billing/billingAccounts/billingPeriods"
+      }
+    }
+  ]
+}

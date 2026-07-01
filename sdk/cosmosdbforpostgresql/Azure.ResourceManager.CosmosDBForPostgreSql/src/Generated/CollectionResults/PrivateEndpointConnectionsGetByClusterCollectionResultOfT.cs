@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     yield break;
                 }
                 CosmosDBForPostgreSqlPrivateEndpointConnectionListResult result = CosmosDBForPostgreSqlPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
