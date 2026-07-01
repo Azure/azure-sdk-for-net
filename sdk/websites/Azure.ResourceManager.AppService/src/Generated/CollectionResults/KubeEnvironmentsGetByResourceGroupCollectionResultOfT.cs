@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 KubeEnvironmentListResult result = KubeEnvironmentListResult.FromResponse(response);
-                yield return Page<KubeEnvironmentData>.FromValues((IReadOnlyList<KubeEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<KubeEnvironmentData>.FromValues((IReadOnlyList<KubeEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
