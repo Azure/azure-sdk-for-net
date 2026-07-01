@@ -201,6 +201,7 @@ namespace Azure.AI.AgentServer.Responses
     {
         public ResponseContext(string responseId) { }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
+        public virtual string ConversationChainId { get { throw null; } }
         public bool IsShutdownRequested { get { throw null; } set { } }
         public virtual Azure.AI.AgentServer.Core.PlatformContext PlatformContext { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get { throw null; } }
