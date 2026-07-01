@@ -53,6 +53,45 @@ namespace Azure.SdkAnalyzers
             true,
             "Output model types returned from client methods should have corresponding model factory methods for mocking support.");
 
+        public static readonly DiagnosticDescriptor AZC0005 = new(
+            nameof(AZC0005),
+            "DO provide protected parameterless constructor for mocking.",
+            "DO provide protected parameterless constructor for mocking.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client types should provide a protected parameterless constructor to support mocking.",
+            "https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-client-constructor-for-mocking");
+
+        public static readonly DiagnosticDescriptor AZC0006 = new(
+            nameof(AZC0006),
+            "DO provide constructor overloads that allow specifying additional options.",
+            "A client type should have a public constructor with equivalent parameters that takes a Azure.Core.ClientOptions-derived type as the last argument",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client types should provide constructor overloads that allow specifying additional options via an Azure.Core.ClientOptions-derived type.",
+            "https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-client-constructor-overloads");
+
+        public static readonly DiagnosticDescriptor AZC0007 = new(
+            nameof(AZC0007),
+            "DO provide a minimal constructor that takes only the parameters required to connect to the service.",
+            "A client type should have a public constructor with equivalent parameters that doesn't take a Azure.Core.ClientOptions-derived type as the last argument",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client types should provide a minimal constructor that takes only the parameters required to connect to the service.",
+            "https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-client-constructor-minimal");
+
+        public static readonly DiagnosticDescriptor AZC0021 = new(
+            nameof(AZC0021),
+            "ClientSettings constructor parameters should not be combined with other parameters",
+            "A constructor with a ClientSettings-derived parameter should only take that single parameter",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "A constructor that takes a System.ClientModel.Primitives.ClientSettings-derived parameter should only take that single parameter.");
+
         public static readonly DiagnosticDescriptor AZC0040 = new(
             nameof(AZC0040),
             "Do not expose Apache.Arrow types on the public API surface",
