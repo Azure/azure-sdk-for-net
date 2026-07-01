@@ -1,18 +1,26 @@
 # Release History
 
-## 3.0.0 (2026-06-15)
+## 3.0.0 (2026-08-01)
 
 ### Features Added
 
 - Added support for the `2026-03-01` service API version, which is now the default.
+- Added image translation support: the `TranslateTextWithinImage` property on `BatchOptions` for batch requests, and a `translateTextWithinImage` parameter on `SingleDocumentTranslationClient.Translate` and `TranslateAsync` for single document requests.
+- Added image scan reporting to `DocumentStatusResult`: `ImageCharacterDetected`, `ImageCharged`, `TotalImageScansSucceeded`, and `TotalImageScansFailed`.
 - Added the `DeploymentName` property to `TranslationTarget` to specify the deployment name of the custom translation model for a batch translation request.
-- Added the `DeploymentName` property to `DocumentStatusResult`, exposing the deployment name of the custom translation model or LLM model used for the translation.
+- Added the `DeploymentName` property to `DocumentStatusResult`, exposing the deployment name of the custom translation model used for the translation.
 - Added the `deploymentName` parameter to `SingleDocumentTranslationClient.Translate` and `TranslateAsync` for single document translation requests.
+- Added dependency-injection and hosting support via `DocumentTranslationClientHostExtensions`, `SingleDocumentTranslationClientHostExtensions`, the `DocumentTranslationClientSettings` and `SingleDocumentTranslationClientSettings` types, and new constructors that accept these settings.
 
 ### Breaking Changes
 
-- Removed the `V2024_11_01_Preview` and `V2025_12_01_Preview` preview service versions from `DocumentTranslationClientOptions.ServiceVersion`. Use the stable `V2026_03_01` version instead.
-- Added a `deploymentName` parameter (positioned after `category`) to the `SingleDocumentTranslationClient.Translate` and `TranslateAsync` overloads. This is a binary-breaking change for existing callers.
+- Changed the default `DocumentTranslationClientOptions.ServiceVersion` from `V2024_05_01` to `V2026_03_01`, and removed the interim `V2024_11_01_Preview` and `V2025_12_01_Preview` preview service versions. Use the stable `V2026_03_01` version instead.
+- Added `deploymentName` and `translateTextWithinImage` parameters (positioned after `category`) to the `SingleDocumentTranslationClient.Translate` and `TranslateAsync` overloads. This is a binary-breaking change for existing callers.
+- Renamed the `DocumentTranslateContent` single-argument constructor parameter from `document` to `multipartDocument`. This is a source-breaking change for callers using named arguments.
+
+### Other Changes
+
+- Regenerated the library with the latest Azure code generator, adding the `AzureAITranslationDocumentContext` model-reader-writer context and additional serialization conversion operators on model types.
 
 ## 2.0.0 (2024-11-15)
 
@@ -93,7 +101,7 @@
   - property `DocumentsCancelled` to `DocumentsCanceled` in `TranslationStatusResult`
   - value `Cancelled` to `Canceled` in `DocumentTranslationOperation`
   - value `Cancelling` to `Canceling` in `DocumentTranslationOperation`
-  - parameter `Cancelled` to `Canceled` in function `DocumentTranslationModelFactory.TranslationStatus` 
+  - parameter `Cancelled` to `Canceled` in function `DocumentTranslationModelFactory.TranslationStatus`
 
 ### Bugs Fixed
 - `GetDocumentStasus` and `GetDocumentStatusesAsync` no longer set CreatedAfter and CreatedBefore if the user doesn't set it.
@@ -103,7 +111,7 @@
 
 ### Features Added
 - Added filtering options to methods `GetAllTranslationStatuses`, `GetAllDocumentStatuses` and their async equivalent.
-- Added `DocumentTranslationModelFactory` static class to support mocking model types. 
+- Added `DocumentTranslationModelFactory` static class to support mocking model types.
 
 ### Breaking Changes
 - Properties `Suffix` and `Prefix` are now available under `TranslationSource` instead of in type `DocumentFilter`.

@@ -50,7 +50,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="totalImageScansFailed"> Total image scans failed. </param>
         /// <param name="imageCharged"> Images charged by the API. </param>
         /// <param name="imageCharacterDetected"> Characters detected within images. </param>
-        /// <param name="deploymentName"> Deployment name of the custom translation model or LLM model used for the translation. </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model used for the translation. </param>
         /// <param name="error">
         /// This contains an outer error with error code, message, details, target and an
         /// inner error with more descriptive details.
@@ -88,7 +88,7 @@ namespace Azure.AI.Translation.Document
         /// <summary> Characters detected within images. </summary>
         public int? ImageCharacterDetected { get; }
 
-        /// <summary> Deployment name of the custom translation model or LLM model used for the translation. </summary>
+        /// <summary> Deployment name of the custom translation model used for the translation. </summary>
         public string DeploymentName { get; }
     }
 }
