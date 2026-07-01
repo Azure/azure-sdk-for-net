@@ -1,0 +1,75 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Management.ServiceGroup",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+      "resourceType": "Microsoft.Management/serviceGroups",
+      "methods": [
+        {
+          "methodId": "Microsoft.Management.ServiceGroups.createOrUpdateServiceGroup",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Management.ServiceGroups.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Management.ServiceGroups.updateServiceGroup",
+          "kind": "Update",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Management.ServiceGroups.deleteServiceGroup",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.Management.ServiceGroups.listAncestors",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/listAncestors",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "ServiceGroup",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9\\-_().]{1,90}$"
+      },
+      "apiVersions": [
+        "2024-02-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": []
+}

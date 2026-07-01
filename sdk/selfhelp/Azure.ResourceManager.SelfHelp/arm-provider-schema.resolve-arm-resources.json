@@ -1,0 +1,282 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Help.DiagnosticResource",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}",
+      "resourceType": "Microsoft.Help/diagnostics",
+      "methods": [
+        {
+          "methodId": "Microsoft.Help.DiagnosticResources.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.DiagnosticResources.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "DiagnosticResource",
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9-+@()_]+$",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "apiVersions": [
+        "2024-03-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Help.SolutionResource",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}",
+      "resourceType": "Microsoft.Help/solutions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Help.SolutionResources.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.SolutionResources.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.SolutionResources.update",
+          "kind": "Update",
+          "operationPath": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.SolutionResources.warmUp",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}/warmup",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "SolutionResource",
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9-+@()_]+$",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "apiVersions": [
+        "2024-03-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Help.SimplifiedSolutionsResource",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}",
+      "resourceType": "Microsoft.Help/simplifiedSolutions",
+      "methods": [
+        {
+          "methodId": "Microsoft.Help.SimplifiedSolutionsResources.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.SimplifiedSolutionsResources.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "SimplifiedSolutionsResource",
+      "nameConstraints": {
+        "pattern": "^[A-Za-z0-9-+@()_]+$",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "apiVersions": [
+        "2024-03-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Help.TroubleshooterResource",
+      "resourceIdPattern": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}",
+      "resourceType": "Microsoft.Help/troubleshooters",
+      "methods": [
+        {
+          "methodId": "Microsoft.Help.TroubleshooterResources.create",
+          "kind": "Create",
+          "operationPath": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.TroubleshooterResources.get",
+          "kind": "Read",
+          "operationPath": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.TroubleshooterResources.continue",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/continue",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.TroubleshooterResources.end",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/end",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}"
+          }
+        },
+        {
+          "methodId": "Microsoft.Help.TroubleshooterResources.restart",
+          "kind": "Action",
+          "operationPath": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}/restart",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      },
+      "resourceName": "TroubleshooterResource",
+      "nameConstraints": {
+        "pattern": "([A-Za-z0-9]+(-[A-Za-z0-9]+)+)",
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "apiVersions": [
+        "2024-03-01-preview"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.Help.SolutionResourceSelfHelp",
+      "resourceIdPattern": "/providers/Microsoft.Help/selfHelp/{solutionId}",
+      "resourceType": "Microsoft.Help/selfHelp",
+      "methods": [
+        {
+          "methodId": "Microsoft.Help.SolutionResourceSelfHelps.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Help/selfHelp/{solutionId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.Help/selfHelp/{solutionId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantSolutionResourceSelfHelp",
+      "nameConstraints": {
+        "minLength": 1,
+        "maxLength": 100
+      },
+      "apiVersions": [
+        "2024-03-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Azure.ResourceManager.Operations.list",
+      "operationPath": "/providers/Microsoft.Help/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Help.CheckNameAvailabilityOperationGroup.checkNameAvailability",
+      "operationPath": "/{scope}/providers/Microsoft.Help/checkNameAvailability",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{scope}"
+      }
+    },
+    {
+      "methodId": "Microsoft.Help.DiscoverySolutionOperationGroup.list",
+      "operationPath": "/providers/Microsoft.Help/discoverySolutions",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Help.DiscoverySolutionNLPOperationGroup.discoverSolutions",
+      "operationPath": "/providers/Microsoft.Help/discoverSolutions",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.Help.DiscoverySolutionNLPOperationGroup.discoverSolutionsBySubscription",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.Help/discoverSolutions",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    }
+  ]
+}
