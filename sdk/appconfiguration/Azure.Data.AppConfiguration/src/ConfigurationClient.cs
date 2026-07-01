@@ -1475,7 +1475,7 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            string resourceType = selector.ResourceType?.ToString();
+            string resourceType = GetResourceTypeValue(selector.ResourceType);
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, resourceType, context);
@@ -1495,12 +1495,20 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            string resourceType = selector.ResourceType?.ToString();
+            string resourceType = GetResourceTypeValue(selector.ResourceType);
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, resourceType, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
+
+        private static string GetResourceTypeValue(SettingLabelResourceType? resourceType) => resourceType switch
+        {
+            null => null,
+            SettingLabelResourceType.KeyValue => "kv",
+            SettingLabelResourceType.FeatureFlag => "ff",
+            _ => throw new ArgumentOutOfRangeException(nameof(resourceType), resourceType, "Unknown resource type."),
+        };
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {

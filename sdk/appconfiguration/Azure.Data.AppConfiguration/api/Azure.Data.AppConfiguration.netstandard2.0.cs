@@ -555,21 +555,10 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SettingLabelResourceType : System.IEquatable<Azure.Data.AppConfiguration.SettingLabelResourceType>
+    public enum SettingLabelResourceType
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SettingLabelResourceType(string value) { throw null; }
-        public static Azure.Data.AppConfiguration.SettingLabelResourceType FeatureFlag { get { throw null; } }
-        public static Azure.Data.AppConfiguration.SettingLabelResourceType KeyValue { get { throw null; } }
-        public bool Equals(Azure.Data.AppConfiguration.SettingLabelResourceType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.AppConfiguration.SettingLabelResourceType left, Azure.Data.AppConfiguration.SettingLabelResourceType right) { throw null; }
-        public static implicit operator Azure.Data.AppConfiguration.SettingLabelResourceType (string value) { throw null; }
-        public static bool operator !=(Azure.Data.AppConfiguration.SettingLabelResourceType left, Azure.Data.AppConfiguration.SettingLabelResourceType right) { throw null; }
-        public override string ToString() { throw null; }
+        KeyValue = 0,
+        FeatureFlag = 1,
     }
     public partial class SettingLabelSelector
     {
