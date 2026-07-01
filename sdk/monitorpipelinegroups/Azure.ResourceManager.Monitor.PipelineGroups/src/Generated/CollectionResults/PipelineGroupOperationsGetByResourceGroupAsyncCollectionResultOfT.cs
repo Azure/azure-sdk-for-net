@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                     yield break;
                 }
                 PipelineGroupListResult result = PipelineGroupListResult.FromResponse(response);
-                yield return Page<PipelineGroupData>.FromValues((IReadOnlyList<PipelineGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PipelineGroupData>.FromValues((IReadOnlyList<PipelineGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

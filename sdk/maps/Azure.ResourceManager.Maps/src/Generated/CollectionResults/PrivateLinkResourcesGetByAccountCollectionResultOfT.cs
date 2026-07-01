@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Maps
                     yield break;
                 }
                 PrivateLinkResourceList result = PrivateLinkResourceList.FromResponse(response);
-                yield return Page<MapsPrivateLinkResourceData>.FromValues((IReadOnlyList<MapsPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MapsPrivateLinkResourceData>.FromValues((IReadOnlyList<MapsPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
