@@ -45,7 +45,7 @@ namespace RandomNamespace
         }
 
         [Test]
-        public async Task AZC0006NotProducedForClientsWithoutOptionsCtorWithArguments()
+        public async Task AZC0006NotProducedWhenOptionsParameterIsOptional()
         {
             const string code = @"
 namespace RandomNamespace
