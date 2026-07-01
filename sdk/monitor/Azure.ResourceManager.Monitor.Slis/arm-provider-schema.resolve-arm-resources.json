@@ -1,0 +1,75 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.Monitor.Sli",
+      "resourceIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+      "resourceType": "Microsoft.Monitor/slis",
+      "methods": [
+        {
+          "methodId": "Microsoft.Monitor.Slis.createOrUpdate",
+          "kind": "Create",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Monitor.Slis.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Monitor.Slis.delete",
+          "kind": "Delete",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis/{sliName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        },
+        {
+          "methodId": "Microsoft.Monitor.Slis.listByParent",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/slis",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+            "scopeResourceType": "Microsoft.Management/serviceGroups"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      },
+      "resourceName": "Sli",
+      "nameConstraints": {
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_()~-]{2,63}$"
+      },
+      "apiVersions": [
+        "2025-03-01-preview"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.Monitor.SloView.sliSignalPreview",
+      "operationPath": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Monitor/sliSignalPreview",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{serviceGroupName}",
+        "scopeResourceType": "Microsoft.Management/serviceGroups"
+      }
+    }
+  ]
+}
