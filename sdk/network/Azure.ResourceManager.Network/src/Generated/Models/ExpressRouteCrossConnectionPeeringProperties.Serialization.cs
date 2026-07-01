@@ -134,20 +134,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(GatewayManagerEtag))
+            if (Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
-                writer.WriteStringValue(GatewayManagerEtag);
+                writer.WriteStringValue(GatewayManagerETag);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(Ipv6PeeringConfig))
+            if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue(Ipv6PeeringConfig, options);
+                writer.WriteObjectValue(IPv6PeeringConfig, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.Network.Models
             int? vlanId = default;
             ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
             NetworkProvisioningState? provisioningState = default;
-            string gatewayManagerEtag = default;
+            string gatewayManagerETag = default;
             string lastModifiedBy = default;
-            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("gatewayManagerEtag"u8))
                 {
-                    gatewayManagerEtag = prop.Value.GetString();
+                    gatewayManagerETag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
+                    iPv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Network.Models
                 vlanId,
                 microsoftPeeringConfig,
                 provisioningState,
-                gatewayManagerEtag,
+                gatewayManagerETag,
                 lastModifiedBy,
-                ipv6PeeringConfig,
+                iPv6PeeringConfig,
                 additionalBinaryDataProperties);
         }
     }

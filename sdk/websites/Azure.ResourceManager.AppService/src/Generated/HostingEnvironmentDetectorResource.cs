@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a HostingEnvironmentDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostingEnvironmentDetectorResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHostingEnvironmentDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource"/> using the GetHostingEnvironmentDetector method.
+    /// A class representing a HostingEnvironmentDetector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostingEnvironmentDetectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource"/> using the GetHostingEnvironmentDetectors method.
     /// </summary>
     public partial class HostingEnvironmentDetectorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentDetectorResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="detectorName"> The detectorName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string detectorName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hostingEnvironmentDetectorDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _hostingEnvironmentDetectorDiagnosticsRestClient;
+        private readonly ClientDiagnostics _detectorResponsesClientDiagnostics;
+        private readonly DetectorResponses _detectorResponsesRestClient;
         private readonly AppServiceDetectorData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/detectors";
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HostingEnvironmentDetectorResource for mocking. </summary>
         protected HostingEnvironmentDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HostingEnvironmentDetectorResource(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)
@@ -54,58 +43,72 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HostingEnvironmentDetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hostingEnvironmentDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
-            _hostingEnvironmentDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentDetectorDiagnosticsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hostingEnvironmentDetectorApiVersion);
+            _detectorResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _detectorResponsesRestClient = new DetectorResponses(_detectorResponsesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentDetectorApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppServiceDetectorData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="detectorName"> The detectorName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string detectorName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get Hosting Environment Detector Response
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostingEnvironmentDetectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,15 +116,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorResource.Get");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorResource.Get");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,20 +146,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get Hosting Environment Detector Response
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostingEnvironmentDetectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,15 +167,23 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HostingEnvironmentDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentDetectorResource> Get(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorResource.Get");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorResource.Get");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

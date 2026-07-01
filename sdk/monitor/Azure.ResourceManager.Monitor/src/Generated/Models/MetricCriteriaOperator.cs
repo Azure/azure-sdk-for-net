@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MetricCriteriaOperator : IEquatable<MetricCriteriaOperator>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValueValue = "Equals";
+        /// <summary> GreaterThan. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> GreaterThanOrEqual. </summary>
+        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
+        /// <summary> LessThan. </summary>
+        private const string LessThanValue = "LessThan";
+        /// <summary> LessThanOrEqual. </summary>
+        private const string LessThanOrEqualValue = "LessThanOrEqual";
 
         /// <summary> Initializes a new instance of <see cref="MetricCriteriaOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetricCriteriaOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "Equals";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
-        private const string LessThanValue = "LessThan";
-        private const string LessThanOrEqualValue = "LessThanOrEqual";
+            _value = value;
+        }
 
         /// <summary> Equals. </summary>
         public static MetricCriteriaOperator EqualsValue { get; } = new MetricCriteriaOperator(EqualsValueValue);
+
         /// <summary> GreaterThan. </summary>
         public static MetricCriteriaOperator GreaterThan { get; } = new MetricCriteriaOperator(GreaterThanValue);
+
         /// <summary> GreaterThanOrEqual. </summary>
         public static MetricCriteriaOperator GreaterThanOrEqual { get; } = new MetricCriteriaOperator(GreaterThanOrEqualValue);
+
         /// <summary> LessThan. </summary>
         public static MetricCriteriaOperator LessThan { get; } = new MetricCriteriaOperator(LessThanValue);
+
         /// <summary> LessThanOrEqual. </summary>
         public static MetricCriteriaOperator LessThanOrEqual { get; } = new MetricCriteriaOperator(LessThanOrEqualValue);
+
         /// <summary> Determines if two <see cref="MetricCriteriaOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetricCriteriaOperator left, MetricCriteriaOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetricCriteriaOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetricCriteriaOperator left, MetricCriteriaOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricCriteriaOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetricCriteriaOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetricCriteriaOperator(string value) => new MetricCriteriaOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetricCriteriaOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetricCriteriaOperator?(string value) => value == null ? null : new MetricCriteriaOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetricCriteriaOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetricCriteriaOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

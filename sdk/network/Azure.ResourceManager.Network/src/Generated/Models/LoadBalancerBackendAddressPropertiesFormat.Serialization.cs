@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet, options);
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceIPConfiguration))
             {

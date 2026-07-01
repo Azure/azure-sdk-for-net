@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(addressPrefixes, nameof(addressPrefixes));
 
-            IpAddressType = new ChangeTrackingList<IpamIPType>();
+            IPAddressType = new ChangeTrackingList<IpamIPType>();
             AddressPrefixes = addressPrefixes.ToList();
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Description = description;
             DisplayName = displayName;
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             ParentPoolName = parentPoolName;
             AddressPrefixes = addressPrefixes;
             ProvisioningState = provisioningState;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of IP address type for the IpamPool. </summary>
         [WirePath("ipAddressType")]
-        public IReadOnlyList<IpamIPType> IpAddressType { get; }
+        public IReadOnlyList<IpamIPType> IPAddressType { get; }
 
         /// <summary> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </summary>
         [WirePath("parentPoolName")]

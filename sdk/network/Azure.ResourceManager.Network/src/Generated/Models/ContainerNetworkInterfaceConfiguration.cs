@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of ip configurations of the container network interface configuration. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<NetworkIPConfigurationProfile> IpConfigurations
+        public IList<NetworkIPConfigurationProfile> IPConfigurations
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ContainerNetworkInterfaceConfigurationPropertiesFormat();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

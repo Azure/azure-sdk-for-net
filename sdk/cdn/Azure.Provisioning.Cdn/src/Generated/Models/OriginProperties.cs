@@ -247,6 +247,10 @@ namespace Azure.Provisioning.Cdn
             _privateLinkResourceId = DefineProperty<ResourceIdentifier>(nameof(PrivateLinkResourceId), new string[] { "privateLinkResourceId" });
             _privateLinkLocation = DefineProperty<string>(nameof(PrivateLinkLocation), new string[] { "privateLinkLocation" });
             _privateLinkApprovalMessage = DefineProperty<string>(nameof(PrivateLinkApprovalMessage), new string[] { "privateLinkApprovalMessage" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for OriginProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

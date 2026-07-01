@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string galleryInVmAccessControlProfileApiVersion);
             _galleryInVMAccessControlProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _galleryInVMAccessControlProfilesRestClient = new GalleryInVMAccessControlProfiles(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, Endpoint, galleryInVmAccessControlProfileApiVersion ?? "2025-03-03");
+            _galleryInVMAccessControlProfilesRestClient = new GalleryInVMAccessControlProfiles(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, Endpoint, galleryInVmAccessControlProfileApiVersion ?? "2025-12-03");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

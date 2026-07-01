@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Batch
             _relativeMountPath = DefineProperty<string>(nameof(RelativeMountPath), new string[] { "relativeMountPath" }, isRequired: true);
             _mountOptions = DefineProperty<string>(nameof(MountOptions), new string[] { "mountOptions" });
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchCifsMountConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

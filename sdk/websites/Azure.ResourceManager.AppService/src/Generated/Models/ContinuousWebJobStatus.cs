@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Job status.
-    /// Serialized Name: ContinuousWebJobStatus
-    /// </summary>
+    /// <summary> Job status. </summary>
     public enum ContinuousWebJobStatus
     {
-        /// <summary>
-        /// Initializing
-        /// Serialized Name: ContinuousWebJobStatus.Initializing
-        /// </summary>
+        /// <summary> Initializing. </summary>
         Initializing,
-        /// <summary>
-        /// Starting
-        /// Serialized Name: ContinuousWebJobStatus.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         Starting,
-        /// <summary>
-        /// Running
-        /// Serialized Name: ContinuousWebJobStatus.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         Running,
-        /// <summary>
-        /// PendingRestart
-        /// Serialized Name: ContinuousWebJobStatus.PendingRestart
-        /// </summary>
+        /// <summary> PendingRestart. </summary>
         PendingRestart,
-        /// <summary>
-        /// Stopped
-        /// Serialized Name: ContinuousWebJobStatus.Stopped
-        /// </summary>
+        /// <summary> Stopped. </summary>
         Stopped
     }
 }

@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Cdn
             DefineProperty<string>("type", new string[] { "type" }, defaultValue: "WebApplicationFirewall");
             _wafPolicy = DefineModelProperty<CdnResourceReference>(nameof(WafPolicy), new string[] { "wafPolicy" });
             _associations = DefineListProperty<SecurityPolicyWebApplicationFirewallAssociation>(nameof(Associations), new string[] { "associations" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecurityPolicyWebApplicationFirewall that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

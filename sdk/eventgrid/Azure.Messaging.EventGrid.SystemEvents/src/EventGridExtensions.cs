@@ -23,9 +23,15 @@ namespace Azure.Messaging.EventGrid
         public static bool TryGetSystemEventData(this CloudEvent cloudEvent, out object eventData)
         {
             BinaryData data = cloudEvent.Data;
+            if (data == null)
+            {
+                eventData = null;
+                return false;
+            }
+
             try
             {
-                JsonDocument requestDocument = JsonDocument.Parse(data.ToMemory());
+                using JsonDocument requestDocument = JsonDocument.Parse(data.ToMemory());
                 eventData = SystemEventExtensions.AsSystemEventData(cloudEvent.Type, requestDocument.RootElement);
                 return eventData != null;
             }

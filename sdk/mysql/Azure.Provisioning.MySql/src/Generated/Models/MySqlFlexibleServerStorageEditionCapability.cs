@@ -107,6 +107,10 @@ namespace Azure.Provisioning.MySql
             _maxBackupRetentionDays = DefineProperty<long>(nameof(MaxBackupRetentionDays), new string[] { "maxBackupRetentionDays" }, isOutput: true);
             _minBackupIntervalHours = DefineProperty<long>(nameof(MinBackupIntervalHours), new string[] { "minBackupIntervalHours" }, isOutput: true);
             _maxBackupIntervalHours = DefineProperty<long>(nameof(MaxBackupIntervalHours), new string[] { "maxBackupIntervalHours" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MySqlFlexibleServerStorageEditionCapability that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

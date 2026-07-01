@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixPropertiesFormat"/>. </summary>
         public PublicIPPrefixPropertiesFormat()
         {
-            IpTags = new ChangeTrackingList<IPTag>();
+            IPTags = new ChangeTrackingList<IPTag>();
             PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIpAddress>();
         }
 
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="prefixLength"> The Length of the Public IP Prefix. </param>
         /// <param name="ipPrefix"> The allocated Prefix. </param>
         /// <param name="publicIPAddresses"> The list of all referenced PublicIPAddresses. </param>
-        /// <param name="loadBalancerFrontendIpConfiguration"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
+        /// <param name="loadBalancerFrontendIPConfiguration"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
         /// <param name="customIPPrefix"> The customIpPrefix that this prefix is associated with. </param>
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIpConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIPConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PrefixLength = prefixLength;
-            IpPrefix = ipPrefix;
+            IPPrefix = ipPrefix;
             PublicIPAddresses = publicIPAddresses;
-            LoadBalancerFrontendIpConfiguration = loadBalancerFrontendIpConfiguration;
+            LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             CustomIPPrefix = customIPPrefix;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of tags associated with the public IP prefix. </summary>
         [WirePath("ipTags")]
-        public IList<IPTag> IpTags { get; } = new ChangeTrackingList<IPTag>();
+        public IList<IPTag> IPTags { get; } = new ChangeTrackingList<IPTag>();
 
         /// <summary> The Length of the Public IP Prefix. </summary>
         [WirePath("prefixLength")]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The allocated Prefix. </summary>
         [WirePath("ipPrefix")]
-        public string IpPrefix { get; }
+        public string IPPrefix { get; }
 
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
         [WirePath("publicIPAddresses")]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         [WirePath("loadBalancerFrontendIpConfiguration")]
-        internal NetworkSubResource LoadBalancerFrontendIpConfiguration { get; }
+        internal NetworkSubResource LoadBalancerFrontendIPConfiguration { get; }
 
         /// <summary> The customIpPrefix that this prefix is associated with. </summary>
         [WirePath("customIPPrefix")]
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("loadBalancerFrontendIpConfiguration.id")]
-        public ResourceIdentifier LoadBalancerFrontendIpConfigurationId
+        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
             get
             {
-                return LoadBalancerFrontendIpConfiguration is null ? default : LoadBalancerFrontendIpConfiguration.Id;
+                return LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
             }
         }
 

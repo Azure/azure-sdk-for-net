@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class DeletedSiteResource : IJsonModel<DeletedSiteData>
     {
-        private static DeletedSiteData s_dataDeserializationInstance;
-        private static DeletedSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeletedSiteData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeletedSiteData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeletedSiteData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeletedSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedSiteData>)Data).Write(writer, options);
 
-        DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedSiteData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedSiteData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedSiteData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

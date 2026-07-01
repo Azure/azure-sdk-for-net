@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Completed. </summary>
         Completed,
         /// <summary> Faulted. </summary>
-        Faulted
+        Faulted,
+        /// <summary> RollingBack. </summary>
+        RollingBack
     }
 }

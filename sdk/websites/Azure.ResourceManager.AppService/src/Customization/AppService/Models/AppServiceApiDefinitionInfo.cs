@@ -3,27 +3,11 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.AppService.Models
 {
+    // The generated AppServiceApiDefinitionInfo is internal (flattened into SiteConfig/SiteConfigProperties).
+    // No customization needed; this file is intentionally minimal.
     internal partial class AppServiceApiDefinitionInfo
     {
-        // Add this property back to avoid breaking change with the fix for issue #56828
-        /// <summary>
-        /// The URL of the API definition.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri Uri
-        {
-            get
-            {
-                if (ApiDefinitionUriStringValue is null)
-                    return null;
-                return Uri.TryCreate(ApiDefinitionUriStringValue, UriKind.Absolute, out var uri) ? uri : null;
-            }
-            set => ApiDefinitionUriStringValue = value?.AbsoluteUri;
-        }
     }
 }

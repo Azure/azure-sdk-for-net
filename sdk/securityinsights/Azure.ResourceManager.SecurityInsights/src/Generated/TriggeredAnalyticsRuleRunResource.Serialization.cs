@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class TriggeredAnalyticsRuleRunResource : IJsonModel<TriggeredAnalyticsRuleRunData>
     {
-        private static TriggeredAnalyticsRuleRunData s_dataDeserializationInstance;
-        private static TriggeredAnalyticsRuleRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TriggeredAnalyticsRuleRunData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TriggeredAnalyticsRuleRunData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TriggeredAnalyticsRuleRunData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TriggeredAnalyticsRuleRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredAnalyticsRuleRunData>)Data).Write(writer, options);
 
-        TriggeredAnalyticsRuleRunData IJsonModel<TriggeredAnalyticsRuleRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredAnalyticsRuleRunData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TriggeredAnalyticsRuleRunData IJsonModel<TriggeredAnalyticsRuleRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TriggeredAnalyticsRuleRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TriggeredAnalyticsRuleRunData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TriggeredAnalyticsRuleRunData IPersistableModel<TriggeredAnalyticsRuleRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredAnalyticsRuleRunData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<TriggeredAnalyticsRuleRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredAnalyticsRuleRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TriggeredAnalyticsRuleRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

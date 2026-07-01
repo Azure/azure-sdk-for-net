@@ -9,7 +9,9 @@ param (
     [Parameter(Mandatory=$true, ParameterSetName='PackagePath')]
     [string] $PackagePath,
     [Parameter(Mandatory=$true, ParameterSetName='PackagePath')]
-    [string] $SdkRepoPath
+    [string] $SdkRepoPath,
+
+    [string] $ProjectListOverrideFile = ""
 )
 
 if ($SpellCheckPublicApiSurface -and -not (Get-Command 'npx')) {
@@ -33,7 +35,14 @@ $debugLogging = $env:SYSTEM_DEBUG -eq "true"
 $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
 $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/exportapi.binlog" : ""
 
-Invoke-LoggedMsbuildCommand "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope=`"$relativePackagePath`" /p:SDKType=$SDKType /restore $servicesProj $diagnosticArguments"
+# When a project list override file is supplied, scope the API export build to only those projects
+# instead of every package in the service directory ($(Scope) is then ignored for project selection).
+$projectListOverrideArgument = ""
+if ($ProjectListOverrideFile) {
+    $projectListOverrideArgument = "/p:ProjectListOverrideFile=`"$ProjectListOverrideFile`""
+}
+
+Invoke-LoggedMsbuildCommand "dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope=`"$relativePackagePath`" /p:SDKType=$SDKType $projectListOverrideArgument /restore $servicesProj $diagnosticArguments"
 
 # Normalize line endings to LF in generated API listing files
 Write-Host "Normalizing line endings in API listing files"

@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _revision = DefineProperty<string>(nameof(Revision), new string[] { "revision" });
             _upgrades = DefineListProperty<string>(nameof(Upgrades), new string[] { "upgrades" });
             _compatibleWith = DefineListProperty<CompatibleVersions>(nameof(CompatibleWith), new string[] { "compatibleWith" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MeshRevision that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

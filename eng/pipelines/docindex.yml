@@ -121,6 +121,7 @@ jobs:
             TargetRepoName: $(DocRepoName)
             TargetRepoOwner: $(DocRepoOwner)
             WorkingDirectory: $(DocRepoLocation)
+            AuthToken: ''
 
         - task: AzureCLI@2
           displayName: Queue Docs CI build for main branch
@@ -216,6 +217,7 @@ jobs:
             WorkingDirectory: $(DocRepoLocation)
             ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
             PushArgs: -f
+            AuthToken: ''
 
         - task: AzureCLI@2
           displayName: Queue Docs CI build

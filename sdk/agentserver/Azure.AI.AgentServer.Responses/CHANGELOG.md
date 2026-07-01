@@ -3,6 +3,7 @@
 ## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state.
 
 ### Breaking Changes
 

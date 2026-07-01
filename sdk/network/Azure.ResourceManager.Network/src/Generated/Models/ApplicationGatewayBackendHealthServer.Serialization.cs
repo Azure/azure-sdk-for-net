@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(IpConfiguration))
+            if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IpConfiguration, options);
+                writer.WriteObjectValue(IPConfiguration, options);
             }
             if (Optional.IsDefined(Health))
             {

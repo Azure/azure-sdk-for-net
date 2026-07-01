@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ScheduledQueryRuleCondition : IUtf8JsonSerializable, IJsonModel<ScheduledQueryRuleCondition>
+    /// <summary> A condition of the scheduled query rule. </summary>
+    public partial class ScheduledQueryRuleCondition : IJsonModel<ScheduledQueryRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledQueryRuleCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScheduledQueryRuleCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScheduledQueryRuleCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduledQueryRuleCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledQueryRuleCondition IPersistableModel<ScheduledQueryRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScheduledQueryRuleCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduledQueryRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support writing '{format}' format.");
             }
-
+            if (Optional.IsDefined(CriterionType))
+            {
+                writer.WritePropertyName("criterionType"u8);
+                writer.WriteStringValue(CriterionType.Value.ToString());
+            }
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
@@ -58,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Dimensions)
+                foreach (MonitorDimension item in Dimensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -74,6 +119,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
+            if (Optional.IsDefined(AlertSensitivity))
+            {
+                writer.WritePropertyName("alertSensitivity"u8);
+                writer.WriteStringValue(AlertSensitivity);
+            }
+            if (Optional.IsDefined(IgnoreDataBefore))
+            {
+                writer.WritePropertyName("ignoreDataBefore"u8);
+                writer.WriteStringValue(IgnoreDataBefore.Value, "O");
+            }
             if (Optional.IsDefined(FailingPeriods))
             {
                 writer.WritePropertyName("failingPeriods"u8);
@@ -84,15 +139,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(MinRecurrenceCount))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("minRecurrenceCount"u8);
+                writer.WriteNumberValue(MinRecurrenceCount.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,26 +161,32 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        ScheduledQueryRuleCondition IJsonModel<ScheduledQueryRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduledQueryRuleCondition IJsonModel<ScheduledQueryRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScheduledQueryRuleCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScheduledQueryRuleCondition(document.RootElement, options);
         }
 
-        internal static ScheduledQueryRuleCondition DeserializeScheduledQueryRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScheduledQueryRuleCondition DeserializeScheduledQueryRuleCondition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ScheduledQueryRuleCriterionType? criterionType = default;
             string query = default;
             ScheduledQueryRuleTimeAggregationType? timeAggregation = default;
             string metricMeasureColumn = default;
@@ -128,89 +194,123 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorDimension> dimensions = default;
             MonitorConditionOperator? @operator = default;
             double? threshold = default;
+            string alertSensitivity = default;
+            DateTimeOffset? ignoreDataBefore = default;
             ConditionFailingPeriods failingPeriods = default;
             string metricName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            long? minRecurrenceCount = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("query"u8))
+                if (prop.NameEquals("criterionType"u8))
                 {
-                    query = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeAggregation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeAggregation = new ScheduledQueryRuleTimeAggregationType(property.Value.GetString());
+                    criterionType = new ScheduledQueryRuleCriterionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("metricMeasureColumn"u8))
+                if (prop.NameEquals("query"u8))
                 {
-                    metricMeasureColumn = property.Value.GetString();
+                    query = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceIdColumn"u8))
+                if (prop.NameEquals("timeAggregation"u8))
                 {
-                    resourceIdColumn = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeAggregation = new ScheduledQueryRuleTimeAggregationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dimensions"u8))
+                if (prop.NameEquals("metricMeasureColumn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    metricMeasureColumn = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceIdColumn"u8))
+                {
+                    resourceIdColumn = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dimensions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorDimension> array = new List<MonitorDimension>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorDimension.DeserializeMonitorDimension(item, options));
                     }
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("operator"u8))
+                if (prop.NameEquals("operator"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @operator = property.Value.GetString().ToMonitorConditionOperator();
+                    @operator = prop.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
-                if (property.NameEquals("threshold"u8))
+                if (prop.NameEquals("threshold"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threshold = property.Value.GetDouble();
+                    threshold = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("failingPeriods"u8))
+                if (prop.NameEquals("alertSensitivity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    alertSensitivity = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ignoreDataBefore"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failingPeriods = ConditionFailingPeriods.DeserializeConditionFailingPeriods(property.Value, options);
+                    ignoreDataBefore = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("metricName"u8))
+                if (prop.NameEquals("failingPeriods"u8))
                 {
-                    metricName = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failingPeriods = ConditionFailingPeriods.DeserializeConditionFailingPeriods(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("metricName"u8))
+                {
+                    metricName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("minRecurrenceCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minRecurrenceCount = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledQueryRuleCondition(
+                criterionType,
                 query,
                 timeAggregation,
                 metricMeasureColumn,
@@ -218,40 +318,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 dimensions ?? new ChangeTrackingList<MonitorDimension>(),
                 @operator,
                 threshold,
+                alertSensitivity,
+                ignoreDataBefore,
                 failingPeriods,
                 metricName,
-                serializedAdditionalRawData);
+                minRecurrenceCount,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ScheduledQueryRuleCondition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ScheduledQueryRuleCondition IPersistableModel<ScheduledQueryRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScheduledQueryRuleCondition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ScheduledQueryRuleCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
