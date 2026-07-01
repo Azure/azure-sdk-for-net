@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 ContextListResult result = ContextListResult.FromResponse(response);
-                yield return Page<EdgeContextData>.FromValues((IReadOnlyList<EdgeContextData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeContextData>.FromValues((IReadOnlyList<EdgeContextData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

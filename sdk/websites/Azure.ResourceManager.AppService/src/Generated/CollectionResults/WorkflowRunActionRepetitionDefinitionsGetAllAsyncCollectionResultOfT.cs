@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WorkflowRunActionRepetitionDefinitionCollection result = WorkflowRunActionRepetitionDefinitionCollection.FromResponse(response);
-                yield return Page<WorkflowRunActionRepetitionDefinitionData>.FromValues((IReadOnlyList<WorkflowRunActionRepetitionDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkflowRunActionRepetitionDefinitionData>.FromValues((IReadOnlyList<WorkflowRunActionRepetitionDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

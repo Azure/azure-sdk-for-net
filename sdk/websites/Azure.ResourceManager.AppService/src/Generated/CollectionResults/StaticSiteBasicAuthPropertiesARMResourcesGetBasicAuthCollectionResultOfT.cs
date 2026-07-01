@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 StaticSiteBasicAuthPropertiesCollection result = StaticSiteBasicAuthPropertiesCollection.FromResponse(response);
-                yield return Page<StaticSiteBasicAuthPropertyData>.FromValues((IReadOnlyList<StaticSiteBasicAuthPropertyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StaticSiteBasicAuthPropertyData>.FromValues((IReadOnlyList<StaticSiteBasicAuthPropertyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

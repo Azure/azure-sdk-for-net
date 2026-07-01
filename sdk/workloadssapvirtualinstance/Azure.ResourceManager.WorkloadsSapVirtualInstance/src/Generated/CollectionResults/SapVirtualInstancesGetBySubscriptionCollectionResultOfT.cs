@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                     yield break;
                 }
                 SAPVirtualInstanceListResult result = SAPVirtualInstanceListResult.FromResponse(response);
-                yield return Page<SapVirtualInstanceData>.FromValues((IReadOnlyList<SapVirtualInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SapVirtualInstanceData>.FromValues((IReadOnlyList<SapVirtualInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
