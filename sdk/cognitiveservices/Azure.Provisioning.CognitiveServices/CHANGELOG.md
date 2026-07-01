@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Regenerated with the TypeSpec-based provisioning generator.
+- Updated default API version to `2026-05-01`.
+
 ### Breaking Changes
+
+- Updated generated types and resource shapes to match the TypeSpec-based generator output. API compatibility mitigations are still being evaluated.
 
 ### Bugs Fixed
 
