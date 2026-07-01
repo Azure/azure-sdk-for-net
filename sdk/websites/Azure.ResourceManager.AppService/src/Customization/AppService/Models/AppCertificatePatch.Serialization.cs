@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppCertificatePatch : IUtf8JsonSerializable, IJsonModel<AppCertificatePatch>
+    public partial class AppCertificatePatch : IJsonModel<AppCertificatePatch>
     {
         internal static AppCertificatePatch DeserializeAppCertificatePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             string friendlyName = default;
             string subjectName = default;
             IList<string> hostNames = default;
-            byte[] pfxBlob = default;
+            BinaryData pfxBlob = default;
             string siteName = default;
             string selfLink = default;
             string issuer = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? expirationDate = default;
             string thumbprintString = default;
             bool? valid = default;
-            byte[] cerBlob = default;
+            BinaryData cerBlob = default;
             string publicKeyHash = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             ResourceIdentifier keyVaultId = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            pfxBlob = property0.Value.GetBytesFromBase64("D");
+                            pfxBlob = BinaryData.FromBytes(property0.Value.GetBytesFromBase64("D"));
                             continue;
                         }
                         if (property0.NameEquals("siteName"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cerBlob = property0.Value.GetBytesFromBase64("D");
+                            cerBlob = BinaryData.FromBytes(property0.Value.GetBytesFromBase64("D"));
                             continue;
                         }
                         if (property0.NameEquals("publicKeyHash"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("keyVaultId"u8))
@@ -264,11 +264,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppCertificatePatch(
-                id,
-                name,
-                type,
-                systemData,
+            CertificatePatchResourceProperties properties = new CertificatePatchResourceProperties(
                 password,
                 friendlyName,
                 subjectName,
@@ -290,8 +286,8 @@ namespace Azure.ResourceManager.AppService.Models
                 serverFarmId,
                 canonicalName,
                 domainValidationMethod,
-                kind,
-                serializedAdditionalRawData);
+                new ChangeTrackingDictionary<string, BinaryData>());
+            return new AppCertificatePatch(id, name, type, systemData, properties, kind, serializedAdditionalRawData);
         }
     }
 }

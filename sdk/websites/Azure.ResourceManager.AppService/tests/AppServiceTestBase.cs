@@ -19,10 +19,15 @@ namespace Azure.ResourceManager.AppService.Tests
 
         public AppServiceTestBase(bool isAsync) : base(isAsync)
         {
+            // After migrating to the TypeSpec generator, operations returning no body no longer send the
+            // "Accept" header. Existing recordings still include it, so allow Accept to differ without
+            // breaking the match.
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         public AppServiceTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [SetUp]

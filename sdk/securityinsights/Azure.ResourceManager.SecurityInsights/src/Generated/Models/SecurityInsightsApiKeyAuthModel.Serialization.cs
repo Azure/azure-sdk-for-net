@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsApiKeyAuthModel : IUtf8JsonSerializable, IJsonModel<SecurityInsightsApiKeyAuthModel>
+    /// <summary> Model for authentication with the API Key. Will result in additional header on the request (default behavior) to the remote server: 'ApiKeyName: ApiKeyIdentifier ApiKey'. If 'IsApiKeyInPostPayload' is true it will send it in the body of the request and not the header. </summary>
+    public partial class SecurityInsightsApiKeyAuthModel : CcpAuthConfig, IJsonModel<SecurityInsightsApiKeyAuthModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsApiKeyAuthModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsApiKeyAuthModel"/> for deserialization. </summary>
+        internal SecurityInsightsApiKeyAuthModel()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CcpAuthConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsApiKeyAuthModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsApiKeyAuthModel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsApiKeyAuthModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsApiKeyAuthModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsApiKeyAuthModel IPersistableModel<SecurityInsightsApiKeyAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityInsightsApiKeyAuthModel)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsApiKeyAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsApiKeyAuthModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsApiKeyAuthModel)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("apiKey"u8);
             writer.WriteStringValue(ApiKey);
@@ -52,222 +96,80 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        SecurityInsightsApiKeyAuthModel IJsonModel<SecurityInsightsApiKeyAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsApiKeyAuthModel IJsonModel<SecurityInsightsApiKeyAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityInsightsApiKeyAuthModel)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CcpAuthConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsApiKeyAuthModel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsApiKeyAuthModel(document.RootElement, options);
         }
 
-        internal static SecurityInsightsApiKeyAuthModel DeserializeSecurityInsightsApiKeyAuthModel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsApiKeyAuthModel DeserializeSecurityInsightsApiKeyAuthModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            CcpAuthType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string apiKey = default;
             string apiKeyName = default;
             string apiKeyIdentifier = default;
             bool? isApiKeyInPostPayload = default;
-            CcpAuthType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("apiKey"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    apiKey = property.Value.GetString();
+                    @type = new CcpAuthType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiKeyName"u8))
+                if (prop.NameEquals("apiKey"u8))
                 {
-                    apiKeyName = property.Value.GetString();
+                    apiKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiKeyIdentifier"u8))
+                if (prop.NameEquals("apiKeyName"u8))
                 {
-                    apiKeyIdentifier = property.Value.GetString();
+                    apiKeyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isApiKeyInPostPayload"u8))
+                if (prop.NameEquals("apiKeyIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    apiKeyIdentifier = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isApiKeyInPostPayload"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isApiKeyInPostPayload = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new CcpAuthType(property.Value.GetString());
+                    isApiKeyInPostPayload = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsApiKeyAuthModel(
-                type,
-                serializedAdditionalRawData,
+                @type,
+                additionalBinaryDataProperties,
                 apiKey,
                 apiKeyName,
                 apiKeyIdentifier,
                 isApiKeyInPostPayload);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiKey))
-                {
-                    builder.Append("  apiKey: ");
-                    if (ApiKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiKeyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiKeyName))
-                {
-                    builder.Append("  apiKeyName: ");
-                    if (ApiKeyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiKeyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiKeyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyIdentifier), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  apiKeyIdentifier: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiKeyIdentifier))
-                {
-                    builder.Append("  apiKeyIdentifier: ");
-                    if (ApiKeyIdentifier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ApiKeyIdentifier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ApiKeyIdentifier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApiKeyInPostPayload), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isApiKeyInPostPayload: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsApiKeyInPostPayload))
-                {
-                    builder.Append("  isApiKeyInPostPayload: ");
-                    var boolValue = IsApiKeyInPostPayload.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{AuthType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsApiKeyAuthModel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsApiKeyAuthModel)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsApiKeyAuthModel IPersistableModel<SecurityInsightsApiKeyAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsApiKeyAuthModel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsApiKeyAuthModel(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsApiKeyAuthModel)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsApiKeyAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

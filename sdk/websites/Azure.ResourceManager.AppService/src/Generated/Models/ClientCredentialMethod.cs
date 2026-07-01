@@ -7,48 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The method that should be used to authenticate the user.
-    /// Serialized Name: OpenIdConnectClientCredentialMethod
-    /// </summary>
+    /// <summary> The method that should be used to authenticate the user. </summary>
     public readonly partial struct ClientCredentialMethod : IEquatable<ClientCredentialMethod>
     {
         private readonly string _value;
+        /// <summary> ClientSecretPost. </summary>
+        private const string ClientSecretPostValue = "ClientSecretPost";
 
         /// <summary> Initializes a new instance of <see cref="ClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClientCredentialMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ClientSecretPostValue = "ClientSecretPost";
-
-        /// <summary>
-        /// ClientSecretPost
-        /// Serialized Name: OpenIdConnectClientCredentialMethod.ClientSecretPost
-        /// </summary>
+        /// <summary> ClientSecretPost. </summary>
         public static ClientCredentialMethod ClientSecretPost { get; } = new ClientCredentialMethod(ClientSecretPostValue);
+
         /// <summary> Determines if two <see cref="ClientCredentialMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClientCredentialMethod left, ClientCredentialMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClientCredentialMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClientCredentialMethod left, ClientCredentialMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClientCredentialMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClientCredentialMethod(string value) => new ClientCredentialMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClientCredentialMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClientCredentialMethod?(string value) => value == null ? null : new ClientCredentialMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClientCredentialMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClientCredentialMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

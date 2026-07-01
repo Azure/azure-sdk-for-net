@@ -8,138 +8,136 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the PremierAddOn data model.
-    /// Premier add-on.
-    /// Serialized Name: PremierAddOn
-    /// </summary>
+    /// <summary> Premier add-on. </summary>
     public partial class PremierAddOnData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PremierAddOnData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: PremierAddOn.kind
-        /// </param>
-        /// <param name="sku">
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOn.properties.sku
-        /// </param>
-        /// <param name="product">
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOn.properties.product
-        /// </param>
-        /// <param name="vendor">
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOn.properties.vendor
-        /// </param>
-        /// <param name="marketplacePublisher">
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOn.properties.marketplacePublisher
-        /// </param>
-        /// <param name="marketplaceOffer">
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOn.properties.marketplaceOffer
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> PremierAddOn resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PremierAddOnProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Kind = kind;
-            Sku = sku;
-            Product = product;
-            Vendor = vendor;
-            MarketplacePublisher = marketplacePublisher;
-            MarketplaceOffer = marketplaceOffer;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PremierAddOnData"/> for deserialization. </summary>
-        internal PremierAddOnData()
-        {
-        }
+        /// <summary> PremierAddOn resource specific properties. </summary>
+        [WirePath("properties")]
+        internal PremierAddOnProperties Properties { get; set; }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: PremierAddOn.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOn.properties.sku
-        /// </summary>
+
+        /// <summary> Premier add on SKU. </summary>
         [WirePath("properties.sku")]
-        public string Sku { get; set; }
-        /// <summary>
-        /// Premier add on Product.
-        /// Serialized Name: PremierAddOn.properties.product
-        /// </summary>
+        public string Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> Premier add on Product. </summary>
         [WirePath("properties.product")]
-        public string Product { get; set; }
-        /// <summary>
-        /// Premier add on Vendor.
-        /// Serialized Name: PremierAddOn.properties.vendor
-        /// </summary>
+        public string Product
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Product;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnProperties();
+                }
+                Properties.Product = value;
+            }
+        }
+
+        /// <summary> Premier add on Vendor. </summary>
         [WirePath("properties.vendor")]
-        public string Vendor { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace publisher.
-        /// Serialized Name: PremierAddOn.properties.marketplacePublisher
-        /// </summary>
+        public string Vendor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vendor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnProperties();
+                }
+                Properties.Vendor = value;
+            }
+        }
+
+        /// <summary> Premier add on Marketplace publisher. </summary>
         [WirePath("properties.marketplacePublisher")]
-        public string MarketplacePublisher { get; set; }
-        /// <summary>
-        /// Premier add on Marketplace offer.
-        /// Serialized Name: PremierAddOn.properties.marketplaceOffer
-        /// </summary>
+        public string MarketplacePublisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplacePublisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnProperties();
+                }
+                Properties.MarketplacePublisher = value;
+            }
+        }
+
+        /// <summary> Premier add on Marketplace offer. </summary>
         [WirePath("properties.marketplaceOffer")]
-        public string MarketplaceOffer { get; set; }
+        public string MarketplaceOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceOffer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PremierAddOnProperties();
+                }
+                Properties.MarketplaceOffer = value;
+            }
+        }
     }
 }

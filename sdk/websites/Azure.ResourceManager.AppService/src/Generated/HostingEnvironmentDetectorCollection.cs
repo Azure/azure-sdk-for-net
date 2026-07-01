@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HostingEnvironmentDetectorCollection : ArmCollection, IEnumerable<HostingEnvironmentDetectorResource>, IAsyncEnumerable<HostingEnvironmentDetectorResource>
     {
-        private readonly ClientDiagnostics _hostingEnvironmentDetectorDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _hostingEnvironmentDetectorDiagnosticsRestClient;
+        private readonly ClientDiagnostics _detectorResponsesClientDiagnostics;
+        private readonly DetectorResponses _detectorResponsesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HostingEnvironmentDetectorCollection for mocking. </summary>
         protected HostingEnvironmentDetectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDetectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HostingEnvironmentDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hostingEnvironmentDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentDetectorResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HostingEnvironmentDetectorResource.ResourceType, out string hostingEnvironmentDetectorDiagnosticsApiVersion);
-            _hostingEnvironmentDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentDetectorDiagnosticsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HostingEnvironmentDetectorResource.ResourceType, out string hostingEnvironmentDetectorApiVersion);
+            _detectorResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentDetectorResource.ResourceType.Namespace, Diagnostics);
+            _detectorResponsesRestClient = new DetectorResponses(_detectorResponsesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentDetectorApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AppServiceEnvironmentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironmentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get Hosting Environment Detector Response
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,19 +76,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -103,20 +110,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get Hosting Environment Detector Response
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,19 +128,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<HostingEnvironmentDetectorResource> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HostingEnvironmentDetectorResource> Get(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,50 +162,50 @@ namespace Azure.ResourceManager.AppService
         /// Description for List Hosting Environment Detector Responses
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_ListHostingEnvironmentDetectorResponses</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_ListHostingEnvironmentDetectorResponses. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostingEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HostingEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppServiceDetectorData, HostingEnvironmentDetectorResource>(new DetectorResponsesGetHostingEnvironmentDetectorResponsesAsyncCollectionResultOfT(
+                _detectorResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostingEnvironmentDetectorCollection.GetAll"), data => new HostingEnvironmentDetectorResource(Client, data));
         }
 
         /// <summary>
         /// Description for List Hosting Environment Detector Responses
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_ListHostingEnvironmentDetectorResponses</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_ListHostingEnvironmentDetectorResponses. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,29 +213,33 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="HostingEnvironmentDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentDetectorDiagnosticsRestClient.CreateListHostingEnvironmentDetectorResponsesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostingEnvironmentDetectorResource(Client, AppServiceDetectorData.DeserializeAppServiceDetectorData(e)), _hostingEnvironmentDetectorDiagnosticsClientDiagnostics, Pipeline, "HostingEnvironmentDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppServiceDetectorData, HostingEnvironmentDetectorResource>(new DetectorResponsesGetHostingEnvironmentDetectorResponsesCollectionResultOfT(
+                _detectorResponsesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostingEnvironmentDetectorCollection.GetAll"), data => new HostingEnvironmentDetectorResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,17 +248,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppServiceDetectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceDetectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,20 +290,16 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,17 +308,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppServiceDetectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceDetectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,20 +350,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,19 +368,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<NullableResponse<HostingEnvironmentDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<HostingEnvironmentDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppServiceDetectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceDetectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HostingEnvironmentDetectorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,20 +414,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// <term> Operation Id. </term>
+        /// <description> DetectorResponses_GetHostingEnvironmentDetectorResponse. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,19 +432,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual NullableResponse<HostingEnvironmentDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<HostingEnvironmentDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeGrain = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _detectorResponsesClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentDetectorDiagnosticsRestClient.GetHostingEnvironmentDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppServiceDetectorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppServiceDetectorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HostingEnvironmentDetectorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,6 +484,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HostingEnvironmentDetectorResource> IAsyncEnumerable<HostingEnvironmentDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

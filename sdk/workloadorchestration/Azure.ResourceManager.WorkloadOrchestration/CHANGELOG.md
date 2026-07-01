@@ -1,18 +1,13 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (2026-06-30)
 
 ### Other Changes
 
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
 ## 1.0.0 (2025-09-01)
-
-
 
 ### Features Added
 
@@ -23,6 +18,5 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - HTTP pipeline with custom policies.
     - Better error-handling.
     - Support uniform telemetry across all languages.
-
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

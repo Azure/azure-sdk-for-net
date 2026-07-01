@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class OracleAuthModel : IUtf8JsonSerializable, IJsonModel<OracleAuthModel>
+    /// <summary> Model for API authentication for Oracle. </summary>
+    public partial class OracleAuthModel : CcpAuthConfig, IJsonModel<OracleAuthModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleAuthModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OracleAuthModel"/> for deserialization. </summary>
+        internal OracleAuthModel()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CcpAuthConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOracleAuthModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleAuthModel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OracleAuthModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OracleAuthModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleAuthModel IPersistableModel<OracleAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options) => (OracleAuthModel)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OracleAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleAuthModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OracleAuthModel)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
@@ -46,214 +90,76 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(PemFile);
         }
 
-        OracleAuthModel IJsonModel<OracleAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OracleAuthModel IJsonModel<OracleAuthModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OracleAuthModel)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CcpAuthConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OracleAuthModel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOracleAuthModel(document.RootElement, options);
         }
 
-        internal static OracleAuthModel DeserializeOracleAuthModel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OracleAuthModel DeserializeOracleAuthModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Guid tenantId = default;
+            CcpAuthType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string tenantId = default;
             string userId = default;
             string publicFingerprint = default;
             string pemFile = default;
-            CcpAuthType type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    tenantId = property.Value.GetGuid();
+                    @type = new CcpAuthType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userId"u8))
+                if (prop.NameEquals("tenantId"u8))
                 {
-                    userId = property.Value.GetString();
+                    tenantId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicFingerprint"u8))
+                if (prop.NameEquals("userId"u8))
                 {
-                    publicFingerprint = property.Value.GetString();
+                    userId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pemFile"u8))
+                if (prop.NameEquals("publicFingerprint"u8))
                 {
-                    pemFile = property.Value.GetString();
+                    publicFingerprint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("pemFile"u8))
                 {
-                    type = new CcpAuthType(property.Value.GetString());
+                    pemFile = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OracleAuthModel(
-                type,
-                serializedAdditionalRawData,
+                @type,
+                additionalBinaryDataProperties,
                 tenantId,
                 userId,
                 publicFingerprint,
                 pemFile);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  tenantId: ");
-                builder.AppendLine($"'{TenantId.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserId))
-                {
-                    builder.Append("  userId: ");
-                    if (UserId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicFingerprint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publicFingerprint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicFingerprint))
-                {
-                    builder.Append("  publicFingerprint: ");
-                    if (PublicFingerprint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PublicFingerprint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PublicFingerprint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PemFile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pemFile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PemFile))
-                {
-                    builder.Append("  pemFile: ");
-                    if (PemFile.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PemFile}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PemFile}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{AuthType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<OracleAuthModel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(OracleAuthModel)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OracleAuthModel IPersistableModel<OracleAuthModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OracleAuthModel>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOracleAuthModel(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OracleAuthModel)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OracleAuthModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

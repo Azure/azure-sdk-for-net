@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WorkflowRunActionRepetitionCollection : ArmCollection, IEnumerable<WorkflowRunActionRepetitionResource>, IAsyncEnumerable<WorkflowRunActionRepetitionResource>
     {
-        private readonly ClientDiagnostics _workflowRunActionRepetitionClientDiagnostics;
-        private readonly WorkflowRunActionRepetitionsRestOperations _workflowRunActionRepetitionRestClient;
+        private readonly ClientDiagnostics _workflowRunActionRepetitionDefinitionsClientDiagnostics;
+        private readonly WorkflowRunActionRepetitionDefinitions _workflowRunActionRepetitionDefinitionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowRunActionRepetitionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkflowRunActionRepetitionCollection for mocking. </summary>
         protected WorkflowRunActionRepetitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowRunActionRepetitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WorkflowRunActionRepetitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workflowRunActionRepetitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionRepetitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkflowRunActionRepetitionResource.ResourceType, out string workflowRunActionRepetitionApiVersion);
-            _workflowRunActionRepetitionRestClient = new WorkflowRunActionRepetitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workflowRunActionRepetitionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _workflowRunActionRepetitionDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionRepetitionResource.ResourceType.Namespace, Diagnostics);
+            _workflowRunActionRepetitionDefinitionsRestClient = new WorkflowRunActionRepetitionDefinitions(_workflowRunActionRepetitionDefinitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WorkflowRunActionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkflowRunActionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkflowRunActionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a workflow run action repetition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WorkflowRunActionRepetitionResource>> GetAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
-            using var scope = _workflowRunActionRepetitionClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Get");
+            using DiagnosticScope scope = _workflowRunActionRepetitionDefinitionsClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workflowRunActionRepetitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunActionRepetitionDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowRunActionRepetitionDefinitionData> response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.AppService
         /// Get a workflow run action repetition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WorkflowRunActionRepetitionResource> Get(string repetitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
-            using var scope = _workflowRunActionRepetitionClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Get");
+            using DiagnosticScope scope = _workflowRunActionRepetitionDefinitionsClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _workflowRunActionRepetitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunActionRepetitionDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowRunActionRepetitionDefinitionData> response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,53 @@ namespace Azure.ResourceManager.AppService
         /// Get all of a workflow run action repetitions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowRunActionRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkflowRunActionRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkflowRunActionRepetitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowRunActionRepetitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowRunActionRepetitionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowRunActionRepetitionResource(Client, WorkflowRunActionRepetitionDefinitionData.DeserializeWorkflowRunActionRepetitionDefinitionData(e)), _workflowRunActionRepetitionClientDiagnostics, Pipeline, "WorkflowRunActionRepetitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkflowRunActionRepetitionDefinitionData, WorkflowRunActionRepetitionResource>(new WorkflowRunActionRepetitionDefinitionsGetAllAsyncCollectionResultOfT(
+                _workflowRunActionRepetitionDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "WorkflowRunActionRepetitionCollection.GetAll"), data => new WorkflowRunActionRepetitionResource(Client, data));
         }
 
         /// <summary>
         /// Get all of a workflow run action repetitions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +210,70 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WorkflowRunActionRepetitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkflowRunActionRepetitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowRunActionRepetitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowRunActionRepetitionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowRunActionRepetitionResource(Client, WorkflowRunActionRepetitionDefinitionData.DeserializeWorkflowRunActionRepetitionDefinitionData(e)), _workflowRunActionRepetitionClientDiagnostics, Pipeline, "WorkflowRunActionRepetitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkflowRunActionRepetitionDefinitionData, WorkflowRunActionRepetitionResource>(new WorkflowRunActionRepetitionDefinitionsGetAllCollectionResultOfT(
+                _workflowRunActionRepetitionDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "WorkflowRunActionRepetitionCollection.GetAll"), data => new WorkflowRunActionRepetitionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
-            using var scope = _workflowRunActionRepetitionClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Exists");
+            using DiagnosticScope scope = _workflowRunActionRepetitionDefinitionsClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workflowRunActionRepetitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunActionRepetitionDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowRunActionRepetitionDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunActionRepetitionDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +287,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string repetitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
-            using var scope = _workflowRunActionRepetitionClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Exists");
+            using DiagnosticScope scope = _workflowRunActionRepetitionDefinitionsClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workflowRunActionRepetitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunActionRepetitionDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowRunActionRepetitionDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunActionRepetitionDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +344,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WorkflowRunActionRepetitionResource>> GetIfExistsAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
-            using var scope = _workflowRunActionRepetitionClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowRunActionRepetitionDefinitionsClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workflowRunActionRepetitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunActionRepetitionDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowRunActionRepetitionDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunActionRepetitionDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowRunActionRepetitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +405,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRunActionRepetitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRunActionRepetitionDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunActionRepetitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="repetitionName"> The workflow repetition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="repetitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WorkflowRunActionRepetitionResource> GetIfExists(string repetitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
-            using var scope = _workflowRunActionRepetitionClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowRunActionRepetitionDefinitionsClientDiagnostics.CreateScope("WorkflowRunActionRepetitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workflowRunActionRepetitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunActionRepetitionDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, repetitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowRunActionRepetitionDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunActionRepetitionDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowRunActionRepetitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +472,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkflowRunActionRepetitionResource> IAsyncEnumerable<WorkflowRunActionRepetitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

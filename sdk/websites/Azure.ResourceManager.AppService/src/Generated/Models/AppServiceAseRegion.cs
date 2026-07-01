@@ -8,142 +8,111 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// ASE region.
-    /// Serialized Name: AseRegion
-    /// </summary>
+    /// <summary> ASE region. </summary>
     public partial class AppServiceAseRegion : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAseRegion"/>. </summary>
         public AppServiceAseRegion()
         {
-            AvailableSku = new ChangeTrackingList<string>();
-            AvailableOS = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAseRegion"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// Display name for region.
-        /// Serialized Name: AseRegion.properties.displayName
-        /// </param>
-        /// <param name="isStandard">
-        /// Is region standard.
-        /// Serialized Name: AseRegion.properties.standard
-        /// </param>
-        /// <param name="isDedicatedHostEnabled">
-        /// Dedicated host enabled.
-        /// Serialized Name: AseRegion.properties.dedicatedHost
-        /// </param>
-        /// <param name="isZoneRedundantEnabled">
-        /// Zone redundant deployment enabled.
-        /// Serialized Name: AseRegion.properties.zoneRedundant
-        /// </param>
-        /// <param name="availableSku">
-        /// Available Skus in region.
-        /// Serialized Name: AseRegion.properties.availableSku
-        /// </param>
-        /// <param name="availableOS">
-        /// Available OSs in region.
-        /// Serialized Name: AseRegion.properties.availableOS
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceAseRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? isStandard, bool? isDedicatedHostEnabled, bool? isZoneRedundantEnabled, IList<string> availableSku, IList<string> availableOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ASE region resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceAseRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AseRegionProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            IsStandard = isStandard;
-            IsDedicatedHostEnabled = isDedicatedHostEnabled;
-            IsZoneRedundantEnabled = isZoneRedundantEnabled;
-            AvailableSku = availableSku;
-            AvailableOS = availableOS;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Display name for region.
-        /// Serialized Name: AseRegion.properties.displayName
-        /// </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; }
-        /// <summary>
-        /// Is region standard.
-        /// Serialized Name: AseRegion.properties.standard
-        /// </summary>
-        [WirePath("properties.standard")]
-        public bool? IsStandard { get; }
-        /// <summary>
-        /// Dedicated host enabled.
-        /// Serialized Name: AseRegion.properties.dedicatedHost
-        /// </summary>
-        [WirePath("properties.dedicatedHost")]
-        public bool? IsDedicatedHostEnabled { get; }
-        /// <summary>
-        /// Zone redundant deployment enabled.
-        /// Serialized Name: AseRegion.properties.zoneRedundant
-        /// </summary>
-        [WirePath("properties.zoneRedundant")]
-        public bool? IsZoneRedundantEnabled { get; }
-        /// <summary>
-        /// Available Skus in region.
-        /// Serialized Name: AseRegion.properties.availableSku
-        /// </summary>
-        [WirePath("properties.availableSku")]
-        public IList<string> AvailableSku { get; }
-        /// <summary>
-        /// Available OSs in region.
-        /// Serialized Name: AseRegion.properties.availableOS
-        /// </summary>
-        [WirePath("properties.availableOS")]
-        public IList<string> AvailableOS { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> ASE region resource specific properties. </summary>
+        [WirePath("properties")]
+        internal AseRegionProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Display name for region. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
+        /// <summary> Is region standard. </summary>
+        [WirePath("properties.standard")]
+        public bool? IsStandard
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsStandard;
+            }
+        }
+
+        /// <summary> Dedicated host enabled. </summary>
+        [WirePath("properties.dedicatedHost")]
+        public bool? IsDedicatedHostEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDedicatedHostEnabled;
+            }
+        }
+
+        /// <summary> Zone redundant deployment enabled. </summary>
+        [WirePath("properties.zoneRedundant")]
+        public bool? IsZoneRedundantEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundantEnabled;
+            }
+        }
+
+        /// <summary> Available Skus in region. </summary>
+        [WirePath("properties.availableSku")]
+        public IList<string> AvailableSku
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseRegionProperties();
+                }
+                return Properties.AvailableSku;
+            }
+        }
+
+        /// <summary> Available OSs in region. </summary>
+        [WirePath("properties.availableOS")]
+        public IList<string> AvailableOS
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseRegionProperties();
+                }
+                return Properties.AvailableOS;
+            }
+        }
     }
 }
