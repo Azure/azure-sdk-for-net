@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyIdentifier = keyIdentifier;
         }
 
-        /// <summary> Currently, we support only SystemAssigned MSI. We need this when we support UserAssignedIdentities </summary>
+        /// <summary> The client ID of the user-assigned identity used to access the Key Vault. </summary>
         [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
         /// <summary> Gets or sets the KeyIdentifier. </summary>
