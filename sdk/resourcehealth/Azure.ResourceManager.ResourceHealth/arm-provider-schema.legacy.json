@@ -1,0 +1,366 @@
+{
+  "resources": [
+    {
+      "resourceModelId": "Microsoft.ResourceHealth.EmergingIssuesGetResult",
+      "resourceIdPattern": "/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}",
+      "resourceType": "Microsoft.ResourceHealth/emergingIssues",
+      "methods": [
+        {
+          "methodId": "Microsoft.ResourceHealth.EmergingIssuesGetResults.get",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EmergingIssuesGetResults.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.ResourceHealth/emergingIssues",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "ServiceEmergingIssue",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ResourceHealth.Event",
+      "resourceIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+      "resourceType": "Microsoft.ResourceHealth/events",
+      "methods": [
+        {
+          "methodId": "Microsoft.ResourceHealth.TenantEventOperationGroup.getByTenantIdAndTrackingId",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.TenantEventOperationGroup.listByTenantId",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.ResourceHealth/events",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.TenantEventOperationGroup.fetchDetailsByTenantIdAndTrackingId",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/fetchEventDetails",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.TenantEventOperationGroup.listByTenantIdAndEventId",
+          "kind": "Action",
+          "operationPath": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/listSecurityAdvisoryImpactedResources",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "TenantResourceHealthEvent",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ResourceHealth.EventImpactedResource",
+      "resourceIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}",
+      "resourceType": "Microsoft.ResourceHealth/events/impactedResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.ResourceHealth.ImpactedResources.getByTenantId",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.ImpactedResources.listByTenantIdAndEventId",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "parentResourceId": "/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+      "resourceName": "TenantResourceHealthEventImpactedResource",
+      "nameConstraints": {
+        "pattern": "^[^*#&+:<>%?]+$"
+      },
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ResourceHealth.MetadataEntity",
+      "resourceIdPattern": "/providers/Microsoft.ResourceHealth/metadata/{name}",
+      "resourceType": "Microsoft.ResourceHealth/metadata",
+      "methods": [
+        {
+          "methodId": "Microsoft.ResourceHealth.MetadataEntities.getEntity",
+          "kind": "Read",
+          "operationPath": "/providers/Microsoft.ResourceHealth/metadata/{name}",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "/providers/Microsoft.ResourceHealth/metadata/{name}",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.MetadataEntities.list",
+          "kind": "List",
+          "operationPath": "/providers/Microsoft.ResourceHealth/metadata",
+          "scope": {
+            "kind": "Tenant",
+            "scopeIdPattern": "",
+            "scopeResourceType": "Microsoft.Resources/tenants"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      },
+      "resourceName": "ResourceHealthMetadataEntity",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ResourceHealth.Event",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+      "resourceType": "Microsoft.ResourceHealth/events",
+      "methods": [
+        {
+          "methodId": "Microsoft.ResourceHealth.EventOperationGroup.getBySubscriptionIdAndTrackingId",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EventOperationGroup.listBySubscriptionId",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EventsOperationGroup.listBySingleResource",
+          "kind": "List",
+          "operationPath": "/{resourceUri}/providers/Microsoft.ResourceHealth/events",
+          "scope": {
+            "kind": "Extension",
+            "scopeIdPattern": "/{resourceUri}"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EventOperationGroup.fetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingId",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/fetchBillingCommunicationDetails",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EventOperationGroup.fetchDetailsBySubscriptionIdAndTrackingId",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/fetchEventDetails",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EventOperationGroup.listBySubscriptionIdAndEventId",
+          "kind": "Action",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/listSecurityAdvisoryImpactedResources",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "resourceName": "ResourceHealthEvent",
+      "nameConstraints": {},
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "rbacRoles": []
+    },
+    {
+      "resourceModelId": "Microsoft.ResourceHealth.EventImpactedResource",
+      "resourceIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}",
+      "resourceType": "Microsoft.ResourceHealth/events/impactedResources",
+      "methods": [
+        {
+          "methodId": "Microsoft.ResourceHealth.EventImpactedResources.get",
+          "kind": "Read",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        },
+        {
+          "methodId": "Microsoft.ResourceHealth.EventImpactedResources.listBySubscriptionIdAndEventId",
+          "kind": "List",
+          "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources",
+          "scope": {
+            "kind": "Subscription",
+            "scopeIdPattern": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+            "scopeResourceType": "Microsoft.Resources/subscriptions"
+          }
+        }
+      ],
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      },
+      "parentResourceId": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}",
+      "resourceName": "ResourceHealthEventImpactedResource",
+      "nameConstraints": {
+        "pattern": "^[^*#&+:<>%?]+$"
+      },
+      "apiVersions": [
+        "2025-05-01"
+      ],
+      "rbacRoles": []
+    }
+  ],
+  "nonResourceMethods": [
+    {
+      "methodId": "Microsoft.ResourceHealth.Operations.list",
+      "operationPath": "/providers/Microsoft.ResourceHealth/operations",
+      "scope": {
+        "kind": "Tenant",
+        "scopeIdPattern": "",
+        "scopeResourceType": "Microsoft.Resources/tenants"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.AvailabilityStatuses.getByResource",
+      "operationPath": "/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses/current",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.AvailabilityStatuses.listBySubscriptionId",
+      "operationPath": "/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/availabilityStatuses",
+      "scope": {
+        "kind": "Subscription",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}",
+        "scopeResourceType": "Microsoft.Resources/subscriptions"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.AvailabilityStatuses.list",
+      "operationPath": "/{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.AvailabilityStatuses.listByResourceGroup",
+      "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceHealth/availabilityStatuses",
+      "scope": {
+        "kind": "ResourceGroup",
+        "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+        "scopeResourceType": "Microsoft.Resources/resourceGroups"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.ChildAvailabilityStatuses.getByResource",
+      "operationPath": "/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses/current",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.ChildAvailabilityStatuses.list",
+      "operationPath": "/{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    },
+    {
+      "methodId": "Microsoft.ResourceHealth.ChildResourcesOperationGroup.list",
+      "operationPath": "/{resourceUri}/providers/Microsoft.ResourceHealth/childResources",
+      "scope": {
+        "kind": "Extension",
+        "scopeIdPattern": "/{resourceUri}"
+      }
+    }
+  ]
+}
