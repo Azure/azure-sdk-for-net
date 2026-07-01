@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Current status of the App Service Environment.
-    /// Serialized Name: HostingEnvironmentStatus
-    /// </summary>
+    /// <summary> Current status of the App Service Environment. </summary>
     public enum HostingEnvironmentStatus
     {
-        /// <summary>
-        /// Preparing
-        /// Serialized Name: HostingEnvironmentStatus.Preparing
-        /// </summary>
+        /// <summary> Preparing. </summary>
         Preparing,
-        /// <summary>
-        /// Ready
-        /// Serialized Name: HostingEnvironmentStatus.Ready
-        /// </summary>
+        /// <summary> Ready. </summary>
         Ready,
-        /// <summary>
-        /// Scaling
-        /// Serialized Name: HostingEnvironmentStatus.Scaling
-        /// </summary>
+        /// <summary> Scaling. </summary>
         Scaling,
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: HostingEnvironmentStatus.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         Deleting
     }
 }

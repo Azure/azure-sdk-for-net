@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,74 +25,79 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WorkflowRunCollection : ArmCollection, IEnumerable<WorkflowRunResource>, IAsyncEnumerable<WorkflowRunResource>
     {
-        private readonly ClientDiagnostics _workflowRunClientDiagnostics;
-        private readonly WorkflowRunsRestOperations _workflowRunRestClient;
+        private readonly ClientDiagnostics _workflowRunsClientDiagnostics;
+        private readonly WorkflowRuns _workflowRunsRestClient;
+        /// <summary> The workflowName. </summary>
         private readonly string _workflowName;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowRunCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkflowRunCollection for mocking. </summary>
         protected WorkflowRunCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowRunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowRunCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="workflowName"> The workflow name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workflowName"> The workflowName for the resource. </param>
         internal WorkflowRunCollection(ArmClient client, ResourceIdentifier id, string workflowName) : base(client, id)
         {
-            _workflowName = workflowName;
-            _workflowRunClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkflowRunResource.ResourceType, out string workflowRunApiVersion);
-            _workflowRunRestClient = new WorkflowRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workflowRunApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _workflowName = workflowName;
+            _workflowRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunResource.ResourceType.Namespace, Diagnostics);
+            _workflowRunsRestClient = new WorkflowRuns(_workflowRunsClientDiagnostics, Pipeline, Endpoint, workflowRunApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a workflow run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WorkflowRunResource>> GetAsync(string runName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
-            using var scope = _workflowRunClientDiagnostics.CreateScope("WorkflowRunCollection.Get");
+            using DiagnosticScope scope = _workflowRunsClientDiagnostics.CreateScope("WorkflowRunCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workflowRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, runName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, runName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowRunData> response = Response.FromValue(WorkflowRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,38 +111,42 @@ namespace Azure.ResourceManager.AppService
         /// Gets a workflow run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WorkflowRunResource> Get(string runName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
-            using var scope = _workflowRunClientDiagnostics.CreateScope("WorkflowRunCollection.Get");
+            using DiagnosticScope scope = _workflowRunsClientDiagnostics.CreateScope("WorkflowRunCollection.Get");
             scope.Start();
             try
             {
-                var response = _workflowRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, runName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, runName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowRunData> response = Response.FromValue(WorkflowRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,52 +160,16 @@ namespace Azure.ResourceManager.AppService
         /// Gets a list of workflow runs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowRunResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowRunResource(Client, WorkflowRunData.DeserializeWorkflowRunData(e)), _workflowRunClientDiagnostics, Pipeline, "WorkflowRunCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of workflow runs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,47 +177,111 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkflowRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowRunResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkflowRunResource> GetAllAsync(int? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowRunRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowRunResource(Client, WorkflowRunData.DeserializeWorkflowRunData(e)), _workflowRunClientDiagnostics, Pipeline, "WorkflowRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkflowRunData, WorkflowRunResource>(new WorkflowRunsGetAllAsyncCollectionResultOfT(
+                _workflowRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                _workflowName,
+                top,
+                filter,
+                context,
+                "WorkflowRunCollection.GetAll"), data => new WorkflowRunResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of workflow runs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkflowRunResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkflowRunResource> GetAll(int? top = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkflowRunData, WorkflowRunResource>(new WorkflowRunsGetAllCollectionResultOfT(
+                _workflowRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                _workflowName,
+                top,
+                filter,
+                context,
+                "WorkflowRunCollection.GetAll"), data => new WorkflowRunResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
-            using var scope = _workflowRunClientDiagnostics.CreateScope("WorkflowRunCollection.Exists");
+            using DiagnosticScope scope = _workflowRunsClientDiagnostics.CreateScope("WorkflowRunCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workflowRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, runName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, runName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,36 +295,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string runName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
-            using var scope = _workflowRunClientDiagnostics.CreateScope("WorkflowRunCollection.Exists");
+            using DiagnosticScope scope = _workflowRunsClientDiagnostics.CreateScope("WorkflowRunCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workflowRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, runName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, runName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,38 +352,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WorkflowRunResource>> GetIfExistsAsync(string runName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
-            using var scope = _workflowRunClientDiagnostics.CreateScope("WorkflowRunCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowRunsClientDiagnostics.CreateScope("WorkflowRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workflowRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, runName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, runName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowRunResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -345,38 +413,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/runs/{runName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runName"> The workflow run name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WorkflowRunResource> GetIfExists(string runName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
-            using var scope = _workflowRunClientDiagnostics.CreateScope("WorkflowRunCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowRunsClientDiagnostics.CreateScope("WorkflowRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workflowRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _workflowName, runName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _workflowName, runName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowRunResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,6 +480,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkflowRunResource> IAsyncEnumerable<WorkflowRunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

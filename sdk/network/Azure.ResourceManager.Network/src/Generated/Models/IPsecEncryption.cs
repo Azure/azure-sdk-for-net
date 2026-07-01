@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> None. </summary>
         private const string NoneValue = "None";
         /// <summary> DES. </summary>
-        private const string DESValue = "DES";
+        private const string DesValue = "DES";
         /// <summary> DES3. </summary>
-        private const string DES3Value = "DES3";
+        private const string Des3Value = "DES3";
         /// <summary> AES128. </summary>
-        private const string AES128Value = "AES128";
+        private const string Aes128Value = "AES128";
         /// <summary> AES192. </summary>
-        private const string AES192Value = "AES192";
+        private const string Aes192Value = "AES192";
         /// <summary> AES256. </summary>
-        private const string AES256Value = "AES256";
+        private const string Aes256Value = "AES256";
         /// <summary> GCMAES128. </summary>
-        private const string GCMAES128Value = "GCMAES128";
+        private const string GcmAes128Value = "GCMAES128";
         /// <summary> GCMAES192. </summary>
-        private const string GCMAES192Value = "GCMAES192";
+        private const string GcmAes192Value = "GCMAES192";
         /// <summary> GCMAES256. </summary>
-        private const string GCMAES256Value = "GCMAES256";
+        private const string GcmAes256Value = "GCMAES256";
 
         /// <summary> Initializes a new instance of <see cref="IPsecEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -48,28 +48,28 @@ namespace Azure.ResourceManager.Network.Models
         public static IPsecEncryption None { get; } = new IPsecEncryption(NoneValue);
 
         /// <summary> DES. </summary>
-        public static IPsecEncryption DES { get; } = new IPsecEncryption(DESValue);
+        public static IPsecEncryption Des { get; } = new IPsecEncryption(DesValue);
 
         /// <summary> DES3. </summary>
-        public static IPsecEncryption DES3 { get; } = new IPsecEncryption(DES3Value);
+        public static IPsecEncryption Des3 { get; } = new IPsecEncryption(Des3Value);
 
         /// <summary> AES128. </summary>
-        public static IPsecEncryption AES128 { get; } = new IPsecEncryption(AES128Value);
+        public static IPsecEncryption Aes128 { get; } = new IPsecEncryption(Aes128Value);
 
         /// <summary> AES192. </summary>
-        public static IPsecEncryption AES192 { get; } = new IPsecEncryption(AES192Value);
+        public static IPsecEncryption Aes192 { get; } = new IPsecEncryption(Aes192Value);
 
         /// <summary> AES256. </summary>
-        public static IPsecEncryption AES256 { get; } = new IPsecEncryption(AES256Value);
+        public static IPsecEncryption Aes256 { get; } = new IPsecEncryption(Aes256Value);
 
         /// <summary> GCMAES128. </summary>
-        public static IPsecEncryption GCMAES128 { get; } = new IPsecEncryption(GCMAES128Value);
+        public static IPsecEncryption GcmAes128 { get; } = new IPsecEncryption(GcmAes128Value);
 
         /// <summary> GCMAES192. </summary>
-        public static IPsecEncryption GCMAES192 { get; } = new IPsecEncryption(GCMAES192Value);
+        public static IPsecEncryption GcmAes192 { get; } = new IPsecEncryption(GcmAes192Value);
 
         /// <summary> GCMAES256. </summary>
-        public static IPsecEncryption GCMAES256 { get; } = new IPsecEncryption(GCMAES256Value);
+        public static IPsecEncryption GcmAes256 { get; } = new IPsecEncryption(GcmAes256Value);
 
         /// <summary> Determines if two <see cref="IPsecEncryption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

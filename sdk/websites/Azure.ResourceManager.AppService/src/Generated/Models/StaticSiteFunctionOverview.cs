@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site Function Overview ARM resource.
-    /// Serialized Name: StaticSiteFunctionOverviewARMResource
-    /// </summary>
+    /// <summary> Static Site Function Overview ARM resource. </summary>
     public partial class StaticSiteFunctionOverview : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
         public StaticSiteFunctionOverview()
@@ -56,48 +25,46 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverview"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionName">
-        /// The name for the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.functionName
-        /// </param>
-        /// <param name="triggerType">
-        /// The trigger type of the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.triggerType
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteFunctionOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string functionName, FunctionTriggerType? triggerType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSiteFunctionOverviewARMResource resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteFunctionOverview(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSiteFunctionOverviewARMResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            FunctionName = functionName;
-            TriggerType = triggerType;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The name for the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.functionName
-        /// </summary>
-        [WirePath("properties.functionName")]
-        public string FunctionName { get; }
-        /// <summary>
-        /// The trigger type of the function
-        /// Serialized Name: StaticSiteFunctionOverviewARMResource.properties.triggerType
-        /// </summary>
-        [WirePath("properties.triggerType")]
-        public FunctionTriggerType? TriggerType { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> StaticSiteFunctionOverviewARMResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteFunctionOverviewARMResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> The name for the function. </summary>
+        [WirePath("properties.functionName")]
+        public string FunctionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FunctionName;
+            }
+        }
+
+        /// <summary> The trigger type of the function. </summary>
+        [WirePath("properties.triggerType")]
+        public FunctionTriggerType? TriggerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TriggerType;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ContinuousWebJobStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContinuousWebJobStatus value) => value switch
         {
             ContinuousWebJobStatus.Initializing => "Initializing",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContinuousWebJobStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ContinuousWebJobStatus ToContinuousWebJobStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initializing")) return ContinuousWebJobStatus.Initializing;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Starting")) return ContinuousWebJobStatus.Starting;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return ContinuousWebJobStatus.Running;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingRestart")) return ContinuousWebJobStatus.PendingRestart;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopped")) return ContinuousWebJobStatus.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initializing"))
+            {
+                return ContinuousWebJobStatus.Initializing;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Starting"))
+            {
+                return ContinuousWebJobStatus.Starting;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running"))
+            {
+                return ContinuousWebJobStatus.Running;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingRestart"))
+            {
+                return ContinuousWebJobStatus.PendingRestart;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopped"))
+            {
+                return ContinuousWebJobStatus.Stopped;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContinuousWebJobStatus value.");
         }
     }

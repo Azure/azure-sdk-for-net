@@ -99,6 +99,10 @@ namespace Azure.Provisioning.CostManagement
             _status = DefineProperty<RuleStatus>(nameof(Status), new string[] { "status" }, isRequired: true);
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true);
             _updatedOn = DefineProperty<DateTimeOffset>(nameof(UpdatedOn), new string[] { "updatedDate" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CostAllocationRuleProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

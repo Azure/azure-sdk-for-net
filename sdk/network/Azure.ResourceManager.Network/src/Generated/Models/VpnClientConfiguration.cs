@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             VpnClientRevokedCertificates = new ChangeTrackingList<VpnClientRevokedCertificate>();
             VpnClientProtocols = new ChangeTrackingList<VpnClientProtocol>();
             VpnAuthenticationTypes = new ChangeTrackingList<VpnAuthenticationType>();
-            VpnClientIpsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            VpnClientIPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             RadiusServers = new ChangeTrackingList<RadiusServer>();
             VngClientConnectionConfigurations = new ChangeTrackingList<VngClientConnectionConfiguration>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientRevokedCertificates"> VpnClientRevokedCertificate for Virtual network gateway. </param>
         /// <param name="vpnClientProtocols"> VpnClientProtocols for Virtual network gateway. </param>
         /// <param name="vpnAuthenticationTypes"> VPN authentication types for the virtual network gateway.. </param>
-        /// <param name="vpnClientIpsecPolicies"> VpnClientIpsecPolicies for virtual network gateway P2S client. </param>
+        /// <param name="vpnClientIPsecPolicies"> VpnClientIpsecPolicies for virtual network gateway P2S client. </param>
         /// <param name="radiusServerAddress"> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </param>
         /// <param name="radiusServerSecret"> The radius secret property of the VirtualNetworkGateway resource for vpn client connection. We will no longer return radiusServerSecret in VirtualNetworkGateway Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGateway ListRadiusSecrets API to fetch radius server secrets. </param>
         /// <param name="radiusServers"> The radiusServers property for multiple radius server configuration. </param>
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="aadIssuer"> The AADIssuer property of the VirtualNetworkGateway resource for vpn client connection used for AAD authentication. </param>
         /// <param name="vngClientConnectionConfigurations"> per ip address pool connection policy for virtual network gateway P2S client. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnClientConfiguration(VirtualNetworkAddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IPsecPolicy> vpnClientIpsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer, IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnClientConfiguration(VirtualNetworkAddressSpace vpnClientAddressPool, IList<VpnClientRootCertificate> vpnClientRootCertificates, IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates, IList<VpnClientProtocol> vpnClientProtocols, IList<VpnAuthenticationType> vpnAuthenticationTypes, IList<IPsecPolicy> vpnClientIPsecPolicies, string radiusServerAddress, string radiusServerSecret, IList<RadiusServer> radiusServers, string aadTenant, string aadAudience, string aadIssuer, IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
             VpnClientRevokedCertificates = vpnClientRevokedCertificates;
             VpnClientProtocols = vpnClientProtocols;
             VpnAuthenticationTypes = vpnAuthenticationTypes;
-            VpnClientIpsecPolicies = vpnClientIpsecPolicies;
+            VpnClientIPsecPolicies = vpnClientIPsecPolicies;
             RadiusServerAddress = radiusServerAddress;
             RadiusServerSecret = radiusServerSecret;
             RadiusServers = radiusServers;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> VpnClientIpsecPolicies for virtual network gateway P2S client. </summary>
         [WirePath("vpnClientIpsecPolicies")]
-        public IList<IPsecPolicy> VpnClientIpsecPolicies { get; }
+        public IList<IPsecPolicy> VpnClientIPsecPolicies { get; }
 
         /// <summary> The radius server address property of the VirtualNetworkGateway resource for vpn client connection. </summary>
         [WirePath("radiusServerAddress")]

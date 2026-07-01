@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Kubernetes
             _enableAzureRbac = DefineProperty<bool>(nameof(EnableAzureRbac), new string[] { "enableAzureRBAC" });
             _adminGroupObjectIds = DefineListProperty<string>(nameof(AdminGroupObjectIds), new string[] { "adminGroupObjectIDs" });
             _tenantId = DefineProperty<string>(nameof(TenantId), new string[] { "tenantID" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterAadProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

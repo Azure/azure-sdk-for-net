@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.0-beta.3 (2026-06-30)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
 
 ## 1.2.0-beta.2 (2026-06-04)
 

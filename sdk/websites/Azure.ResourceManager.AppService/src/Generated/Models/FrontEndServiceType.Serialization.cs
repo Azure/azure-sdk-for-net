@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class FrontEndServiceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FrontEndServiceType value) => value switch
         {
             FrontEndServiceType.NodePort => "NodePort",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontEndServiceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FrontEndServiceType ToFrontEndServiceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NodePort")) return FrontEndServiceType.NodePort;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LoadBalancer")) return FrontEndServiceType.LoadBalancer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NodePort"))
+            {
+                return FrontEndServiceType.NodePort;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LoadBalancer"))
+            {
+                return FrontEndServiceType.LoadBalancer;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontEndServiceType value.");
         }
     }

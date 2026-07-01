@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _mode = DefineProperty<IstioIngressGatewayMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for IstioIngressGateway that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

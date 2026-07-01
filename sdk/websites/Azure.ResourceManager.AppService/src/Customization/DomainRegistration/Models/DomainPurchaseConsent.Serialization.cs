@@ -135,96 +135,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new DomainPurchaseConsent(agreementKeys ?? new ChangeTrackingList<string>(), agreedBy, agreedAt, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKeys), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  agreementKeys: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AgreementKeys))
-                {
-                    if (AgreementKeys.Any())
-                    {
-                        builder.Append("  agreementKeys: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AgreementKeys)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedBy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  agreedBy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AgreedBy))
-                {
-                    builder.Append("  agreedBy: ");
-                    if (AgreedBy.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AgreedBy}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AgreedBy}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  agreedAt: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AgreedOn))
-                {
-                    builder.Append("  agreedAt: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(AgreedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DomainPurchaseConsent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DomainPurchaseConsent>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,8 +143,6 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support writing '{options.Format}' format.");
             }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _begin = DefineProperty<int>(nameof(Begin), new string[] { "begin" });
             _end = DefineProperty<int>(nameof(End), new string[] { "end" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for HttpErrorRange that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

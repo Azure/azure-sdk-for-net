@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Kubernetes
             _feature = DefineProperty<string>(nameof(Feature), new string[] { "feature" });
             _settings = DefineDictionaryProperty<string>(nameof(Settings), new string[] { "settings" });
             _protectedSettings = DefineDictionaryProperty<string>(nameof(ProtectedSettings), new string[] { "protectedSettings" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterArcAgentryConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

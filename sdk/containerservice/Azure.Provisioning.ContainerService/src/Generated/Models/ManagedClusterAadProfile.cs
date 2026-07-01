@@ -143,6 +143,10 @@ namespace Azure.Provisioning.ContainerService
             _serverAppId = DefineProperty<Guid>(nameof(ServerAppId), new string[] { "serverAppID" });
             _serverAppSecret = DefineProperty<string>(nameof(ServerAppSecret), new string[] { "serverAppSecret" });
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantID" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAadProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

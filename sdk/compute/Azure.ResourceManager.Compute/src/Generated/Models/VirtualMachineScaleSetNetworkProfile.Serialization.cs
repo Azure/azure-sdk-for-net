@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
+            if (Optional.IsDefined(InterconnectGroupProfile))
+            {
+                writer.WritePropertyName("interconnectGroupProfile"u8);
+                writer.WriteObjectValue(InterconnectGroupProfile, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeApiEntityReference healthProbe = default;
             IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default;
             NetworkApiVersion? networkApiVersion = default;
+            InterconnectGroupProfile interconnectGroupProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,12 +180,21 @@ namespace Azure.ResourceManager.Compute.Models
                     networkApiVersion = new NetworkApiVersion(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("interconnectGroupProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interconnectGroupProfile = InterconnectGroupProfile.DeserializeInterconnectGroupProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetNetworkProfile(healthProbe, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(), networkApiVersion, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbe, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>(), networkApiVersion, interconnectGroupProfile, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,47 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// The IIS handler mappings used to define which handler processes HTTP requests with certain extension.
     /// For example, it is used to configure php-cgi.exe process to handle all HTTP requests with *.php extension.
-    /// Serialized Name: HandlerMapping
     /// </summary>
     public partial class HttpRequestHandlerMapping
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HttpRequestHandlerMapping"/>. </summary>
         public HttpRequestHandlerMapping()
@@ -55,43 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpRequestHandlerMapping"/>. </summary>
-        /// <param name="extension">
-        /// Requests with this extension will be handled using the specified FastCGI application.
-        /// Serialized Name: HandlerMapping.extension
-        /// </param>
-        /// <param name="scriptProcessor">
-        /// The absolute path to the FastCGI application.
-        /// Serialized Name: HandlerMapping.scriptProcessor
-        /// </param>
-        /// <param name="arguments">
-        /// Command-line arguments to be passed to the script processor.
-        /// Serialized Name: HandlerMapping.arguments
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HttpRequestHandlerMapping(string extension, string scriptProcessor, string arguments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="extension"> Requests with this extension will be handled using the specified FastCGI application. </param>
+        /// <param name="scriptProcessor"> The absolute path to the FastCGI application. </param>
+        /// <param name="arguments"> Command-line arguments to be passed to the script processor. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HttpRequestHandlerMapping(string extension, string scriptProcessor, string arguments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Extension = extension;
             ScriptProcessor = scriptProcessor;
             Arguments = arguments;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Requests with this extension will be handled using the specified FastCGI application.
-        /// Serialized Name: HandlerMapping.extension
-        /// </summary>
+        /// <summary> Requests with this extension will be handled using the specified FastCGI application. </summary>
         [WirePath("extension")]
         public string Extension { get; set; }
-        /// <summary>
-        /// The absolute path to the FastCGI application.
-        /// Serialized Name: HandlerMapping.scriptProcessor
-        /// </summary>
+
+        /// <summary> The absolute path to the FastCGI application. </summary>
         [WirePath("scriptProcessor")]
         public string ScriptProcessor { get; set; }
-        /// <summary>
-        /// Command-line arguments to be passed to the script processor.
-        /// Serialized Name: HandlerMapping.arguments
-        /// </summary>
+
+        /// <summary> Command-line arguments to be passed to the script processor. </summary>
         [WirePath("arguments")]
         public string Arguments { get; set; }
     }

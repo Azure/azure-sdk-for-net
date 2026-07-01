@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerInstance
             _memoryInGB = DefineProperty<double>(nameof(MemoryInGB), new string[] { "memoryInGB" });
             _cpu = DefineProperty<double>(nameof(Cpu), new string[] { "cpu" });
             _gpu = DefineModelProperty<ContainerGpuResourceInfo>(nameof(Gpu), new string[] { "gpu" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerResourceLimits that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

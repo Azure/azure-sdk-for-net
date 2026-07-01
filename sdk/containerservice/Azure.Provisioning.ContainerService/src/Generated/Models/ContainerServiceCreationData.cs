@@ -41,6 +41,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceCreationData that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

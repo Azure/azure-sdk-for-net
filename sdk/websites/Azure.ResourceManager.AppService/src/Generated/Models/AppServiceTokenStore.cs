@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the token store.
-    /// Serialized Name: TokenStore
-    /// </summary>
+    /// <summary> The configuration settings of the token store. </summary>
     public partial class AppServiceTokenStore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceTokenStore"/>. </summary>
         public AppServiceTokenStore()
@@ -57,83 +26,77 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: TokenStore.enabled
         /// </param>
         /// <param name="tokenRefreshExtensionHours">
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
-        /// Serialized Name: TokenStore.tokenRefreshExtensionHours
         /// </param>
-        /// <param name="fileSystem">
-        /// The configuration settings of the storage of the tokens if a file system is used.
-        /// Serialized Name: TokenStore.fileSystem
-        /// </param>
-        /// <param name="azureBlobStorage">
-        /// The configuration settings of the storage of the tokens if blob storage is used.
-        /// Serialized Name: TokenStore.azureBlobStorage
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, AppServiceBlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="fileSystem"> The configuration settings of the storage of the tokens if a file system is used. </param>
+        /// <param name="azureBlobStorage"> The configuration settings of the storage of the tokens if blob storage is used. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceTokenStore(bool? isEnabled, double? tokenRefreshExtensionHours, FileSystemTokenStore fileSystem, AppServiceBlobStorageTokenStore azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// The default is &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: TokenStore.enabled
         /// </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary>
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
-        /// Serialized Name: TokenStore.tokenRefreshExtensionHours
         /// </summary>
         [WirePath("tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours { get; set; }
-        /// <summary>
-        /// The configuration settings of the storage of the tokens if a file system is used.
-        /// Serialized Name: TokenStore.fileSystem
-        /// </summary>
+
+        /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
+        [WirePath("fileSystem")]
         internal FileSystemTokenStore FileSystem { get; set; }
-        /// <summary>
-        /// The directory in which the tokens will be stored.
-        /// Serialized Name: FileSystemTokenStore.directory
-        /// </summary>
+
+        /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
+        [WirePath("azureBlobStorage")]
+        internal AppServiceBlobStorageTokenStore AzureBlobStorage { get; set; }
+
+        /// <summary> The directory in which the tokens will be stored. </summary>
         [WirePath("fileSystem.directory")]
         public string FileSystemDirectory
         {
-            get => FileSystem is null ? default : FileSystem.Directory;
+            get
+            {
+                return FileSystem is null ? default : FileSystem.Directory;
+            }
             set
             {
                 if (FileSystem is null)
+                {
                     FileSystem = new FileSystemTokenStore();
+                }
                 FileSystem.Directory = value;
             }
         }
 
-        /// <summary>
-        /// The configuration settings of the storage of the tokens if blob storage is used.
-        /// Serialized Name: TokenStore.azureBlobStorage
-        /// </summary>
-        internal AppServiceBlobStorageTokenStore AzureBlobStorage { get; set; }
-        /// <summary>
-        /// The name of the app setting containing the SAS URL of the blob storage containing the tokens.
-        /// Serialized Name: BlobStorageTokenStore.sasUrlSettingName
-        /// </summary>
+        /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
         [WirePath("azureBlobStorage.sasUrlSettingName")]
         public string AzureBlobStorageSasUrlSettingName
         {
-            get => AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
+            get
+            {
+                return AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
+            }
             set
             {
                 if (AzureBlobStorage is null)
+                {
                     AzureBlobStorage = new AppServiceBlobStorageTokenStore();
+                }
                 AzureBlobStorage.SasUrlSettingName = value;
             }
         }

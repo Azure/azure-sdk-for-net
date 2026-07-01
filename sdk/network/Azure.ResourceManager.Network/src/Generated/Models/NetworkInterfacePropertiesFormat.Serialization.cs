@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkInterfaceIPConfigurationData item in IpConfigurations)
+                foreach (NetworkInterfaceIPConfigurationData item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

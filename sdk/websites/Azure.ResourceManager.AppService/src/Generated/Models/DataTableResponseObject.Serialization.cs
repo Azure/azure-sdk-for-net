@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DataTableResponseObject : IUtf8JsonSerializable, IJsonModel<DataTableResponseObject>
+    /// <summary> Data Table which defines columns and raw row values. </summary>
+    public partial class DataTableResponseObject : IJsonModel<DataTableResponseObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataTableResponseObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataTableResponseObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataTableResponseObject(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataTableResponseObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataTableResponseObject IPersistableModel<DataTableResponseObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataTableResponseObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataTableResponseObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
@@ -45,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
-                foreach (var item in Columns)
+                foreach (DataTableResponseColumn item in Columns)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
-                foreach (var item in Rows)
+                foreach (IList<string> item in Rows)
                 {
                     if (item == null)
                     {
@@ -63,23 +101,28 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item)
+                    foreach (string item0 in item)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +131,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        DataTableResponseObject IJsonModel<DataTableResponseObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataTableResponseObject IJsonModel<DataTableResponseObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataTableResponseObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataTableResponseObject(document.RootElement, options);
         }
 
-        internal static DataTableResponseObject DeserializeDataTableResponseObject(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataTableResponseObject DeserializeDataTableResponseObject(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,37 +159,36 @@ namespace Azure.ResourceManager.AppService.Models
             string tableName = default;
             IList<DataTableResponseColumn> columns = default;
             IList<IList<string>> rows = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tableName"u8))
+                if (prop.NameEquals("tableName"u8))
                 {
-                    tableName = property.Value.GetString();
+                    tableName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columns"u8))
+                if (prop.NameEquals("columns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataTableResponseColumn> array = new List<DataTableResponseColumn>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item, options));
                     }
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("rows"u8))
+                if (prop.NameEquals("rows"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IList<string>> array = new List<IList<string>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -152,7 +199,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<string> array0 = new List<string>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(item0.GetString());
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    array0.Add(item0.GetString());
+                                }
                             }
                             array.Add(array0);
                         }
@@ -162,151 +216,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataTableResponseObject(tableName, columns ?? new ChangeTrackingList<DataTableResponseColumn>(), rows ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
+            return new DataTableResponseObject(tableName, columns ?? new ChangeTrackingList<DataTableResponseColumn>(), rows ?? new ChangeTrackingList<IList<string>>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tableName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableName))
-                {
-                    builder.Append("  tableName: ");
-                    if (TableName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TableName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TableName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  columns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Columns))
-                {
-                    if (Columns.Any())
-                    {
-                        builder.Append("  columns: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Columns)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  columns: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rows), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rows: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Rows))
-                {
-                    if (Rows.Any())
-                    {
-                        builder.Append("  rows: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Rows)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine("[");
-                            foreach (var item0 in item)
-                            {
-                                if (item0 == null)
-                                {
-                                    builder.Append("null");
-                                    continue;
-                                }
-                                if (item0.Contains(Environment.NewLine))
-                                {
-                                    builder.AppendLine("    '''");
-                                    builder.AppendLine($"{item0}'''");
-                                }
-                                else
-                                {
-                                    builder.AppendLine($"    '{item0}'");
-                                }
-                            }
-                            builder.AppendLine("  ]");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DataTableResponseObject>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataTableResponseObject IPersistableModel<DataTableResponseObject>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataTableResponseObject(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataTableResponseObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
