@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(HibernateResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(ScheduledActionExecutionParameterDetail))]
     [ModelReaderWriterBuildable(typeof(StartResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(UserRequestResources))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext

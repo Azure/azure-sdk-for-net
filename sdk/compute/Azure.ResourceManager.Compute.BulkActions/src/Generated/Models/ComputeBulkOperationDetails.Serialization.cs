@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ComputeBulkOperationType? operationType = default;
             Guid? subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
-            ScheduledActionDeadlineType? deadlineType = default;
-            ScheduledActionOperationState? state = default;
+            Models.ScheduledActionDeadlineType? deadlineType = default;
+            Models.ScheduledActionOperationState? state = default;
             string timeZone = default;
             ComputeBulkOperationError error = default;
             ComputeBulkFallbackOperationInfo fallbackOperationInfo = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deadlineType = new ScheduledActionDeadlineType(prop.Value.GetString());
+                    deadlineType = new Models.ScheduledActionDeadlineType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    state = new ScheduledActionOperationState(prop.Value.GetString());
+                    state = new Models.ScheduledActionOperationState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timezone"u8))

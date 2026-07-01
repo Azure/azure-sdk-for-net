@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationType? operationType, Guid? subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationType? operationType, Guid? subscriptionId, DateTimeOffset? deadlineOn, Models.ScheduledActionDeadlineType? deadlineType, Models.ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public DateTimeOffset? DeadlineOn { get; }
 
         /// <summary> Type of deadline of the operation. </summary>
-        public ScheduledActionDeadlineType? DeadlineType { get; }
+        public Models.ScheduledActionDeadlineType? DeadlineType { get; }
 
         /// <summary> Current state of the operation. </summary>
-        public ScheduledActionOperationState? State { get; }
+        public Models.ScheduledActionOperationState? State { get; }
 
         /// <summary> Timezone for the operation. </summary>
         public string TimeZone { get; }

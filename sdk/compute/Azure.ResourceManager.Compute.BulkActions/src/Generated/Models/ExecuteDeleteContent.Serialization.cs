@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 throw new FormatException($"The model {nameof(ExecuteDeleteContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("executionParameters"u8);
-            writer.WriteObjectValue(ExecutionParameters, options);
+            writer.WriteObjectValue<Models.ScheduledActionExecutionParameterDetail>(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
             if (Optional.IsDefined(IsForceDeletion))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ScheduledActionExecutionParameterDetail executionParameters = default;
+            Models.ScheduledActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
             bool? isForceDeletion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (prop.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
+                    executionParameters = Models.ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))
