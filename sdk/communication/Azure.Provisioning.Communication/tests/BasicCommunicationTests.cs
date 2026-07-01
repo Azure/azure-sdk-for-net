@@ -24,8 +24,8 @@ public class BasicCommunicationTests
                     };
                 infra.Add(location);
 
-                CommunicationServiceResource comm =
-                    new(nameof(comm))
+                CommunicationService comm =
+                    new(nameof(comm), "2026-03-18")
                     {
                         Location = location,
                         DataLocation = "unitedstates"

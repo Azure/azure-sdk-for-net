@@ -14,18 +14,18 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Communication
 {
     /// <summary> A class representing a SenderUsername resource. </summary>
-    public partial class SenderUsernameResource : ProvisionableResource
+    public partial class SenderUsername : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SenderUsernameProperties _properties;
-        private ResourceReference<CommunicationDomainResource> _parent;
+        private ResourceReference<CommunicationDomain> _parent;
 
-        /// <summary> Creates a new SenderUsernameResource. </summary>
+        /// <summary> Creates a new SenderUsername. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SenderUsernameResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2026-03-18")
+        public SenderUsername(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2026-03-18")
         {
         }
 
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Communication
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public CommunicationDomainResource Parent
+        public CommunicationDomain Parent
         {
             get
             {
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Define all the provisionable properties for SenderUsernameResource. </summary>
+        /// <summary> Define all the provisionable properties for SenderUsername. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -162,21 +162,21 @@ namespace Azure.Provisioning.Communication
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SenderUsernameProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CommunicationDomainResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CommunicationDomain>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SenderUsernameResource. </summary>
+        /// <summary> Creates a reference to an existing SenderUsername. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SenderUsernameResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SenderUsername FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SenderUsernameResource result = new SenderUsernameResource(bicepIdentifier, resourceVersion);
+            SenderUsername result = new SenderUsername(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SenderUsernameResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SenderUsername that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

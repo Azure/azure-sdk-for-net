@@ -15,7 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Communication
 {
     /// <summary> A class representing a CommunicationService resource. </summary>
-    public partial class CommunicationServiceResource : ProvisionableResource
+    public partial class CommunicationService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -25,10 +25,10 @@ namespace Azure.Provisioning.Communication
         private CommunicationServiceProperties _properties;
         private ManagedServiceIdentity _identity;
 
-        /// <summary> Creates a new CommunicationServiceResource. </summary>
+        /// <summary> Creates a new CommunicationService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CommunicationServiceResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/communicationServices", resourceVersion ?? "2026-03-18")
+        public CommunicationService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/communicationServices", resourceVersion ?? "2026-03-18")
         {
         }
 
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Define all the provisionable properties for CommunicationServiceResource. </summary>
+        /// <summary> Define all the provisionable properties for CommunicationService. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -274,17 +274,17 @@ namespace Azure.Provisioning.Communication
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing CommunicationServiceResource. </summary>
+        /// <summary> Creates a reference to an existing CommunicationService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static CommunicationServiceResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static CommunicationService FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            CommunicationServiceResource result = new CommunicationServiceResource(bicepIdentifier, resourceVersion);
+            CommunicationService result = new CommunicationService(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for CommunicationServiceResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CommunicationService that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

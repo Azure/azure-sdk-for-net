@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Communication
 {
     /// <summary> A class representing a Domains resource. </summary>
-    public partial class CommunicationDomainResource : ProvisionableResource
+    public partial class CommunicationDomain : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,12 +22,12 @@ namespace Azure.Provisioning.Communication
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private DomainProperties _properties;
-        private ResourceReference<EmailServiceResource> _parent;
+        private ResourceReference<EmailService> _parent;
 
-        /// <summary> Creates a new CommunicationDomainResource. </summary>
+        /// <summary> Creates a new CommunicationDomain. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CommunicationDomainResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains", resourceVersion ?? "2026-03-18")
+        public CommunicationDomain(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains", resourceVersion ?? "2026-03-18")
         {
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Communication
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public EmailServiceResource Parent
+        public EmailService Parent
         {
             get
             {
@@ -230,7 +230,7 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Define all the provisionable properties for CommunicationDomainResource. </summary>
+        /// <summary> Define all the provisionable properties for CommunicationDomain. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -240,21 +240,21 @@ namespace Azure.Provisioning.Communication
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DomainProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<EmailServiceResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EmailService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing CommunicationDomainResource. </summary>
+        /// <summary> Creates a reference to an existing CommunicationDomain. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static CommunicationDomainResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static CommunicationDomain FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            CommunicationDomainResource result = new CommunicationDomainResource(bicepIdentifier, resourceVersion);
+            CommunicationDomain result = new CommunicationDomain(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for CommunicationDomainResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CommunicationDomain that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

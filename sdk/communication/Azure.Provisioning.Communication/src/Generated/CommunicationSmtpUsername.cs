@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Communication
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SmtpUsernameProperties _properties;
-        private ResourceReference<CommunicationServiceResource> _parent;
+        private ResourceReference<CommunicationService> _parent;
 
         /// <summary> Creates a new CommunicationSmtpUsername. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.Communication
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public CommunicationServiceResource Parent
+        public CommunicationService Parent
         {
             get
             {
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Communication
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SmtpUsernameProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CommunicationServiceResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CommunicationService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

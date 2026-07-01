@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Communication
 {
     /// <summary> A class representing an EmailService resource. </summary>
-    public partial class EmailServiceResource : ProvisionableResource
+    public partial class EmailService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -23,10 +23,10 @@ namespace Azure.Provisioning.Communication
         private BicepValue<AzureLocation> _location;
         private EmailServiceProperties _properties;
 
-        /// <summary> Creates a new EmailServiceResource. </summary>
+        /// <summary> Creates a new EmailService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public EmailServiceResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices", resourceVersion ?? "2026-03-18")
+        public EmailService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Communication/emailServices", resourceVersion ?? "2026-03-18")
         {
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.Communication
             }
         }
 
-        /// <summary> Define all the provisionable properties for EmailServiceResource. </summary>
+        /// <summary> Define all the provisionable properties for EmailService. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -153,17 +153,17 @@ namespace Azure.Provisioning.Communication
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing EmailServiceResource. </summary>
+        /// <summary> Creates a reference to an existing EmailService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static EmailServiceResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static EmailService FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            EmailServiceResource result = new EmailServiceResource(bicepIdentifier, resourceVersion);
+            EmailService result = new EmailService(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for EmailServiceResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for EmailService that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

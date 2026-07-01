@@ -38,7 +38,7 @@ ProvisioningParameter location =
     };
 infra.Add(location);
 
-CommunicationServiceResource comm =
+CommunicationService comm =
     new(nameof(comm))
     {
         Location = location,
