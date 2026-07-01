@@ -69,6 +69,10 @@ namespace Azure.Provisioning.DurableTask
             _name = DefineProperty<DurableTaskSchedulerSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
             _capacity = DefineProperty<int>(nameof(Capacity), new string[] { "capacity" });
             _redundancyState = DefineProperty<DurableTaskResourceRedundancyState>(nameof(RedundancyState), new string[] { "redundancyState" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DurableTaskSchedulerSku that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

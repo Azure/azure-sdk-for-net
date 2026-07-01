@@ -110,6 +110,10 @@ namespace Azure.Provisioning.DurableTask
             _sku = DefineModelProperty<DurableTaskSchedulerSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _privateEndpointConnections = DefineListProperty<DurableTaskPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DurableTaskSchedulerProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
