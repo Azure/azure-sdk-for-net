@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/discovery/Azure.ResourceManager.Discovery",
+  "Tag": "net/discovery/Azure.ResourceManager.Discovery_bcee18254b"
+}

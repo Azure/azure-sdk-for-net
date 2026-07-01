@@ -995,6 +995,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
 
+# PRLabel: %Discovery %Mgmt
+/sdk/discovery/                                                    @oylawal @achocron
+
+# ServiceLabel: %Discovery %Mgmt
+# ServiceOwners:                                                   @achocron
+
 # PRLabel: %App Services %Mgmt
 /sdk/domainregistration/Azure.ResourceManager.*/                   @antcp @AzureAppServiceCLI
 
