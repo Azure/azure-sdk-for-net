@@ -8,9 +8,4 @@
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-  </PropertyGroup>
 </Project>

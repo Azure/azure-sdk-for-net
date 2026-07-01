@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HealthcareApis
                     yield break;
                 }
                 Models.DicomServiceCollection result = Models.DicomServiceCollection.FromResponse(response);
-                yield return Page<DicomServiceData>.FromValues((IReadOnlyList<DicomServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DicomServiceData>.FromValues((IReadOnlyList<DicomServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

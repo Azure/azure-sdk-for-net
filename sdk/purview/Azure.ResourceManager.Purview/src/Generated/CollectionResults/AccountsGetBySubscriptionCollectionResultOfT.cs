@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Purview
                     yield break;
                 }
                 AccountList result = AccountList.FromResponse(response);
-                yield return Page<PurviewAccountData>.FromValues((IReadOnlyList<PurviewAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PurviewAccountData>.FromValues((IReadOnlyList<PurviewAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ExtendedLocations
                     yield break;
                 }
                 CustomLocationOperationsList result = CustomLocationOperationsList.FromResponse(response);
-                yield return Page<CustomLocationOperationInfo>.FromValues((IReadOnlyList<CustomLocationOperationInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CustomLocationOperationInfo>.FromValues((IReadOnlyList<CustomLocationOperationInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

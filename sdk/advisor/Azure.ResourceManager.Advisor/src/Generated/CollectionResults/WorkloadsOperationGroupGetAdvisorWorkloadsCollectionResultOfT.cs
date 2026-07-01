@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Advisor
                     yield break;
                 }
                 WorkloadListResult result = WorkloadListResult.FromResponse(response);
-                yield return Page<AdvisorWorkload>.FromValues((IReadOnlyList<AdvisorWorkload>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AdvisorWorkload>.FromValues((IReadOnlyList<AdvisorWorkload>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

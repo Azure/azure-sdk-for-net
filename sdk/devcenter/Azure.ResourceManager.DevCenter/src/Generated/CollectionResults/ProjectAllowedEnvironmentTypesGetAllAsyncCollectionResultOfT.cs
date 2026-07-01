@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 AllowedEnvironmentTypeListResult result = AllowedEnvironmentTypeListResult.FromResponse(response);
-                yield return Page<AllowedEnvironmentTypeData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AllowedEnvironmentTypeData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

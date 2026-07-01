@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 ClusterMetricsConfigurationList result = ClusterMetricsConfigurationList.FromResponse(response);
-                yield return Page<NetworkCloudClusterMetricsConfigurationData>.FromValues((IReadOnlyList<NetworkCloudClusterMetricsConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudClusterMetricsConfigurationData>.FromValues((IReadOnlyList<NetworkCloudClusterMetricsConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

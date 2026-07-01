@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 ImageVersionListResult result = ImageVersionListResult.FromResponse(response);
-                yield return Page<ImageVersionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ImageVersionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ServerConfigurationOptionListResult result = ServerConfigurationOptionListResult.FromResponse(response);
-                yield return Page<ManagedInstanceServerConfigurationOptionData>.FromValues((IReadOnlyList<ManagedInstanceServerConfigurationOptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstanceServerConfigurationOptionData>.FromValues((IReadOnlyList<ManagedInstanceServerConfigurationOptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

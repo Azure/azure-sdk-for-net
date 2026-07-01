@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     yield break;
                 }
                 FleetManagedNamespaceListResult result = FleetManagedNamespaceListResult.FromResponse(response);
-                yield return Page<ContainerServiceFleetManagedNamespaceData>.FromValues((IReadOnlyList<ContainerServiceFleetManagedNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceFleetManagedNamespaceData>.FromValues((IReadOnlyList<ContainerServiceFleetManagedNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<PerfCounterDataSource> performanceCounters = default;
-            IList<PerformanceCountersOtelDataSource> performanceCountersOTel = default;
+            IList<PerformanceCountersOtelDataSource> performanceCountersOtel = default;
             IList<WindowsEventLogDataSource> windowsEventLogs = default;
             IList<SyslogDataSource> syslog = default;
             IList<ExtensionDataSource> extensions = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         array.Add(PerformanceCountersOtelDataSource.DeserializePerformanceCountersOtelDataSource(item, options));
                     }
-                    performanceCountersOTel = array;
+                    performanceCountersOtel = array;
                     continue;
                 }
                 if (prop.NameEquals("windowsEventLogs"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return new DataCollectionRuleDataSources(
                 performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
-                performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>(),
+                performanceCountersOtel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>(),
                 windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
                 syslog ?? new ChangeTrackingList<SyslogDataSource>(),
                 extensions ?? new ChangeTrackingList<ExtensionDataSource>(),

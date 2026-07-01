@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 EventDataCollection result = EventDataCollection.FromResponse(response);
-                yield return Page<EventDataInfo>.FromValues((IReadOnlyList<EventDataInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventDataInfo>.FromValues((IReadOnlyList<EventDataInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

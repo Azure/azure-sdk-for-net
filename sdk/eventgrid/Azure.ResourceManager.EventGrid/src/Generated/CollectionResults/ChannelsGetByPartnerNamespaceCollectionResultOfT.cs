@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 ChannelsListResult result = ChannelsListResult.FromResponse(response);
-                yield return Page<PartnerNamespaceChannelData>.FromValues((IReadOnlyList<PartnerNamespaceChannelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PartnerNamespaceChannelData>.FromValues((IReadOnlyList<PartnerNamespaceChannelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

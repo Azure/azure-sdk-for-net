@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.EdgeOrder
                     yield break;
                 }
                 AddressResourceList result = AddressResourceList.FromResponse(response);
-                yield return Page<EdgeOrderAddressData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeOrderAddressData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 DrillResourceListResult result = DrillResourceListResult.FromResponse(response);
-                yield return Page<DrillTargetData>.FromValues((IReadOnlyList<DrillTargetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DrillTargetData>.FromValues((IReadOnlyList<DrillTargetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

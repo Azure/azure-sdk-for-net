@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 SharedGalleryImageVersionList result = SharedGalleryImageVersionList.FromResponse(response);
-                yield return Page<SharedGalleryImageVersionData>.FromValues((IReadOnlyList<SharedGalleryImageVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SharedGalleryImageVersionData>.FromValues((IReadOnlyList<SharedGalleryImageVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

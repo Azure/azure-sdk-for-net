@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.SignalR
                     yield break;
                 }
                 SignalRCustomDomainList result = SignalRCustomDomainList.FromResponse(response);
-                yield return Page<SignalRCustomDomainData>.FromValues((IReadOnlyList<SignalRCustomDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SignalRCustomDomainData>.FromValues((IReadOnlyList<SignalRCustomDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

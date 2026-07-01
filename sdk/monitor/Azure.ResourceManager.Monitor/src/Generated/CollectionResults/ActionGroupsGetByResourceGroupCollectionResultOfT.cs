@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 ActionGroupList result = ActionGroupList.FromResponse(response);
-                yield return Page<ActionGroupData>.FromValues((IReadOnlyList<ActionGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ActionGroupData>.FromValues((IReadOnlyList<ActionGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

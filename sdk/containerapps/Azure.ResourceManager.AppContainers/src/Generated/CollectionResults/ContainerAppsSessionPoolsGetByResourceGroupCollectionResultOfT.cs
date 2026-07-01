@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 Models.SessionPoolCollection result = Models.SessionPoolCollection.FromResponse(response);
-                yield return Page<SessionPoolData>.FromValues((IReadOnlyList<SessionPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SessionPoolData>.FromValues((IReadOnlyList<SessionPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

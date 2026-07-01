@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Resources
                     yield break;
                 }
                 ArmDeploymentOperationsListResult result = ArmDeploymentOperationsListResult.FromResponse(response);
-                yield return Page<ArmDeploymentOperation>.FromValues((IReadOnlyList<ArmDeploymentOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArmDeploymentOperation>.FromValues((IReadOnlyList<ArmDeploymentOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

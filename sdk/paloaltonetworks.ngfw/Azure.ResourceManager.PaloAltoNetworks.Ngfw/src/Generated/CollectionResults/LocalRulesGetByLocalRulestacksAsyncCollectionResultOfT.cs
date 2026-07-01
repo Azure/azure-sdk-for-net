@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 LocalRulesResourceListResult result = LocalRulesResourceListResult.FromResponse(response);
-                yield return Page<LocalRulestackRuleData>.FromValues((IReadOnlyList<LocalRulestackRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<LocalRulestackRuleData>.FromValues((IReadOnlyList<LocalRulestackRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedInstanceOperationListResult result = ManagedInstanceOperationListResult.FromResponse(response);
-                yield return Page<ManagedInstanceOperationData>.FromValues((IReadOnlyList<ManagedInstanceOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstanceOperationData>.FromValues((IReadOnlyList<ManagedInstanceOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
                     yield break;
                 }
                 OpenShiftClusterList result = OpenShiftClusterList.FromResponse(response);
-                yield return Page<OpenShiftClusterData>.FromValues((IReadOnlyList<OpenShiftClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OpenShiftClusterData>.FromValues((IReadOnlyList<OpenShiftClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 RunbookListResult result = RunbookListResult.FromResponse(response);
-                yield return Page<AutomationRunbookData>.FromValues((IReadOnlyList<AutomationRunbookData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationRunbookData>.FromValues((IReadOnlyList<AutomationRunbookData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

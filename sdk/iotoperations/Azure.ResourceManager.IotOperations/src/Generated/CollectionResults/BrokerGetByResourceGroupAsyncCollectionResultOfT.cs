@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.IotOperations
                     yield break;
                 }
                 BrokerResourceListResult result = BrokerResourceListResult.FromResponse(response);
-                yield return Page<IotOperationsBrokerData>.FromValues((IReadOnlyList<IotOperationsBrokerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IotOperationsBrokerData>.FromValues((IReadOnlyList<IotOperationsBrokerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

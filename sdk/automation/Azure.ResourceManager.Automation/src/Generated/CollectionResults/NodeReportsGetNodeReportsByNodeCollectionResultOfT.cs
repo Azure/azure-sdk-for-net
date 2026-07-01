@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 DscNodeReportListResult result = DscNodeReportListResult.FromResponse(response);
-                yield return Page<DscNodeReport>.FromValues((IReadOnlyList<DscNodeReport>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DscNodeReport>.FromValues((IReadOnlyList<DscNodeReport>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

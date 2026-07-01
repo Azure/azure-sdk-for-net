@@ -52,8 +52,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 EventGridDomainListResult result = EventGridDomainListResult.FromResponse(response);
-                yield return Page<EventGridDomainData>.FromValues((IReadOnlyList<EventGridDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventGridDomainData>.FromValues((IReadOnlyList<EventGridDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

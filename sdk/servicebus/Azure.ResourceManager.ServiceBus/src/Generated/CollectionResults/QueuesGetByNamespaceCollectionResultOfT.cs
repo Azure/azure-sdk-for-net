@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 SBQueueListResult result = SBQueueListResult.FromResponse(response);
-                yield return Page<ServiceBusQueueData>.FromValues((IReadOnlyList<ServiceBusQueueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceBusQueueData>.FromValues((IReadOnlyList<ServiceBusQueueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

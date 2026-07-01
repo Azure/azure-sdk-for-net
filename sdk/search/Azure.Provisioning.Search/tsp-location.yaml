@@ -1,0 +1,4 @@
+directory: specification/search/resource-manager/Microsoft.Search/Search
+commit: d1f585363eb716e2cff686352f1e9bb5e1ac028a
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

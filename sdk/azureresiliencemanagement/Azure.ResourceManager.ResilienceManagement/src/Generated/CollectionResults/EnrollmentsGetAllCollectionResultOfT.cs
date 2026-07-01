@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 EnrollmentListResult result = EnrollmentListResult.FromResponse(response);
-                yield return Page<UsagePlanEnrollmentData>.FromValues((IReadOnlyList<UsagePlanEnrollmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<UsagePlanEnrollmentData>.FromValues((IReadOnlyList<UsagePlanEnrollmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

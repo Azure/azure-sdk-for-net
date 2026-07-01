@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 ProductTemplateList result = ProductTemplateList.FromResponse(response);
-                yield return Page<SecurityInsightsProductTemplateData>.FromValues((IReadOnlyList<SecurityInsightsProductTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsProductTemplateData>.FromValues((IReadOnlyList<SecurityInsightsProductTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

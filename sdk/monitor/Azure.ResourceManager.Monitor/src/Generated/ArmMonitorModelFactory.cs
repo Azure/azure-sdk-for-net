@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
-        /// <param name="performanceCountersOTel"> The list of Open Telemetry performance counter data source configurations. </param>
+        /// <param name="performanceCountersOtel"> The list of Open Telemetry performance counter data source configurations. </param>
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
@@ -570,10 +570,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleDataSources"/> instance for mocking. </returns>
-        public static DataCollectionRuleDataSources DataCollectionRuleDataSources(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOtelDataSource> performanceCountersOTel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
+        public static DataCollectionRuleDataSources DataCollectionRuleDataSources(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOtelDataSource> performanceCountersOtel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
         {
             performanceCounters ??= new ChangeTrackingList<PerfCounterDataSource>();
-            performanceCountersOTel ??= new ChangeTrackingList<PerformanceCountersOtelDataSource>();
+            performanceCountersOtel ??= new ChangeTrackingList<PerformanceCountersOtelDataSource>();
             windowsEventLogs ??= new ChangeTrackingList<WindowsEventLogDataSource>();
             syslog ??= new ChangeTrackingList<SyslogDataSource>();
             extensions ??= new ChangeTrackingList<ExtensionDataSource>();
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
             return new DataCollectionRuleDataSources(
                 (performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>()).ToList(),
-                (performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>()).ToList(),
+                (performanceCountersOtel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>()).ToList(),
                 (windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>()).ToList(),
                 (syslog ?? new ChangeTrackingList<SyslogDataSource>()).ToList(),
                 (extensions ?? new ChangeTrackingList<ExtensionDataSource>()).ToList(),
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
-        /// <param name="performanceCountersOTel"> The list of Open Telemetry performance counter data source configurations. </param>
+        /// <param name="performanceCountersOtel"> The list of Open Telemetry performance counter data source configurations. </param>
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
@@ -622,10 +622,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
         /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
         /// <returns> A new <see cref="Models.DataSourcesSpec"/> instance for mocking. </returns>
-        public static DataSourcesSpec DataSourcesSpec(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOtelDataSource> performanceCountersOTel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
+        public static DataSourcesSpec DataSourcesSpec(IEnumerable<PerfCounterDataSource> performanceCounters = default, IEnumerable<PerformanceCountersOtelDataSource> performanceCountersOtel = default, IEnumerable<WindowsEventLogDataSource> windowsEventLogs = default, IEnumerable<SyslogDataSource> syslog = default, IEnumerable<ExtensionDataSource> extensions = default, IEnumerable<LogFilesDataSource> logFiles = default, IEnumerable<IisLogsDataSource> iisLogs = default, IEnumerable<WindowsFirewallLogsDataSource> windowsFirewallLogs = default, IEnumerable<PrometheusForwarderDataSource> prometheusForwarder = default, IEnumerable<PlatformTelemetryDataSource> platformTelemetry = default, DataImportSourcesEventHub dataImportsEventHub = default, IEnumerable<OtelLogsDataSource> otelLogs = default, IEnumerable<OtelTracesDataSource> otelTraces = default, IEnumerable<OtelMetricsDataSource> otelMetrics = default, IEnumerable<EtwProviderDataSource> etwProviders = default)
         {
             performanceCounters ??= new ChangeTrackingList<PerfCounterDataSource>();
-            performanceCountersOTel ??= new ChangeTrackingList<PerformanceCountersOtelDataSource>();
+            performanceCountersOtel ??= new ChangeTrackingList<PerformanceCountersOtelDataSource>();
             windowsEventLogs ??= new ChangeTrackingList<WindowsEventLogDataSource>();
             syslog ??= new ChangeTrackingList<SyslogDataSource>();
             extensions ??= new ChangeTrackingList<ExtensionDataSource>();
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
             return new DataSourcesSpec(
                 (performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>()).ToList(),
-                (performanceCountersOTel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>()).ToList(),
+                (performanceCountersOtel ?? new ChangeTrackingList<PerformanceCountersOtelDataSource>()).ToList(),
                 (windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>()).ToList(),
                 (syslog ?? new ChangeTrackingList<SyslogDataSource>()).ToList(),
                 (extensions ?? new ChangeTrackingList<ExtensionDataSource>()).ToList(),

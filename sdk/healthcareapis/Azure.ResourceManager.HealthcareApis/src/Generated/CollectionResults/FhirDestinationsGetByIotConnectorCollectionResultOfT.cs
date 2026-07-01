@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.HealthcareApis
                     yield break;
                 }
                 Models.HealthcareApisIotFhirDestinationCollection result = Models.HealthcareApisIotFhirDestinationCollection.FromResponse(response);
-                yield return Page<HealthcareApisIotFhirDestinationData>.FromValues((IReadOnlyList<HealthcareApisIotFhirDestinationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HealthcareApisIotFhirDestinationData>.FromValues((IReadOnlyList<HealthcareApisIotFhirDestinationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
