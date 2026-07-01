@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 VariableListResult result = VariableListResult.FromResponse(response);
-                yield return Page<AutomationVariableData>.FromValues((IReadOnlyList<AutomationVariableData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationVariableData>.FromValues((IReadOnlyList<AutomationVariableData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
