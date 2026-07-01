@@ -310,12 +310,12 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"></param>
+        /// <param name="changeLongTermRetentionBackupAccessTierParameters"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionBackupResource>> ChangeAccessTierAsync(WaitUntil waitUntil, ChangeLongTermRetentionBackupAccessTierParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionBackupResource>> ChangeAccessTierAsync(WaitUntil waitUntil, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
 
             using DiagnosticScope scope = _longTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.ChangeAccessTier");
             scope.Start();
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionBackupsRestClient.CreateChangeAccessTierRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChangeLongTermRetentionBackupAccessTierParameters.ToRequestContent(content), context);
+                HttpMessage message = _longTermRetentionBackupsRestClient.CreateChangeAccessTierRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChangeLongTermRetentionBackupAccessTierParameters.ToRequestContent(changeLongTermRetentionBackupAccessTierParameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SubscriptionLongTermRetentionBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionBackupResource>(
                     new SubscriptionLongTermRetentionBackupResourceOperationSource(Client),
@@ -369,12 +369,12 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"></param>
+        /// <param name="changeLongTermRetentionBackupAccessTierParameters"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionLongTermRetentionBackupResource> ChangeAccessTier(WaitUntil waitUntil, ChangeLongTermRetentionBackupAccessTierParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="changeLongTermRetentionBackupAccessTierParameters"/> is null. </exception>
+        public virtual ArmOperation<SubscriptionLongTermRetentionBackupResource> ChangeAccessTier(WaitUntil waitUntil, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
 
             using DiagnosticScope scope = _longTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupResource.ChangeAccessTier");
             scope.Start();
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionBackupsRestClient.CreateChangeAccessTierRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChangeLongTermRetentionBackupAccessTierParameters.ToRequestContent(content), context);
+                HttpMessage message = _longTermRetentionBackupsRestClient.CreateChangeAccessTierRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ChangeLongTermRetentionBackupAccessTierParameters.ToRequestContent(changeLongTermRetentionBackupAccessTierParameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SubscriptionLongTermRetentionBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionBackupResource>(
                     new SubscriptionLongTermRetentionBackupResourceOperationSource(Client),
