@@ -10682,7 +10682,7 @@
       "kind": "constant",
       "name": "AzureFunctionBindingKind",
       "namespace": "Azure.AI.Extensions.OpenAI",
-      "usage": "External",
+      "usage": "Input,Output,External",
       "valueType": {
         "$id": "812",
         "kind": "string",
@@ -18052,19 +18052,19 @@
                 }
               ],
               "discriminatedSubtypes": {
-                "a2a_preview": {
+                "azure_function": {
                   "$id": "1321",
                   "kind": "model",
-                  "name": "A2APreviewTool",
+                  "name": "AzureFunctionTool",
                   "namespace": "Azure.AI.Extensions.OpenAI",
-                  "crossLanguageDefinitionId": "Azure.AI.Projects.A2APreviewTool",
+                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool",
                   "usage": "Input,Output,External",
-                  "doc": "An agent implementing the A2A protocol.",
-                  "discriminatorValue": "a2a_preview",
+                  "doc": "The input definition information for an Azure Function Tool, as used to configure an Agent.",
+                  "discriminatorValue": "azure_function",
                   "decorators": [],
                   "serializationOptions": {
                     "json": {
-                      "name": "A2APreviewTool"
+                      "name": "AzureFunctionTool"
                     }
                   },
                   "isExactName": false,
@@ -18077,12 +18077,12 @@
                       "kind": "property",
                       "name": "type",
                       "serializedName": "type",
-                      "doc": "The type of the tool. Always `\"a2a_preview`.",
+                      "doc": "The object type, which is always 'browser_automation'.",
                       "type": {
                         "$id": "1323",
                         "kind": "enumvalue",
-                        "name": "a2a_preview",
-                        "value": "a2a_preview",
+                        "name": "azure_function",
+                        "value": "azure_function",
                         "valueType": {
                           "$ref": "222"
                         },
@@ -18577,7 +18577,7 @@
                       "discriminator": true,
                       "flatten": false,
                       "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.AI.Projects.A2APreviewTool.type",
+                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool.type",
                       "serializationOptions": {
                         "json": {
                           "name": "type"
@@ -18589,11 +18589,515 @@
                     {
                       "$id": "1357",
                       "kind": "property",
+                      "name": "tool_configs",
+                      "serializedName": "tool_configs",
+                      "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
+                      "type": {
+                        "$id": "1358",
+                        "kind": "dict",
+                        "keyType": {
+                          "$id": "1359",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "valueType": {
+                          "$id": "1360",
+                          "kind": "model",
+                          "name": "ToolConfig",
+                          "namespace": "Azure.AI.Extensions.OpenAI",
+                          "crossLanguageDefinitionId": "Azure.AI.Projects.ToolConfig",
+                          "usage": "Input,Output,External",
+                          "doc": "Per-tool configuration that controls tool visibility and search behavior.",
+                          "decorators": [],
+                          "serializationOptions": {
+                            "json": {
+                              "name": "ToolConfig"
+                            }
+                          },
+                          "isExactName": false,
+                          "properties": [
+                            {
+                              "$id": "1361",
+                              "kind": "property",
+                              "name": "pin",
+                              "serializedName": "pin",
+                              "doc": "When true, the tool is always included in agent context and visible in `tools/list`.\nWhen false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.",
+                              "type": {
+                                "$id": "1362",
+                                "kind": "boolean",
+                                "name": "boolean",
+                                "crossLanguageDefinitionId": "TypeSpec.boolean",
+                                "decorators": []
+                              },
+                              "optional": true,
+                              "readOnly": false,
+                              "discriminator": false,
+                              "flatten": false,
+                              "decorators": [],
+                              "crossLanguageDefinitionId": "Azure.AI.Projects.ToolConfig.pin",
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "pin"
+                                }
+                              },
+                              "isHttpMetadata": false,
+                              "isExactName": false
+                            },
+                            {
+                              "$id": "1363",
+                              "kind": "property",
+                              "name": "additional_search_text",
+                              "serializedName": "additional_search_text",
+                              "doc": "Additional text indexed for tool_search. Supplements the native tool description\nto improve discoverability. Does not alter `tools/list` output.",
+                              "type": {
+                                "$id": "1364",
+                                "kind": "string",
+                                "name": "string",
+                                "crossLanguageDefinitionId": "TypeSpec.string",
+                                "decorators": []
+                              },
+                              "optional": true,
+                              "readOnly": false,
+                              "discriminator": false,
+                              "flatten": false,
+                              "decorators": [],
+                              "crossLanguageDefinitionId": "Azure.AI.Projects.ToolConfig.additional_search_text",
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "additional_search_text"
+                                }
+                              },
+                              "isHttpMetadata": false,
+                              "isExactName": false
+                            }
+                          ]
+                        },
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool.tool_configs",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "tool_configs"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    },
+                    {
+                      "$id": "1365",
+                      "kind": "property",
+                      "name": "azure_function",
+                      "serializedName": "azure_function",
+                      "doc": "The Azure Function Tool definition.",
+                      "type": {
+                        "$id": "1366",
+                        "kind": "model",
+                        "name": "AzureFunctionDefinition",
+                        "namespace": "Azure.AI.Extensions.OpenAI",
+                        "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition",
+                        "usage": "Input,Output,External",
+                        "doc": "The definition of Azure function.",
+                        "decorators": [],
+                        "serializationOptions": {
+                          "json": {
+                            "name": "AzureFunctionDefinition"
+                          }
+                        },
+                        "isExactName": false,
+                        "properties": [
+                          {
+                            "$id": "1367",
+                            "kind": "property",
+                            "name": "function",
+                            "serializedName": "function",
+                            "doc": "The definition of azure function and its parameters.",
+                            "type": {
+                              "$id": "1368",
+                              "kind": "model",
+                              "name": "AzureFunctionDefinitionFunction",
+                              "namespace": "Azure.AI.Extensions.OpenAI",
+                              "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous",
+                              "usage": "Input,Output,External",
+                              "decorators": [],
+                              "serializationOptions": {
+                                "json": {
+                                  "name": ""
+                                }
+                              },
+                              "isExactName": false,
+                              "properties": [
+                                {
+                                  "$id": "1369",
+                                  "kind": "property",
+                                  "name": "name",
+                                  "serializedName": "name",
+                                  "doc": "The name of the function to be called.",
+                                  "type": {
+                                    "$id": "1370",
+                                    "kind": "string",
+                                    "name": "string",
+                                    "crossLanguageDefinitionId": "TypeSpec.string",
+                                    "decorators": []
+                                  },
+                                  "optional": false,
+                                  "readOnly": false,
+                                  "discriminator": false,
+                                  "flatten": false,
+                                  "decorators": [],
+                                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous.name",
+                                  "serializationOptions": {
+                                    "json": {
+                                      "name": "name"
+                                    }
+                                  },
+                                  "isHttpMetadata": false,
+                                  "isExactName": false
+                                },
+                                {
+                                  "$id": "1371",
+                                  "kind": "property",
+                                  "name": "description",
+                                  "serializedName": "description",
+                                  "doc": "A description of what the function does, used by the model to choose when and how to call the function.",
+                                  "type": {
+                                    "$id": "1372",
+                                    "kind": "string",
+                                    "name": "string",
+                                    "crossLanguageDefinitionId": "TypeSpec.string",
+                                    "decorators": []
+                                  },
+                                  "optional": true,
+                                  "readOnly": false,
+                                  "discriminator": false,
+                                  "flatten": false,
+                                  "decorators": [],
+                                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous.description",
+                                  "serializationOptions": {
+                                    "json": {
+                                      "name": "description"
+                                    }
+                                  },
+                                  "isHttpMetadata": false,
+                                  "isExactName": false
+                                },
+                                {
+                                  "$id": "1373",
+                                  "kind": "property",
+                                  "name": "parameters",
+                                  "serializedName": "parameters",
+                                  "doc": "The parameters the functions accepts, described as a JSON Schema object.",
+                                  "type": {
+                                    "$id": "1374",
+                                    "kind": "dict",
+                                    "keyType": {
+                                      "$id": "1375",
+                                      "kind": "string",
+                                      "name": "string",
+                                      "crossLanguageDefinitionId": "TypeSpec.string",
+                                      "decorators": []
+                                    },
+                                    "valueType": {
+                                      "$id": "1376",
+                                      "kind": "unknown",
+                                      "name": "unknown",
+                                      "crossLanguageDefinitionId": "",
+                                      "decorators": []
+                                    },
+                                    "decorators": []
+                                  },
+                                  "optional": false,
+                                  "readOnly": false,
+                                  "discriminator": false,
+                                  "flatten": false,
+                                  "decorators": [],
+                                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous.parameters",
+                                  "serializationOptions": {
+                                    "json": {
+                                      "name": "parameters"
+                                    }
+                                  },
+                                  "isHttpMetadata": false,
+                                  "isExactName": false
+                                }
+                              ]
+                            },
+                            "optional": false,
+                            "readOnly": false,
+                            "discriminator": false,
+                            "flatten": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function",
+                            "serializationOptions": {
+                              "json": {
+                                "name": "function"
+                              }
+                            },
+                            "isHttpMetadata": false,
+                            "isExactName": false
+                          },
+                          {
+                            "$id": "1377",
+                            "kind": "property",
+                            "name": "input_binding",
+                            "serializedName": "input_binding",
+                            "doc": "Input storage queue. The queue storage trigger runs a function as messages are added to it.",
+                            "type": {
+                              "$id": "1378",
+                              "kind": "model",
+                              "name": "AzureFunctionBinding",
+                              "namespace": "Azure.AI.Extensions.OpenAI",
+                              "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionBinding",
+                              "usage": "Input,Output,External",
+                              "doc": "The structure for keeping storage queue name and URI.",
+                              "decorators": [],
+                              "serializationOptions": {
+                                "json": {
+                                  "name": "AzureFunctionBinding"
+                                }
+                              },
+                              "isExactName": false,
+                              "properties": [
+                                {
+                                  "$id": "1379",
+                                  "kind": "property",
+                                  "name": "Kind",
+                                  "serializedName": "type",
+                                  "doc": "The type of binding, which is always 'storage_queue'.",
+                                  "type": {
+                                    "$ref": "811"
+                                  },
+                                  "optional": false,
+                                  "readOnly": false,
+                                  "discriminator": false,
+                                  "flatten": false,
+                                  "decorators": [],
+                                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionBinding.type",
+                                  "serializationOptions": {
+                                    "json": {
+                                      "name": "type"
+                                    }
+                                  },
+                                  "isHttpMetadata": false,
+                                  "isExactName": false
+                                },
+                                {
+                                  "$id": "1380",
+                                  "kind": "property",
+                                  "name": "storage_queue",
+                                  "serializedName": "storage_queue",
+                                  "doc": "Storage queue.",
+                                  "type": {
+                                    "$id": "1381",
+                                    "kind": "model",
+                                    "name": "AzureFunctionStorageQueue",
+                                    "namespace": "Azure.AI.Extensions.OpenAI",
+                                    "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionStorageQueue",
+                                    "usage": "Input,Output,External",
+                                    "doc": "The structure for keeping storage queue name and URI.",
+                                    "decorators": [],
+                                    "serializationOptions": {
+                                      "json": {
+                                        "name": "AzureFunctionStorageQueue"
+                                      }
+                                    },
+                                    "isExactName": false,
+                                    "properties": [
+                                      {
+                                        "$id": "1382",
+                                        "kind": "property",
+                                        "name": "queue_service_endpoint",
+                                        "serializedName": "queue_service_endpoint",
+                                        "doc": "URI to the Azure Storage Queue service allowing you to manipulate a queue.",
+                                        "type": {
+                                          "$id": "1383",
+                                          "kind": "string",
+                                          "name": "string",
+                                          "crossLanguageDefinitionId": "TypeSpec.string",
+                                          "decorators": []
+                                        },
+                                        "optional": false,
+                                        "readOnly": false,
+                                        "discriminator": false,
+                                        "flatten": false,
+                                        "decorators": [],
+                                        "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionStorageQueue.queue_service_endpoint",
+                                        "serializationOptions": {
+                                          "json": {
+                                            "name": "queue_service_endpoint"
+                                          }
+                                        },
+                                        "isHttpMetadata": false,
+                                        "isExactName": false
+                                      },
+                                      {
+                                        "$id": "1384",
+                                        "kind": "property",
+                                        "name": "queue_name",
+                                        "serializedName": "queue_name",
+                                        "doc": "The name of an Azure function storage queue.",
+                                        "type": {
+                                          "$id": "1385",
+                                          "kind": "string",
+                                          "name": "string",
+                                          "crossLanguageDefinitionId": "TypeSpec.string",
+                                          "decorators": []
+                                        },
+                                        "optional": false,
+                                        "readOnly": false,
+                                        "discriminator": false,
+                                        "flatten": false,
+                                        "decorators": [],
+                                        "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionStorageQueue.queue_name",
+                                        "serializationOptions": {
+                                          "json": {
+                                            "name": "queue_name"
+                                          }
+                                        },
+                                        "isHttpMetadata": false,
+                                        "isExactName": false
+                                      }
+                                    ]
+                                  },
+                                  "optional": false,
+                                  "readOnly": false,
+                                  "discriminator": false,
+                                  "flatten": false,
+                                  "decorators": [],
+                                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionBinding.storage_queue",
+                                  "serializationOptions": {
+                                    "json": {
+                                      "name": "storage_queue"
+                                    }
+                                  },
+                                  "isHttpMetadata": false,
+                                  "isExactName": false
+                                }
+                              ]
+                            },
+                            "optional": false,
+                            "readOnly": false,
+                            "discriminator": false,
+                            "flatten": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.input_binding",
+                            "serializationOptions": {
+                              "json": {
+                                "name": "input_binding"
+                              }
+                            },
+                            "isHttpMetadata": false,
+                            "isExactName": false
+                          },
+                          {
+                            "$id": "1386",
+                            "kind": "property",
+                            "name": "output_binding",
+                            "serializedName": "output_binding",
+                            "doc": "Output storage queue. The function writes output to this queue when the input items are processed.",
+                            "type": {
+                              "$ref": "1378"
+                            },
+                            "optional": false,
+                            "readOnly": false,
+                            "discriminator": false,
+                            "flatten": false,
+                            "decorators": [],
+                            "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.output_binding",
+                            "serializationOptions": {
+                              "json": {
+                                "name": "output_binding"
+                              }
+                            },
+                            "isHttpMetadata": false,
+                            "isExactName": false
+                          }
+                        ]
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool.azure_function",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "azure_function"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    }
+                  ]
+                },
+                "a2a_preview": {
+                  "$id": "1387",
+                  "kind": "model",
+                  "name": "A2APreviewTool",
+                  "namespace": "Azure.AI.Extensions.OpenAI",
+                  "crossLanguageDefinitionId": "Azure.AI.Projects.A2APreviewTool",
+                  "usage": "Input,Output,External",
+                  "doc": "An agent implementing the A2A protocol.",
+                  "discriminatorValue": "a2a_preview",
+                  "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "A2APreviewTool"
+                    }
+                  },
+                  "isExactName": false,
+                  "baseModel": {
+                    "$ref": "1319"
+                  },
+                  "properties": [
+                    {
+                      "$id": "1388",
+                      "kind": "property",
+                      "name": "type",
+                      "serializedName": "type",
+                      "doc": "The type of the tool. Always `\"a2a_preview`.",
+                      "type": {
+                        "$id": "1389",
+                        "kind": "enumvalue",
+                        "name": "a2a_preview",
+                        "value": "a2a_preview",
+                        "valueType": {
+                          "$ref": "222"
+                        },
+                        "enumType": {
+                          "$ref": "1324"
+                        },
+                        "decorators": [],
+                        "isExactName": false
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": true,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.AI.Projects.A2APreviewTool.type",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "type"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    },
+                    {
+                      "$id": "1390",
+                      "kind": "property",
                       "name": "BaseUri",
                       "serializedName": "base_url",
                       "doc": "Base URL of the agent.",
                       "type": {
-                        "$id": "1358",
+                        "$id": "1391",
                         "kind": "url",
                         "name": "url",
                         "crossLanguageDefinitionId": "TypeSpec.url",
@@ -18614,13 +19118,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1359",
+                      "$id": "1392",
                       "kind": "property",
                       "name": "agent_card_path",
                       "serializedName": "agent_card_path",
                       "doc": "The path to the agent card relative to the `base_url`.\nIf not provided, defaults to  `/.well-known/agent-card.json`",
                       "type": {
-                        "$id": "1360",
+                        "$id": "1393",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -18641,13 +19145,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1361",
+                      "$id": "1394",
                       "kind": "property",
                       "name": "project_connection_id",
                       "serializedName": "project_connection_id",
                       "doc": "The connection ID in the project for the A2A server.\nThe connection stores authentication and other connection details needed to connect to the A2A server.",
                       "type": {
-                        "$id": "1362",
+                        "$id": "1395",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -18668,13 +19172,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1363",
+                      "$id": "1396",
                       "kind": "property",
                       "name": "send_credentials_for_agent_card",
                       "serializedName": "send_credentials_for_agent_card",
                       "doc": "When `true`, Foundry sends its credentials when fetching the remote\nagent's Agent Card. The service defaults to `false` if a value is not\nspecified by the caller (anonymous fetch).",
                       "type": {
-                        "$id": "1364",
+                        "$id": "1397",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -18696,8 +19200,91 @@
                     }
                   ]
                 },
+                "work_iq_preview": {
+                  "$id": "1398",
+                  "kind": "model",
+                  "name": "WorkIQPreviewTool",
+                  "namespace": "Azure.AI.Extensions.OpenAI",
+                  "crossLanguageDefinitionId": "Azure.AI.Projects.WorkIQPreviewTool",
+                  "usage": "Input,Output,External",
+                  "doc": "A WorkIQ server-side tool.",
+                  "discriminatorValue": "work_iq_preview",
+                  "decorators": [],
+                  "serializationOptions": {
+                    "json": {
+                      "name": "WorkIQPreviewTool"
+                    }
+                  },
+                  "isExactName": false,
+                  "baseModel": {
+                    "$ref": "1319"
+                  },
+                  "properties": [
+                    {
+                      "$id": "1399",
+                      "kind": "property",
+                      "name": "type",
+                      "serializedName": "type",
+                      "doc": "The object type, which is always 'work_iq_preview'.",
+                      "type": {
+                        "$id": "1400",
+                        "kind": "enumvalue",
+                        "name": "work_iq_preview",
+                        "value": "work_iq_preview",
+                        "valueType": {
+                          "$ref": "222"
+                        },
+                        "enumType": {
+                          "$ref": "1324"
+                        },
+                        "decorators": [],
+                        "isExactName": false
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": true,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.AI.Projects.WorkIQPreviewTool.type",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "type"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    },
+                    {
+                      "$id": "1401",
+                      "kind": "property",
+                      "name": "project_connection_id",
+                      "serializedName": "project_connection_id",
+                      "doc": "The ID of the WorkIQ project connection.",
+                      "type": {
+                        "$id": "1402",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.AI.Projects.WorkIQPreviewTool.project_connection_id",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "project_connection_id"
+                        }
+                      },
+                      "isHttpMetadata": false,
+                      "isExactName": false
+                    }
+                  ]
+                },
                 "custom": {
-                  "$id": "1365",
+                  "$id": "1403",
                   "kind": "model",
                   "name": "CustomToolParam",
                   "namespace": "Azure.AI.Extensions.OpenAI.Internal",
@@ -18719,13 +19306,13 @@
                   },
                   "properties": [
                     {
-                      "$id": "1366",
+                      "$id": "1404",
                       "kind": "property",
                       "name": "type",
                       "serializedName": "type",
                       "doc": "The type of the custom tool. Always `custom`.",
                       "type": {
-                        "$id": "1367",
+                        "$id": "1405",
                         "kind": "enumvalue",
                         "name": "custom",
                         "value": "custom",
@@ -18753,13 +19340,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1368",
+                      "$id": "1406",
                       "kind": "property",
                       "name": "name",
                       "serializedName": "name",
                       "doc": "The name of the custom tool, used to identify it in tool calls.",
                       "type": {
-                        "$id": "1369",
+                        "$id": "1407",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -18780,13 +19367,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1370",
+                      "$id": "1408",
                       "kind": "property",
                       "name": "description",
                       "serializedName": "description",
                       "doc": "Optional description of the custom tool, used to provide more context.",
                       "type": {
-                        "$id": "1371",
+                        "$id": "1409",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -18807,13 +19394,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1372",
+                      "$id": "1410",
                       "kind": "property",
                       "name": "format",
                       "serializedName": "format",
                       "doc": "The input format for the custom tool. Default is unconstrained text.",
                       "type": {
-                        "$id": "1373",
+                        "$id": "1411",
                         "kind": "model",
                         "name": "CustomToolParamFormat",
                         "namespace": "Azure.AI.Extensions.OpenAI.Internal",
@@ -18828,7 +19415,7 @@
                         },
                         "isExactName": false,
                         "discriminatorProperty": {
-                          "$id": "1374",
+                          "$id": "1412",
                           "kind": "property",
                           "name": "type",
                           "serializedName": "type",
@@ -18851,12 +19438,12 @@
                         },
                         "properties": [
                           {
-                            "$ref": "1374"
+                            "$ref": "1412"
                           }
                         ],
                         "discriminatedSubtypes": {
                           "text": {
-                            "$id": "1375",
+                            "$id": "1413",
                             "kind": "model",
                             "name": "CustomTextFormatParam",
                             "namespace": "Azure.AI.Extensions.OpenAI.Internal",
@@ -18873,17 +19460,17 @@
                             },
                             "isExactName": false,
                             "baseModel": {
-                              "$ref": "1373"
+                              "$ref": "1411"
                             },
                             "properties": [
                               {
-                                "$id": "1376",
+                                "$id": "1414",
                                 "kind": "property",
                                 "name": "type",
                                 "serializedName": "type",
                                 "doc": "Unconstrained text format. Always `text`.",
                                 "type": {
-                                  "$id": "1377",
+                                  "$id": "1415",
                                   "kind": "enumvalue",
                                   "name": "text",
                                   "value": "text",
@@ -18891,7 +19478,7 @@
                                     "$ref": "254"
                                   },
                                   "enumType": {
-                                    "$id": "1378",
+                                    "$id": "1416",
                                     "kind": "enum",
                                     "decorators": [],
                                     "name": "CustomToolParamFormatType",
@@ -18899,7 +19486,7 @@
                                     "isExactName": false,
                                     "namespace": "Azure.AI.Extensions.OpenAI.Internal",
                                     "valueType": {
-                                      "$id": "1379",
+                                      "$id": "1417",
                                       "kind": "string",
                                       "decorators": [],
                                       "doc": "A sequence of textual characters.",
@@ -18908,32 +19495,32 @@
                                     },
                                     "values": [
                                       {
-                                        "$id": "1380",
+                                        "$id": "1418",
                                         "kind": "enumvalue",
                                         "decorators": [],
                                         "name": "text",
                                         "isExactName": false,
                                         "value": "text",
                                         "valueType": {
-                                          "$ref": "1379"
+                                          "$ref": "1417"
                                         },
                                         "enumType": {
-                                          "$ref": "1378"
+                                          "$ref": "1416"
                                         },
                                         "crossLanguageDefinitionId": "OpenAI.CustomToolParamFormatType.anonymous"
                                       },
                                       {
-                                        "$id": "1381",
+                                        "$id": "1419",
                                         "kind": "enumvalue",
                                         "decorators": [],
                                         "name": "grammar",
                                         "isExactName": false,
                                         "value": "grammar",
                                         "valueType": {
-                                          "$ref": "1379"
+                                          "$ref": "1417"
                                         },
                                         "enumType": {
-                                          "$ref": "1378"
+                                          "$ref": "1416"
                                         },
                                         "crossLanguageDefinitionId": "OpenAI.CustomToolParamFormatType.anonymous"
                                       }
@@ -18967,7 +19554,7 @@
                             ]
                           },
                           "grammar": {
-                            "$id": "1382",
+                            "$id": "1420",
                             "kind": "model",
                             "name": "CustomGrammarFormatParam",
                             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -18984,17 +19571,17 @@
                             },
                             "isExactName": false,
                             "baseModel": {
-                              "$ref": "1373"
+                              "$ref": "1411"
                             },
                             "properties": [
                               {
-                                "$id": "1383",
+                                "$id": "1421",
                                 "kind": "property",
                                 "name": "type",
                                 "serializedName": "type",
                                 "doc": "Grammar format. Always `grammar`.",
                                 "type": {
-                                  "$id": "1384",
+                                  "$id": "1422",
                                   "kind": "enumvalue",
                                   "name": "grammar",
                                   "value": "grammar",
@@ -19002,7 +19589,7 @@
                                     "$ref": "254"
                                   },
                                   "enumType": {
-                                    "$ref": "1378"
+                                    "$ref": "1416"
                                   },
                                   "decorators": [],
                                   "isExactName": false
@@ -19022,7 +19609,7 @@
                                 "isExactName": false
                               },
                               {
-                                "$id": "1385",
+                                "$id": "1423",
                                 "kind": "property",
                                 "name": "syntax",
                                 "serializedName": "syntax",
@@ -19045,13 +19632,13 @@
                                 "isExactName": false
                               },
                               {
-                                "$id": "1386",
+                                "$id": "1424",
                                 "kind": "property",
                                 "name": "definition",
                                 "serializedName": "definition",
                                 "doc": "The grammar definition.",
                                 "type": {
-                                  "$id": "1387",
+                                  "$id": "1425",
                                   "kind": "string",
                                   "name": "string",
                                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19090,13 +19677,13 @@
                       "isExactName": false
                     },
                     {
-                      "$id": "1388",
+                      "$id": "1426",
                       "kind": "property",
                       "name": "ShouldDeferLoading",
                       "serializedName": "defer_loading",
                       "doc": "Whether this tool should be deferred and discovered via tool search.",
                       "type": {
-                        "$id": "1389",
+                        "$id": "1427",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -19138,12 +19725,12 @@
           "isExactName": false
         },
         {
-          "$id": "1390",
+          "$id": "1428",
           "kind": "property",
           "name": "status",
           "serializedName": "status",
           "type": {
-            "$id": "1391",
+            "$id": "1429",
             "kind": "nullable",
             "type": {
               "$ref": "195"
@@ -19173,19 +19760,40 @@
       "$ref": "1321"
     },
     {
-      "$ref": "1365"
+      "$ref": "1360"
     },
     {
-      "$ref": "1373"
+      "$ref": "1366"
     },
     {
-      "$ref": "1375"
+      "$ref": "1368"
     },
     {
-      "$ref": "1382"
+      "$ref": "1378"
     },
     {
-      "$id": "1392",
+      "$ref": "1381"
+    },
+    {
+      "$ref": "1387"
+    },
+    {
+      "$ref": "1398"
+    },
+    {
+      "$ref": "1403"
+    },
+    {
+      "$ref": "1411"
+    },
+    {
+      "$ref": "1413"
+    },
+    {
+      "$ref": "1420"
+    },
+    {
+      "$id": "1430",
       "kind": "model",
       "name": "BingGroundingTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19205,13 +19813,13 @@
       },
       "properties": [
         {
-          "$id": "1393",
+          "$id": "1431",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'bing_grounding'.",
           "type": {
-            "$id": "1394",
+            "$id": "1432",
             "kind": "enumvalue",
             "name": "bing_grounding",
             "value": "bing_grounding",
@@ -19239,13 +19847,13 @@
           "isExactName": false
         },
         {
-          "$id": "1395",
+          "$id": "1433",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1396",
+            "$id": "1434",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19266,13 +19874,13 @@
           "isExactName": false
         },
         {
-          "$id": "1397",
+          "$id": "1435",
           "kind": "property",
           "name": "description",
           "serializedName": "description",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1398",
+            "$id": "1436",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19293,94 +19901,13 @@
           "isExactName": false
         },
         {
-          "$id": "1399",
+          "$id": "1437",
           "kind": "property",
           "name": "tool_configs",
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1400",
-            "kind": "dict",
-            "keyType": {
-              "$id": "1401",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "valueType": {
-              "$id": "1402",
-              "kind": "model",
-              "name": "ToolConfig",
-              "namespace": "Azure.AI.Extensions.OpenAI",
-              "crossLanguageDefinitionId": "Azure.AI.Projects.ToolConfig",
-              "usage": "External",
-              "doc": "Per-tool configuration that controls tool visibility and search behavior.",
-              "decorators": [],
-              "serializationOptions": {
-                "json": {
-                  "name": "ToolConfig"
-                }
-              },
-              "isExactName": false,
-              "properties": [
-                {
-                  "$id": "1403",
-                  "kind": "property",
-                  "name": "pin",
-                  "serializedName": "pin",
-                  "doc": "When true, the tool is always included in agent context and visible in `tools/list`.\nWhen false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.",
-                  "type": {
-                    "$id": "1404",
-                    "kind": "boolean",
-                    "name": "boolean",
-                    "crossLanguageDefinitionId": "TypeSpec.boolean",
-                    "decorators": []
-                  },
-                  "optional": true,
-                  "readOnly": false,
-                  "discriminator": false,
-                  "flatten": false,
-                  "decorators": [],
-                  "crossLanguageDefinitionId": "Azure.AI.Projects.ToolConfig.pin",
-                  "serializationOptions": {
-                    "json": {
-                      "name": "pin"
-                    }
-                  },
-                  "isHttpMetadata": false,
-                  "isExactName": false
-                },
-                {
-                  "$id": "1405",
-                  "kind": "property",
-                  "name": "additional_search_text",
-                  "serializedName": "additional_search_text",
-                  "doc": "Additional text indexed for tool_search. Supplements the native tool description\nto improve discoverability. Does not alter `tools/list` output.",
-                  "type": {
-                    "$id": "1406",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "optional": true,
-                  "readOnly": false,
-                  "discriminator": false,
-                  "flatten": false,
-                  "decorators": [],
-                  "crossLanguageDefinitionId": "Azure.AI.Projects.ToolConfig.additional_search_text",
-                  "serializationOptions": {
-                    "json": {
-                      "name": "additional_search_text"
-                    }
-                  },
-                  "isHttpMetadata": false,
-                  "isExactName": false
-                }
-              ]
-            },
-            "decorators": []
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -19397,13 +19924,13 @@
           "isExactName": false
         },
         {
-          "$id": "1407",
+          "$id": "1438",
           "kind": "property",
           "name": "bing_grounding",
           "serializedName": "bing_grounding",
           "doc": "The bing grounding search tool parameters.",
           "type": {
-            "$id": "1408",
+            "$id": "1439",
             "kind": "model",
             "name": "BingGroundingSearchToolParameters",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19419,17 +19946,17 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1409",
+                "$id": "1440",
                 "kind": "property",
                 "name": "search_configurations",
                 "serializedName": "search_configurations",
                 "doc": "The search configurations attached to this tool. There can be a maximum of 1\nsearch configuration resource attached to the tool.",
                 "type": {
-                  "$id": "1410",
+                  "$id": "1441",
                   "kind": "array",
                   "name": "ArrayBingGroundingSearchConfiguration",
                   "valueType": {
-                    "$id": "1411",
+                    "$id": "1442",
                     "kind": "model",
                     "name": "BingGroundingSearchConfiguration",
                     "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19445,13 +19972,13 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "1412",
+                        "$id": "1443",
                         "kind": "property",
                         "name": "project_connection_id",
                         "serializedName": "project_connection_id",
                         "doc": "Project connection id for grounding with bing search",
                         "type": {
-                          "$id": "1413",
+                          "$id": "1444",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19472,13 +19999,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1414",
+                        "$id": "1445",
                         "kind": "property",
                         "name": "market",
                         "serializedName": "market",
                         "doc": "The market where the results come from.",
                         "type": {
-                          "$id": "1415",
+                          "$id": "1446",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19499,13 +20026,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1416",
+                        "$id": "1447",
                         "kind": "property",
                         "name": "Language",
                         "serializedName": "set_lang",
                         "doc": "The language to use for user interface strings when calling Bing API.",
                         "type": {
-                          "$id": "1417",
+                          "$id": "1448",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19526,13 +20053,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1418",
+                        "$id": "1449",
                         "kind": "property",
                         "name": "count",
                         "serializedName": "count",
                         "doc": "The number of search results to return in the bing api response",
                         "type": {
-                          "$id": "1419",
+                          "$id": "1450",
                           "kind": "int64",
                           "name": "int64",
                           "crossLanguageDefinitionId": "TypeSpec.int64",
@@ -19553,13 +20080,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1420",
+                        "$id": "1451",
                         "kind": "property",
                         "name": "freshness",
                         "serializedName": "freshness",
                         "doc": "Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters).",
                         "type": {
-                          "$id": "1421",
+                          "$id": "1452",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19617,16 +20144,13 @@
       ]
     },
     {
-      "$ref": "1402"
+      "$ref": "1439"
     },
     {
-      "$ref": "1408"
+      "$ref": "1442"
     },
     {
-      "$ref": "1411"
-    },
-    {
-      "$id": "1422",
+      "$id": "1453",
       "kind": "model",
       "name": "MicrosoftFabricPreviewTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19646,13 +20170,13 @@
       },
       "properties": [
         {
-          "$id": "1423",
+          "$id": "1454",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'fabric_dataagent_preview'.",
           "type": {
-            "$id": "1424",
+            "$id": "1455",
             "kind": "enumvalue",
             "name": "fabric_dataagent_preview",
             "value": "fabric_dataagent_preview",
@@ -19680,13 +20204,13 @@
           "isExactName": false
         },
         {
-          "$id": "1425",
+          "$id": "1456",
           "kind": "property",
           "name": "fabric_dataagent_preview",
           "serializedName": "fabric_dataagent_preview",
           "doc": "The fabric data agent tool parameters.",
           "type": {
-            "$id": "1426",
+            "$id": "1457",
             "kind": "model",
             "name": "FabricDataAgentToolOptions",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19702,17 +20226,17 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1427",
+                "$id": "1458",
                 "kind": "property",
                 "name": "project_connections",
                 "serializedName": "project_connections",
                 "doc": "The project connections attached to this tool. There can be a maximum of 1 connection\nresource attached to the tool.",
                 "type": {
-                  "$id": "1428",
+                  "$id": "1459",
                   "kind": "array",
                   "name": "ArrayToolProjectConnection",
                   "valueType": {
-                    "$id": "1429",
+                    "$id": "1460",
                     "kind": "model",
                     "name": "ToolProjectConnection",
                     "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19728,13 +20252,13 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "1430",
+                        "$id": "1461",
                         "kind": "property",
                         "name": "project_connection_id",
                         "serializedName": "project_connection_id",
                         "doc": "A project connection in a ToolProjectConnectionList attached to this tool.",
                         "type": {
-                          "$id": "1431",
+                          "$id": "1462",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19792,13 +20316,13 @@
       ]
     },
     {
-      "$ref": "1426"
+      "$ref": "1457"
     },
     {
-      "$ref": "1429"
+      "$ref": "1460"
     },
     {
-      "$id": "1432",
+      "$id": "1463",
       "kind": "model",
       "name": "SharepointPreviewTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19818,13 +20342,13 @@
       },
       "properties": [
         {
-          "$id": "1433",
+          "$id": "1464",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'sharepoint_grounding_preview'.",
           "type": {
-            "$id": "1434",
+            "$id": "1465",
             "kind": "enumvalue",
             "name": "sharepoint_grounding_preview",
             "value": "sharepoint_grounding_preview",
@@ -19852,13 +20376,13 @@
           "isExactName": false
         },
         {
-          "$id": "1435",
+          "$id": "1466",
           "kind": "property",
           "name": "sharepoint_grounding_preview",
           "serializedName": "sharepoint_grounding_preview",
           "doc": "The sharepoint grounding tool parameters.",
           "type": {
-            "$id": "1436",
+            "$id": "1467",
             "kind": "model",
             "name": "SharepointGroundingToolParameters",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19874,13 +20398,13 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1437",
+                "$id": "1468",
                 "kind": "property",
                 "name": "project_connections",
                 "serializedName": "project_connections",
                 "doc": "The project connections attached to this tool. There can be a maximum of 1 connection\nresource attached to the tool.",
                 "type": {
-                  "$ref": "1428"
+                  "$ref": "1459"
                 },
                 "optional": true,
                 "readOnly": false,
@@ -19915,10 +20439,10 @@
       ]
     },
     {
-      "$ref": "1436"
+      "$ref": "1467"
     },
     {
-      "$id": "1438",
+      "$id": "1469",
       "kind": "model",
       "name": "AzureAISearchTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -19938,13 +20462,13 @@
       },
       "properties": [
         {
-          "$id": "1439",
+          "$id": "1470",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'azure_ai_search'.",
           "type": {
-            "$id": "1440",
+            "$id": "1471",
             "kind": "enumvalue",
             "name": "azure_ai_search",
             "value": "azure_ai_search",
@@ -19972,13 +20496,13 @@
           "isExactName": false
         },
         {
-          "$id": "1441",
+          "$id": "1472",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1442",
+            "$id": "1473",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -19999,13 +20523,13 @@
           "isExactName": false
         },
         {
-          "$id": "1443",
+          "$id": "1474",
           "kind": "property",
           "name": "description",
           "serializedName": "description",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1444",
+            "$id": "1475",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20026,13 +20550,13 @@
           "isExactName": false
         },
         {
-          "$id": "1445",
+          "$id": "1476",
           "kind": "property",
           "name": "tool_configs",
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -20049,13 +20573,13 @@
           "isExactName": false
         },
         {
-          "$id": "1446",
+          "$id": "1477",
           "kind": "property",
           "name": "AzureAISearch",
           "serializedName": "azure_ai_search",
           "doc": "The azure ai search index resource.",
           "type": {
-            "$id": "1447",
+            "$id": "1478",
             "kind": "model",
             "name": "AzureAISearchToolResource",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20071,17 +20595,17 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1448",
+                "$id": "1479",
                 "kind": "property",
                 "name": "indexes",
                 "serializedName": "indexes",
                 "doc": "The indices attached to this agent. There can be a maximum of 1 index\nresource attached to the agent.",
                 "type": {
-                  "$id": "1449",
+                  "$id": "1480",
                   "kind": "array",
                   "name": "ArrayAiSearchIndexResource",
                   "valueType": {
-                    "$id": "1450",
+                    "$id": "1481",
                     "kind": "model",
                     "name": "AISearchIndexResource",
                     "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20097,13 +20621,13 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "1451",
+                        "$id": "1482",
                         "kind": "property",
                         "name": "project_connection_id",
                         "serializedName": "project_connection_id",
                         "doc": "An index connection ID in an IndexResource attached to this agent.",
                         "type": {
-                          "$id": "1452",
+                          "$id": "1483",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20124,13 +20648,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1453",
+                        "$id": "1484",
                         "kind": "property",
                         "name": "index_name",
                         "serializedName": "index_name",
                         "doc": "The name of an index in an IndexResource attached to this agent.",
                         "type": {
-                          "$id": "1454",
+                          "$id": "1485",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20151,7 +20675,7 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1455",
+                        "$id": "1486",
                         "kind": "property",
                         "name": "query_type",
                         "serializedName": "query_type",
@@ -20174,13 +20698,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1456",
+                        "$id": "1487",
                         "kind": "property",
                         "name": "top_k",
                         "serializedName": "top_k",
                         "doc": "Number of documents to retrieve from search and present to the model.",
                         "type": {
-                          "$id": "1457",
+                          "$id": "1488",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -20201,13 +20725,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1458",
+                        "$id": "1489",
                         "kind": "property",
                         "name": "filter",
                         "serializedName": "filter",
                         "doc": "filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters).",
                         "type": {
-                          "$id": "1459",
+                          "$id": "1490",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20228,13 +20752,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1460",
+                        "$id": "1491",
                         "kind": "property",
                         "name": "index_asset_id",
                         "serializedName": "index_asset_id",
                         "doc": "Index asset id for search resource.",
                         "type": {
-                          "$id": "1461",
+                          "$id": "1492",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20292,13 +20816,13 @@
       ]
     },
     {
-      "$ref": "1447"
+      "$ref": "1478"
     },
     {
-      "$ref": "1450"
+      "$ref": "1481"
     },
     {
-      "$id": "1462",
+      "$id": "1493",
       "kind": "model",
       "name": "OpenApiTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20318,13 +20842,13 @@
       },
       "properties": [
         {
-          "$id": "1463",
+          "$id": "1494",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'openapi'.",
           "type": {
-            "$id": "1464",
+            "$id": "1495",
             "kind": "enumvalue",
             "name": "openapi",
             "value": "openapi",
@@ -20352,13 +20876,13 @@
           "isExactName": false
         },
         {
-          "$id": "1465",
+          "$id": "1496",
           "kind": "property",
           "name": "tool_configs",
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -20375,13 +20899,13 @@
           "isExactName": false
         },
         {
-          "$id": "1466",
+          "$id": "1497",
           "kind": "property",
           "name": "OpenApi",
           "serializedName": "openapi",
           "doc": "The openapi function definition.",
           "type": {
-            "$id": "1467",
+            "$id": "1498",
             "kind": "model",
             "name": "OpenApiFunctionDefinition",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20397,13 +20921,13 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1468",
+                "$id": "1499",
                 "kind": "property",
                 "name": "name",
                 "serializedName": "name",
                 "doc": "The name of the function to be called.",
                 "type": {
-                  "$id": "1469",
+                  "$id": "1500",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20424,13 +20948,13 @@
                 "isExactName": false
               },
               {
-                "$id": "1470",
+                "$id": "1501",
                 "kind": "property",
                 "name": "description",
                 "serializedName": "description",
                 "doc": "A description of what the function does, used by the model to choose when and how to call the function.",
                 "type": {
-                  "$id": "1471",
+                  "$id": "1502",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20451,29 +20975,13 @@
                 "isExactName": false
               },
               {
-                "$id": "1472",
+                "$id": "1503",
                 "kind": "property",
                 "name": "Specification",
                 "serializedName": "spec",
                 "doc": "The openapi function shape, described as a JSON Schema object.",
                 "type": {
-                  "$id": "1473",
-                  "kind": "dict",
-                  "keyType": {
-                    "$id": "1474",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "valueType": {
-                    "$id": "1475",
-                    "kind": "unknown",
-                    "name": "unknown",
-                    "crossLanguageDefinitionId": "",
-                    "decorators": []
-                  },
-                  "decorators": []
+                  "$ref": "1374"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -20490,13 +20998,13 @@
                 "isExactName": false
               },
               {
-                "$id": "1476",
+                "$id": "1504",
                 "kind": "property",
                 "name": "auth",
                 "serializedName": "auth",
                 "doc": "Open API authentication details",
                 "type": {
-                  "$id": "1477",
+                  "$id": "1505",
                   "kind": "model",
                   "name": "OpenApiAuthDetails",
                   "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20511,7 +21019,7 @@
                   },
                   "isExactName": false,
                   "discriminatorProperty": {
-                    "$id": "1478",
+                    "$id": "1506",
                     "kind": "property",
                     "name": "type",
                     "serializedName": "type",
@@ -20535,12 +21043,12 @@
                   },
                   "properties": [
                     {
-                      "$ref": "1478"
+                      "$ref": "1506"
                     }
                   ],
                   "discriminatedSubtypes": {
                     "anonymous": {
-                      "$id": "1479",
+                      "$id": "1507",
                       "kind": "model",
                       "name": "OpenApiAnonymousAuthDetails",
                       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20556,17 +21064,17 @@
                       },
                       "isExactName": false,
                       "baseModel": {
-                        "$ref": "1477"
+                        "$ref": "1505"
                       },
                       "properties": [
                         {
-                          "$id": "1480",
+                          "$id": "1508",
                           "kind": "property",
                           "name": "type",
                           "serializedName": "type",
                           "doc": "The object type, which is always 'anonymous'.",
                           "type": {
-                            "$id": "1481",
+                            "$id": "1509",
                             "kind": "enumvalue",
                             "name": "anonymous",
                             "value": "anonymous",
@@ -20574,7 +21082,7 @@
                               "$ref": "269"
                             },
                             "enumType": {
-                              "$id": "1482",
+                              "$id": "1510",
                               "kind": "enum",
                               "decorators": [],
                               "doc": "Authentication type for OpenApi endpoint. Allowed types are:\n- Anonymous (no authentication required)\n- Project Connection (requires project_connection_id to endpoint, as setup in AI Foundry)\n- Managed_Identity (requires audience for identity based auth)",
@@ -20583,7 +21091,7 @@
                               "isExactName": false,
                               "namespace": "Azure.AI.Extensions.OpenAI",
                               "valueType": {
-                                "$id": "1483",
+                                "$id": "1511",
                                 "kind": "string",
                                 "decorators": [],
                                 "doc": "A sequence of textual characters.",
@@ -20592,47 +21100,47 @@
                               },
                               "values": [
                                 {
-                                  "$id": "1484",
+                                  "$id": "1512",
                                   "kind": "enumvalue",
                                   "decorators": [],
                                   "name": "anonymous",
                                   "isExactName": false,
                                   "value": "anonymous",
                                   "valueType": {
-                                    "$ref": "1483"
+                                    "$ref": "1511"
                                   },
                                   "enumType": {
-                                    "$ref": "1482"
+                                    "$ref": "1510"
                                   },
                                   "crossLanguageDefinitionId": "Azure.AI.Projects.OpenApiAuthType.anonymous"
                                 },
                                 {
-                                  "$id": "1485",
+                                  "$id": "1513",
                                   "kind": "enumvalue",
                                   "decorators": [],
                                   "name": "project_connection",
                                   "isExactName": false,
                                   "value": "project_connection",
                                   "valueType": {
-                                    "$ref": "1483"
+                                    "$ref": "1511"
                                   },
                                   "enumType": {
-                                    "$ref": "1482"
+                                    "$ref": "1510"
                                   },
                                   "crossLanguageDefinitionId": "Azure.AI.Projects.OpenApiAuthType.project_connection"
                                 },
                                 {
-                                  "$id": "1486",
+                                  "$id": "1514",
                                   "kind": "enumvalue",
                                   "decorators": [],
                                   "name": "managedIdentity",
                                   "isExactName": false,
                                   "value": "managed_identity",
                                   "valueType": {
-                                    "$ref": "1483"
+                                    "$ref": "1511"
                                   },
                                   "enumType": {
-                                    "$ref": "1482"
+                                    "$ref": "1510"
                                   },
                                   "crossLanguageDefinitionId": "Azure.AI.Projects.OpenApiAuthType.managedIdentity"
                                 }
@@ -20669,7 +21177,7 @@
                       ]
                     },
                     "project_connection": {
-                      "$id": "1487",
+                      "$id": "1515",
                       "kind": "model",
                       "name": "OpenApiProjectConnectionAuthDetails",
                       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20685,17 +21193,17 @@
                       },
                       "isExactName": false,
                       "baseModel": {
-                        "$ref": "1477"
+                        "$ref": "1505"
                       },
                       "properties": [
                         {
-                          "$id": "1488",
+                          "$id": "1516",
                           "kind": "property",
                           "name": "type",
                           "serializedName": "type",
                           "doc": "The object type, which is always 'project_connection'.",
                           "type": {
-                            "$id": "1489",
+                            "$id": "1517",
                             "kind": "enumvalue",
                             "name": "project_connection",
                             "value": "project_connection",
@@ -20703,7 +21211,7 @@
                               "$ref": "269"
                             },
                             "enumType": {
-                              "$ref": "1482"
+                              "$ref": "1510"
                             },
                             "decorators": [],
                             "isExactName": false
@@ -20723,13 +21231,13 @@
                           "isExactName": false
                         },
                         {
-                          "$id": "1490",
+                          "$id": "1518",
                           "kind": "property",
                           "name": "security_scheme",
                           "serializedName": "security_scheme",
                           "doc": "Project connection auth security details",
                           "type": {
-                            "$id": "1491",
+                            "$id": "1519",
                             "kind": "model",
                             "name": "OpenApiProjectConnectionSecurityScheme",
                             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20745,13 +21253,13 @@
                             "isExactName": false,
                             "properties": [
                               {
-                                "$id": "1492",
+                                "$id": "1520",
                                 "kind": "property",
                                 "name": "project_connection_id",
                                 "serializedName": "project_connection_id",
                                 "doc": "Project connection id for Project Connection auth type",
                                 "type": {
-                                  "$id": "1493",
+                                  "$id": "1521",
                                   "kind": "string",
                                   "name": "string",
                                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20790,7 +21298,7 @@
                       ]
                     },
                     "managed_identity": {
-                      "$id": "1494",
+                      "$id": "1522",
                       "kind": "model",
                       "name": "OpenApiManagedAuthDetails",
                       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20806,17 +21314,17 @@
                       },
                       "isExactName": false,
                       "baseModel": {
-                        "$ref": "1477"
+                        "$ref": "1505"
                       },
                       "properties": [
                         {
-                          "$id": "1495",
+                          "$id": "1523",
                           "kind": "property",
                           "name": "type",
                           "serializedName": "type",
                           "doc": "The object type, which is always 'managed_identity'.",
                           "type": {
-                            "$id": "1496",
+                            "$id": "1524",
                             "kind": "enumvalue",
                             "name": "managedIdentity",
                             "value": "managed_identity",
@@ -20824,7 +21332,7 @@
                               "$ref": "269"
                             },
                             "enumType": {
-                              "$ref": "1482"
+                              "$ref": "1510"
                             },
                             "decorators": [],
                             "isExactName": false
@@ -20844,13 +21352,13 @@
                           "isExactName": false
                         },
                         {
-                          "$id": "1497",
+                          "$id": "1525",
                           "kind": "property",
                           "name": "security_scheme",
                           "serializedName": "security_scheme",
                           "doc": "Connection auth security details",
                           "type": {
-                            "$id": "1498",
+                            "$id": "1526",
                             "kind": "model",
                             "name": "OpenApiManagedSecurityScheme",
                             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20866,13 +21374,13 @@
                             "isExactName": false,
                             "properties": [
                               {
-                                "$id": "1499",
+                                "$id": "1527",
                                 "kind": "property",
                                 "name": "audience",
                                 "serializedName": "audience",
                                 "doc": "Authentication scope for managed_identity auth type",
                                 "type": {
-                                  "$id": "1500",
+                                  "$id": "1528",
                                   "kind": "string",
                                   "name": "string",
                                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -20927,7 +21435,7 @@
                 "isExactName": false
               },
               {
-                "$id": "1501",
+                "$id": "1529",
                 "kind": "property",
                 "name": "default_params",
                 "serializedName": "default_params",
@@ -20950,17 +21458,17 @@
                 "isExactName": false
               },
               {
-                "$id": "1502",
+                "$id": "1530",
                 "kind": "property",
                 "name": "functions",
                 "serializedName": "functions",
                 "doc": "List of function definitions used by OpenApi tool",
                 "type": {
-                  "$id": "1503",
+                  "$id": "1531",
                   "kind": "array",
                   "name": "Array3",
                   "valueType": {
-                    "$id": "1504",
+                    "$id": "1532",
                     "kind": "model",
                     "name": "OpenApiFunctionDefinitionFunction",
                     "namespace": "Azure.AI.Extensions.OpenAI",
@@ -20975,13 +21483,13 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "1505",
+                        "$id": "1533",
                         "kind": "property",
                         "name": "name",
                         "serializedName": "name",
                         "doc": "The name of the function to be called.",
                         "type": {
-                          "$id": "1506",
+                          "$id": "1534",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21002,13 +21510,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1507",
+                        "$id": "1535",
                         "kind": "property",
                         "name": "description",
                         "serializedName": "description",
                         "doc": "A description of what the function does, used by the model to choose when and how to call the function.",
                         "type": {
-                          "$id": "1508",
+                          "$id": "1536",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21029,13 +21537,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1509",
+                        "$id": "1537",
                         "kind": "property",
                         "name": "parameters",
                         "serializedName": "parameters",
                         "doc": "The parameters the functions accepts, described as a JSON Schema object.",
                         "type": {
-                          "$ref": "1473"
+                          "$ref": "1374"
                         },
                         "optional": false,
                         "readOnly": false,
@@ -21089,31 +21597,31 @@
       ]
     },
     {
-      "$ref": "1467"
-    },
-    {
-      "$ref": "1477"
-    },
-    {
-      "$ref": "1479"
-    },
-    {
-      "$ref": "1487"
-    },
-    {
-      "$ref": "1491"
-    },
-    {
-      "$ref": "1494"
-    },
-    {
       "$ref": "1498"
     },
     {
-      "$ref": "1504"
+      "$ref": "1505"
     },
     {
-      "$id": "1510",
+      "$ref": "1507"
+    },
+    {
+      "$ref": "1515"
+    },
+    {
+      "$ref": "1519"
+    },
+    {
+      "$ref": "1522"
+    },
+    {
+      "$ref": "1526"
+    },
+    {
+      "$ref": "1532"
+    },
+    {
+      "$id": "1538",
       "kind": "model",
       "name": "BingCustomSearchPreviewTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -21133,13 +21641,13 @@
       },
       "properties": [
         {
-          "$id": "1511",
+          "$id": "1539",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'bing_custom_search_preview'.",
           "type": {
-            "$id": "1512",
+            "$id": "1540",
             "kind": "enumvalue",
             "name": "bing_custom_search_preview",
             "value": "bing_custom_search_preview",
@@ -21167,13 +21675,13 @@
           "isExactName": false
         },
         {
-          "$id": "1513",
+          "$id": "1541",
           "kind": "property",
           "name": "bing_custom_search_preview",
           "serializedName": "bing_custom_search_preview",
           "doc": "The bing custom search tool parameters.",
           "type": {
-            "$id": "1514",
+            "$id": "1542",
             "kind": "model",
             "name": "BingCustomSearchToolParameters",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -21189,17 +21697,17 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1515",
+                "$id": "1543",
                 "kind": "property",
                 "name": "search_configurations",
                 "serializedName": "search_configurations",
                 "doc": "The project connections attached to this tool. There can be a maximum of 1 connection\nresource attached to the tool.",
                 "type": {
-                  "$id": "1516",
+                  "$id": "1544",
                   "kind": "array",
                   "name": "ArrayBingCustomSearchConfiguration",
                   "valueType": {
-                    "$id": "1517",
+                    "$id": "1545",
                     "kind": "model",
                     "name": "BingCustomSearchConfiguration",
                     "namespace": "Azure.AI.Extensions.OpenAI",
@@ -21215,13 +21723,13 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "1518",
+                        "$id": "1546",
                         "kind": "property",
                         "name": "project_connection_id",
                         "serializedName": "project_connection_id",
                         "doc": "Project connection id for grounding with bing search",
                         "type": {
-                          "$id": "1519",
+                          "$id": "1547",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21242,13 +21750,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1520",
+                        "$id": "1548",
                         "kind": "property",
                         "name": "instance_name",
                         "serializedName": "instance_name",
                         "doc": "Name of the custom configuration instance given to config.",
                         "type": {
-                          "$id": "1521",
+                          "$id": "1549",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21269,13 +21777,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1522",
+                        "$id": "1550",
                         "kind": "property",
                         "name": "market",
                         "serializedName": "market",
                         "doc": "The market where the results come from.",
                         "type": {
-                          "$id": "1523",
+                          "$id": "1551",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21296,13 +21804,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1524",
+                        "$id": "1552",
                         "kind": "property",
                         "name": "set_lang",
                         "serializedName": "set_lang",
                         "doc": "The language to use for user interface strings when calling Bing API.",
                         "type": {
-                          "$id": "1525",
+                          "$id": "1553",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21323,13 +21831,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1526",
+                        "$id": "1554",
                         "kind": "property",
                         "name": "count",
                         "serializedName": "count",
                         "doc": "The number of search results to return in the bing api response",
                         "type": {
-                          "$id": "1527",
+                          "$id": "1555",
                           "kind": "int64",
                           "name": "int64",
                           "crossLanguageDefinitionId": "TypeSpec.int64",
@@ -21350,13 +21858,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "1528",
+                        "$id": "1556",
                         "kind": "property",
                         "name": "freshness",
                         "serializedName": "freshness",
                         "doc": "Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters).",
                         "type": {
-                          "$id": "1529",
+                          "$id": "1557",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21414,13 +21922,13 @@
       ]
     },
     {
-      "$ref": "1514"
+      "$ref": "1542"
     },
     {
-      "$ref": "1517"
+      "$ref": "1545"
     },
     {
-      "$id": "1530",
+      "$id": "1558",
       "kind": "model",
       "name": "BrowserAutomationPreviewTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -21440,13 +21948,13 @@
       },
       "properties": [
         {
-          "$id": "1531",
+          "$id": "1559",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The object type, which is always 'browser_automation_preview'.",
           "type": {
-            "$id": "1532",
+            "$id": "1560",
             "kind": "enumvalue",
             "name": "browser_automation_preview",
             "value": "browser_automation_preview",
@@ -21474,13 +21982,13 @@
           "isExactName": false
         },
         {
-          "$id": "1533",
+          "$id": "1561",
           "kind": "property",
           "name": "browser_automation_preview",
           "serializedName": "browser_automation_preview",
           "doc": "The Browser Automation Tool parameters.",
           "type": {
-            "$id": "1534",
+            "$id": "1562",
             "kind": "model",
             "name": "BrowserAutomationToolParameters",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -21496,13 +22004,13 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1535",
+                "$id": "1563",
                 "kind": "property",
                 "name": "connection",
                 "serializedName": "connection",
                 "doc": "The project connection parameters associated with the Browser Automation Tool.",
                 "type": {
-                  "$id": "1536",
+                  "$id": "1564",
                   "kind": "model",
                   "name": "BrowserAutomationToolConnectionParameters",
                   "namespace": "Azure.AI.Extensions.OpenAI",
@@ -21518,13 +22026,13 @@
                   "isExactName": false,
                   "properties": [
                     {
-                      "$id": "1537",
+                      "$id": "1565",
                       "kind": "property",
                       "name": "project_connection_id",
                       "serializedName": "project_connection_id",
                       "doc": "The ID of the project connection to your Azure Playwright resource.",
                       "type": {
-                        "$id": "1538",
+                        "$id": "1566",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -21579,432 +22087,13 @@
       ]
     },
     {
-      "$ref": "1534"
+      "$ref": "1562"
     },
     {
-      "$ref": "1536"
+      "$ref": "1564"
     },
     {
-      "$id": "1539",
-      "kind": "model",
-      "name": "AzureFunctionTool",
-      "namespace": "Azure.AI.Extensions.OpenAI",
-      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool",
-      "usage": "External",
-      "doc": "The input definition information for an Azure Function Tool, as used to configure an Agent.",
-      "discriminatorValue": "azure_function",
-      "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "AzureFunctionTool"
-        }
-      },
-      "isExactName": false,
-      "baseModel": {
-        "$ref": "1319"
-      },
-      "properties": [
-        {
-          "$id": "1540",
-          "kind": "property",
-          "name": "type",
-          "serializedName": "type",
-          "doc": "The object type, which is always 'browser_automation'.",
-          "type": {
-            "$id": "1541",
-            "kind": "enumvalue",
-            "name": "azure_function",
-            "value": "azure_function",
-            "valueType": {
-              "$ref": "222"
-            },
-            "enumType": {
-              "$ref": "1324"
-            },
-            "decorators": [],
-            "isExactName": false
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": true,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool.type",
-          "serializationOptions": {
-            "json": {
-              "name": "type"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "1542",
-          "kind": "property",
-          "name": "tool_configs",
-          "serializedName": "tool_configs",
-          "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
-          "type": {
-            "$ref": "1400"
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool.tool_configs",
-          "serializationOptions": {
-            "json": {
-              "name": "tool_configs"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "1543",
-          "kind": "property",
-          "name": "azure_function",
-          "serializedName": "azure_function",
-          "doc": "The Azure Function Tool definition.",
-          "type": {
-            "$id": "1544",
-            "kind": "model",
-            "name": "AzureFunctionDefinition",
-            "namespace": "Azure.AI.Extensions.OpenAI",
-            "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition",
-            "usage": "External",
-            "doc": "The definition of Azure function.",
-            "decorators": [],
-            "serializationOptions": {
-              "json": {
-                "name": "AzureFunctionDefinition"
-              }
-            },
-            "isExactName": false,
-            "properties": [
-              {
-                "$id": "1545",
-                "kind": "property",
-                "name": "function",
-                "serializedName": "function",
-                "doc": "The definition of azure function and its parameters.",
-                "type": {
-                  "$id": "1546",
-                  "kind": "model",
-                  "name": "AzureFunctionDefinitionFunction",
-                  "namespace": "Azure.AI.Extensions.OpenAI",
-                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous",
-                  "usage": "External",
-                  "decorators": [],
-                  "serializationOptions": {
-                    "json": {
-                      "name": ""
-                    }
-                  },
-                  "isExactName": false,
-                  "properties": [
-                    {
-                      "$id": "1547",
-                      "kind": "property",
-                      "name": "name",
-                      "serializedName": "name",
-                      "doc": "The name of the function to be called.",
-                      "type": {
-                        "$id": "1548",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "optional": false,
-                      "readOnly": false,
-                      "discriminator": false,
-                      "flatten": false,
-                      "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous.name",
-                      "serializationOptions": {
-                        "json": {
-                          "name": "name"
-                        }
-                      },
-                      "isHttpMetadata": false,
-                      "isExactName": false
-                    },
-                    {
-                      "$id": "1549",
-                      "kind": "property",
-                      "name": "description",
-                      "serializedName": "description",
-                      "doc": "A description of what the function does, used by the model to choose when and how to call the function.",
-                      "type": {
-                        "$id": "1550",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "optional": true,
-                      "readOnly": false,
-                      "discriminator": false,
-                      "flatten": false,
-                      "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous.description",
-                      "serializationOptions": {
-                        "json": {
-                          "name": "description"
-                        }
-                      },
-                      "isHttpMetadata": false,
-                      "isExactName": false
-                    },
-                    {
-                      "$id": "1551",
-                      "kind": "property",
-                      "name": "parameters",
-                      "serializedName": "parameters",
-                      "doc": "The parameters the functions accepts, described as a JSON Schema object.",
-                      "type": {
-                        "$ref": "1473"
-                      },
-                      "optional": false,
-                      "readOnly": false,
-                      "discriminator": false,
-                      "flatten": false,
-                      "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function.anonymous.parameters",
-                      "serializationOptions": {
-                        "json": {
-                          "name": "parameters"
-                        }
-                      },
-                      "isHttpMetadata": false,
-                      "isExactName": false
-                    }
-                  ]
-                },
-                "optional": false,
-                "readOnly": false,
-                "discriminator": false,
-                "flatten": false,
-                "decorators": [],
-                "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.function",
-                "serializationOptions": {
-                  "json": {
-                    "name": "function"
-                  }
-                },
-                "isHttpMetadata": false,
-                "isExactName": false
-              },
-              {
-                "$id": "1552",
-                "kind": "property",
-                "name": "input_binding",
-                "serializedName": "input_binding",
-                "doc": "Input storage queue. The queue storage trigger runs a function as messages are added to it.",
-                "type": {
-                  "$id": "1553",
-                  "kind": "model",
-                  "name": "AzureFunctionBinding",
-                  "namespace": "Azure.AI.Extensions.OpenAI",
-                  "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionBinding",
-                  "usage": "External",
-                  "doc": "The structure for keeping storage queue name and URI.",
-                  "decorators": [],
-                  "serializationOptions": {
-                    "json": {
-                      "name": "AzureFunctionBinding"
-                    }
-                  },
-                  "isExactName": false,
-                  "properties": [
-                    {
-                      "$id": "1554",
-                      "kind": "property",
-                      "name": "Kind",
-                      "serializedName": "type",
-                      "doc": "The type of binding, which is always 'storage_queue'.",
-                      "type": {
-                        "$ref": "811"
-                      },
-                      "optional": false,
-                      "readOnly": false,
-                      "discriminator": false,
-                      "flatten": false,
-                      "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionBinding.type",
-                      "serializationOptions": {
-                        "json": {
-                          "name": "type"
-                        }
-                      },
-                      "isHttpMetadata": false,
-                      "isExactName": false
-                    },
-                    {
-                      "$id": "1555",
-                      "kind": "property",
-                      "name": "storage_queue",
-                      "serializedName": "storage_queue",
-                      "doc": "Storage queue.",
-                      "type": {
-                        "$id": "1556",
-                        "kind": "model",
-                        "name": "AzureFunctionStorageQueue",
-                        "namespace": "Azure.AI.Extensions.OpenAI",
-                        "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionStorageQueue",
-                        "usage": "External",
-                        "doc": "The structure for keeping storage queue name and URI.",
-                        "decorators": [],
-                        "serializationOptions": {
-                          "json": {
-                            "name": "AzureFunctionStorageQueue"
-                          }
-                        },
-                        "isExactName": false,
-                        "properties": [
-                          {
-                            "$id": "1557",
-                            "kind": "property",
-                            "name": "queue_service_endpoint",
-                            "serializedName": "queue_service_endpoint",
-                            "doc": "URI to the Azure Storage Queue service allowing you to manipulate a queue.",
-                            "type": {
-                              "$id": "1558",
-                              "kind": "string",
-                              "name": "string",
-                              "crossLanguageDefinitionId": "TypeSpec.string",
-                              "decorators": []
-                            },
-                            "optional": false,
-                            "readOnly": false,
-                            "discriminator": false,
-                            "flatten": false,
-                            "decorators": [],
-                            "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionStorageQueue.queue_service_endpoint",
-                            "serializationOptions": {
-                              "json": {
-                                "name": "queue_service_endpoint"
-                              }
-                            },
-                            "isHttpMetadata": false,
-                            "isExactName": false
-                          },
-                          {
-                            "$id": "1559",
-                            "kind": "property",
-                            "name": "queue_name",
-                            "serializedName": "queue_name",
-                            "doc": "The name of an Azure function storage queue.",
-                            "type": {
-                              "$id": "1560",
-                              "kind": "string",
-                              "name": "string",
-                              "crossLanguageDefinitionId": "TypeSpec.string",
-                              "decorators": []
-                            },
-                            "optional": false,
-                            "readOnly": false,
-                            "discriminator": false,
-                            "flatten": false,
-                            "decorators": [],
-                            "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionStorageQueue.queue_name",
-                            "serializationOptions": {
-                              "json": {
-                                "name": "queue_name"
-                              }
-                            },
-                            "isHttpMetadata": false,
-                            "isExactName": false
-                          }
-                        ]
-                      },
-                      "optional": false,
-                      "readOnly": false,
-                      "discriminator": false,
-                      "flatten": false,
-                      "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionBinding.storage_queue",
-                      "serializationOptions": {
-                        "json": {
-                          "name": "storage_queue"
-                        }
-                      },
-                      "isHttpMetadata": false,
-                      "isExactName": false
-                    }
-                  ]
-                },
-                "optional": false,
-                "readOnly": false,
-                "discriminator": false,
-                "flatten": false,
-                "decorators": [],
-                "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.input_binding",
-                "serializationOptions": {
-                  "json": {
-                    "name": "input_binding"
-                  }
-                },
-                "isHttpMetadata": false,
-                "isExactName": false
-              },
-              {
-                "$id": "1561",
-                "kind": "property",
-                "name": "output_binding",
-                "serializedName": "output_binding",
-                "doc": "Output storage queue. The function writes output to this queue when the input items are processed.",
-                "type": {
-                  "$ref": "1553"
-                },
-                "optional": false,
-                "readOnly": false,
-                "discriminator": false,
-                "flatten": false,
-                "decorators": [],
-                "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionDefinition.output_binding",
-                "serializationOptions": {
-                  "json": {
-                    "name": "output_binding"
-                  }
-                },
-                "isHttpMetadata": false,
-                "isExactName": false
-              }
-            ]
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.AI.Projects.AzureFunctionTool.azure_function",
-          "serializationOptions": {
-            "json": {
-              "name": "azure_function"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$ref": "1544"
-    },
-    {
-      "$ref": "1546"
-    },
-    {
-      "$ref": "1553"
-    },
-    {
-      "$ref": "1556"
-    },
-    {
-      "$id": "1562",
+      "$id": "1567",
       "kind": "model",
       "name": "CaptureStructuredOutputsTool",
       "namespace": "Azure.AI.Extensions.OpenAI",
@@ -22024,13 +22113,13 @@
       },
       "properties": [
         {
-          "$id": "1563",
+          "$id": "1568",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The type of the tool. Always `capture_structured_outputs`.",
           "type": {
-            "$id": "1564",
+            "$id": "1569",
             "kind": "enumvalue",
             "name": "capture_structured_outputs",
             "value": "capture_structured_outputs",
@@ -22058,13 +22147,13 @@
           "isExactName": false
         },
         {
-          "$id": "1565",
+          "$id": "1570",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1566",
+            "$id": "1571",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -22085,13 +22174,13 @@
           "isExactName": false
         },
         {
-          "$id": "1567",
+          "$id": "1572",
           "kind": "property",
           "name": "description",
           "serializedName": "description",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$id": "1568",
+            "$id": "1573",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -22112,13 +22201,13 @@
           "isExactName": false
         },
         {
-          "$id": "1569",
+          "$id": "1574",
           "kind": "property",
           "name": "tool_configs",
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -22135,13 +22224,13 @@
           "isExactName": false
         },
         {
-          "$id": "1570",
+          "$id": "1575",
           "kind": "property",
           "name": "OutputDefinition",
           "serializedName": "outputs",
           "doc": "The structured outputs to capture from the model.",
           "type": {
-            "$id": "1571",
+            "$id": "1576",
             "kind": "model",
             "name": "StructuredOutputDefinition",
             "namespace": "Azure.AI.Extensions.OpenAI",
@@ -22157,13 +22246,13 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "1572",
+                "$id": "1577",
                 "kind": "property",
                 "name": "name",
                 "serializedName": "name",
                 "doc": "The name of the structured output.",
                 "type": {
-                  "$id": "1573",
+                  "$id": "1578",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -22184,13 +22273,13 @@
                 "isExactName": false
               },
               {
-                "$id": "1574",
+                "$id": "1579",
                 "kind": "property",
                 "name": "description",
                 "serializedName": "description",
                 "doc": "A description of the output to emit. Used by the model to determine when to emit the output.",
                 "type": {
-                  "$id": "1575",
+                  "$id": "1580",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -22211,13 +22300,13 @@
                 "isExactName": false
               },
               {
-                "$id": "1576",
+                "$id": "1581",
                 "kind": "property",
                 "name": "schema",
                 "serializedName": "schema",
                 "doc": "The JSON schema for the structured output.",
                 "type": {
-                  "$ref": "1473"
+                  "$ref": "1374"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -22234,16 +22323,16 @@
                 "isExactName": false
               },
               {
-                "$id": "1577",
+                "$id": "1582",
                 "kind": "property",
                 "name": "IsStrict",
                 "serializedName": "strict",
                 "doc": "Whether to enforce strict validation. Default `true`.",
                 "type": {
-                  "$id": "1578",
+                  "$id": "1583",
                   "kind": "nullable",
                   "type": {
-                    "$id": "1579",
+                    "$id": "1584",
                     "kind": "boolean",
                     "name": "boolean",
                     "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -22284,90 +22373,7 @@
       ]
     },
     {
-      "$ref": "1571"
-    },
-    {
-      "$id": "1580",
-      "kind": "model",
-      "name": "WorkIQPreviewTool",
-      "namespace": "Azure.AI.Extensions.OpenAI",
-      "crossLanguageDefinitionId": "Azure.AI.Projects.WorkIQPreviewTool",
-      "usage": "External",
-      "doc": "A WorkIQ server-side tool.",
-      "discriminatorValue": "work_iq_preview",
-      "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "WorkIQPreviewTool"
-        }
-      },
-      "isExactName": false,
-      "baseModel": {
-        "$ref": "1319"
-      },
-      "properties": [
-        {
-          "$id": "1581",
-          "kind": "property",
-          "name": "type",
-          "serializedName": "type",
-          "doc": "The object type, which is always 'work_iq_preview'.",
-          "type": {
-            "$id": "1582",
-            "kind": "enumvalue",
-            "name": "work_iq_preview",
-            "value": "work_iq_preview",
-            "valueType": {
-              "$ref": "222"
-            },
-            "enumType": {
-              "$ref": "1324"
-            },
-            "decorators": [],
-            "isExactName": false
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": true,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.AI.Projects.WorkIQPreviewTool.type",
-          "serializationOptions": {
-            "json": {
-              "name": "type"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "1583",
-          "kind": "property",
-          "name": "project_connection_id",
-          "serializedName": "project_connection_id",
-          "doc": "The ID of the WorkIQ project connection.",
-          "type": {
-            "$id": "1584",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.AI.Projects.WorkIQPreviewTool.project_connection_id",
-          "serializationOptions": {
-            "json": {
-              "name": "project_connection_id"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
+      "$ref": "1576"
     },
     {
       "$id": "1585",
@@ -23116,7 +23122,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -24282,7 +24288,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -24714,7 +24720,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -24742,7 +24748,7 @@
             "name": "WebSearchConfiguration",
             "namespace": "Azure.AI.Extensions.OpenAI",
             "crossLanguageDefinitionId": "Azure.AI.Projects.WebSearchConfiguration",
-            "usage": "External",
+            "usage": "Input,Output,External",
             "doc": "A web search configuration for bing custom search",
             "decorators": [],
             "serializationOptions": {
@@ -25209,7 +25215,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -25354,7 +25360,7 @@
             "$id": "1781",
             "kind": "nullable",
             "type": {
-              "$ref": "1473"
+              "$ref": "1374"
             },
             "namespace": "Azure.AI.Extensions.OpenAI.Internal"
           },
@@ -26018,7 +26024,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -26155,7 +26161,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -27270,7 +27276,7 @@
           "serializedName": "tool_configs",
           "doc": "Deprecated. This property is deprecated and will be removed in a future version.",
           "type": {
-            "$ref": "1400"
+            "$ref": "1358"
           },
           "optional": true,
           "readOnly": false,
@@ -28049,7 +28055,7 @@
                   ]
                 },
                 {
-                  "$ref": "1365"
+                  "$ref": "1403"
                 }
               ],
               "namespace": "Azure.AI.Extensions.OpenAI.Internal",
@@ -33904,7 +33910,7 @@
           "name": "error",
           "serializedName": "error",
           "type": {
-            "$ref": "1473"
+            "$ref": "1374"
           },
           "optional": true,
           "readOnly": false,
@@ -40128,7 +40134,7 @@
                       "name": "error",
                       "serializedName": "error",
                       "type": {
-                        "$ref": "1473"
+                        "$ref": "1374"
                       },
                       "optional": true,
                       "readOnly": false,
@@ -41523,7 +41529,7 @@
                 "name": "additionalInfo",
                 "serializedName": "additionalInfo",
                 "type": {
-                  "$ref": "1473"
+                  "$ref": "1374"
                 },
                 "optional": true,
                 "readOnly": false,
@@ -41545,7 +41551,7 @@
                 "name": "debugInfo",
                 "serializedName": "debugInfo",
                 "type": {
-                  "$ref": "1473"
+                  "$ref": "1374"
                 },
                 "optional": true,
                 "readOnly": false,
@@ -43025,7 +43031,7 @@
                   "name": "ToolCallOutputContent",
                   "variantTypes": [
                     {
-                      "$ref": "1473"
+                      "$ref": "1374"
                     },
                     {
                       "$id": "2887",
@@ -49885,7 +49891,7 @@
           "name": "error",
           "serializedName": "error",
           "type": {
-            "$ref": "1473"
+            "$ref": "1374"
           },
           "optional": true,
           "readOnly": false,
@@ -57393,7 +57399,7 @@
             "kind": "array",
             "name": "ArrayRecord",
             "valueType": {
-              "$ref": "1473"
+              "$ref": "1374"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []

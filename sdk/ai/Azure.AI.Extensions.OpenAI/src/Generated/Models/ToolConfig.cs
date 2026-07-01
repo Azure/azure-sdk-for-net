@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ToolConfig"/>. </summary>
-        internal ToolConfig()
+        public ToolConfig()
         {
         }
 
@@ -39,12 +39,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// When true, the tool is always included in agent context and visible in `tools/list`.
         /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
         /// </summary>
-        public bool? Pin { get; }
+        public bool? Pin { get; set; }
 
         /// <summary>
         /// Additional text indexed for tool_search. Supplements the native tool description
         /// to improve discoverability. Does not alter `tools/list` output.
         /// </summary>
-        public string AdditionalSearchText { get; }
+        public string AdditionalSearchText { get; set; }
     }
 }

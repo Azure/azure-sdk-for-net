@@ -38,6 +38,71 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesEmptyModelParam(additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionTool"/> instance for mocking. </returns>
+        public static ResponsesAzureFunctionTool ResponsesAzureFunctionTool(IDictionary<string, ToolConfig> toolConfigs = default, ResponsesAzureFunctionDefinition azureFunction = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ResponsesAzureFunctionTool("azure_function", toolConfigs, azureFunction, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The definition of Azure function. </summary>
+        /// <param name="function"> The definition of azure function and its parameters. </param>
+        /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
+        /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionDefinition"/> instance for mocking. </returns>
+        public static ResponsesAzureFunctionDefinition ResponsesAzureFunctionDefinition(ResponsesAzureFunctionDefinitionFunction function = default, ResponsesAzureFunctionBinding inputBinding = default, ResponsesAzureFunctionBinding outputBinding = default)
+        {
+            return new ResponsesAzureFunctionDefinition(function, inputBinding, outputBinding, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ResponsesAzureFunctionDefinitionFunction. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionDefinitionFunction"/> instance for mocking. </returns>
+        public static ResponsesAzureFunctionDefinitionFunction ResponsesAzureFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ResponsesAzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionBinding"/> instance for mocking. </returns>
+        public static ResponsesAzureFunctionBinding ResponsesAzureFunctionBinding(ResponsesAzureFunctionStorageQueue storageQueue = default)
+        {
+            return new ResponsesAzureFunctionBinding("storage_queue", storageQueue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionStorageQueue"/> instance for mocking. </returns>
+        public static ResponsesAzureFunctionStorageQueue ResponsesAzureFunctionStorageQueue(string queueServiceEndpoint = default, string queueName = default)
+        {
+            return new ResponsesAzureFunctionStorageQueue(queueServiceEndpoint, queueName, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> An agent implementing the A2A protocol. </summary>
         /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
@@ -63,6 +128,14 @@ namespace Azure.AI.Extensions.OpenAI
                 projectConnectionId,
                 sendCredentialsForAgentCard,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <returns> A new <see cref="OpenAI.ResponsesWorkIQPreviewTool"/> instance for mocking. </returns>
+        public static ResponsesWorkIQPreviewTool ResponsesWorkIQPreviewTool(string projectConnectionId = default)
+        {
+            return new ResponsesWorkIQPreviewTool("work_iq_preview", projectConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Custom tool. </summary>
@@ -126,21 +199,6 @@ namespace Azure.AI.Extensions.OpenAI
                 toolConfigs,
                 bingGrounding,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
-        /// <param name="pin">
-        /// When true, the tool is always included in agent context and visible in `tools/list`.
-        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
-        /// </param>
-        /// <param name="additionalSearchText">
-        /// Additional text indexed for tool_search. Supplements the native tool description
-        /// to improve discoverability. Does not alter `tools/list` output.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
-        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
-        {
-            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -438,56 +496,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesBrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionTool"/> instance for mocking. </returns>
-        public static ResponsesAzureFunctionTool ResponsesAzureFunctionTool(IDictionary<string, ToolConfig> toolConfigs = default, ResponsesAzureFunctionDefinition azureFunction = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new ResponsesAzureFunctionTool("azure_function", toolConfigs, azureFunction, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The definition of Azure function. </summary>
-        /// <param name="function"> The definition of azure function and its parameters. </param>
-        /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
-        /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionDefinition"/> instance for mocking. </returns>
-        public static ResponsesAzureFunctionDefinition ResponsesAzureFunctionDefinition(ResponsesAzureFunctionDefinitionFunction function = default, ResponsesAzureFunctionBinding inputBinding = default, ResponsesAzureFunctionBinding outputBinding = default)
-        {
-            return new ResponsesAzureFunctionDefinition(function, inputBinding, outputBinding, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ResponsesAzureFunctionDefinitionFunction. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static ResponsesAzureFunctionDefinitionFunction ResponsesAzureFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
-        {
-            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ResponsesAzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The structure for keeping storage queue name and URI. </summary>
-        /// <param name="storageQueue"> Storage queue. </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionBinding"/> instance for mocking. </returns>
-        public static ResponsesAzureFunctionBinding ResponsesAzureFunctionBinding(ResponsesAzureFunctionStorageQueue storageQueue = default)
-        {
-            return new ResponsesAzureFunctionBinding("storage_queue", storageQueue, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The structure for keeping storage queue name and URI. </summary>
-        /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
-        /// <param name="queueName"> The name of an Azure function storage queue. </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesAzureFunctionStorageQueue"/> instance for mocking. </returns>
-        public static ResponsesAzureFunctionStorageQueue ResponsesAzureFunctionStorageQueue(string queueServiceEndpoint = default, string queueName = default)
-        {
-            return new ResponsesAzureFunctionStorageQueue(queueServiceEndpoint, queueName, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A tool for capturing structured outputs. </summary>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
@@ -518,14 +526,6 @@ namespace Azure.AI.Extensions.OpenAI
             schema ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ResponsesStructuredOutputDefinition(name, description, schema, isStrict, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A WorkIQ server-side tool. </summary>
-        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesWorkIQPreviewTool"/> instance for mocking. </returns>
-        public static ResponsesWorkIQPreviewTool ResponsesWorkIQPreviewTool(string projectConnectionId = default)
-        {
-            return new ResponsesWorkIQPreviewTool("work_iq_preview", projectConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A FabricIQ server-side tool. </summary>

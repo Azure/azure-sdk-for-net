@@ -16,8 +16,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        internal ResponsesWebSearchConfiguration(string projectConnectionId, string instanceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> or <paramref name="instanceName"/> is null. </exception>
+        public ResponsesWebSearchConfiguration(string projectConnectionId, string instanceName)
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            Argument.AssertNotNull(instanceName, nameof(instanceName));
+
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;
         }
@@ -34,9 +38,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Project connection id for grounding with bing custom search. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> Name of the custom configuration instance given to config. </summary>
-        public string InstanceName { get; }
+        public string InstanceName { get; set; }
     }
 }

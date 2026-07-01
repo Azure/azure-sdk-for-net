@@ -78,10 +78,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("ToolSearchToolParam")] public partial class ResponsesToolSearchToolParam { }
 [CodeGenType("WebSearchApproximateLocation")] public partial class ResponsesWebSearchApproximateLocation { }
 [CodeGenType("WebSearchConfiguration")] public partial class ResponsesWebSearchConfiguration { }
-/// <summary>
-///
-/// </summary>
-[CodeGenType("WebSearchTool")] public partial class ResponsesWebSearchTool { }
+
 //[CodeGenType("WebSearchToolSearchContextSize")] public readonly partial struct ResponsesWebSearchToolSearchContextSize { }
 [CodeGenType("WorkIQPreviewTool")] public partial class ResponsesWorkIQPreviewTool { }
 

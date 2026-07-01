@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesWorkIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        internal ResponsesWorkIQPreviewTool(string projectConnectionId) : base("work_iq_preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public ResponsesWorkIQPreviewTool(string projectConnectionId) : base("work_iq_preview")
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -32,6 +35,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the WorkIQ project connection. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
     }
 }
