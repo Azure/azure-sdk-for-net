@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 throw new FormatException($"The model {nameof(ExecuteDeallocateContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("executionParameters"u8);
-            writer.WriteObjectValue(ExecutionParameters, options);
+            writer.WriteObjectValue<Models.ScheduledActionExecutionParameterDetail>(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ScheduledActionExecutionParameterDetail executionParameters = default;
+            Models.ScheduledActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
+                    executionParameters = Models.ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))

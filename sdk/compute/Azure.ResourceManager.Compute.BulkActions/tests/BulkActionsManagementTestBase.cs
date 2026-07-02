@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
             {
                 var content = new GetBulkOperationStatusContent(ids);
                 var response = await DefaultResourceGroup
-                    .BulkGetOperationsStatusAsync(content)
+                    .BulkGetOperationsStatusAsync(Location, content)
                     .ConfigureAwait(false);
                 last = response.Value;
 

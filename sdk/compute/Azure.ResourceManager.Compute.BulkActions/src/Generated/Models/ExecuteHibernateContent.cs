@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
-        public ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources)
+        public ExecuteHibernateContent(Models.ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
             Argument.AssertNotNull(resources, nameof(resources));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteHibernateContent(Models.ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The execution parameters for the request. </summary>
-        public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
+        public Models.ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
 
         /// <summary> The resources for the request. </summary>
         public UserRequestResources Resources { get; }

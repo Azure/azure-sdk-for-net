@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var ids = GetPreCreatedVmIds(1);
             var content = BuildStartContent(ids);
 
-            var response = await DefaultResourceGroup.BulkStartOperationAsync(content);
+            var response = await DefaultResourceGroup.BulkStartOperationAsync(Location, content);
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var ids = GetPreCreatedVmIds(2);
             var content = BuildDeallocateContent(ids);
 
-            var response = await DefaultResourceGroup.BulkDeallocateOperationAsync(content);
+            var response = await DefaultResourceGroup.BulkDeallocateOperationAsync(Location, content);
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var ids = GetPreCreatedVmIds(3);
             var content = BuildHibernateContent(ids);
 
-            var response = await DefaultResourceGroup.BulkHibernateOperationAsync(content);
+            var response = await DefaultResourceGroup.BulkHibernateOperationAsync(Location, content);
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             // directly. This isolates the GetStatus contract: shape, mapping to operation IDs,
             // and round-trip echo of OperationType/State.
             var ids = GetPreCreatedVmIds(4);
-            var startResponse = await DefaultResourceGroup.BulkStartOperationAsync(BuildStartContent(ids));
+            var startResponse = await DefaultResourceGroup.BulkStartOperationAsync(Location, BuildStartContent(ids));
             var opIds = ExtractOperationIds(startResponse.Value.Results);
             ClassicAssert.AreEqual(ids.Count, opIds.Count, "Seeding Start did not return one operation per resource.");
 
-            var statusResponse = await DefaultResourceGroup.BulkGetOperationsStatusAsync(new GetBulkOperationStatusContent(opIds));
+            var statusResponse = await DefaultResourceGroup.BulkGetOperationsStatusAsync(Location, new GetBulkOperationStatusContent(opIds));
             var status = statusResponse.Value;
 
             ClassicAssert.AreEqual(opIds.Count, status.Results.Count);
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             // every op as Cancelled. The cancel transition is fast, so this validation runs
             // within the recording budget.
             var ids = GetPreCreatedVmIds(5);
-            var seedResponse = await DefaultResourceGroup.BulkDeallocateOperationAsync(BuildDeallocateContent(ids));
+            var seedResponse = await DefaultResourceGroup.BulkDeallocateOperationAsync(Location, BuildDeallocateContent(ids));
             var opIds = ExtractOperationIds(seedResponse.Value.Results);
             ClassicAssert.AreEqual(ids.Count, opIds.Count, "Seeding Deallocate did not return one operation per resource.");
 
-            var cancelResponse = await DefaultResourceGroup.BulkCancelOperationsAsync(new CancelBulkOperationsContent(opIds));
+            var cancelResponse = await DefaultResourceGroup.BulkCancelOperationsAsync(Location, new CancelBulkOperationsContent(opIds));
             var cancel = cancelResponse.Value;
             ClassicAssert.AreEqual(opIds.Count, cancel.Results.Count);
             foreach (var r in cancel.Results)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var ids = GetPreCreatedVmIds(5);
             var content = BuildDeleteContent(ids, forceDelete: false);
 
-            var response = await DefaultResourceGroup.BulkDeleteOperationAsync(content);
+            var response = await DefaultResourceGroup.BulkDeleteOperationAsync(Location, content);
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
