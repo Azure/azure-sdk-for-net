@@ -146,7 +146,7 @@ ResponsesServer.Run<StreamingUpstreamHandler>(configure: builder =>
     builder.Services.AddSingleton(new ResponsesClient(
         new ApiKeyCredential(
             Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "your-api-key"),
-        new OpenAIClientOptions
+        new ResponsesClientOptions
         {
             Endpoint = new Uri(
                 Environment.GetEnvironmentVariable("UPSTREAM_ENDPOINT")
