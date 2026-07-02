@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Values that define the states of operations in Bulkactions. </summary>
-    public readonly partial struct ScheduledActionOperationState : IEquatable<ScheduledActionOperationState>
+    public readonly partial struct BulkActionOperationState : IEquatable<BulkActionOperationState>
     {
         private readonly string _value;
         /// <summary> The default value for the operation state enum. </summary>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Operations that are blocked. </summary>
         private const string BlockedValue = "Blocked";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScheduledActionOperationState(string value)
+        public BulkActionOperationState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -45,56 +45,56 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The default value for the operation state enum. </summary>
-        public static ScheduledActionOperationState Unknown { get; } = new ScheduledActionOperationState(UnknownValue);
+        public static BulkActionOperationState Unknown { get; } = new BulkActionOperationState(UnknownValue);
 
         /// <summary> Operations that are pending scheduling. </summary>
-        public static ScheduledActionOperationState PendingScheduling { get; } = new ScheduledActionOperationState(PendingSchedulingValue);
+        public static BulkActionOperationState PendingScheduling { get; } = new BulkActionOperationState(PendingSchedulingValue);
 
         /// <summary> Operations that have been scheduled. </summary>
-        public static ScheduledActionOperationState Scheduled { get; } = new ScheduledActionOperationState(ScheduledValue);
+        public static BulkActionOperationState Scheduled { get; } = new BulkActionOperationState(ScheduledValue);
 
         /// <summary> Operations that are waiting to be executed. </summary>
-        public static ScheduledActionOperationState PendingExecution { get; } = new ScheduledActionOperationState(PendingExecutionValue);
+        public static BulkActionOperationState PendingExecution { get; } = new BulkActionOperationState(PendingExecutionValue);
 
         /// <summary> Operations that are in the process of being executed. </summary>
-        public static ScheduledActionOperationState Executing { get; } = new ScheduledActionOperationState(ExecutingValue);
+        public static BulkActionOperationState Executing { get; } = new BulkActionOperationState(ExecutingValue);
 
         /// <summary> Operations that succeeded. </summary>
-        public static ScheduledActionOperationState Succeeded { get; } = new ScheduledActionOperationState(SucceededValue);
+        public static BulkActionOperationState Succeeded { get; } = new BulkActionOperationState(SucceededValue);
 
         /// <summary> Operations that have failed. </summary>
-        public static ScheduledActionOperationState Failed { get; } = new ScheduledActionOperationState(FailedValue);
+        public static BulkActionOperationState Failed { get; } = new BulkActionOperationState(FailedValue);
 
         /// <summary> Operations that have been Cancelled by the user. </summary>
-        public static ScheduledActionOperationState Cancelled { get; } = new ScheduledActionOperationState(CancelledValue);
+        public static BulkActionOperationState Cancelled { get; } = new BulkActionOperationState(CancelledValue);
 
         /// <summary> Operations that are blocked. </summary>
-        public static ScheduledActionOperationState Blocked { get; } = new ScheduledActionOperationState(BlockedValue);
+        public static BulkActionOperationState Blocked { get; } = new BulkActionOperationState(BlockedValue);
 
-        /// <summary> Determines if two <see cref="ScheduledActionOperationState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BulkActionOperationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ScheduledActionOperationState left, ScheduledActionOperationState right) => left.Equals(right);
+        public static bool operator ==(BulkActionOperationState left, BulkActionOperationState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScheduledActionOperationState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BulkActionOperationState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ScheduledActionOperationState left, ScheduledActionOperationState right) => !left.Equals(right);
+        public static bool operator !=(BulkActionOperationState left, BulkActionOperationState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionOperationState(string value) => new ScheduledActionOperationState(value);
+        public static implicit operator BulkActionOperationState(string value) => new BulkActionOperationState(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionOperationState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionOperationState?(string value) => value == null ? null : new ScheduledActionOperationState(value);
+        public static implicit operator BulkActionOperationState?(string value) => value == null ? null : new BulkActionOperationState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScheduledActionOperationState other && Equals(other);
+        public override bool Equals(object obj) => obj is BulkActionOperationState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ScheduledActionOperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BulkActionOperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

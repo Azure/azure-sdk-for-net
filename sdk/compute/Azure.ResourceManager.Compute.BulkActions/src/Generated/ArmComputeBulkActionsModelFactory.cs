@@ -21,23 +21,23 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
             return new ExecuteDeallocateContent(executionParameters, resources, default);
         }
 
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionExecutionParameterDetail"/> instance for mocking. </returns>
-        public static ScheduledActionExecutionParameterDetail ScheduledActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy = default)
+        /// <returns> A new <see cref="Models.BulkActionExecutionParameterDetail"/> instance for mocking. </returns>
+        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy = default)
         {
-            return new ScheduledActionExecutionParameterDetail(retryPolicy, default);
+            return new BulkActionExecutionParameterDetail(retryPolicy, default);
         }
 
         /// <param name="retryCount"> Retry count for user request. </param>
         /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
         /// <param name="onFailureAction"> Action to take on failure. </param>
         /// <returns> A new <see cref="Models.BulkOperationRetryPolicy"/> instance for mocking. </returns>
-        public static BulkOperationRetryPolicy BulkOperationRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default, ComputeBulkOperationType? onFailureAction = default)
+        public static BulkOperationRetryPolicy BulkOperationRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default, ComputeBulkOperationKind? onFailureAction = default)
         {
             return new BulkOperationRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, default);
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
-        /// <param name="operationType"> Type of operation performed on the resources. </param>
+        /// <param name="operationKind"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadlineOn"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationDetails"/> instance for mocking. </returns>
-        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationType? operationType = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
+        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationKind? operationKind = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, BulkActionDeadlineKind? deadlineType = default, BulkActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
         {
             return new ComputeBulkOperationDetails(
                 operationId,
                 resourceId,
-                operationType,
+                operationKind,
                 subscriptionId,
                 deadlineOn,
                 deadlineType,
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ComputeBulkOperationError(errorCode, errorDetails, default);
         }
 
-        /// <param name="lastOperationType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="lastOperationKind"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
         /// <param name="error"> The error code if the fallback operation failed. </param>
         /// <returns> A new <see cref="Models.ComputeBulkFallbackOperationInfo"/> instance for mocking. </returns>
-        public static ComputeBulkFallbackOperationInfo ComputeBulkFallbackOperationInfo(ComputeBulkOperationType lastOperationType = default, string status = default, ComputeBulkOperationError error = default)
+        public static ComputeBulkFallbackOperationInfo ComputeBulkFallbackOperationInfo(ComputeBulkOperationKind lastOperationKind = default, string status = default, ComputeBulkOperationError error = default)
         {
-            return new ComputeBulkFallbackOperationInfo(lastOperationType, status, error, default);
+            return new ComputeBulkFallbackOperationInfo(lastOperationKind, status, error, default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        public static ExecuteHibernateContent ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
             return new ExecuteHibernateContent(executionParameters, resources, default);
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        public static ExecuteStartContent ExecuteStartContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
             return new ExecuteStartContent(executionParameters, resources, default);
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, bool? isForceDeletion = default)
         {
             return new ExecuteDeleteContent(executionParameters, resources, isForceDeletion, default);
         }

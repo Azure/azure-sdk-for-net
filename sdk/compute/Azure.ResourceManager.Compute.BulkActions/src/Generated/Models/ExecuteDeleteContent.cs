@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
-        public ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources)
+        public ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
             Argument.AssertNotNull(resources, nameof(resources));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, bool? isForceDeletion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, bool? isForceDeletion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The execution parameters for the request. </summary>
-        public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
+        public BulkActionExecutionParameterDetail ExecutionParameters { get; }
 
         /// <summary> The resources for the request. </summary>
         public UserRequestResources Resources { get; }

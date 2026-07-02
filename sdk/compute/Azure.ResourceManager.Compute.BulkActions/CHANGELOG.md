@@ -1,10 +1,18 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2026-06-07)
 
 ### Features Added
 
 ### Breaking Changes
+
+- The bulk operation methods now require an explicit `AzureLocation` parameter instead of inferring the location from the `ResourceGroupResource`. A resource group's location can differ from the location of the resources it contains, so the location must be supplied by the caller. The following overloads that inferred the location were removed:
+    - `BulkStartOperation` / `BulkStartOperationAsync`
+    - `BulkDeallocateOperation` / `BulkDeallocateOperationAsync`
+    - `BulkHibernateOperation` / `BulkHibernateOperationAsync`
+    - `BulkDeleteOperation` / `BulkDeleteOperationAsync`
+    - `BulkGetOperationsStatus` / `BulkGetOperationsStatusAsync`
+    - `BulkCancelOperations` / `BulkCancelOperationsAsync`
 
 ### Bugs Fixed
 

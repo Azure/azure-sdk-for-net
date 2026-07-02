@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            ScheduledActionExecutionParameterDetail executionParameters = default;
+            BulkActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
             bool? isForceDeletion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 if (prop.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
+                    executionParameters = BulkActionExecutionParameterDetail.DeserializeBulkActionExecutionParameterDetail(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Extra details needed to run the user's request. </summary>
-    public partial class ScheduledActionExecutionParameterDetail
+    public partial class BulkActionExecutionParameterDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionExecutionParameterDetail"/>. </summary>
-        public ScheduledActionExecutionParameterDetail()
+        /// <summary> Initializes a new instance of <see cref="BulkActionExecutionParameterDetail"/>. </summary>
+        public BulkActionExecutionParameterDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionExecutionParameterDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionExecutionParameterDetail"/>. </summary>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryPolicy = retryPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
