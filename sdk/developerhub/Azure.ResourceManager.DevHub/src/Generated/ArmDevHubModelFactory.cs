@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
-        /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthCallRequestContent"/> instance for mocking. </returns>
-        public static DeveloperHubGitHubOAuthCallRequestContent DeveloperHubGitHubOAuthCallRequestContent(string redirectUri = default)
+        /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthCallContent"/> instance for mocking. </returns>
+        public static DeveloperHubGitHubOAuthCallContent DeveloperHubGitHubOAuthCallContent(string redirectUri = default)
         {
-            return new DeveloperHubGitHubOAuthCallRequestContent(redirectUri, default);
+            return new DeveloperHubGitHubOAuthCallContent(redirectUri, default);
         }
 
         /// <param name="authUri"> URL for authorizing the Developer Hub GitHub App. </param>
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
-        /// <returns> A new <see cref="Models.DeveloperHubAdoOAuthCallRequestContent"/> instance for mocking. </returns>
-        public static DeveloperHubAdoOAuthCallRequestContent DeveloperHubAdoOAuthCallRequestContent(string redirectUri = default)
+        /// <returns> A new <see cref="Models.DeveloperHubAdoOAuthCallContent"/> instance for mocking. </returns>
+        public static DeveloperHubAdoOAuthCallContent DeveloperHubAdoOAuthCallContent(string redirectUri = default)
         {
-            return new DeveloperHubAdoOAuthCallRequestContent(redirectUri, default);
+            return new DeveloperHubAdoOAuthCallContent(redirectUri, default);
         }
 
         /// <param name="authUri"> URL used to authorize ADO app using Entra ID. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </param>
         /// <param name="actionType"> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
         /// <returns> A new <see cref="Models.DeveloperHubOperationInfo"/> instance for mocking. </returns>
-        public static DeveloperHubOperationInfo DeveloperHubOperationInfo(string name = default, bool? isDataAction = default, DevHubOperationDisplay display = default, Origin? origin = default, DevHubActionType? actionType = default)
+        public static DeveloperHubOperationInfo DeveloperHubOperationInfo(string name = default, bool? isDataAction = default, DevHubOperationDisplay display = default, DevHubOperationOrigin? origin = default, DevHubActionType? actionType = default)
         {
             return new DeveloperHubOperationInfo(
                 name,
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <returns> A new <see cref="Models.IacProfileTagsPatch"/> instance for mocking. </returns>
-        public static IacProfileTagsPatch IacProfileTagsPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.DevHubTagsPatch"/> instance for mocking. </returns>
+        public static DevHubTagsPatch DevHubTagsPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new IacProfileTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new DevHubTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="templateName"> Template Name. </param>
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="siteId"></param>
         /// <param name="instanceName"></param>
         /// <param name="instanceStage"></param>
-        /// <returns> A new <see cref="Models.DeveloperHubExportTemplateRequestContent"/> instance for mocking. </returns>
-        public static DeveloperHubExportTemplateRequestContent DeveloperHubExportTemplateRequestContent(string templateName = default, IEnumerable<string> resourceGroupIds = default, string siteId = default, string instanceName = default, string instanceStage = default)
+        /// <returns> A new <see cref="Models.DeveloperHubExportTemplateContent"/> instance for mocking. </returns>
+        public static DeveloperHubExportTemplateContent DeveloperHubExportTemplateContent(string templateName = default, IEnumerable<string> resourceGroupIds = default, string siteId = default, string instanceName = default, string instanceStage = default)
         {
             resourceGroupIds ??= new ChangeTrackingList<string>();
 
-            return new DeveloperHubExportTemplateRequestContent(
+            return new DeveloperHubExportTemplateContent(
                 templateName,
                 (resourceGroupIds ?? new ChangeTrackingList<string>()).ToList(),
                 siteId,
@@ -267,12 +267,12 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <param name="templateName"> Template Name. </param>
         /// <param name="scaleRequirement"></param>
-        /// <returns> A new <see cref="Models.DeveloperHubScaleTemplateRequestContent"/> instance for mocking. </returns>
-        public static DeveloperHubScaleTemplateRequestContent DeveloperHubScaleTemplateRequestContent(string templateName = default, IEnumerable<DevHubScaleProperty> scaleRequirement = default)
+        /// <returns> A new <see cref="Models.DeveloperHubScaleTemplateContent"/> instance for mocking. </returns>
+        public static DeveloperHubScaleTemplateContent DeveloperHubScaleTemplateContent(string templateName = default, IEnumerable<DevHubScaleProperty> scaleRequirement = default)
         {
             scaleRequirement ??= new ChangeTrackingList<DevHubScaleProperty>();
 
-            return new DeveloperHubScaleTemplateRequestContent(templateName, (scaleRequirement ?? new ChangeTrackingList<DevHubScaleProperty>()).ToList(), default);
+            return new DeveloperHubScaleTemplateContent(templateName, (scaleRequirement ?? new ChangeTrackingList<DevHubScaleProperty>()).ToList(), default);
         }
 
         /// <param name="region"> The region of the store. </param>

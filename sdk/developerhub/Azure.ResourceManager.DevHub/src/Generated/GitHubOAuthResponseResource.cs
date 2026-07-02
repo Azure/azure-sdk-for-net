@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeveloperHubGitHubOAuthInfoResult>> GitHubOAuthAsync(DeveloperHubGitHubOAuthCallRequestContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeveloperHubGitHubOAuthInfoResult>> GitHubOAuthAsync(DeveloperHubGitHubOAuthCallContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _devHubClientClientDiagnostics.CreateScope("GitHubOAuthResponseResource.GitHubOAuth");
             scope.Start();
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubGitHubOAuthInfoResult> response = Response.FromValue(DeveloperHubGitHubOAuthInfoResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeveloperHubGitHubOAuthInfoResult> GitHubOAuth(DeveloperHubGitHubOAuthCallRequestContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<DeveloperHubGitHubOAuthInfoResult> GitHubOAuth(DeveloperHubGitHubOAuthCallContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _devHubClientClientDiagnostics.CreateScope("GitHubOAuthResponseResource.GitHubOAuth");
             scope.Start();
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubGitHubOAuthInfoResult> response = Response.FromValue(DeveloperHubGitHubOAuthInfoResult.FromResponse(result), result);
                 if (response.Value == null)

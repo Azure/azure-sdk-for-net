@@ -422,14 +422,10 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeveloperHubGitHubOAuthListResult>> GetGitHubOAuthAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeveloperHubGitHubOAuthListResult>> GetGitHubOAuthAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using DiagnosticScope scope = DevHubClientClientDiagnostics.CreateScope("MockableDevHubSubscriptionResource.GetGitHubOAuth");
             scope.Start();
             try
@@ -471,14 +467,10 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeveloperHubGitHubOAuthListResult> GetGitHubOAuth(string location, CancellationToken cancellationToken = default)
+        public virtual Response<DeveloperHubGitHubOAuthListResult> GetGitHubOAuth(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using DiagnosticScope scope = DevHubClientClientDiagnostics.CreateScope("MockableDevHubSubscriptionResource.GetGitHubOAuth");
             scope.Start();
             try

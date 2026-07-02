@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> GitHubOAuth request object. </summary>
-    public partial class DeveloperHubGitHubOAuthCallRequestContent
+    public partial class DeveloperHubGitHubOAuthCallContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthCallRequestContent"/>. </summary>
-        public DeveloperHubGitHubOAuthCallRequestContent()
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthCallContent"/>. </summary>
+        public DeveloperHubGitHubOAuthCallContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthCallRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubGitHubOAuthCallContent"/>. </summary>
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubGitHubOAuthCallRequestContent(string redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubGitHubOAuthCallContent(string redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedirectUri = redirectUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

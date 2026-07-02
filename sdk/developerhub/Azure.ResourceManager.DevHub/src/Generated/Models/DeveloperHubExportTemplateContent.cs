@@ -11,26 +11,26 @@ using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
 {
-    /// <summary> The DeveloperHubExportTemplateRequestContent. </summary>
-    public partial class DeveloperHubExportTemplateRequestContent
+    /// <summary> The DeveloperHubExportTemplateContent. </summary>
+    public partial class DeveloperHubExportTemplateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubExportTemplateRequestContent"/>. </summary>
-        public DeveloperHubExportTemplateRequestContent()
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubExportTemplateContent"/>. </summary>
+        public DeveloperHubExportTemplateContent()
         {
             ResourceGroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubExportTemplateRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubExportTemplateContent"/>. </summary>
         /// <param name="templateName"> Template Name. </param>
         /// <param name="resourceGroupIds"></param>
         /// <param name="siteId"></param>
         /// <param name="instanceName"></param>
         /// <param name="instanceStage"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubExportTemplateRequestContent(string templateName, IList<string> resourceGroupIds, string siteId, string instanceName, string instanceStage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubExportTemplateContent(string templateName, IList<string> resourceGroupIds, string siteId, string instanceName, string instanceStage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateName = templateName;
             ResourceGroupIds = resourceGroupIds;

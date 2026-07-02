@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.DevHub
             return message;
         }
 
-        internal HttpMessage CreateGetGitHubOAuthRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetGitHubOAuthRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DevHub/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/githuboauth", false);
             if (_apiVersion != null)
             {

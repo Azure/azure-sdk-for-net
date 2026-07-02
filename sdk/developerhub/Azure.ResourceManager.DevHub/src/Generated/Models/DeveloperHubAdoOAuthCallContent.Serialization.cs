@@ -15,61 +15,61 @@ using Azure.ResourceManager.DevHub;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> ADOOAuth request object. </summary>
-    public partial class DeveloperHubAdoOAuthCallRequestContent : IJsonModel<DeveloperHubAdoOAuthCallRequestContent>
+    public partial class DeveloperHubAdoOAuthCallContent : IJsonModel<DeveloperHubAdoOAuthCallContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeveloperHubAdoOAuthCallRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeveloperHubAdoOAuthCallContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeveloperHubAdoOAuthCallRequestContent(document.RootElement, options);
+                        return DeserializeDeveloperHubAdoOAuthCallContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeveloperHubAdoOAuthCallContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperHubAdoOAuthCallRequestContent IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeveloperHubAdoOAuthCallContent IPersistableModel<DeveloperHubAdoOAuthCallContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeveloperHubAdoOAuthCallContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="developerHubAdoOAuthCallRequestContent"> The <see cref="DeveloperHubAdoOAuthCallRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeveloperHubAdoOAuthCallRequestContent developerHubAdoOAuthCallRequestContent)
+        /// <param name="developerHubAdoOAuthCallContent"> The <see cref="DeveloperHubAdoOAuthCallContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeveloperHubAdoOAuthCallContent developerHubAdoOAuthCallContent)
         {
-            if (developerHubAdoOAuthCallRequestContent == null)
+            if (developerHubAdoOAuthCallContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(developerHubAdoOAuthCallRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(developerHubAdoOAuthCallContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeveloperHubAdoOAuthCallRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeveloperHubAdoOAuthCallContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(RedirectUri))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperHubAdoOAuthCallRequestContent IJsonModel<DeveloperHubAdoOAuthCallRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeveloperHubAdoOAuthCallContent IJsonModel<DeveloperHubAdoOAuthCallContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeveloperHubAdoOAuthCallRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeveloperHubAdoOAuthCallContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubAdoOAuthCallContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeveloperHubAdoOAuthCallContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeveloperHubAdoOAuthCallRequestContent(document.RootElement, options);
+            return DeserializeDeveloperHubAdoOAuthCallContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeveloperHubAdoOAuthCallRequestContent DeserializeDeveloperHubAdoOAuthCallRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeveloperHubAdoOAuthCallContent DeserializeDeveloperHubAdoOAuthCallContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperHubAdoOAuthCallRequestContent(redirectUri, additionalBinaryDataProperties);
+            return new DeveloperHubAdoOAuthCallContent(redirectUri, additionalBinaryDataProperties);
         }
     }
 }

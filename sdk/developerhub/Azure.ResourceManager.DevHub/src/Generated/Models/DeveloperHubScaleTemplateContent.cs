@@ -11,23 +11,23 @@ using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
 {
-    /// <summary> The DeveloperHubScaleTemplateRequestContent. </summary>
-    public partial class DeveloperHubScaleTemplateRequestContent
+    /// <summary> The DeveloperHubScaleTemplateContent. </summary>
+    public partial class DeveloperHubScaleTemplateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubScaleTemplateRequestContent"/>. </summary>
-        public DeveloperHubScaleTemplateRequestContent()
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubScaleTemplateContent"/>. </summary>
+        public DeveloperHubScaleTemplateContent()
         {
             ScaleRequirement = new ChangeTrackingList<DevHubScaleProperty>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeveloperHubScaleTemplateRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeveloperHubScaleTemplateContent"/>. </summary>
         /// <param name="templateName"> Template Name. </param>
         /// <param name="scaleRequirement"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubScaleTemplateRequestContent(string templateName, IList<DevHubScaleProperty> scaleRequirement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubScaleTemplateContent(string templateName, IList<DevHubScaleProperty> scaleRequirement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateName = templateName;
             ScaleRequirement = scaleRequirement;

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DevHub.Models
             string name = default;
             bool? isDataAction = default;
             DevHubOperationDisplay display = default;
-            Origin? origin = default;
+            DevHubOperationOrigin? origin = default;
             DevHubActionType? actionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    origin = new Origin(prop.Value.GetString());
+                    origin = new DevHubOperationOrigin(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))

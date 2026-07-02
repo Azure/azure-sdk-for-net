@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </param>
         /// <param name="actionType"> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubOperationInfo(string name, bool? isDataAction, DevHubOperationDisplay display, Origin? origin, DevHubActionType? actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubOperationInfo(string name, bool? isDataAction, DevHubOperationDisplay display, DevHubOperationOrigin? origin, DevHubActionType? actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDataAction = isDataAction;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public DevHubOperationDisplay Display { get; }
 
         /// <summary> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </summary>
-        public Origin? Origin { get; }
+        public DevHubOperationOrigin? Origin { get; }
 
         /// <summary> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </summary>
         public DevHubActionType? ActionType { get; }

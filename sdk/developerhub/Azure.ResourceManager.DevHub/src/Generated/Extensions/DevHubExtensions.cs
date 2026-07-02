@@ -466,14 +466,14 @@ namespace Azure.ResourceManager.DevHub
         /// Callback URL to hit once authenticated with GitHub App to have the service store the OAuth token.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetGitHubOAuthAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetGitHubOAuthAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DeveloperHubGitHubOAuthListResult>> GetGitHubOAuthAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeveloperHubGitHubOAuthListResult>> GetGitHubOAuthAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -484,14 +484,14 @@ namespace Azure.ResourceManager.DevHub
         /// Callback URL to hit once authenticated with GitHub App to have the service store the OAuth token.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetGitHubOAuth(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GetGitHubOAuth(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DeveloperHubGitHubOAuthListResult> GetGitHubOAuth(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<DeveloperHubGitHubOAuthListResult> GetGitHubOAuth(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

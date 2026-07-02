@@ -14,62 +14,62 @@ using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
 {
-    /// <summary> The DeveloperHubExportTemplateRequestContent. </summary>
-    public partial class DeveloperHubExportTemplateRequestContent : IJsonModel<DeveloperHubExportTemplateRequestContent>
+    /// <summary> The DeveloperHubExportTemplateContent. </summary>
+    public partial class DeveloperHubExportTemplateContent : IJsonModel<DeveloperHubExportTemplateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeveloperHubExportTemplateRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeveloperHubExportTemplateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeveloperHubExportTemplateRequestContent(document.RootElement, options);
+                        return DeserializeDeveloperHubExportTemplateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperHubExportTemplateRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeveloperHubExportTemplateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperHubExportTemplateRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeveloperHubExportTemplateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeveloperHubExportTemplateRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeveloperHubExportTemplateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperHubExportTemplateRequestContent IPersistableModel<DeveloperHubExportTemplateRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeveloperHubExportTemplateContent IPersistableModel<DeveloperHubExportTemplateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeveloperHubExportTemplateRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeveloperHubExportTemplateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="developerHubExportTemplateRequestContent"> The <see cref="DeveloperHubExportTemplateRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeveloperHubExportTemplateRequestContent developerHubExportTemplateRequestContent)
+        /// <param name="developerHubExportTemplateContent"> The <see cref="DeveloperHubExportTemplateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeveloperHubExportTemplateContent developerHubExportTemplateContent)
         {
-            if (developerHubExportTemplateRequestContent == null)
+            if (developerHubExportTemplateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(developerHubExportTemplateRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(developerHubExportTemplateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeveloperHubExportTemplateRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeveloperHubExportTemplateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperHubExportTemplateRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeveloperHubExportTemplateContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TemplateName))
             {
@@ -139,24 +139,24 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperHubExportTemplateRequestContent IJsonModel<DeveloperHubExportTemplateRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeveloperHubExportTemplateContent IJsonModel<DeveloperHubExportTemplateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeveloperHubExportTemplateRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeveloperHubExportTemplateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubExportTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperHubExportTemplateRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeveloperHubExportTemplateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeveloperHubExportTemplateRequestContent(document.RootElement, options);
+            return DeserializeDeveloperHubExportTemplateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeveloperHubExportTemplateRequestContent DeserializeDeveloperHubExportTemplateRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeveloperHubExportTemplateContent DeserializeDeveloperHubExportTemplateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperHubExportTemplateRequestContent(
+            return new DeveloperHubExportTemplateContent(
                 templateName,
                 resourceGroupIds ?? new ChangeTrackingList<string>(),
                 siteId,

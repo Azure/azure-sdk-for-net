@@ -14,62 +14,62 @@ using Azure.ResourceManager.DevHub;
 
 namespace Azure.ResourceManager.DevHub.Models
 {
-    /// <summary> The DeveloperHubScaleTemplateRequestContent. </summary>
-    public partial class DeveloperHubScaleTemplateRequestContent : IJsonModel<DeveloperHubScaleTemplateRequestContent>
+    /// <summary> The DeveloperHubScaleTemplateContent. </summary>
+    public partial class DeveloperHubScaleTemplateContent : IJsonModel<DeveloperHubScaleTemplateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeveloperHubScaleTemplateRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeveloperHubScaleTemplateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeveloperHubScaleTemplateRequestContent(document.RootElement, options);
+                        return DeserializeDeveloperHubScaleTemplateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeveloperHubScaleTemplateRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeveloperHubScaleTemplateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperHubScaleTemplateRequestContent IPersistableModel<DeveloperHubScaleTemplateRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeveloperHubScaleTemplateContent IPersistableModel<DeveloperHubScaleTemplateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeveloperHubScaleTemplateRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeveloperHubScaleTemplateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="developerHubScaleTemplateRequestContent"> The <see cref="DeveloperHubScaleTemplateRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeveloperHubScaleTemplateRequestContent developerHubScaleTemplateRequestContent)
+        /// <param name="developerHubScaleTemplateContent"> The <see cref="DeveloperHubScaleTemplateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeveloperHubScaleTemplateContent developerHubScaleTemplateContent)
         {
-            if (developerHubScaleTemplateRequestContent == null)
+            if (developerHubScaleTemplateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(developerHubScaleTemplateRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(developerHubScaleTemplateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeveloperHubScaleTemplateRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeveloperHubScaleTemplateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TemplateName))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.DevHub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperHubScaleTemplateRequestContent IJsonModel<DeveloperHubScaleTemplateRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeveloperHubScaleTemplateContent IJsonModel<DeveloperHubScaleTemplateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeveloperHubScaleTemplateRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeveloperHubScaleTemplateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeveloperHubScaleTemplateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeveloperHubScaleTemplateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeveloperHubScaleTemplateRequestContent(document.RootElement, options);
+            return DeserializeDeveloperHubScaleTemplateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeveloperHubScaleTemplateRequestContent DeserializeDeveloperHubScaleTemplateRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeveloperHubScaleTemplateContent DeserializeDeveloperHubScaleTemplateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperHubScaleTemplateRequestContent(templateName, scaleRequirement ?? new ChangeTrackingList<DevHubScaleProperty>(), additionalBinaryDataProperties);
+            return new DeveloperHubScaleTemplateContent(templateName, scaleRequirement ?? new ChangeTrackingList<DevHubScaleProperty>(), additionalBinaryDataProperties);
         }
     }
 }

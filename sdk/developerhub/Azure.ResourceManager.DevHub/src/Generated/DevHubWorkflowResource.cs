@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="patch"> Parameters supplied to the Update Workflow Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<DevHubWorkflowResource>> UpdateAsync(IacProfileTagsPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubWorkflowResource>> UpdateAsync(DevHubTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workflowRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IacProfileTagsPatch.ToRequestContent(patch), context);
+                HttpMessage message = _workflowRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevHubTagsPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevHubWorkflowData> response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="patch"> Parameters supplied to the Update Workflow Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<DevHubWorkflowResource> Update(IacProfileTagsPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<DevHubWorkflowResource> Update(DevHubTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workflowRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IacProfileTagsPatch.ToRequestContent(patch), context);
+                HttpMessage message = _workflowRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevHubTagsPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevHubWorkflowData> response = Response.FromValue(DevHubWorkflowData.FromResponse(result), result);
                 if (response.Value == null)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DevHub
                 else
                 {
                     DevHubWorkflowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    IacProfileTagsPatch patch = new IacProfileTagsPatch();
+                    DevHubTagsPatch patch = new DevHubTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DevHub
                 else
                 {
                     DevHubWorkflowData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    IacProfileTagsPatch patch = new IacProfileTagsPatch();
+                    DevHubTagsPatch patch = new DevHubTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DevHub
                 else
                 {
                     DevHubWorkflowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    IacProfileTagsPatch patch = new IacProfileTagsPatch();
+                    DevHubTagsPatch patch = new DevHubTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<DevHubWorkflowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DevHub
                 else
                 {
                     DevHubWorkflowData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    IacProfileTagsPatch patch = new IacProfileTagsPatch();
+                    DevHubTagsPatch patch = new DevHubTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<DevHubWorkflowResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.DevHub
                 else
                 {
                     DevHubWorkflowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    IacProfileTagsPatch patch = new IacProfileTagsPatch();
+                    DevHubTagsPatch patch = new DevHubTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DevHub
                 else
                 {
                     DevHubWorkflowData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    IacProfileTagsPatch patch = new IacProfileTagsPatch();
+                    DevHubTagsPatch patch = new DevHubTagsPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
