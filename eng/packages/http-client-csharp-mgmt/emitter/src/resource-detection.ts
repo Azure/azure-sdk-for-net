@@ -61,21 +61,29 @@ import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
+import { ArmProviderSchemaSnapshots } from "./arm-provider-schema-snapshot.js";
 
-export async function updateClients(
+export function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
-) {
-  let armProviderSchema: ArmProviderSchema;
+): ArmProviderSchemaSnapshots {
+  const legacy = buildArmProviderSchema(sdkContext, codeModel);
+  const resolveArmResourcesSchema = resolveArmResources(
+    sdkContext.program,
+    sdkContext
+  );
 
-  if (options?.["use-legacy-resource-detection"] === false) {
-    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
-  } else {
-    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
-  }
+  const armProviderSchema =
+    options?.["use-legacy-resource-detection"] === false
+      ? resolveArmResourcesSchema
+      : legacy;
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+  return {
+    legacy,
+    resolveArmResources: resolveArmResourcesSchema
+  };
 }
 
 /**
