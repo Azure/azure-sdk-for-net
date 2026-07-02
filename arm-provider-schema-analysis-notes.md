@@ -1,0 +1,10 @@
+# ARM provider schema analysis notes
+
+This file tracks the manual root-cause analysis for libraries reviewed after generating the schema comparison reports.
+
+| Library | Status | Root cause / notes | Follow-up |
+| --- | --- | --- | --- |
+| `Azure.ResourceManager.Advisor` | Good | Legacy and `resolveArmResources` are almost identical. The only requested-axis difference is an extra subscription-scoped `Microsoft.Advisor.ResourceRecommendationBases.list` operation from `resolveArmResources`, and that addition makes sense. | No issue needed. |
+| `Azure.ResourceManager.Network` | `resolveArmResources` bug | `resolveArmResources` returns 0 resources while legacy detects 140. Network uses converted/legacy custom resource bases with `@Azure.ResourceManager.Legacy.customAzureResource(#{ isAzureResource: true })`; the ARM resolver does not recognize/register this pattern as resources. | Tracked by Azure/typespec-azure#4798. Either fix/enforce the spec pattern or support this custom-resource shape in the library. |
+| `Azure.ResourceManager.DevTestLabs` | Mostly comparison noise | Raw resource ID mismatches are caused by path variable names (`{name}` vs `{labName}` etc.). After normalizing variables, resource identity, hierarchy, models, and CRUD match. Remaining differences are 2 list/action operation classifications plus 2 extra non-resource methods. | No root-cause issue opened yet; lower priority than real resource identity mismatches. |
+| `Azure.ResourceManager.Automation` | Spec modeling issue | Several operations are written as `ArmResourceRead<ParentResource>` even though the response type is not that parent resource, e.g. `nodeCountInformationGet` returns `NodeCounts`, not `AutomationAccount`. `resolveArmResources` promotes those paths to child resources; legacy treats them as actions on the parent. | Covered by linter candidates in the doc PR Azure/typespec-azure#4793. These should be modeled as actions if the response is not a resource. |
