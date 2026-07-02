@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DurableTask
 {
+    // The previous customization renaming of the SchedulerPrivateLink and PrivateEndpointConnection have those methods with the old names.
+    // After the renaming from the Spec, the new names are GetDurableTaskSchedulerPrivateLinkResources and GetDurableTaskPrivateEndpointConnections.
+    // We are keeping them for backward compatibility, but they are marked as EditorBrowsableState.Never to hide them from intellisense.
     public partial class DurableTaskSchedulerResource
     {
-        // The previous customization renaming of the SchedulerPrivateLink and PrivateEndpointConnection have those methods with the old names.
-        // After the renaming from the Spec, the new names are GetDurableTaskSchedulerPrivateLinkResources and GetDurableTaskPrivateEndpointConnections.
-        // We are keeping them for backward compatibility, but they are marked as EditorBrowsableState.Never to hide them from intellisense.
         /// <summary> Gets a collection of SchedulerPrivateLinkResources in the <see cref="DurableTaskSchedulerResource"/>. </summary>
         /// <returns> An object representing collection of SchedulerPrivateLinkResources and their operations over a DurableTaskSchedulerPrivateLinkResource. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
