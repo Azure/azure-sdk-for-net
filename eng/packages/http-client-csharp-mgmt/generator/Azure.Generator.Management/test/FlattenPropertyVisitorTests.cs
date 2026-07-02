@@ -1243,6 +1243,45 @@ namespace Azure.Generator.Mgmt.Tests
                 $"Base initializer should pass the flattened 'wrapperValue'. Args: [{string.Join(", ", initializerArgNames)}]");
         }
 
+        [Test]
+        public void TestSafeFlattenInitializesRequiredWrapperWhenFlattenedLeafIsOptional()
+        {
+            var valueProp = InputFactory.Property("value", InputPrimitiveType.String, isRequired: false, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "RequiredSafeFlattenWrapper",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProp]);
+
+            var wrapperProp = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentModel = InputFactory.Model(
+                "RequiredSafeFlattenParent",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProp]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [wrapperModel, parentModel]);
+
+            var parentModelProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentModelProvider]);
+            }
+
+            var publicCtor = parentModelProvider.Constructors
+                .Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(publicCtor.Signature.Parameters, Is.Empty);
+
+            var rendered = new TypeProviderWriter(parentModelProvider).Write().Content;
+            Assert.That(rendered, Does.Contain("Wrapper = new global::Samples.Models.RequiredSafeFlattenWrapper();"));
+            Assert.That(rendered, Does.Contain("Wrapper.Value"));
+        }
+
         /// <summary>
         /// Verifies that <see cref="FlattenPropertyVisitor.FilterAttributesForFlatten"/> drops any
         /// WirePath attribute attached to the inner property while preserving other attributes.
