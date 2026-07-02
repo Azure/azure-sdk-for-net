@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
