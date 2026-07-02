@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingCustomerRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingCustomerRoleAssignmentResource> GetAllAsync(string filter = default, long? maxCount = default, long? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingCustomerRoleAssignmentResource> GetAllAsync(string filter = default, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                maxCount,
+                top,
                 skip,
                 context,
                 "BillingCustomerRoleAssignmentCollection.GetAll"), data => new BillingCustomerRoleAssignmentResource(Client, data));
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingCustomerRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingCustomerRoleAssignmentResource> GetAll(string filter = default, long? maxCount = default, long? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingCustomerRoleAssignmentResource> GetAll(string filter = default, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                maxCount,
+                top,
                 skip,
                 context,
                 "BillingCustomerRoleAssignmentCollection.GetAll"), data => new BillingCustomerRoleAssignmentResource(Client, data));

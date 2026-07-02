@@ -312,14 +312,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="keyName"></param>
-        /// <param name="content"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WebAppKeyInfo>> CreateOrUpdateFunctionSecretAsync(string keyName, WebAppKeyInfo content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppKeyInfo>> CreateOrUpdateFunctionSecretAsync(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(info, nameof(info));
 
             using DiagnosticScope scope = _functionEnvelopesClientDiagnostics.CreateScope("SiteFunctionResource.CreateOrUpdateFunctionSecret");
             scope.Start();
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateCreateOrUpdateFunctionSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(content), context);
+                HttpMessage message = _functionEnvelopesRestClient.CreateCreateOrUpdateFunctionSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppKeyInfo> response = Response.FromValue(WebAppKeyInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,14 +367,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="keyName"></param>
-        /// <param name="content"> The key to create or update. </param>
+        /// <param name="info"> The key to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WebAppKeyInfo> CreateOrUpdateFunctionSecret(string keyName, WebAppKeyInfo content, CancellationToken cancellationToken = default)
+        public virtual Response<WebAppKeyInfo> CreateOrUpdateFunctionSecret(string keyName, WebAppKeyInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(info, nameof(info));
 
             using DiagnosticScope scope = _functionEnvelopesClientDiagnostics.CreateScope("SiteFunctionResource.CreateOrUpdateFunctionSecret");
             scope.Start();
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateCreateOrUpdateFunctionSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(content), context);
+                HttpMessage message = _functionEnvelopesRestClient.CreateCreateOrUpdateFunctionSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppKeyInfo> response = Response.FromValue(WebAppKeyInfo.FromResponse(result), result);
                 if (response.Value == null)
