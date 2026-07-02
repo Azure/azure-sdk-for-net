@@ -10,7 +10,5 @@ namespace Azure.ResourceManager.Network
     {
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> AddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
-        /// <summary> Compatibility member. </summary>
-        public global::System.String IPAddress { get; set; }
     }
 }

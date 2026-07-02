@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         internal EffectiveRoute()
         {
             AddressPrefix = new ChangeTrackingList<string>();
-            NextHopIpAddress = new ChangeTrackingList<string>();
+            NextHopIPAddress = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EffectiveRoute"/>. </summary>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="source"> Who created the route. </param>
         /// <param name="state"> The value of effective route. </param>
         /// <param name="addressPrefix"> The address prefixes of the effective routes in CIDR notation. </param>
-        /// <param name="nextHopIpAddress"> The IP address of the next hop of the effective route. </param>
+        /// <param name="nextHopIPAddress"> The IP address of the next hop of the effective route. </param>
         /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EffectiveRoute(string name, bool? disableBgpRoutePropagation, EffectiveRouteSource? source, EffectiveRouteState? state, IReadOnlyList<string> addressPrefix, IList<string> nextHopIpAddress, RouteNextHopType? nextHopType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EffectiveRoute(string name, bool? disableBgpRoutePropagation, EffectiveRouteSource? source, EffectiveRouteState? state, IReadOnlyList<string> addressPrefix, IReadOnlyList<string> nextHopIPAddress, RouteNextHopType? nextHopType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisableBgpRoutePropagation = disableBgpRoutePropagation;
             Source = source;
             State = state;
             AddressPrefix = addressPrefix;
-            NextHopIpAddress = nextHopIpAddress;
+            NextHopIPAddress = nextHopIPAddress;
             NextHopType = nextHopType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP address of the next hop of the effective route. </summary>
         [WirePath("nextHopIpAddress")]
-        public IList<string> NextHopIpAddress { get; }
+        public IReadOnlyList<string> NextHopIPAddress { get; }
 
         /// <summary> The type of Azure hop the packet should be sent to. </summary>
         [WirePath("nextHopType")]

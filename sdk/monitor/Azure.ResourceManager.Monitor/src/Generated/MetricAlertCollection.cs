@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(MetricAlertResource.ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
-            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2024-03-01-preview");
+            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 ConnectedEnvironmentCollection result = ConnectedEnvironmentCollection.FromResponse(response);
-                yield return Page<ContainerAppConnectedEnvironmentData>.FromValues((IReadOnlyList<ContainerAppConnectedEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppConnectedEnvironmentData>.FromValues((IReadOnlyList<ContainerAppConnectedEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -125,6 +125,10 @@ namespace Azure.Provisioning.Cdn
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValue = DefineListProperty<string>(nameof(MatchValue), new string[] { "matchValue" }, isRequired: true);
             _transforms = DefineListProperty<TransformType>(nameof(Transforms), new string[] { "transforms" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CustomRuleMatchCondition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

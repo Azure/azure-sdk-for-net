@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 PrivateLinkResourcesListResult result = PrivateLinkResourcesListResult.FromResponse(response);
-                yield return Page<EventGridPrivateLinkResource>.FromValues((IReadOnlyList<EventGridPrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventGridPrivateLinkResource>.FromValues((IReadOnlyList<EventGridPrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

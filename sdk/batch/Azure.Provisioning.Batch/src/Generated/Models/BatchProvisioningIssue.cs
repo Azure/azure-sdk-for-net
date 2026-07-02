@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _properties = DefineModelProperty<BatchProvisioningIssueProperties>(nameof(Properties), new string[] { "properties" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchProvisioningIssue that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

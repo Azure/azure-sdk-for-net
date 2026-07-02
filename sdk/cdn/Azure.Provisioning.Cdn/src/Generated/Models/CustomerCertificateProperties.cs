@@ -153,6 +153,10 @@ namespace Azure.Provisioning.Cdn
             _certificateAuthority = DefineProperty<string>(nameof(CertificateAuthority), new string[] { "certificateAuthority" }, isOutput: true);
             _subjectAlternativeNames = DefineListProperty<string>(nameof(SubjectAlternativeNames), new string[] { "subjectAlternativeNames" }, isOutput: true);
             _thumbprint = DefineProperty<string>(nameof(Thumbprint), new string[] { "thumbprint" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CustomerCertificateProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

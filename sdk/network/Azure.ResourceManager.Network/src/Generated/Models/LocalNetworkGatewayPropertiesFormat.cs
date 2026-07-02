@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayPropertiesFormat"/>. </summary>
         /// <param name="localNetworkAddressSpace"> Local network site address space. </param>
-        /// <param name="gatewayIpAddress"> IP address of local network gateway. </param>
+        /// <param name="gatewayIPAddress"> IP address of local network gateway. </param>
         /// <param name="fqdn"> FQDN of local network gateway. </param>
         /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalNetworkGatewayPropertiesFormat(VirtualNetworkAddressSpace localNetworkAddressSpace, string gatewayIpAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalNetworkGatewayPropertiesFormat(VirtualNetworkAddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocalNetworkAddressSpace = localNetworkAddressSpace;
-            GatewayIpAddress = gatewayIpAddress;
+            GatewayIPAddress = gatewayIPAddress;
             Fqdn = fqdn;
             BgpSettings = bgpSettings;
             ResourceGuid = resourceGuid;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP address of local network gateway. </summary>
         [WirePath("gatewayIpAddress")]
-        public string GatewayIpAddress { get; set; }
+        public string GatewayIPAddress { get; set; }
 
         /// <summary> FQDN of local network gateway. </summary>
         [WirePath("fqdn")]

@@ -32,10 +32,5 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
             => GetExpressRoutePortAuthorizations().Get(authorizationName, cancellationToken);
-
-        /// <summary> Invokes the GenerateLoaAsync compatibility operation. </summary>
-        public virtual Task<Response<GenerateExpressRoutePortsLoaResult>> GenerateLoaAsync(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the GenerateLoa compatibility operation. </summary>
-        public virtual Response<GenerateExpressRoutePortsLoaResult> GenerateLoa(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

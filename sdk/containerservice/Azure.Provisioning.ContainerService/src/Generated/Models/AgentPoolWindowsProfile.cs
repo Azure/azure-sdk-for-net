@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isOutboundNatDisabled = DefineProperty<bool>(nameof(IsOutboundNatDisabled), new string[] { "disableOutboundNat" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolWindowsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

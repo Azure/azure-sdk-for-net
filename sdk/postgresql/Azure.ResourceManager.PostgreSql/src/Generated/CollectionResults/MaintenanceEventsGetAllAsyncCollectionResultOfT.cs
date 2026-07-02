@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 MaintenanceEventResourceListResult result = MaintenanceEventResourceListResult.FromResponse(response);
-                yield return Page<MaintenanceEventData>.FromValues((IReadOnlyList<MaintenanceEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MaintenanceEventData>.FromValues((IReadOnlyList<MaintenanceEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

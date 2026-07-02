@@ -21,25 +21,25 @@ namespace Azure.ResourceManager.Network.Models
         public DscpQosDefinition()
         {
             Markings = new ChangeTrackingList<int>();
-            SourceIpRanges = new ChangeTrackingList<QosIPRange>();
-            DestinationIpRanges = new ChangeTrackingList<QosIPRange>();
+            SourceIPRanges = new ChangeTrackingList<QosIPRange>();
+            DestinationIPRanges = new ChangeTrackingList<QosIPRange>();
             SourcePortRanges = new ChangeTrackingList<QosPortRange>();
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
-        /// <param name="sourceIpRanges"> Source IP ranges. </param>
-        /// <param name="destinationIpRanges"> Destination IP ranges. </param>
+        /// <param name="sourceIPRanges"> Source IP ranges. </param>
+        /// <param name="destinationIPRanges"> Destination IP ranges. </param>
         /// <param name="sourcePortRanges"> Sources port ranges. </param>
         /// <param name="destinationPortRanges"> Destination port ranges. </param>
         /// <param name="protocol"> RNM supported protocol types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscpQosDefinition(IList<int> markings, IList<QosIPRange> sourceIpRanges, IList<QosIPRange> destinationIpRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscpQosDefinition(IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Markings = markings;
-            SourceIpRanges = sourceIpRanges;
-            DestinationIpRanges = destinationIpRanges;
+            SourceIPRanges = sourceIPRanges;
+            DestinationIPRanges = destinationIPRanges;
             SourcePortRanges = sourcePortRanges;
             DestinationPortRanges = destinationPortRanges;
             Protocol = protocol;
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Source IP ranges. </summary>
         [WirePath("sourceIpRanges")]
-        public IList<QosIPRange> SourceIpRanges { get; }
+        public IList<QosIPRange> SourceIPRanges { get; }
 
         /// <summary> Destination IP ranges. </summary>
         [WirePath("destinationIpRanges")]
-        public IList<QosIPRange> DestinationIpRanges { get; }
+        public IList<QosIPRange> DestinationIPRanges { get; }
 
         /// <summary> Sources port ranges. </summary>
         [WirePath("sourcePortRanges")]

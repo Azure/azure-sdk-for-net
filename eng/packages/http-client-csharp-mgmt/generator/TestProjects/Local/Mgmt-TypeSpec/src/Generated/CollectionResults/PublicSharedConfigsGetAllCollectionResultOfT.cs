@@ -49,8 +49,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 SharedConfigListResult result = SharedConfigListResult.FromResponse(response);
-                yield return Page<SharedConfigData>.FromValues((IReadOnlyList<SharedConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SharedConfigData>.FromValues((IReadOnlyList<SharedConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

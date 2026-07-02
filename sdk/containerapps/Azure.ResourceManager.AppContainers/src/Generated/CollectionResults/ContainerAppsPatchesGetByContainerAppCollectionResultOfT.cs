@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 ContainerAppsPatchList result = ContainerAppsPatchList.FromResponse(response);
-                yield return Page<ContainerAppsPatchData>.FromValues((IReadOnlyList<ContainerAppsPatchData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppsPatchData>.FromValues((IReadOnlyList<ContainerAppsPatchData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

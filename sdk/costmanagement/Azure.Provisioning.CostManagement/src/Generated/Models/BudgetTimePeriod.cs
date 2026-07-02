@@ -62,6 +62,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true);
             _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BudgetTimePeriod that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

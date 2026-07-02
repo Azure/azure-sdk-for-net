@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A list of IPConfigurations of the network interface. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<NetworkInterfaceIPConfigurationData> IpConfigurations
+        public IList<NetworkInterfaceIPConfigurationData> IPConfigurations
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new NetworkInterfacePropertiesFormat();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

@@ -9,7 +9,7 @@
     "AlertRulesIncidentsApi": "2016-03-01",
     "LogProfilesApi": "2016-03-01",
     "ActivityLogAlertsApi": "2023-01-01-preview",
-    "MetricAlertApi": "2024-03-01-preview",
+    "MetricAlertApi": "2026-01-01",
     "ScheduledQueryRuleApi": "2025-01-01-preview",
     "MetricBaselinesApi": "2019-03-01",
     "ActionGroupsApi": "2024-10-01-preview",

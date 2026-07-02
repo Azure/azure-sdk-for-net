@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ServiceNetworking
         {
             base.DefineProvisionableProperties();
             _wafSecurityPolicy = DefineModelProperty<WafSecurityPolicy>(nameof(WafSecurityPolicy), new string[] { "wafSecurityPolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecurityPolicyConfigurations that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

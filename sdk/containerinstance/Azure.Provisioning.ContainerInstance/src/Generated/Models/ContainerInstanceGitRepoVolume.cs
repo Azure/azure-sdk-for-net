@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerInstance
             _directory = DefineProperty<string>(nameof(Directory), new string[] { "directory" });
             _repository = DefineProperty<string>(nameof(Repository), new string[] { "repository" }, isRequired: true);
             _revision = DefineProperty<string>(nameof(Revision), new string[] { "revision" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerInstanceGitRepoVolume that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

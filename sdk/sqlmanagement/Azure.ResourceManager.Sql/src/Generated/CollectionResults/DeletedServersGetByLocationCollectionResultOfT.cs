@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 DeletedServerListResult result = DeletedServerListResult.FromResponse(response);
-                yield return Page<DeletedServerData>.FromValues((IReadOnlyList<DeletedServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DeletedServerData>.FromValues((IReadOnlyList<DeletedServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

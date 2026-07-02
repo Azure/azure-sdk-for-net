@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Native. </summary>
         private const string NativeValue = "Native";
         /// <summary> VXLAN. </summary>
-        private const string VXLANValue = "VXLAN";
+        private const string VxlanValue = "VXLAN";
 
         /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static GatewayLoadBalancerTunnelProtocol Native { get; } = new GatewayLoadBalancerTunnelProtocol(NativeValue);
 
         /// <summary> VXLAN. </summary>
-        public static GatewayLoadBalancerTunnelProtocol VXLAN { get; } = new GatewayLoadBalancerTunnelProtocol(VXLANValue);
+        public static GatewayLoadBalancerTunnelProtocol Vxlan { get; } = new GatewayLoadBalancerTunnelProtocol(VxlanValue);
 
         /// <summary> Determines if two <see cref="GatewayLoadBalancerTunnelProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

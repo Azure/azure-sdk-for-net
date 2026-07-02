@@ -84,6 +84,10 @@ namespace Azure.Provisioning.Batch
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" }, isOutput: true);
             _suggestedResourceIds = DefineListProperty<ResourceIdentifier>(nameof(SuggestedResourceIds), new string[] { "suggestedResourceIds" }, isOutput: true);
             _suggestedAccessRules = DefineListProperty<BatchAccessRule>(nameof(SuggestedAccessRules), new string[] { "suggestedAccessRules" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchProvisioningIssueProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

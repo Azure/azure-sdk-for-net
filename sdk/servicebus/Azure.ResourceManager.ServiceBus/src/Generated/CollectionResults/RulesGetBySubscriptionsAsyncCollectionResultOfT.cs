@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 RuleListResult result = RuleListResult.FromResponse(response);
-                yield return Page<ServiceBusRuleData>.FromValues((IReadOnlyList<ServiceBusRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceBusRuleData>.FromValues((IReadOnlyList<ServiceBusRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

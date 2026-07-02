@@ -47,6 +47,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _coreQuota = DefineProperty<int>(nameof(CoreQuota), new string[] { "coreQuota" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchVmFamilyCoreQuota that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

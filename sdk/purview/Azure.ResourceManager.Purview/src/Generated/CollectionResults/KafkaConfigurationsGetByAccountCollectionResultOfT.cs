@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Purview
                     yield break;
                 }
                 KafkaConfigurationList result = KafkaConfigurationList.FromResponse(response);
-                yield return Page<PurviewKafkaConfigurationData>.FromValues((IReadOnlyList<PurviewKafkaConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PurviewKafkaConfigurationData>.FromValues((IReadOnlyList<PurviewKafkaConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

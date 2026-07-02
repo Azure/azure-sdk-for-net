@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 RegistryTrackedResourceArmPaginatedResult result = RegistryTrackedResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningRegistryData>.FromValues((IReadOnlyList<MachineLearningRegistryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningRegistryData>.FromValues((IReadOnlyList<MachineLearningRegistryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

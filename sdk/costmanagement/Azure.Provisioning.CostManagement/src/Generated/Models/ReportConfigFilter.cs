@@ -91,6 +91,10 @@ namespace Azure.Provisioning.CostManagement
             _or = DefineListProperty<ReportConfigFilter>(nameof(Or), new string[] { "or" });
             _dimensions = DefineModelProperty<ReportConfigComparisonExpression>(nameof(Dimensions), new string[] { "dimensions" });
             _tags = DefineModelProperty<ReportConfigComparisonExpression>(nameof(Tags), new string[] { "tags" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigFilter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.DataMigration
                     yield break;
                 }
                 FileList result = FileList.FromResponse(response);
-                yield return Page<DataMigrationProjectFileData>.FromValues((IReadOnlyList<DataMigrationProjectFileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataMigrationProjectFileData>.FromValues((IReadOnlyList<DataMigrationProjectFileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,54 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Type of the install script.
-    /// Serialized Name: InstallScriptType
-    /// </summary>
+    /// <summary> Type of the install script. </summary>
     public readonly partial struct InstallScriptType : IEquatable<InstallScriptType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="InstallScriptType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InstallScriptType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RemoteAzureBlobValue = "RemoteAzureBlob";
         private const string PlatformStorageValue = "PlatformStorage";
 
-        /// <summary>
-        /// RemoteAzureBlob
-        /// Serialized Name: InstallScriptType.RemoteAzureBlob
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="InstallScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public InstallScriptType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RemoteAzureBlob. </summary>
         public static InstallScriptType RemoteAzureBlob { get; } = new InstallScriptType(RemoteAzureBlobValue);
-        /// <summary>
-        /// PlatformStorage
-        /// Serialized Name: InstallScriptType.PlatformStorage
-        /// </summary>
+
+        /// <summary> Gets the PlatformStorage. </summary>
         public static InstallScriptType PlatformStorage { get; } = new InstallScriptType(PlatformStorageValue);
+
         /// <summary> Determines if two <see cref="InstallScriptType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InstallScriptType left, InstallScriptType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InstallScriptType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InstallScriptType left, InstallScriptType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InstallScriptType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InstallScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InstallScriptType(string value) => new InstallScriptType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InstallScriptType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InstallScriptType?(string value) => value == null ? null : new InstallScriptType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InstallScriptType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InstallScriptType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -93,6 +93,10 @@ namespace Azure.Provisioning.Batch
             _keyUri = DefineProperty<Uri>(nameof(KeyUri), new string[] { "keyUrl" });
             _rotationToLatestKeyVersionEnabled = DefineProperty<bool>(nameof(RotationToLatestKeyVersionEnabled), new string[] { "rotationToLatestKeyVersionEnabled" });
             _identityReference = DefineModelProperty<ComputeNodeIdentityReference>(nameof(IdentityReference), new string[] { "identityReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchDiskCustomerManagedKey that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

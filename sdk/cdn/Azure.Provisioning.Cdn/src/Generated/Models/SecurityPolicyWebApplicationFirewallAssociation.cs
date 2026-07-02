@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _domains = DefineListProperty<FrontDoorActivatedResourceInfo>(nameof(Domains), new string[] { "domains" });
             _patternsToMatch = DefineListProperty<string>(nameof(PatternsToMatch), new string[] { "patternsToMatch" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SecurityPolicyWebApplicationFirewallAssociation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

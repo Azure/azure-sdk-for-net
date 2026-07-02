@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(PrivateLinkServiceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(LoadBalancerFrontendIpConfigurations))
+            if (Optional.IsCollectionDefined(LoadBalancerFrontendIPConfigurations))
             {
                 writer.WritePropertyName("loadBalancerFrontendIpConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (FrontendIPConfigurationData item in LoadBalancerFrontendIpConfigurations)
+                foreach (FrontendIPConfigurationData item in LoadBalancerFrontendIPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (PrivateLinkServiceIPConfiguration item in IpConfigurations)
+                foreach (PrivateLinkServiceIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations = default;
+            IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
             IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
             string destinationIPAddress = default;
             PrivateLinkServiceAccessMode? accessMode = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item, options));
                     }
-                    loadBalancerFrontendIpConfigurations = array;
+                    loadBalancerFrontendIPConfigurations = array;
                     continue;
                 }
                 if (prop.NameEquals("ipConfigurations"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             return new PrivateLinkServiceProperties(
-                loadBalancerFrontendIpConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
+                loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
                 ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
                 destinationIPAddress,
                 accessMode,

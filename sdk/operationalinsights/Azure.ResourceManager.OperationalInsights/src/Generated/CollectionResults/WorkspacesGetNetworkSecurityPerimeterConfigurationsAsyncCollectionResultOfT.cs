@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.OperationalInsights
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
-                yield return Page<OperationalInsightsNetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OperationalInsightsNetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

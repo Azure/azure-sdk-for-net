@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _cipherSuiteSetForTls12 = DefineListProperty<AfdCustomizedCipherSuiteForTls12>(nameof(CipherSuiteSetForTls12), new string[] { "cipherSuiteSetForTls12" });
             _cipherSuiteSetForTls13 = DefineListProperty<AfdCustomizedCipherSuiteForTls13>(nameof(CipherSuiteSetForTls13), new string[] { "cipherSuiteSetForTls13" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

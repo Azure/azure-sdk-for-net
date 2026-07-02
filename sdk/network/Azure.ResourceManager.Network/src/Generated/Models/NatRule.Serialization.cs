@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(NatRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(IpProtocols))
+            if (Optional.IsCollectionDefined(IPProtocols))
             {
                 writer.WritePropertyName("ipProtocols"u8);
                 writer.WriteStartArray();
-                foreach (FirewallPolicyRuleNetworkProtocol item in IpProtocols)
+                foreach (FirewallPolicyRuleNetworkProtocol item in IPProtocols)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("translatedPort"u8);
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourceIpGroups)
+                foreach (string item in SourceIPGroups)
                 {
                     if (item == null)
                     {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> destinationPorts = default;
             string translatedAddress = default;
             string translatedPort = default;
-            IList<string> sourceIpGroups = default;
+            IList<string> sourceIPGroups = default;
             string translatedFqdn = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (prop.NameEquals("translatedFqdn"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network.Models
                 destinationPorts ?? new ChangeTrackingList<string>(),
                 translatedAddress,
                 translatedPort,
-                sourceIpGroups ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
                 translatedFqdn);
         }
     }

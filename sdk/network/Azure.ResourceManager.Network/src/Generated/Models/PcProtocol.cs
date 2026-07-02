@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> Any. </summary>
         private const string AnyValue = "Any";
 
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TCP. </summary>
-        public static PcProtocol TCP { get; } = new PcProtocol(TCPValue);
+        public static PcProtocol Tcp { get; } = new PcProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static PcProtocol UDP { get; } = new PcProtocol(UDPValue);
+        public static PcProtocol Udp { get; } = new PcProtocol(UdpValue);
 
         /// <summary> Any. </summary>
         public static PcProtocol Any { get; } = new PcProtocol(AnyValue);

@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,33 +18,65 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class McasDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
-        public McasDataConnector()
+        public McasDataConnector() : base(DataConnectorKind.MicrosoftCloudAppSecurity)
         {
-            Kind = DataConnectorKind.MicrosoftCloudAppSecurity;
         }
 
         /// <summary> Initializes a new instance of <see cref="McasDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, McasDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> MCAS (Microsoft Cloud App Security) data connector properties. </param>
+        internal McasDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, McasDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            DataTypes = dataTypes;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> MCAS (Microsoft Cloud App Security) data connector properties. </summary>
+        [WirePath("properties")]
+        internal McasDataConnectorProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new McasDataConnectorProperties();
+                    }
+                    Properties.TenantId = value.Value;
+                }
+            }
+        }
+
         /// <summary> The available data types for the connector. </summary>
         [WirePath("properties.dataTypes")]
-        public McasDataConnectorDataTypes DataTypes { get; set; }
+        public McasDataConnectorDataTypes DataTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTypes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new McasDataConnectorProperties();
+                }
+                Properties.DataTypes = value;
+            }
+        }
     }
 }

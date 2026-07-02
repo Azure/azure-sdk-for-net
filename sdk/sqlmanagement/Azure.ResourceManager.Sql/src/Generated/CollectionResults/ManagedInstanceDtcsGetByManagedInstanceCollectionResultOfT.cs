@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedInstanceDtcListResult result = ManagedInstanceDtcListResult.FromResponse(response);
-                yield return Page<ManagedInstanceDtcData>.FromValues((IReadOnlyList<ManagedInstanceDtcData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedInstanceDtcData>.FromValues((IReadOnlyList<ManagedInstanceDtcData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

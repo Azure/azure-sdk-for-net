@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 ImageListResult result = ImageListResult.FromResponse(response);
-                yield return Page<DiskImageData>.FromValues((IReadOnlyList<DiskImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DiskImageData>.FromValues((IReadOnlyList<DiskImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 SshPublicKeysGroupListResult result = SshPublicKeysGroupListResult.FromResponse(response);
-                yield return Page<SshPublicKeyData>.FromValues((IReadOnlyList<SshPublicKeyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SshPublicKeyData>.FromValues((IReadOnlyList<SshPublicKeyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

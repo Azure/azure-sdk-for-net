@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.HybridNetwork
                     yield break;
                 }
                 NetworkFunctionListResult result = NetworkFunctionListResult.FromResponse(response);
-                yield return Page<NetworkFunctionData>.FromValues((IReadOnlyList<NetworkFunctionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkFunctionData>.FromValues((IReadOnlyList<NetworkFunctionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class RecommendationChannelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RecommendationChannel value) => value switch
         {
             RecommendationChannel.Notification => "Notification",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendationChannel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RecommendationChannel ToRecommendationChannel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Notification")) return RecommendationChannel.Notification;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Api")) return RecommendationChannel.Api;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email")) return RecommendationChannel.Email;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Webhook")) return RecommendationChannel.Webhook;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return RecommendationChannel.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Notification"))
+            {
+                return RecommendationChannel.Notification;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Api"))
+            {
+                return RecommendationChannel.Api;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email"))
+            {
+                return RecommendationChannel.Email;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Webhook"))
+            {
+                return RecommendationChannel.Webhook;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All"))
+            {
+                return RecommendationChannel.All;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendationChannel value.");
         }
     }

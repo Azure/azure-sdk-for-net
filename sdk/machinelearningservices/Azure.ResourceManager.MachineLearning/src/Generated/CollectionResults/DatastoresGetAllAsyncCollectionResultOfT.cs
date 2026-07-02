@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 DatastoreResourceArmPaginatedResult result = DatastoreResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningDatastoreData>.FromValues((IReadOnlyList<MachineLearningDatastoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningDatastoreData>.FromValues((IReadOnlyList<MachineLearningDatastoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

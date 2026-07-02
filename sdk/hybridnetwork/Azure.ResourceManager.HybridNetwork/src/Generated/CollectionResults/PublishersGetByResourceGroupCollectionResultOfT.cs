@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.HybridNetwork
                     yield break;
                 }
                 PublisherListResult result = PublisherListResult.FromResponse(response);
-                yield return Page<PublisherData>.FromValues((IReadOnlyList<PublisherData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PublisherData>.FromValues((IReadOnlyList<PublisherData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

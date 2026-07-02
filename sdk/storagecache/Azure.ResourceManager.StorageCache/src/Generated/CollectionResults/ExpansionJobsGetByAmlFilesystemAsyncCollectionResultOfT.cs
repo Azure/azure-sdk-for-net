@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.StorageCache
                     yield break;
                 }
                 ExpansionJobsListResult result = ExpansionJobsListResult.FromResponse(response);
-                yield return Page<AmlFileSystemExpansionJobData>.FromValues((IReadOnlyList<AmlFileSystemExpansionJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AmlFileSystemExpansionJobData>.FromValues((IReadOnlyList<AmlFileSystemExpansionJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
