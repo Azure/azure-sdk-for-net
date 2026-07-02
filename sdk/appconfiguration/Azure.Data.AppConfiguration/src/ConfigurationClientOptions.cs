@@ -18,10 +18,6 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
-        private const string AzConfigUsGovCloudHostName = "azconfig.azure.us";
-        private const string AzConfigChinaCloudHostName = "azconfig.azure.cn";
-        private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
-        private const string AppConfigChinaCloudHostName = "appconfig.azure.cn";
         private const string AzConfigPublicCloudHostName = "azconfig.io";
         private const string AppConfigStagingCloudHostName = "appconfig-staging.azure.com";
 
@@ -114,14 +110,16 @@ namespace Azure.Data.AppConfiguration
             string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
             return host switch
             {
-                _ when IsHostInDomain(host, AzConfigUsGovCloudHostName) || IsHostInDomain(host, AppConfigUsGovCloudHostName)
-                    => $"{AppConfigurationAudience.AzureGovernment}/.default",
-                _ when IsHostInDomain(host, AzConfigChinaCloudHostName) || IsHostInDomain(host, AppConfigChinaCloudHostName)
-                    => $"{AppConfigurationAudience.AzureChina}/.default",
+                // The public cloud data-plane host ("azconfig.io") maps to a documented audience
+                // ("appconfig.azure.com") whose domain cannot be derived from the host, so it is mapped explicitly.
                 _ when IsHostInDomain(host, AzConfigPublicCloudHostName)
                     => $"{AppConfigurationAudience.AzurePublicCloud}/.default",
+                // The staging host label is hyphenated ("appconfig-staging") and is not treated as a bare
+                // marker by the derivation below, so it is mapped explicitly.
                 _ when IsHostInDomain(host, AppConfigStagingCloudHostName)
                     => $"https://{AppConfigStagingCloudHostName}/.default",
+                // All other clouds (including Azure US Government and Azure China) carry the audience
+                // domain in the host, so it is derived directly.
                 _ => $"{GetAudienceFromHost(host)}/.default"
             };
         }
@@ -142,7 +140,7 @@ namespace Azure.Data.AppConfiguration
         private static string GetAudienceFromHost(string host)
         {
             string[] labels = host.Split('.');
-            for (int i = labels.Length - 2; i >= 0; i--)
+            for (int i = labels.Length - 1; i >= 0; i--)
             {
                 if (IsAppConfigLabel(labels[i]))
                 {

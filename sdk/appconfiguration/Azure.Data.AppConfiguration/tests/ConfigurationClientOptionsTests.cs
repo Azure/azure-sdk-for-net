@@ -77,16 +77,16 @@ namespace Azure.Data.AppConfiguration.Tests
                 // well-known cloud suffixes only match on a DNS label boundary, so look-alike hosts are not misclassified
                 yield return new TestCaseData("https://myazconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.fooappconfig.azure.us", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                // china cloud
-                yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                // china cloud: appconfig.* hosts derive the documented audience; azconfig.* hosts derive the valid azconfig.* audience
+                yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", "https://azconfig.azure.cn/.default");
+                yield return new TestCaseData("https://contoso.azconfig.azure.cn", "https://azconfig.azure.cn/.default");
                 yield return new TestCaseData("https://other.APPconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.cn//", $"{AppConfigurationAudience.AzureChina}/.default");
-                // us gov cloud
-                yield return new TestCaseData("http://other-23232.AZconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                // us gov cloud: appconfig.* hosts derive the documented audience; azconfig.* hosts derive the valid azconfig.* audience
+                yield return new TestCaseData("http://other-23232.AZconfig.azure.us", "https://azconfig.azure.us/.default");
+                yield return new TestCaseData("https://contoso.azconfig.azure.us", "https://azconfig.azure.us/.default");
                 yield return new TestCaseData("https://other.APPconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.us/", $"{AppConfigurationAudience.AzureGovernment}/.default");
