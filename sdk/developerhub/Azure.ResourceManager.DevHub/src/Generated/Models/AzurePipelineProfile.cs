@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzurePipelineProfile(AdoRepository repository, string armServiceConnection, Build build, Deployment deployment, string @namespace, ResourceIdentifier acr, ResourceIdentifier clusterId, DeveloperHubPullRequestContent pullRequest, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzurePipelineProfile(AdoRepository repository, string armServiceConnection, DevHubDockerBuildInfo build, DevHubDeploymentProperties deployment, string @namespace, ResourceIdentifier acr, ResourceIdentifier clusterId, DeveloperHubPullRequestContent pullRequest, DevHubWorkflowRun lastWorkflowRun, DevHubAuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Repository = repository;
             ArmServiceConnection = armServiceConnection;
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.DevHub.Models
         public string ArmServiceConnection { get; set; }
 
         /// <summary> Build details of the repository associated with the workflow. </summary>
-        public Build Build { get; set; }
+        public DevHubDockerBuildInfo Build { get; set; }
 
         /// <summary> Deployment details of the repository associated with the workflow. </summary>
-        public Deployment Deployment { get; set; }
+        public DevHubDeploymentProperties Deployment { get; set; }
 
         /// <summary> Kubernetes namespace the application is deployed to. </summary>
         public string Namespace { get; set; }
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.DevHub.Models
         public DeveloperHubPullRequestContent PullRequest { get; set; }
 
         /// <summary> Gets or sets the LastWorkflowRun. </summary>
-        public WorkflowRun LastWorkflowRun { get; set; }
+        public DevHubWorkflowRun LastWorkflowRun { get; set; }
 
         /// <summary> Determines the authorization status of requests. </summary>
-        public AuthorizationStatus? AuthStatus { get; }
+        public DevHubAuthorizationStatus? AuthStatus { get; }
     }
 }

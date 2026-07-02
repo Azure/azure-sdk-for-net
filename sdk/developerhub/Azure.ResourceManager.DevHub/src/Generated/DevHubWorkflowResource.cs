@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DeveloperHubDeleteWorkflowResponseResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeveloperHubDeleteWorkflowResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowResource.Delete");
             scope.Start();
@@ -328,10 +328,10 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _workflowRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeveloperHubDeleteWorkflowResponseResult> response = Response.FromValue(DeveloperHubDeleteWorkflowResponseResult.FromResponse(result), result);
+                Response<DeveloperHubDeleteWorkflowResult> response = Response.FromValue(DeveloperHubDeleteWorkflowResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DevHubArmOperation<DeveloperHubDeleteWorkflowResponseResult> operation = new DevHubArmOperation<DeveloperHubDeleteWorkflowResponseResult>(response, rehydrationToken);
+                DevHubArmOperation<DeveloperHubDeleteWorkflowResult> operation = new DevHubArmOperation<DeveloperHubDeleteWorkflowResult>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DevHub
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DeveloperHubDeleteWorkflowResponseResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeveloperHubDeleteWorkflowResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workflowClientDiagnostics.CreateScope("DevHubWorkflowResource.Delete");
             scope.Start();
@@ -380,10 +380,10 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _workflowRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeveloperHubDeleteWorkflowResponseResult> response = Response.FromValue(DeveloperHubDeleteWorkflowResponseResult.FromResponse(result), result);
+                Response<DeveloperHubDeleteWorkflowResult> response = Response.FromValue(DeveloperHubDeleteWorkflowResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DevHubArmOperation<DeveloperHubDeleteWorkflowResponseResult> operation = new DevHubArmOperation<DeveloperHubDeleteWorkflowResponseResult>(response, rehydrationToken);
+                DevHubArmOperation<DeveloperHubDeleteWorkflowResult> operation = new DevHubArmOperation<DeveloperHubDeleteWorkflowResult>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

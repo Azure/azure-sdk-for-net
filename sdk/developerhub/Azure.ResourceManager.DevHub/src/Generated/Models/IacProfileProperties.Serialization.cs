@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 writer.WritePropertyName("stages"u8);
                 writer.WriteStartArray();
-                foreach (StageProperties item in Stages)
+                foreach (DevHubStageInfo item in Stages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 writer.WritePropertyName("templates"u8);
                 writer.WriteStartArray();
-                foreach (IacTemplateProperties item in Templates)
+                foreach (DevHubIacTemplateProperties item in Templates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             IacGitHubProfile githubProfile = default;
             TerraformProfile terraformProfile = default;
-            IList<StageProperties> stages = default;
-            IList<IacTemplateProperties> templates = default;
+            IList<DevHubStageInfo> stages = default;
+            IList<DevHubIacTemplateProperties> templates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    List<StageProperties> array = new List<StageProperties>();
+                    List<DevHubStageInfo> array = new List<DevHubStageInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StageProperties.DeserializeStageProperties(item, options));
+                        array.Add(DevHubStageInfo.DeserializeDevHubStageInfo(item, options));
                     }
                     stages = array;
                     continue;
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    List<IacTemplateProperties> array = new List<IacTemplateProperties>();
+                    List<DevHubIacTemplateProperties> array = new List<DevHubIacTemplateProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IacTemplateProperties.DeserializeIacTemplateProperties(item, options));
+                        array.Add(DevHubIacTemplateProperties.DeserializeDevHubIacTemplateProperties(item, options));
                     }
                     templates = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IacProfileProperties(githubProfile, terraformProfile, stages ?? new ChangeTrackingList<StageProperties>(), templates ?? new ChangeTrackingList<IacTemplateProperties>(), additionalBinaryDataProperties);
+            return new IacProfileProperties(githubProfile, terraformProfile, stages ?? new ChangeTrackingList<DevHubStageInfo>(), templates ?? new ChangeTrackingList<DevHubIacTemplateProperties>(), additionalBinaryDataProperties);
         }
     }
 }

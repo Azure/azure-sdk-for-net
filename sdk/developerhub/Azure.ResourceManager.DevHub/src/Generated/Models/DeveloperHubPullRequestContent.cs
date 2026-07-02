@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="pullNumber"> The number associated with the submitted pull request. </param>
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubPullRequestContent(string prUri, int? pullNumber, PullRequestStatus? prStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubPullRequestContent(string prUri, int? pullNumber, DevHubPullRequestStatus? prStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrUri = prUri;
             PullNumber = pullNumber;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.DevHub.Models
         public int? PullNumber { get; }
 
         /// <summary> The status of the Pull Request submitted against the users repository. </summary>
-        public PullRequestStatus? PrStatus { get; }
+        public DevHubPullRequestStatus? PrStatus { get; }
     }
 }

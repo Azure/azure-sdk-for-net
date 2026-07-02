@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.DevHub.Mocking
             return new DevHubTemplateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VersionedTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DevHubVersionedTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VersionedTemplateResource"/> object. </returns>
-        public virtual VersionedTemplateResource GetVersionedTemplateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevHubVersionedTemplateResource"/> object. </returns>
+        public virtual DevHubVersionedTemplateResource GetDevHubVersionedTemplateResource(ResourceIdentifier id)
         {
-            VersionedTemplateResource.ValidateResourceId(id);
-            return new VersionedTemplateResource(Client, id);
+            DevHubVersionedTemplateResource.ValidateResourceId(id);
+            return new DevHubVersionedTemplateResource(Client, id);
         }
     }
 }

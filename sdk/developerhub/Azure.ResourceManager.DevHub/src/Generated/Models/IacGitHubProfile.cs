@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
         /// <param name="branchName"> Repository Branch Name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IacGitHubProfile(string repositoryName, string repositoryMainBranch, string repositoryOwner, AuthorizationStatus? authStatus, int? pullNumber, PullRequestStatus? prStatus, string branchName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IacGitHubProfile(string repositoryName, string repositoryMainBranch, string repositoryOwner, DevHubAuthorizationStatus? authStatus, int? pullNumber, DevHubPullRequestStatus? prStatus, string branchName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepositoryName = repositoryName;
             RepositoryMainBranch = repositoryMainBranch;
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.DevHub.Models
         public string RepositoryOwner { get; set; }
 
         /// <summary> Determines the authorization status of requests. </summary>
-        public AuthorizationStatus? AuthStatus { get; }
+        public DevHubAuthorizationStatus? AuthStatus { get; }
 
         /// <summary> The number associated with the submitted pull request. </summary>
         public int? PullNumber { get; }
 
         /// <summary> The status of the Pull Request submitted against the users repository. </summary>
-        public PullRequestStatus? PrStatus { get; }
+        public DevHubPullRequestStatus? PrStatus { get; }
 
         /// <summary> Repository Branch Name. </summary>
         public string BranchName { get; set; }

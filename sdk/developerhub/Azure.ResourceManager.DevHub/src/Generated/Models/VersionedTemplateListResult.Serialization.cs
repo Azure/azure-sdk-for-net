@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VersionedTemplateData item in Value)
+            foreach (DevHubVersionedTemplateData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 return null;
             }
-            IList<VersionedTemplateData> value = default;
+            IList<DevHubVersionedTemplateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VersionedTemplateData> array = new List<VersionedTemplateData>();
+                    List<DevHubVersionedTemplateData> array = new List<DevHubVersionedTemplateData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VersionedTemplateData.DeserializeVersionedTemplateData(item, options));
+                        array.Add(DevHubVersionedTemplateData.DeserializeDevHubVersionedTemplateData(item, options));
                     }
                     value = array;
                     continue;

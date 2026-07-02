@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             string name = default;
             bool? isDataAction = default;
-            OperationDisplay display = default;
+            DevHubOperationDisplay display = default;
             Origin? origin = default;
-            ActionType? actionType = default;
+            DevHubActionType? actionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(prop.Value, options);
+                    display = DevHubOperationDisplay.DeserializeDevHubOperationDisplay(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("origin"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    actionType = new ActionType(prop.Value.GetString());
+                    actionType = new DevHubActionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

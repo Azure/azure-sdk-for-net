@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevHub.Tests.Scenario
         {
             return new DevHubWorkflowData(AzureLocation.EastUS)
             {
-                Properties = new WorkflowProperties
+                Properties = new DevHubWorkflowProperties
                 {
                     GithubWorkflowProfile = new GitHubWorkflowProfile
                     {
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DevHub.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var collection = _resourceGroup.GetDevHubWorkflows();
+            DevHubWorkflowCollection collection = _resourceGroup.GetDevHubWorkflows();
             string workflowName = Recording.GenerateAssetName("workflow");
 
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workflowName, GetWorkflowData());
+            ArmOperation<DevHubWorkflowResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workflowName, GetWorkflowData());
             DevHubWorkflowResource workflow = lro.Value;
 
             Assert.That(lro.HasCompleted, Is.True);

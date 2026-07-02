@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="lastWorkflowRun"></param>
         /// <param name="authStatus"> Determines the authorization status of requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubWorkflowProfile(string repositoryOwner, string repositoryName, string branchName, string dockerfile, string dockerBuildContext, Deployment deploymentProperties, string @namespace, Acr acr, GitHubWorkflowProfileOidcCredentials oidcCredentials, ResourceIdentifier aksResourceId, string prUri, int? pullNumber, PullRequestStatus? prStatus, WorkflowRun lastWorkflowRun, AuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubWorkflowProfile(string repositoryOwner, string repositoryName, string branchName, string dockerfile, string dockerBuildContext, DevHubDeploymentProperties deploymentProperties, string @namespace, DevHubContainerRegistryInfo acr, GitHubWorkflowProfileOidcCredentials oidcCredentials, ResourceIdentifier aksResourceId, string prUri, int? pullNumber, DevHubPullRequestStatus? prStatus, DevHubWorkflowRun lastWorkflowRun, DevHubAuthorizationStatus? authStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepositoryOwner = repositoryOwner;
             RepositoryName = repositoryName;
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DevHub.Models
         public string DockerBuildContext { get; set; }
 
         /// <summary> Deployment details of the repository associated with the workflow. </summary>
-        public Deployment DeploymentProperties { get; set; }
+        public DevHubDeploymentProperties DeploymentProperties { get; set; }
 
         /// <summary> Kubernetes namespace the application is deployed to. </summary>
         public string Namespace { get; set; }
 
         /// <summary> Information on the azure container registry. </summary>
-        public Acr Acr { get; set; }
+        public DevHubContainerRegistryInfo Acr { get; set; }
 
         /// <summary> The fields needed for OIDC with GitHub. </summary>
         public GitHubWorkflowProfileOidcCredentials OidcCredentials { get; set; }
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DevHub.Models
         public int? PullNumber { get; }
 
         /// <summary> The status of the Pull Request submitted against the users repository. </summary>
-        public PullRequestStatus? PrStatus { get; }
+        public DevHubPullRequestStatus? PrStatus { get; }
 
         /// <summary> Gets or sets the LastWorkflowRun. </summary>
-        public WorkflowRun LastWorkflowRun { get; set; }
+        public DevHubWorkflowRun LastWorkflowRun { get; set; }
 
         /// <summary> Determines the authorization status of requests. </summary>
-        public AuthorizationStatus? AuthStatus { get; }
+        public DevHubAuthorizationStatus? AuthStatus { get; }
     }
 }

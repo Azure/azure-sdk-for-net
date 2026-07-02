@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevHub
         public ETag? ETag { get; }
 
         /// <summary> Gets the Stages. </summary>
-        public IList<StageProperties> Stages
+        public IList<DevHubStageInfo> Stages
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary> Gets the Templates. </summary>
-        public IList<IacTemplateProperties> Templates
+        public IList<DevHubIacTemplateProperties> Templates
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary> Determines the authorization status of requests. </summary>
-        public AuthorizationStatus? AuthStatus
+        public DevHubAuthorizationStatus? AuthStatus
         {
             get
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary> The status of the Pull Request submitted against the users repository. </summary>
-        public PullRequestStatus? PrStatus
+        public DevHubPullRequestStatus? PrStatus
         {
             get
             {

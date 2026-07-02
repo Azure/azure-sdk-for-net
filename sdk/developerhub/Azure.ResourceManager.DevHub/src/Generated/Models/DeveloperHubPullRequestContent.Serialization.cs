@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             string prUri = default;
             int? pullNumber = default;
-            PullRequestStatus? prStatus = default;
+            DevHubPullRequestStatus? prStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    prStatus = new PullRequestStatus(prop.Value.GetString());
+                    prStatus = new DevHubPullRequestStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

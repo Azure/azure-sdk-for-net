@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             AdoRepository repository = default;
             string armServiceConnection = default;
-            Build build = default;
-            Deployment deployment = default;
+            DevHubDockerBuildInfo build = default;
+            DevHubDeploymentProperties deployment = default;
             string @namespace = default;
             ResourceIdentifier acr = default;
             ResourceIdentifier clusterId = default;
             DeveloperHubPullRequestContent pullRequest = default;
-            WorkflowRun lastWorkflowRun = default;
-            AuthorizationStatus? authStatus = default;
+            DevHubWorkflowRun lastWorkflowRun = default;
+            DevHubAuthorizationStatus? authStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    build = Build.DeserializeBuild(prop.Value, options);
+                    build = DevHubDockerBuildInfo.DeserializeDevHubDockerBuildInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deployment"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    deployment = Deployment.DeserializeDeployment(prop.Value, options);
+                    deployment = DevHubDeploymentProperties.DeserializeDevHubDeploymentProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("namespace"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    lastWorkflowRun = WorkflowRun.DeserializeWorkflowRun(prop.Value, options);
+                    lastWorkflowRun = DevHubWorkflowRun.DeserializeDevHubWorkflowRun(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authStatus"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    authStatus = new AuthorizationStatus(prop.Value.GetString());
+                    authStatus = new DevHubAuthorizationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

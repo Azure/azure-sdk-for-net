@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.DevHub.Models
             string repositoryName = default;
             string repositoryMainBranch = default;
             string repositoryOwner = default;
-            AuthorizationStatus? authStatus = default;
+            DevHubAuthorizationStatus? authStatus = default;
             int? pullNumber = default;
-            PullRequestStatus? prStatus = default;
+            DevHubPullRequestStatus? prStatus = default;
             string branchName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    authStatus = new AuthorizationStatus(prop.Value.GetString());
+                    authStatus = new DevHubAuthorizationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pullNumber"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    prStatus = new PullRequestStatus(prop.Value.GetString());
+                    prStatus = new DevHubPullRequestStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("branchName"u8))

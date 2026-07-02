@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="repository"> Details of the GitHub repository associated with the workflow. </param>
         /// <param name="oidcCredentials"> The fields needed for OIDC with GitHub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubProviderProfile(GitHubRepository repository, OidcCredentials oidcCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubProviderProfile(GitHubRepository repository, DevHubOidcCredentials oidcCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Repository = repository;
             OidcCredentials = oidcCredentials;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DevHub.Models
         public GitHubRepository Repository { get; set; }
 
         /// <summary> The fields needed for OIDC with GitHub. </summary>
-        public OidcCredentials OidcCredentials { get; set; }
+        public DevHubOidcCredentials OidcCredentials { get; set; }
     }
 }

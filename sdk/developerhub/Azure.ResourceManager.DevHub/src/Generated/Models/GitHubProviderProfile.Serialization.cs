@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 return null;
             }
             GitHubRepository repository = default;
-            OidcCredentials oidcCredentials = default;
+            DevHubOidcCredentials oidcCredentials = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    oidcCredentials = OidcCredentials.DeserializeOidcCredentials(prop.Value, options);
+                    oidcCredentials = DevHubOidcCredentials.DeserializeDevHubOidcCredentials(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

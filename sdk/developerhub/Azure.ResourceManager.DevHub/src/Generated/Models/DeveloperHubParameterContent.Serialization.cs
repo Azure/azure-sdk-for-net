@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.DevHub.Models
             }
             string name = default;
             string description = default;
-            ParameterType? parameterType = default;
-            ParameterKind? parameterKind = default;
+            DevHubTemplateParameterType? parameterType = default;
+            DevHubTemplateParameterKind? parameterKind = default;
             bool? isRequired = default;
-            ParameterDefault @default = default;
+            DevHubTemplateParameterDefault @default = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    parameterType = new ParameterType(prop.Value.GetString());
+                    parameterType = new DevHubTemplateParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameterKind"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    parameterKind = new ParameterKind(prop.Value.GetString());
+                    parameterKind = new DevHubTemplateParameterKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("required"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    @default = ParameterDefault.DeserializeParameterDefault(prop.Value, options);
+                    @default = DevHubTemplateParameterDefault.DeserializeDevHubTemplateParameterDefault(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

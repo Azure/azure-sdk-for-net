@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevHub.Models
             {
                 writer.WritePropertyName("scaleRequirement"u8);
                 writer.WriteStartArray();
-                foreach (ScaleProperty item in ScaleRequirement)
+                foreach (DevHubScaleProperty item in ScaleRequirement)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 return null;
             }
             string templateName = default;
-            IList<ScaleProperty> scaleRequirement = default;
+            IList<DevHubScaleProperty> scaleRequirement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    List<ScaleProperty> array = new List<ScaleProperty>();
+                    List<DevHubScaleProperty> array = new List<DevHubScaleProperty>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ScaleProperty.DeserializeScaleProperty(item, options));
+                        array.Add(DevHubScaleProperty.DeserializeDevHubScaleProperty(item, options));
                     }
                     scaleRequirement = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperHubScaleTemplateRequestContent(templateName, scaleRequirement ?? new ChangeTrackingList<ScaleProperty>(), additionalBinaryDataProperties);
+            return new DeveloperHubScaleTemplateRequestContent(templateName, scaleRequirement ?? new ChangeTrackingList<DevHubScaleProperty>(), additionalBinaryDataProperties);
         }
     }
 }

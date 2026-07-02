@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> Initializes a new instance of <see cref="DeveloperHubScaleTemplateRequestContent"/>. </summary>
         public DeveloperHubScaleTemplateRequestContent()
         {
-            ScaleRequirement = new ChangeTrackingList<ScaleProperty>();
+            ScaleRequirement = new ChangeTrackingList<DevHubScaleProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeveloperHubScaleTemplateRequestContent"/>. </summary>
         /// <param name="templateName"> Template Name. </param>
         /// <param name="scaleRequirement"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubScaleTemplateRequestContent(string templateName, IList<ScaleProperty> scaleRequirement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubScaleTemplateRequestContent(string templateName, IList<DevHubScaleProperty> scaleRequirement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateName = templateName;
             ScaleRequirement = scaleRequirement;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DevHub.Models
         public string TemplateName { get; set; }
 
         /// <summary> Gets the ScaleRequirement. </summary>
-        public IList<ScaleProperty> ScaleRequirement { get; }
+        public IList<DevHubScaleProperty> ScaleRequirement { get; }
     }
 }

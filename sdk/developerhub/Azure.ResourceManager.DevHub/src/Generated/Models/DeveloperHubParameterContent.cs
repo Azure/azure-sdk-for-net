@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="isRequired"> Whether the parameter is required. </param>
         /// <param name="default"> A reference to a default parameter value or a reference parameter to take the value from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeveloperHubParameterContent(string name, string description, ParameterType? parameterType, ParameterKind? parameterKind, bool? isRequired, ParameterDefault @default, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeveloperHubParameterContent(string name, string description, DevHubTemplateParameterType? parameterType, DevHubTemplateParameterKind? parameterKind, bool? isRequired, DevHubTemplateParameterDefault @default, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.DevHub.Models
         public string Description { get; }
 
         /// <summary> The type of the template parameter. </summary>
-        public ParameterType? ParameterType { get; }
+        public DevHubTemplateParameterType? ParameterType { get; }
 
         /// <summary> The type of the template parameter. </summary>
-        public ParameterKind? ParameterKind { get; }
+        public DevHubTemplateParameterKind? ParameterKind { get; }
 
         /// <summary> Whether the parameter is required. </summary>
         public bool? IsRequired { get; }
 
         /// <summary> A reference to a default parameter value or a reference parameter to take the value from. </summary>
-        public ParameterDefault Default { get; }
+        public DevHubTemplateParameterDefault Default { get; }
     }
 }

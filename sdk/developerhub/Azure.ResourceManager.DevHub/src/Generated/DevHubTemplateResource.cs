@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.DevHub
             }
         }
 
-        /// <summary> Gets a collection of VersionedTemplates in the <see cref="DevHubTemplateResource"/>. </summary>
-        /// <returns> An object representing collection of VersionedTemplates and their operations over a VersionedTemplateResource. </returns>
-        public virtual VersionedTemplateCollection GetVersionedTemplates()
+        /// <summary> Gets a collection of DevHubVersionedTemplates in the <see cref="DevHubTemplateResource"/>. </summary>
+        /// <returns> An object representing collection of DevHubVersionedTemplates and their operations over a DevHubVersionedTemplateResource. </returns>
+        public virtual DevHubVersionedTemplateCollection GetDevHubVersionedTemplates()
         {
-            return GetCachedClient(client => new VersionedTemplateCollection(client, Id));
+            return GetCachedClient(client => new DevHubVersionedTemplateCollection(client, Id));
         }
 
         /// <summary> Gets a VersionedTemplate. </summary>
@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.DevHub
         /// <exception cref="ArgumentNullException"> <paramref name="templateVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VersionedTemplateResource>> GetVersionedTemplateAsync(string templateVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubVersionedTemplateResource>> GetDevHubVersionedTemplateAsync(string templateVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateVersion, nameof(templateVersion));
 
-            return await GetVersionedTemplates().GetAsync(templateVersion, cancellationToken).ConfigureAwait(false);
+            return await GetDevHubVersionedTemplates().GetAsync(templateVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a VersionedTemplate. </summary>
@@ -212,11 +212,11 @@ namespace Azure.ResourceManager.DevHub
         /// <exception cref="ArgumentNullException"> <paramref name="templateVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VersionedTemplateResource> GetVersionedTemplate(string templateVersion, CancellationToken cancellationToken = default)
+        public virtual Response<DevHubVersionedTemplateResource> GetDevHubVersionedTemplate(string templateVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateVersion, nameof(templateVersion));
 
-            return GetVersionedTemplates().Get(templateVersion, cancellationToken);
+            return GetDevHubVersionedTemplates().Get(templateVersion, cancellationToken);
         }
     }
 }

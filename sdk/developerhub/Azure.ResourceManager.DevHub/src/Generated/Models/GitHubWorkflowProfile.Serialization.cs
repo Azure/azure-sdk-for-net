@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.DevHub.Models
             string branchName = default;
             string dockerfile = default;
             string dockerBuildContext = default;
-            Deployment deploymentProperties = default;
+            DevHubDeploymentProperties deploymentProperties = default;
             string @namespace = default;
-            Acr acr = default;
+            DevHubContainerRegistryInfo acr = default;
             GitHubWorkflowProfileOidcCredentials oidcCredentials = default;
             ResourceIdentifier aksResourceId = default;
             string prUri = default;
             int? pullNumber = default;
-            PullRequestStatus? prStatus = default;
-            WorkflowRun lastWorkflowRun = default;
-            AuthorizationStatus? authStatus = default;
+            DevHubPullRequestStatus? prStatus = default;
+            DevHubWorkflowRun lastWorkflowRun = default;
+            DevHubAuthorizationStatus? authStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    deploymentProperties = Deployment.DeserializeDeployment(prop.Value, options);
+                    deploymentProperties = DevHubDeploymentProperties.DeserializeDevHubDeploymentProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("namespace"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    acr = Acr.DeserializeAcr(prop.Value, options);
+                    acr = DevHubContainerRegistryInfo.DeserializeDevHubContainerRegistryInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("oidcCredentials"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    prStatus = new PullRequestStatus(prop.Value.GetString());
+                    prStatus = new DevHubPullRequestStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastWorkflowRun"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    lastWorkflowRun = WorkflowRun.DeserializeWorkflowRun(prop.Value, options);
+                    lastWorkflowRun = DevHubWorkflowRun.DeserializeDevHubWorkflowRun(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authStatus"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     {
                         continue;
                     }
-                    authStatus = new AuthorizationStatus(prop.Value.GetString());
+                    authStatus = new DevHubAuthorizationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

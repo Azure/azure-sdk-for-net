@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevHub
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            TemplateProperties properties = default;
+            DevHubTemplateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         continue;
                     }
-                    properties = TemplateProperties.DeserializeTemplateProperties(prop.Value, options);
+                    properties = DevHubTemplateProperties.DeserializeDevHubTemplateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

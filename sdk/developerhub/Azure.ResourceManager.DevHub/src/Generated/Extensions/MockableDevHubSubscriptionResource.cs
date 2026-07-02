@@ -302,15 +302,13 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="artifactGenerationProperties"></param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="devHubArtifactGenerationProperties"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="artifactGenerationProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<IDictionary<string, string>>> GeneratePreviewArtifactsAsync(string location, ArtifactGenerationProperties artifactGenerationProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="devHubArtifactGenerationProperties"/> is null. </exception>
+        public virtual async Task<Response<IDictionary<string, string>>> GeneratePreviewArtifactsAsync(AzureLocation location, DevHubArtifactGenerationProperties devHubArtifactGenerationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(artifactGenerationProperties, nameof(artifactGenerationProperties));
+            Argument.AssertNotNull(devHubArtifactGenerationProperties, nameof(devHubArtifactGenerationProperties));
 
             using DiagnosticScope scope = DevHubClientClientDiagnostics.CreateScope("MockableDevHubSubscriptionResource.GeneratePreviewArtifacts");
             scope.Start();
@@ -320,7 +318,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, ArtifactGenerationProperties.ToRequestContent(artifactGenerationProperties), context);
+                HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, DevHubArtifactGenerationProperties.ToRequestContent(devHubArtifactGenerationProperties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, string> value = default;
@@ -364,15 +362,13 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="artifactGenerationProperties"></param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="devHubArtifactGenerationProperties"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="artifactGenerationProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<IDictionary<string, string>> GeneratePreviewArtifacts(string location, ArtifactGenerationProperties artifactGenerationProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="devHubArtifactGenerationProperties"/> is null. </exception>
+        public virtual Response<IDictionary<string, string>> GeneratePreviewArtifacts(AzureLocation location, DevHubArtifactGenerationProperties devHubArtifactGenerationProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(artifactGenerationProperties, nameof(artifactGenerationProperties));
+            Argument.AssertNotNull(devHubArtifactGenerationProperties, nameof(devHubArtifactGenerationProperties));
 
             using DiagnosticScope scope = DevHubClientClientDiagnostics.CreateScope("MockableDevHubSubscriptionResource.GeneratePreviewArtifacts");
             scope.Start();
@@ -382,7 +378,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, ArtifactGenerationProperties.ToRequestContent(artifactGenerationProperties), context);
+                HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, DevHubArtifactGenerationProperties.ToRequestContent(devHubArtifactGenerationProperties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, string> value = default;
@@ -430,7 +426,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeveloperHubGitHubOAuthListResponseResult>> GetGitHubOAuthAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeveloperHubGitHubOAuthListResult>> GetGitHubOAuthAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -444,7 +440,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 };
                 HttpMessage message = DevHubClientRestClient.CreateGetGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeveloperHubGitHubOAuthListResponseResult> response = Response.FromValue(DeveloperHubGitHubOAuthListResponseResult.FromResponse(result), result);
+                Response<DeveloperHubGitHubOAuthListResult> response = Response.FromValue(DeveloperHubGitHubOAuthListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -479,7 +475,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeveloperHubGitHubOAuthListResponseResult> GetGitHubOAuth(string location, CancellationToken cancellationToken = default)
+        public virtual Response<DeveloperHubGitHubOAuthListResult> GetGitHubOAuth(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -493,7 +489,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 };
                 HttpMessage message = DevHubClientRestClient.CreateGetGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeveloperHubGitHubOAuthListResponseResult> response = Response.FromValue(DeveloperHubGitHubOAuthListResponseResult.FromResponse(result), result);
+                Response<DeveloperHubGitHubOAuthListResult> response = Response.FromValue(DeveloperHubGitHubOAuthListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

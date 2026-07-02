@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of a Template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevHubTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TemplateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DevHubTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevHubTemplateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a Template. </summary>
-        public TemplateProperties Properties { get; }
+        public DevHubTemplateProperties Properties { get; }
     }
 }

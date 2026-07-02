@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeveloperHubPrLinkResponseResult>> ExportAsync(DeveloperHubExportTemplateRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeveloperHubPrLinkResult>> ExportAsync(DeveloperHubExportTemplateRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _iacProfilesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubExportTemplateRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeveloperHubPrLinkResponseResult> response = Response.FromValue(DeveloperHubPrLinkResponseResult.FromResponse(result), result);
+                Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeveloperHubPrLinkResponseResult> Export(DeveloperHubExportTemplateRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DeveloperHubPrLinkResult> Export(DeveloperHubExportTemplateRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _iacProfilesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubExportTemplateRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeveloperHubPrLinkResponseResult> response = Response.FromValue(DeveloperHubPrLinkResponseResult.FromResponse(result), result);
+                Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeveloperHubPrLinkResponseResult>> ScaleAsync(DeveloperHubScaleTemplateRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeveloperHubPrLinkResult>> ScaleAsync(DeveloperHubScaleTemplateRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _iacProfilesRestClient.CreateScaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubScaleTemplateRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeveloperHubPrLinkResponseResult> response = Response.FromValue(DeveloperHubPrLinkResponseResult.FromResponse(result), result);
+                Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeveloperHubPrLinkResponseResult> Scale(DeveloperHubScaleTemplateRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DeveloperHubPrLinkResult> Scale(DeveloperHubScaleTemplateRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.DevHub
                 };
                 HttpMessage message = _iacProfilesRestClient.CreateScaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubScaleTemplateRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeveloperHubPrLinkResponseResult> response = Response.FromValue(DeveloperHubPrLinkResponseResult.FromResponse(result), result);
+                Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

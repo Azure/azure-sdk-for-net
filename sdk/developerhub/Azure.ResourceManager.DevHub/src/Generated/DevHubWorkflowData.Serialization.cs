@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevHub
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            WorkflowProperties properties = default;
+            DevHubWorkflowProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         continue;
                     }
-                    properties = WorkflowProperties.DeserializeWorkflowProperties(prop.Value, options);
+                    properties = DevHubWorkflowProperties.DeserializeDevHubWorkflowProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

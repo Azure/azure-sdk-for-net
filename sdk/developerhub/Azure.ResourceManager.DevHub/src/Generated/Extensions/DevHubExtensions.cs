@@ -136,21 +136,21 @@ namespace Azure.ResourceManager.DevHub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VersionedTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DevHubVersionedTemplateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubArmClient.GetVersionedTemplateResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubArmClient.GetDevHubVersionedTemplateResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VersionedTemplateResource"/> object. </returns>
-        public static VersionedTemplateResource GetVersionedTemplateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevHubVersionedTemplateResource"/> object. </returns>
+        public static DevHubVersionedTemplateResource GetDevHubVersionedTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDevHubArmClient(client).GetVersionedTemplateResource(id);
+            return GetMockableDevHubArmClient(client).GetDevHubVersionedTemplateResource(id);
         }
 
         /// <summary>
@@ -428,38 +428,38 @@ namespace Azure.ResourceManager.DevHub
         /// Generate preview dockerfile and manifests.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GeneratePreviewArtifactsAsync(string, ArtifactGenerationProperties, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GeneratePreviewArtifactsAsync(AzureLocation, DevHubArtifactGenerationProperties, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="artifactGenerationProperties"></param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="devHubArtifactGenerationProperties"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<IDictionary<string, string>>> GeneratePreviewArtifactsAsync(this SubscriptionResource subscriptionResource, string location, ArtifactGenerationProperties artifactGenerationProperties, CancellationToken cancellationToken = default)
+        public static async Task<Response<IDictionary<string, string>>> GeneratePreviewArtifactsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DevHubArtifactGenerationProperties devHubArtifactGenerationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDevHubSubscriptionResource(subscriptionResource).GeneratePreviewArtifactsAsync(location, artifactGenerationProperties, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevHubSubscriptionResource(subscriptionResource).GeneratePreviewArtifactsAsync(location, devHubArtifactGenerationProperties, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Generate preview dockerfile and manifests.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GeneratePreviewArtifacts(string, ArtifactGenerationProperties, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDevHubSubscriptionResource.GeneratePreviewArtifacts(AzureLocation, DevHubArtifactGenerationProperties, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="artifactGenerationProperties"></param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="devHubArtifactGenerationProperties"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<IDictionary<string, string>> GeneratePreviewArtifacts(this SubscriptionResource subscriptionResource, string location, ArtifactGenerationProperties artifactGenerationProperties, CancellationToken cancellationToken = default)
+        public static Response<IDictionary<string, string>> GeneratePreviewArtifacts(this SubscriptionResource subscriptionResource, AzureLocation location, DevHubArtifactGenerationProperties devHubArtifactGenerationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDevHubSubscriptionResource(subscriptionResource).GeneratePreviewArtifacts(location, artifactGenerationProperties, cancellationToken);
+            return GetMockableDevHubSubscriptionResource(subscriptionResource).GeneratePreviewArtifacts(location, devHubArtifactGenerationProperties, cancellationToken);
         }
 
         /// <summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DeveloperHubGitHubOAuthListResponseResult>> GetGitHubOAuthAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeveloperHubGitHubOAuthListResult>> GetGitHubOAuthAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DeveloperHubGitHubOAuthListResponseResult> GetGitHubOAuth(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<DeveloperHubGitHubOAuthListResult> GetGitHubOAuth(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<OperationListResult>> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevHubOperationListResult>> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<OperationListResult> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Response<DevHubOperationListResult> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

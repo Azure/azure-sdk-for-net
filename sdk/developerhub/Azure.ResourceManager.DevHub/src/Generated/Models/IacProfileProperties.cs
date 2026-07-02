@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <summary> Initializes a new instance of <see cref="IacProfileProperties"/>. </summary>
         public IacProfileProperties()
         {
-            Stages = new ChangeTrackingList<StageProperties>();
-            Templates = new ChangeTrackingList<IacTemplateProperties>();
+            Stages = new ChangeTrackingList<DevHubStageInfo>();
+            Templates = new ChangeTrackingList<DevHubIacTemplateProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IacProfileProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevHub.Models
         /// <param name="stages"></param>
         /// <param name="templates"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IacProfileProperties(IacGitHubProfile githubProfile, TerraformProfile terraformProfile, IList<StageProperties> stages, IList<IacTemplateProperties> templates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IacProfileProperties(IacGitHubProfile githubProfile, TerraformProfile terraformProfile, IList<DevHubStageInfo> stages, IList<DevHubIacTemplateProperties> templates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GithubProfile = githubProfile;
             TerraformProfile = terraformProfile;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DevHub.Models
         internal TerraformProfile TerraformProfile { get; set; }
 
         /// <summary> Gets the Stages. </summary>
-        public IList<StageProperties> Stages { get; } = new ChangeTrackingList<StageProperties>();
+        public IList<DevHubStageInfo> Stages { get; } = new ChangeTrackingList<DevHubStageInfo>();
 
         /// <summary> Gets the Templates. </summary>
-        public IList<IacTemplateProperties> Templates { get; } = new ChangeTrackingList<IacTemplateProperties>();
+        public IList<DevHubIacTemplateProperties> Templates { get; } = new ChangeTrackingList<DevHubIacTemplateProperties>();
 
         /// <summary> Repository Name. </summary>
         public string RepositoryName
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> Determines the authorization status of requests. </summary>
-        public AuthorizationStatus? AuthStatus
+        public DevHubAuthorizationStatus? AuthStatus
         {
             get
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <summary> The status of the Pull Request submitted against the users repository. </summary>
-        public PullRequestStatus? PrStatus
+        public DevHubPullRequestStatus? PrStatus
         {
             get
             {

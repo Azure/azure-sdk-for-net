@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevHubOperationListResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableDevHubTenantResource.GetAll");
             scope.Start();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 };
                 HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
+                Response<DevHubOperationListResult> response = Response.FromValue(DevHubOperationListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationListResult> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<DevHubOperationListResult> GetAll(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableDevHubTenantResource.GetAll");
             scope.Start();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 };
                 HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
+                Response<DevHubOperationListResult> response = Response.FromValue(DevHubOperationListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a workflow. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevHubWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DevHubWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevHubWorkflowProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a workflow. </summary>
-        public WorkflowProperties Properties { get; set; }
+        public DevHubWorkflowProperties Properties { get; set; }
     }
 }
