@@ -25,6 +25,12 @@ parameters:
   - name: mcpServer
     # Optional mock/live selector forwarded to mcpSetupTemplate when it builds both tiers. Blank = none.
     type: string
+    default: ''
+  - name: toolsRepo
+    # Optional azure-sdk-tools repository-resource alias for a cross-repo MCP build (running the eval
+    # outside the tools repo). Blank in azure-sdk-tools. The consuming pipeline declares the resource.
+    type: string
+    default: ''
   - name: evalInvokeTemplate
     # SWAP POINT: runs `vally eval` per shard. Default = the conditional common invoke template.
     type: string
