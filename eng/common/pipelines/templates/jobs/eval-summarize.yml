@@ -18,6 +18,7 @@ jobs:
         displayName: 'Use Node.js 22.x'
         inputs:
           version: 22.x
+
       # Match *.junit.xml only so stray XML (e.g. a DLL's doc XML) can't fake a shard.
       - task: DownloadPipelineArtifact@2
         displayName: 'Download all shard results'
@@ -25,6 +26,7 @@ jobs:
           buildType: 'current'
           itemPattern: '**/*.junit.xml'
           targetPath: $(Pipeline.Workspace)/eval-results
+
       # Renders the rollup to the run's Summary tab (##vso[task.uploadsummary]).
       - script: |
           node "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.js" \
@@ -32,6 +34,7 @@ jobs:
             --output-path "$(Build.ArtifactStagingDirectory)/eval-summary.md"
         displayName: 'Render Markdown rollup'
         condition: always()
+
       - task: PublishTestResults@2
         displayName: 'Publish eval rollup'
         inputs:

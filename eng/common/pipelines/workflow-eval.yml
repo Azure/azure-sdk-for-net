@@ -52,3 +52,11 @@ extends:
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20
+    # Pass-rate gate for `vally eval`. This tier is report-only (failOnFailedTests defaults false),
+    # so the threshold only colors the verdict; a repo/team can raise or lower it here.
+    threshold: 0.8
+    # This repo needs no repo-specific setup (the mock MCP is built by the common BuildMcp job).
+    # A spec/language repo that must start its own bot / server / MCP copies the example hook and
+    # points these at it — see eng/common/pipelines/templates/steps/eval-hook-example.yml.
+    # preEvalTemplate: /eng/pipelines/eval/start-my-bot.yml
+    # postEvalTemplate: /eng/pipelines/eval/stop-my-bot.yml

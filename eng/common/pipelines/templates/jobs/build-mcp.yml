@@ -22,4 +22,5 @@ jobs:
     steps:
       - checkout: self
         fetchDepth: 1
+
       - template: ${{ parameters.mcpSetupTemplate }}

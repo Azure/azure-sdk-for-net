@@ -4,7 +4,6 @@
 parameters:
   - name: vallyRoot
     type: string
-    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: evalGlobs
     type: object
     default: []
@@ -21,10 +20,12 @@ jobs:
     steps:
       - checkout: self
         fetchDepth: 1
+
       - task: UseNode@1
         displayName: 'Use Node.js 22.x'
         inputs:
           version: 22.x
+
       # set -f stops the shell expanding the glob `*` before patterns reach the script.
       - script: |
           patterns=()
