@@ -7,12 +7,12 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The PathRenameMode. </summary>
+    /// <summary> The rename mode. The value must be "legacy" or "posix". </summary>
     public enum PathRenameMode
     {
-        /// <summary> legacy. </summary>
+        /// <summary> Legacy rename mode. </summary>
         Legacy,
-        /// <summary> posix. </summary>
+        /// <summary> POSIX rename mode. </summary>
         Posix
     }
 }

@@ -5,28 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.DataLake;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The FileSystemList. </summary>
     internal partial class FileSystemList
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FileSystemList"/>. </summary>
         internal FileSystemList()
         {
-            Filesystems = new ChangeTrackingList<FileSystem>();
+            Filesystems = new ChangeTrackingList<FileSystemItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSystemList"/>. </summary>
-        /// <param name="filesystems"></param>
-        internal FileSystemList(IReadOnlyList<FileSystem> filesystems)
+        /// <param name="filesystems"> The list of filesystems. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemList(IList<FileSystemItem> filesystems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filesystems = filesystems;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the filesystems. </summary>
-        public IReadOnlyList<FileSystem> Filesystems { get; }
+        /// <summary> The list of filesystems. </summary>
+        public IList<FileSystemItem> Filesystems { get; }
     }
 }

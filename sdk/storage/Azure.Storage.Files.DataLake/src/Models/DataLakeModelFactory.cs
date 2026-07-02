@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -12,6 +13,8 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// DataLakeModelFactory provides utilities for mocking.
     /// </summary>
+    [CodeGenType("FilesDataLakeModelFactory")]
+    [CodeGenSuppress("FileSystemItem", typeof(string))]
     public static partial class DataLakeModelFactory
     {
         #region DataLakeFileReadResult

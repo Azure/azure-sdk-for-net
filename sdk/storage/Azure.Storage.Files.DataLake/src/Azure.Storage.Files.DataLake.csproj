@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Files.DataLake client library</AssemblyTitle>
@@ -36,10 +35,12 @@
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Azure.Storage.Common\src\Shared\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumExtensions.cs" LinkBase="Shared" />
