@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Projects.Evaluation;
 
@@ -21,7 +20,6 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         protected override EvaluatorGenerationJobSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PromptEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -55,7 +53,6 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         PromptEvaluatorGenerationJobSource IPersistableModel<PromptEvaluatorGenerationJobSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PromptEvaluatorGenerationJobSource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,12 +88,10 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         PromptEvaluatorGenerationJobSource IJsonModel<PromptEvaluatorGenerationJobSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PromptEvaluatorGenerationJobSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         protected override EvaluatorGenerationJobSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PromptEvaluatorGenerationJobSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,7 +105,6 @@ namespace Azure.AI.Projects
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         internal static PromptEvaluatorGenerationJobSource DeserializePromptEvaluatorGenerationJobSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

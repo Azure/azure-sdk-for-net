@@ -28,23 +28,19 @@ namespace Azure.AI.Projects.Memory
         /// <summary> Determines if two <see cref="MemoryStoreKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator ==(MemoryStoreKind left, MemoryStoreKind right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="MemoryStoreKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator !=(MemoryStoreKind left, MemoryStoreKind right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="MemoryStoreKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator MemoryStoreKind(string value) => new MemoryStoreKind(value);
 
         /// <summary> Converts a string to a <see cref="MemoryStoreKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator MemoryStoreKind?(string value) => value == null ? null : new MemoryStoreKind(value);
 
         /// <inheritdoc/>
@@ -52,7 +48,6 @@ namespace Azure.AI.Projects.Memory
         public override bool Equals(object obj) => obj is MemoryStoreKind other && Equals(other);
 
         /// <inheritdoc/>
-        [Experimental("AAIP001")]
         public bool Equals(MemoryStoreKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

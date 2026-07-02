@@ -20,7 +20,6 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultMemoryItem"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        [Experimental("AAIP001")]
         internal AgentsPagedResultMemoryItem(IEnumerable<MemoryItem> data, bool hasMore)
         {
             Data = data.ToList();

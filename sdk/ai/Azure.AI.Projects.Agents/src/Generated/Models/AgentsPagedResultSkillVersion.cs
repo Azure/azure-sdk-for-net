@@ -19,7 +19,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultSkillVersion"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        [Experimental("AAIP001")]
         internal AgentsPagedResultSkillVersion(IEnumerable<SkillVersion> data, bool hasMore)
         {
             Data = data.ToList();

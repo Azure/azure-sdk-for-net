@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -53,7 +52,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         AzureFunctionToolCall IPersistableModel<AzureFunctionToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionToolCall)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -90,7 +88,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         AzureFunctionToolCall IJsonModel<AzureFunctionToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureFunctionToolCall)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +105,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         internal static AzureFunctionToolCall DeserializeAzureFunctionToolCall(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

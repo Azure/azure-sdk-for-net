@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 
@@ -54,7 +53,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         MemorySearchPreviewTool IPersistableModel<MemorySearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (MemorySearchPreviewTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -97,7 +95,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         MemorySearchPreviewTool IJsonModel<MemorySearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MemorySearchPreviewTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,7 +112,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         internal static MemorySearchPreviewTool DeserializeMemorySearchPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

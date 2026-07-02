@@ -19,7 +19,6 @@ namespace Azure.Core
 
         /// <summary> Initializes a new instance of <see cref="PagedModelVersion"/>. </summary>
         /// <param name="value"> The ModelVersion items on this page. </param>
-        [Experimental("AAIP001")]
         internal PagedModelVersion(IEnumerable<ModelVersion> value)
         {
             Value = value.ToList();

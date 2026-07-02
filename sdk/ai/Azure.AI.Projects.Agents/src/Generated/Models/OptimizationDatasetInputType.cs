@@ -37,23 +37,19 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Determines if two <see cref="OptimizationDatasetInputType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator ==(OptimizationDatasetInputType left, OptimizationDatasetInputType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="OptimizationDatasetInputType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator !=(OptimizationDatasetInputType left, OptimizationDatasetInputType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="OptimizationDatasetInputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator OptimizationDatasetInputType(string value) => new OptimizationDatasetInputType(value);
 
         /// <summary> Converts a string to a <see cref="OptimizationDatasetInputType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator OptimizationDatasetInputType?(string value) => value == null ? null : new OptimizationDatasetInputType(value);
 
         /// <inheritdoc/>
@@ -61,7 +57,6 @@ namespace Azure.AI.Projects.Agents
         public override bool Equals(object obj) => obj is OptimizationDatasetInputType other && Equals(other);
 
         /// <inheritdoc/>
-        [Experimental("AAIP001")]
         public bool Equals(OptimizationDatasetInputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

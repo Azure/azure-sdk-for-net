@@ -52,23 +52,19 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="TreatmentEffectType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator ==(TreatmentEffectType left, TreatmentEffectType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="TreatmentEffectType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator !=(TreatmentEffectType left, TreatmentEffectType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="TreatmentEffectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator TreatmentEffectType(string value) => new TreatmentEffectType(value);
 
         /// <summary> Converts a string to a <see cref="TreatmentEffectType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator TreatmentEffectType?(string value) => value == null ? null : new TreatmentEffectType(value);
 
         /// <inheritdoc/>
@@ -76,7 +72,6 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is TreatmentEffectType other && Equals(other);
 
         /// <inheritdoc/>
-        [Experimental("AAIP001")]
         public bool Equals(TreatmentEffectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

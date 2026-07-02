@@ -106,22 +106,18 @@ namespace Extensions.Plugin.Visitors
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
         {
-            //string name = type.Type.FullyQualifiedName;
-            //if (string.Equals(type.Type.Name, "ProjectSchedulesGetRunsCollectionResultOfT"))
+            // Diagnostic code for troubleshooting.
+            //if (string.Equals(type.Type.Name, "MemorySearchPreviewTool"))
             //{
-            //    IEnumerable<AttributeStatement> allAttributes =
-            //    [
-            //        .. type.Attributes,
-            //        .. type.CustomCodeView?.Attributes ?? [],
-            //        .. type.SerializationProviders.SelectMany(serializer => serializer.Attributes),
-            //        .. type.SerializationProviders.SelectMany(serializer => serializer.CustomCodeView?.Attributes ?? []),
-            //    ];
-            //    StringBuilder sb = new("+++++++++++\n");
-            //    string realName = allAttributes
-            //        .Where(x => string.Equals(x.Type.Name, "CodeGenTypeAttribute") && x.Arguments.Count == 1 && x.Arguments[0] is LiteralExpression)
-            //        .Select(x => (x.Arguments[0] as LiteralExpression).Literal.ToString())
-            //        .FirstOrDefault(x => !string.IsNullOrEmpty(x));
-            //    throw new InvalidOperationException($"===={GetRealName(type)}={ImplementsExperimrental(type)}=");
+            //    throw new InvalidOperationException(
+            //        $"================================================\n" +
+            //        $"{GetRealName(type)}\n" +
+            //        $"Is already experimental: {_attributedTypes.Contains(type.Type.FullyQualifiedName)}\n" +
+            //        $"Has experimental parent: {HasExperimentalAncestor(type.Type)}\n" +
+            //        $"Implements experimental interface: {ImplementsExperimrental(type)}\n" +
+            //        $"Has the experimental attribute: {type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))}\n" +
+            //        $"Is explicitly marked as experimental: {SupportedPackages.IsExperimental(GetRealName(type))}\n" +
+            //        $"================================================\n");
             //}
             // Fisrt check if the whole class needs to be marked as experimental.
             if ((SupportedPackages.IsExperimental(GetRealName(type)) || HasExperimentalAncestor(type.Type) || ImplementsExperimrental(type))
@@ -133,8 +129,7 @@ namespace Extensions.Plugin.Visitors
                         new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
                 return type;
             }
-            // If the class is not experimental, go over its constructors, fields and methods and mark them experimental
-            // if needed.
+            // If the whole class was already marked as experimental, no need to mark methods/constructors/properties.
             if (_attributedTypes.Contains(type.Type.FullyQualifiedName))
             {
                 return base.VisitType(type);
@@ -142,27 +137,23 @@ namespace Extensions.Plugin.Visitors
             bool isDirty = false;
             // Constructors
             List<ConstructorProvider> constructors = [];
+            // In a first run we will check if all the constructors are experimental and if it is the case, mark class experimental.
+            if (type.Constructors.Count > 0 && type.Constructors.All(x => x.Signature.Parameters.Any(x => IsExperimental(x.Type))))
+            {
+                type.Update(
+                    attributes: [.. type.Attributes,
+                        new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
+                return type;
+            }
+            // If there is at least one constriuctor without experimental argument, just update experimental constructors.
             foreach (ConstructorProvider constructor in type.Constructors)
             {
-                bool allConstructorsExperimental = true;
                 if (constructor.Signature.Parameters.Any(x => IsExperimental(x.Type)))
                 {
                     constructor.Signature.Update(
                         attributes: [.. constructor.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
                     );
                     isDirty = true;
-                }
-                else
-                {
-                    allConstructorsExperimental = false;
-                }
-                // If all the constructors are experimrental, mark class as experimental
-                if (allConstructorsExperimental)
-                {
-                    type.Update(
-                    attributes: [.. type.Attributes,
-                        new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]);
-                    return type;
                 }
                 constructors.Add(constructor);
             }
@@ -204,26 +195,24 @@ namespace Extensions.Plugin.Visitors
             return base.VisitType(type);
         }
 
-        private static bool _visited = false;
         protected override MethodProvider VisitMethod(MethodProvider method)
         {
             // Diagnostics code for troubleshooting.
-            if (string.Equals(method.Signature.Name, "CodeBasedEvaluatorDefinition"))
+            //if (string.Equals(method.Signature.Name, "CodeBasedEvaluatorDefinition"))
+            //{
+            //    throw new InvalidOperationException(
+            //        $"================================================\n" +
+            //        $"Is already experimental: {method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))}\n" +
+            //        $"Return type is experimental: {SupportedPackages.IsExperimental(method.Signature.ReturnType?.FullyQualifiedName)}\n" +
+            //        $"Parameters were previously marked as experimental (include renames): {method.Signature.Parameters.Any(x => _attributedTypes.Contains(x.Type.FullyQualifiedName))}\n" +
+            //        $"Parameters are explicitly marked as experimental: {method.Signature.Parameters.Any(x => SupportedPackages.IsExperimental(x.Type.FullyQualifiedName))}\n" +
+            //        $"{(method.Signature.Attributes[0].Arguments[0] as ScopedApi).Original}.\n" +
+            //        $"================================================\n");
+            //}
+            // If the whole class was already marked as experimental, no need to mark methods.
+            if (_attributedTypes.Contains(method.EnclosingType.Type.FullyQualifiedName))
             {
-                if (_visited)
-                {
-                    throw new InvalidOperationException($"================================================\n" +
-                        $"Is already experimental: {method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))}\n" +
-                        $"Return type is experimental: {SupportedPackages.IsExperimental(method.Signature.ReturnType?.FullyQualifiedName)}\n" +
-                        $"Parameters were previously marked as experimental (include renames): {method.Signature.Parameters.Any(x => _attributedTypes.Contains(x.Type.FullyQualifiedName))}\n" +
-                        $"Parameters are explicitly marked as experimental: {method.Signature.Parameters.Any(x => SupportedPackages.IsExperimental(x.Type.FullyQualifiedName))}\n" +
-                        $"{(method.Signature.Attributes[0].Arguments[0] as ScopedApi).Original}.\n" +
-                        $"================================================\n");
-                }
-                else
-                {
-                    _visited = true;
-                }
+                return base.VisitMethod(method);
             }
             if (!method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute))) && (
                 method.Signature.Parameters.Any(x => _attributedTypes.Contains(x.Type.FullyQualifiedName) || SupportedPackages.IsExperimental(x.Type.FullyQualifiedName))

@@ -17,7 +17,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedRedTeam"/>. </summary>
         /// <param name="value"> The RedTeam items on this page. </param>
-        [Experimental("AAIP001")]
         internal PagedRedTeam(IEnumerable<RedTeam> value)
         {
             Value = value.ToList();

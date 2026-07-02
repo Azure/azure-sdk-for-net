@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Projects.Memory;
 
@@ -21,7 +20,6 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         protected override MemoryItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProceduralMemoryItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -55,7 +53,6 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         ProceduralMemoryItem IPersistableModel<ProceduralMemoryItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProceduralMemoryItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -84,12 +81,10 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         ProceduralMemoryItem IJsonModel<ProceduralMemoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProceduralMemoryItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         protected override MemoryItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProceduralMemoryItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -103,7 +98,6 @@ namespace Azure.AI.Projects
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
         internal static ProceduralMemoryItem DeserializeProceduralMemoryItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

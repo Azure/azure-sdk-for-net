@@ -42,23 +42,19 @@ namespace Azure.AI.Projects
         /// <summary> Determines if two <see cref="FoundryModelWeightType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator ==(FoundryModelWeightType left, FoundryModelWeightType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="FoundryModelWeightType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator !=(FoundryModelWeightType left, FoundryModelWeightType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="FoundryModelWeightType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator FoundryModelWeightType(string value) => new FoundryModelWeightType(value);
 
         /// <summary> Converts a string to a <see cref="FoundryModelWeightType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator FoundryModelWeightType?(string value) => value == null ? null : new FoundryModelWeightType(value);
 
         /// <inheritdoc/>
@@ -66,7 +62,6 @@ namespace Azure.AI.Projects
         public override bool Equals(object obj) => obj is FoundryModelWeightType other && Equals(other);
 
         /// <inheritdoc/>
-        [Experimental("AAIP001")]
         public bool Equals(FoundryModelWeightType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

@@ -20,7 +20,6 @@ namespace Azure.AI.Projects
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
-        [Experimental("AAIP001")]
         internal CreateMemoryRequest(string scope, string content, MemoryItemKind kind)
         {
             Scope = scope;

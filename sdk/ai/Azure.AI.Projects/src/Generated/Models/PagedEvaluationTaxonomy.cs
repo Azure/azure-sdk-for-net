@@ -17,7 +17,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedEvaluationTaxonomy"/>. </summary>
         /// <param name="value"> The EvaluationTaxonomy items on this page. </param>
-        [Experimental("AAIP001")]
         internal PagedEvaluationTaxonomy(IEnumerable<EvaluationTaxonomy> value)
         {
             Value = value.ToList();

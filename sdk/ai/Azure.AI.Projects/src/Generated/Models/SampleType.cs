@@ -28,23 +28,19 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Determines if two <see cref="SampleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator ==(SampleType left, SampleType right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="SampleType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        [Experimental("AAIP001")]
         public static bool operator !=(SampleType left, SampleType right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator SampleType(string value) => new SampleType(value);
 
         /// <summary> Converts a string to a <see cref="SampleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        [Experimental("AAIP001")]
         public static implicit operator SampleType?(string value) => value == null ? null : new SampleType(value);
 
         /// <inheritdoc/>
@@ -52,7 +48,6 @@ namespace Azure.AI.Projects.Evaluation
         public override bool Equals(object obj) => obj is SampleType other && Equals(other);
 
         /// <inheritdoc/>
-        [Experimental("AAIP001")]
         public bool Equals(SampleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

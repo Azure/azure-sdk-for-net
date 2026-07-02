@@ -9,7 +9,6 @@ using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects
 {
-    [Experimental("AAIP001")]
     internal partial class InternalMemorySearchOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

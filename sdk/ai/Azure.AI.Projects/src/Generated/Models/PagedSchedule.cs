@@ -17,7 +17,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedSchedule"/>. </summary>
         /// <param name="value"> The Schedule items on this page. </param>
-        [Experimental("AAIP001")]
         internal PagedSchedule(IEnumerable<ProjectsSchedule> value)
         {
             Value = value.ToList();

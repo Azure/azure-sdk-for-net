@@ -18,7 +18,6 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalCreateMemoryStoreRequest"/>. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
-        [Experimental("AAIP001")]
         internal InternalCreateMemoryStoreRequest(string name, MemoryStoreDefinition definition)
         {
             Name = name;

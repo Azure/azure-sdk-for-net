@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -53,7 +54,7 @@ namespace Azure.AI.Projects.Evaluation
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextPageUri = ((ProjectsPagedInsight)result).NextLink;
+                nextPageUri = ((PagedInsight)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
@@ -67,7 +68,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((ProjectsPagedInsight)page).NextLink;
+            Uri nextPage = ((PagedInsight)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.IsAbsoluteUri ? nextPage.AbsoluteUri : nextPage.OriginalString));

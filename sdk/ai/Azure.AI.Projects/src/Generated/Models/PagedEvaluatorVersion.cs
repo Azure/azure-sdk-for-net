@@ -17,7 +17,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedEvaluatorVersion"/>. </summary>
         /// <param name="value"> The EvaluatorVersion items on this page. </param>
-        [Experimental("AAIP001")]
         internal PagedEvaluatorVersion(IEnumerable<EvaluatorVersion> value)
         {
             Value = value.ToList();

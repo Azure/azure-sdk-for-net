@@ -17,7 +17,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="PagedScheduleRun"/>. </summary>
         /// <param name="value"> The ScheduleRun items on this page. </param>
-        [Experimental("AAIP001")]
         internal PagedScheduleRun(IEnumerable<ScheduleRun> value)
         {
             Value = value.ToList();

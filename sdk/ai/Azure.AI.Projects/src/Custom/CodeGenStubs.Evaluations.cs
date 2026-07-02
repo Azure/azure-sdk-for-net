@@ -108,7 +108,6 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ProjectEvaluatorsGetVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResult { }
 [CodeGenType("ProjectEvaluatorsGetVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsCollectionResult { }
 [CodeGenType("ProjectInsightsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllCollectionResult { }
-[CodeGenType("PagedInsight")][Experimental("AAIP001")] internal partial class ProjectsPagedInsight { }
 [CodeGenType("EvaluationTaxonomiesGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllAsyncCollectionResult { }
 [CodeGenType("EvaluationTaxonomiesGetAllCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllCollectionResult { }
 [CodeGenType("RedTeamsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class RedTeamsGetAllAsyncCollectionResult { }
