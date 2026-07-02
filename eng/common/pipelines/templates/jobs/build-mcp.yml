@@ -4,6 +4,16 @@
 parameters:
   - name: mcpSetupTemplate
     type: string
+  - name: mcpServer
+    # Optional mock/live selector forwarded to templates that build both tiers (e.g. eval-mcp-setup.yml).
+    # Leave blank for param-free repo templates.
+    type: string
+    default: ''
+  - name: toolsRepo
+    # Optional azure-sdk-tools repository-resource alias, forwarded to the MCP template when this
+    # pipeline runs OUTSIDE azure-sdk-tools (cross-repo build). Blank in the tools repo.
+    type: string
+    default: ''
 
 jobs:
   - job: BuildMcp
@@ -23,4 +33,11 @@ jobs:
       - checkout: self
         fetchDepth: 1
 
-      - template: ${{ parameters.mcpSetupTemplate }}
+      # Pass McpServer only when set, so param-free repo templates still resolve.
+      - ${{ if parameters.mcpServer }}:
+        - template: ${{ parameters.mcpSetupTemplate }}
+          parameters:
+            McpServer: ${{ parameters.mcpServer }}
+            toolsRepo: ${{ parameters.toolsRepo }}
+      - ${{ else }}:
+        - template: ${{ parameters.mcpSetupTemplate }}

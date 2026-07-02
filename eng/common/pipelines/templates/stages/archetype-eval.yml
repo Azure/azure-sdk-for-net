@@ -18,9 +18,12 @@ parameters:
       - 'evals/tools/*.eval.yaml'
       - 'evals/workflow-scenarios/mock/*.eval.yaml'
   - name: mcpSetupTemplate
-    # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Differs per tier.
-    # Required (no default): each repo passes its own build template — the example under
-    # steps/eval-mcp-setup.yml is tools-repo specific and not a valid default elsewhere.
+    # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Required (no default):
+    # each repo passes its own build template. This repo uses the shared mock/live builder
+    # steps/eval-mcp-setup.yml and selects the tier via mcpServer.
+    type: string
+  - name: mcpServer
+    # Optional mock/live selector forwarded to mcpSetupTemplate when it builds both tiers. Blank = none.
     type: string
   - name: evalInvokeTemplate
     # SWAP POINT: runs `vally eval` per shard. Default = the conditional common invoke template.
@@ -61,6 +64,8 @@ extends:
           - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
             parameters:
               mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
+              mcpServer: ${{ parameters.mcpServer }}
+              toolsRepo: ${{ parameters.toolsRepo }}
 
           - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
             parameters:
