@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppElasticSnapshotPolicyPatchProperties : IJsonModel<NetAppElasticSnapshotPolicyPatchProperties>, IPersistableModel<NetAppElasticSnapshotPolicyPatchProperties>
     {
         public NetAppElasticSnapshotPolicyPatchProperties() { }
+        internal static NetAppElasticSnapshotPolicyPatchProperties DeserializeNetAppElasticSnapshotPolicyPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+            => element.ValueKind == JsonValueKind.Null ? null : ElasticCompatJson.Create(System.BinaryData.FromString(element.GetRawText()), () => new NetAppElasticSnapshotPolicyPatchProperties());
         protected virtual NetAppElasticSnapshotPolicyPatchProperties PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options) => ElasticCompatJson.Create(data, () => new NetAppElasticSnapshotPolicyPatchProperties());
         protected virtual System.BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => ElasticCompatJson.Write(options);
         NetAppElasticSnapshotPolicyPatchProperties IPersistableModel<NetAppElasticSnapshotPolicyPatchProperties>.Create(System.BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);

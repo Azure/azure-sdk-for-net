@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppElasticVolumePatchProperties : IJsonModel<NetAppElasticVolumePatchProperties>, IPersistableModel<NetAppElasticVolumePatchProperties>
     {
         public NetAppElasticVolumePatchProperties() { ExportRules = new ChangeTrackingList<ElasticExportPolicyRule>(); }
+        internal static NetAppElasticVolumePatchProperties DeserializeNetAppElasticVolumePatchProperties(JsonElement element, ModelReaderWriterOptions options)
+            => element.ValueKind == JsonValueKind.Null ? null : ElasticCompatJson.Create(System.BinaryData.FromString(element.GetRawText()), () => new NetAppElasticVolumePatchProperties());
         protected virtual NetAppElasticVolumePatchProperties PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options) => ElasticCompatJson.Create(data, () => new NetAppElasticVolumePatchProperties());
         protected virtual System.BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => ElasticCompatJson.Write(options);
         NetAppElasticVolumePatchProperties IPersistableModel<NetAppElasticVolumePatchProperties>.Create(System.BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);

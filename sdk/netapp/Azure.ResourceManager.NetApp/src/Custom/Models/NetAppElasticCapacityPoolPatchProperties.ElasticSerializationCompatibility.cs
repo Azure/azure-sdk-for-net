@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppElasticCapacityPoolPatchProperties : IJsonModel<NetAppElasticCapacityPoolPatchProperties>, IPersistableModel<NetAppElasticCapacityPoolPatchProperties>
     {
         public NetAppElasticCapacityPoolPatchProperties() { }
+        internal static NetAppElasticCapacityPoolPatchProperties DeserializeNetAppElasticCapacityPoolPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+            => element.ValueKind == JsonValueKind.Null ? null : ElasticCompatJson.Create(System.BinaryData.FromString(element.GetRawText()), () => new NetAppElasticCapacityPoolPatchProperties());
         protected virtual NetAppElasticCapacityPoolPatchProperties PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options) => ElasticCompatJson.Create(data, () => new NetAppElasticCapacityPoolPatchProperties());
         protected virtual System.BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => ElasticCompatJson.Write(options);
         NetAppElasticCapacityPoolPatchProperties IPersistableModel<NetAppElasticCapacityPoolPatchProperties>.Create(System.BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
