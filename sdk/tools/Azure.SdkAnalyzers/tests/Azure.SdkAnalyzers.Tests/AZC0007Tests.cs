@@ -122,6 +122,25 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(code);
         }
 
+        // A public client type nested in a non-public type is not publicly accessible, so the
+        // constructor rules should not analyze it (no AZC0005/AZC0006/AZC0007/AZC0021).
+        [Test]
+        public async Task NoDiagnosticsForPublicClientNestedInNonPublicType()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    internal class Outer
+    {
+        public class SomeClient
+        {
+            public SomeClient(string connectionString) {}
+        }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
 #if !NETFRAMEWORK // Deriving from Azure.Core.ClientOptions requires netstandard2.0+ support (net472+)
         [Test]
         public async Task AZC0007NotProducedForClientWithClientSettingsAndOtherOverloads()

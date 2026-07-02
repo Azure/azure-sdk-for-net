@@ -30,7 +30,7 @@ namespace Azure.SdkAnalyzers
         public override void Analyze(SymbolAnalysisContext context)
         {
             var type = (INamedTypeSymbol)context.Symbol;
-            if (type.TypeKind != TypeKind.Class || !type.Name.EndsWith(ClientSuffix, StringComparison.Ordinal) || type.DeclaredAccessibility != Accessibility.Public)
+            if (type.TypeKind != TypeKind.Class || !type.Name.EndsWith(ClientSuffix, StringComparison.Ordinal) || !IsPubliclyAccessible(type))
             {
                 return;
             }
@@ -96,6 +96,19 @@ namespace Azure.SdkAnalyzers
                     }
                 }
             }
+        }
+
+        private static bool IsPubliclyAccessible(INamedTypeSymbol type)
+        {
+            for (INamedTypeSymbol current = type; current != null; current = current.ContainingType)
+            {
+                if (current.DeclaredAccessibility != Accessibility.Public)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static bool IsClientOptionsParameter(IParameterSymbol symbol)
