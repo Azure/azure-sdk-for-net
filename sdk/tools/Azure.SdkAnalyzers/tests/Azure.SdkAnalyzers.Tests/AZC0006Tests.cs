@@ -134,6 +134,28 @@ namespace RandomNamespace
 }";
             await Verifier.VerifyAnalyzerAsync(code);
         }
+
+        // Parameter ref-kind (ref/out/in) is part of the constructor signature, so overloads that
+        // differ only by a ref modifier are NOT equivalent and must not be paired: the minimal ctor
+        // still lacks a matching options overload (AZC0007) and the options ctor still lacks a
+        // matching non-options overload (AZC0006).
+        [Test]
+        public async Task AZC0006AndAZC0007ProducedWhenOverloadsDifferOnlyByRefModifier()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    public class SomeClientOptions : Azure.Core.ClientOptions { }
+
+    public class SomeClient
+    {
+        protected SomeClient() {}
+        public {|AZC0007:SomeClient|}(int x) {}
+        public {|AZC0006:SomeClient|}(ref int x, SomeClientOptions options) {}
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
 #endif
     }
 }

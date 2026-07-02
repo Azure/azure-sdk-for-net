@@ -200,11 +200,12 @@ namespace Azure.SdkAnalyzers
 
             public bool Equals(IParameterSymbol x, IParameterSymbol y)
             {
-                // Constructor overload equivalence is determined by parameter type and position, not by
-                // parameter name (C# overload resolution ignores names). Comparing names would produce
-                // false AZC0006/AZC0007 when a with-options and without-options overload name the same
-                // positional parameter differently (e.g. "containerName" vs "blobContainerName").
-                return TypeSymbolEquals(x.Type, y.Type);
+                // Constructor overload equivalence is determined by parameter type, ref-kind (ref/out/in)
+                // and params-ness, but NOT by parameter name (C# overload resolution ignores names).
+                // Comparing names would produce false AZC0006/AZC0007 when a with-options and
+                // without-options overload name the same positional parameter differently (e.g.
+                // "containerName" vs "blobContainerName").
+                return x.RefKind == y.RefKind && x.IsParams == y.IsParams && TypeSymbolEquals(x.Type, y.Type);
             }
 
             private bool TypeSymbolEquals(ITypeSymbol x, ITypeSymbol y)
