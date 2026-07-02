@@ -26,9 +26,6 @@ namespace Azure.Generator.Visitors
         private const string ClientDiagnosticsPropertyName = "ClientDiagnostics";
         private const string ClientDiagnosticsPropertyDescription = "The ClientDiagnostics is used to provide tracing support for the client library.";
 
-        private readonly CSharpType _clientDiagnosticsType;
-        private readonly CSharpType _diagnosticScopeType;
-
         /// <summary>
         /// Creates a new instance of <see cref="DistributedTracingVisitor"/> with the specified types.
         /// </summary>
@@ -38,19 +35,19 @@ namespace Azure.Generator.Visitors
             CSharpType clientDiagnosticsType,
             CSharpType diagnosticScopeType)
         {
-            _clientDiagnosticsType = clientDiagnosticsType;
-            _diagnosticScopeType = diagnosticScopeType;
+            ClientDiagnosticsType = clientDiagnosticsType;
+            DiagnosticScopeType = diagnosticScopeType;
         }
 
         /// <summary>
         /// Gets the <see cref="CSharpType"/> for the ClientDiagnostics class.
         /// </summary>
-        protected CSharpType ClientDiagnosticsType => _clientDiagnosticsType;
+        protected CSharpType ClientDiagnosticsType { get; }
 
         /// <summary>
         /// Gets the <see cref="CSharpType"/> for the DiagnosticScope struct.
         /// </summary>
-        protected CSharpType DiagnosticScopeType => _diagnosticScopeType;
+        protected CSharpType DiagnosticScopeType { get; }
 
         /// <summary>
         /// Determines whether the specified method is a paging method whose scope name should be
@@ -252,7 +249,12 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            var clientField = collectionResult.Fields.First(f => f.Name == "_client");
+            var clientField = collectionResult.Fields.FirstOrDefault(f => f.Name == "_client");
+            if (clientField == null)
+            {
+                return;
+            }
+
             var scopeName = collectionResult.ScopeName;
 
             // declare scope
