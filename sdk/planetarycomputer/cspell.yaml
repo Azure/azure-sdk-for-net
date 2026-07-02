@@ -5,6 +5,10 @@ overrides:
     words:
       - Afmhot
       - Alos
+      - Antartica
+      - bbox
+      - Bbox
+      - bidx
       - Brbg
       - Bugn
       - Bupu
@@ -17,9 +21,12 @@ overrides:
       - Drcog
       - dtype
       - Dtype
+      - ETRS
       - GFET
       - GFPET
       - Gnbu
+      - Haline
+      - LAEA
       - Lanczos
       - Lcmap
       - Lulc
@@ -32,6 +39,7 @@ overrides:
       - Nipy
       - Nodata
       - Nrcan
+      - NZTM
       - Orrd
       - Piyg
       - Pngraw
@@ -46,12 +54,14 @@ overrides:
       - Rdpu
       - Rdylbu
       - Rdylgn
+      - reproject
       - Rplumbo
       - stac
       - Stac
       - Terrainrgb
       - tilejson
       - Tilejson
+      - Topo
       - unscale
       - Usgs
       - Viirs

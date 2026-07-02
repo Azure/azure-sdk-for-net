@@ -18,7 +18,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Based on Python test: test_planetary_computer_04_stac_specification.py
     /// Tests STAC API conformance, collection/item retrieval, and search operations.
     /// </summary>
-    [AsyncOnly]
     public class TestPlanetaryComputer04StacSpecificationTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer04StacSpecificationTests(bool isAsync) : base(isAsync)
@@ -28,24 +27,24 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test getting STAC conformance classes.
         /// Python equivalent: test_01_get_conformance_class
-        /// C# method: GetConformanceClass()
+        /// C# method: GetConformanceClassesAsync()
         /// </summary>
         [Test]
         [Category("STAC")]
         [Category("Conformance")]
-        public async Task Test04_01_GetConformanceClass()
+        public async Task Test04_01_GetConformanceClasses()
         {
             // Arrange
             PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
 
-            TestContext.WriteLine("Testing GetConformanceClass (STAC API conformance)");
+            TestContext.WriteLine("Testing GetConformanceClasses (STAC API conformance)");
 
             // Act
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
 
             // Assert
-            ValidateResponse(response.GetRawResponse(), "GetConformanceClass");
+            ValidateResponse(response.GetRawResponse(), "GetConformanceClasses");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacConformanceClasses conformance = response.Value;

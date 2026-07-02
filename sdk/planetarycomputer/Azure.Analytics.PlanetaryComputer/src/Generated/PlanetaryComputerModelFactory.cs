@@ -126,18 +126,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="importType"> Ingestion type. </param>
         /// <param name="displayName"> Ingestion name. </param>
         /// <param name="sourceCatalogUrl"> Source catalog URL. Required for StaticCatalog ingestion type. </param>
+        /// <param name="stacGeoparquetUrl"> Parquet catalog URL. Required for StacGeoparquet ingestion type. </param>
         /// <param name="skipExistingItems"> Skip processing existing items in the catalog. </param>
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
         /// <param name="creationTime"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
         /// <returns> A new <see cref="PlanetaryComputer.IngestionInformation"/> instance for mocking. </returns>
-        public static IngestionInformation IngestionInformation(Guid id = default, IngestionType importType = default, string displayName = default, Uri sourceCatalogUrl = default, bool? skipExistingItems = default, bool? keepOriginalAssets = default, DateTimeOffset creationTime = default, IngestionStatus status = default)
+        public static IngestionInformation IngestionInformation(Guid id = default, IngestionType importType = default, string displayName = default, Uri sourceCatalogUrl = default, Uri stacGeoparquetUrl = default, bool? skipExistingItems = default, bool? keepOriginalAssets = default, DateTimeOffset creationTime = default, IngestionStatus status = default)
         {
             return new IngestionInformation(
                 id,
                 importType,
                 displayName,
                 sourceCatalogUrl,
+                stacGeoparquetUrl,
                 skipExistingItems,
                 keepOriginalAssets,
                 creationTime,
@@ -1021,7 +1023,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="ids"> List of specific item IDs to return. </param>
         /// <param name="boundingBox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
         /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// Examples:
+        /// <list type="bullet"><item><description>A date-time: "2018-02-12T23:20:50Z"</description></item><item><description>A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"</description></item><item><description>Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"</description></item></list>
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
         /// <param name="limit"> Maximum number of results to return. </param>
         /// <param name="conformanceClass">
         /// Conf
@@ -1236,6 +1248,255 @@ namespace Azure.Analytics.PlanetaryComputer
             return new VariableMatrixWidth(coalesce, minTileRow, maxTileRow, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> ClassMap legend response model. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.ClassMapLegendResponse"/> instance for mocking. </returns>
+        public static ClassMapLegendResponse ClassMapLegendResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ClassMapLegendResponse(additionalProperties);
+        }
+
+        /// <summary> Metadata information for mosaic or search results. </summary>
+        /// <param name="type"> Type of metadata resource. </param>
+        /// <param name="bounds"> Geographic bounding box in [west, south, east, north] format. </param>
+        /// <param name="minZoom"> Minimum zoom level supported. </param>
+        /// <param name="maxZoom"> Maximum zoom level supported. </param>
+        /// <param name="name"> Human-readable name for the resource. </param>
+        /// <param name="assets"> List of asset identifiers included in the resource. </param>
+        /// <param name="defaults"> Defaults. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.MosaicMetadata"/> instance for mocking. </returns>
+        public static MosaicMetadata MosaicMetadata(MosaicMetadataType? @type = default, string bounds = default, int? minZoom = default, int? maxZoom = default, string name = default, IEnumerable<string> assets = default, IDictionary<string, string> defaults = default)
+        {
+            assets ??= new ChangeTrackingList<string>();
+            defaults ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MosaicMetadata(
+                @type,
+                bounds,
+                minZoom,
+                maxZoom,
+                name,
+                assets.ToList(),
+                defaults,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response from a successful mosaic registration with search ID and related links. </summary>
+        /// <param name="searchId"> Unique identifier for the registered search. </param>
+        /// <param name="links"> Related links for the registered mosaic. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerMosaicSearchRegistrationResult"/> instance for mocking. </returns>
+        public static TilerMosaicSearchRegistrationResult TilerMosaicSearchRegistrationResult(string searchId = default, IEnumerable<StacLink> links = default)
+        {
+            links ??= new ChangeTrackingList<StacLink>();
+
+            return new TilerMosaicSearchRegistrationResult(searchId, links.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response containing a list of available tilesets. </summary>
+        /// <param name="tilesets"> Array of available tilesets. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TileSetList"/> instance for mocking. </returns>
+        public static TileSetList TileSetList(IEnumerable<TileSetEntry> tilesets = default)
+        {
+            tilesets ??= new ChangeTrackingList<TileSetEntry>();
+
+            return new TileSetList(tilesets.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Summary information about a single tileset within a list of available tilesets. </summary>
+        /// <param name="title"> Human-readable title of the tileset. </param>
+        /// <param name="dataType"> Type of data in the tiles (e.g., 'map', 'vector'). </param>
+        /// <param name="crs"> Coordinate reference system identifier. </param>
+        /// <param name="links"> Links related to this tileset. </param>
+        /// <param name="boundingBox"> Bounding box of the tileset. </param>
+        /// <param name="accessConstraints"> Access constraints for the tileset. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TileSetEntry"/> instance for mocking. </returns>
+        public static TileSetEntry TileSetEntry(string title = default, string dataType = default, string crs = default, IEnumerable<TileSetLink> links = default, TileSetBoundingBox boundingBox = default, string accessConstraints = default)
+        {
+            links ??= new ChangeTrackingList<TileSetLink>();
+
+            return new TileSetEntry(
+                title,
+                dataType,
+                crs,
+                links.ToList(),
+                boundingBox,
+                accessConstraints,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A link object used in OGC tile resources. </summary>
+        /// <param name="href"> The URL target of the link. </param>
+        /// <param name="rel"> The relationship type of the link. </param>
+        /// <param name="type"> The media type of the linked resource. </param>
+        /// <param name="title"> Human-readable title of the link. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TileSetLink"/> instance for mocking. </returns>
+        public static TileSetLink TileSetLink(string href = default, string rel = default, string @type = default, string title = default)
+        {
+            return new TileSetLink(href, rel, @type, title, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Bounding box for a tile set. </summary>
+        /// <param name="lowerLeft"> Lower-left corner coordinates [x, y]. </param>
+        /// <param name="upperRight"> Upper-right corner coordinates [x, y]. </param>
+        /// <param name="crs"> Coordinate reference system identifier. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TileSetBoundingBox"/> instance for mocking. </returns>
+        public static TileSetBoundingBox TileSetBoundingBox(IEnumerable<double> lowerLeft = default, IEnumerable<double> upperRight = default, string crs = default)
+        {
+            lowerLeft ??= new ChangeTrackingList<double>();
+            upperRight ??= new ChangeTrackingList<double>();
+
+            return new TileSetBoundingBox(lowerLeft.ToList(), upperRight.ToList(), crs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Detailed metadata about a specific tileset, including tile matrix set limits. </summary>
+        /// <param name="title"> Human-readable title of the tileset. </param>
+        /// <param name="dataType"> Type of data in the tiles. </param>
+        /// <param name="crs"> Coordinate reference system identifier. </param>
+        /// <param name="links"> Links related to this tileset. </param>
+        /// <param name="boundingBox"> Bounding box of the tileset. </param>
+        /// <param name="accessConstraints"> Access constraints for the tileset. </param>
+        /// <param name="tileMatrixSetLimits"> Limits for each tile matrix level in the tileset. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TileSetMetadata"/> instance for mocking. </returns>
+        public static TileSetMetadata TileSetMetadata(string title = default, string dataType = default, string crs = default, IEnumerable<TileSetLink> links = default, TileSetBoundingBox boundingBox = default, string accessConstraints = default, IEnumerable<TileMatrixSetLimitsEntry> tileMatrixSetLimits = default)
+        {
+            links ??= new ChangeTrackingList<TileSetLink>();
+            tileMatrixSetLimits ??= new ChangeTrackingList<TileMatrixSetLimitsEntry>();
+
+            return new TileSetMetadata(
+                title,
+                dataType,
+                crs,
+                links.ToList(),
+                boundingBox,
+                accessConstraints,
+                tileMatrixSetLimits.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Limits for a specific tile matrix within a tileset, defining the valid row/column range. </summary>
+        /// <param name="tileMatrix"> Identifier of the tile matrix level. </param>
+        /// <param name="minTileRow"> Minimum tile row index at this zoom level. </param>
+        /// <param name="maxTileRow"> Maximum tile row index at this zoom level. </param>
+        /// <param name="minTileCol"> Minimum tile column index at this zoom level. </param>
+        /// <param name="maxTileCol"> Maximum tile column index at this zoom level. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TileMatrixSetLimitsEntry"/> instance for mocking. </returns>
+        public static TileMatrixSetLimitsEntry TileMatrixSetLimitsEntry(string tileMatrix = default, int minTileRow = default, int maxTileRow = default, int minTileCol = default, int maxTileCol = default)
+        {
+            return new TileMatrixSetLimitsEntry(
+                tileMatrix,
+                minTileRow,
+                maxTileRow,
+                minTileCol,
+                maxTileCol,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> GeoJSON Feature object representing a geographic entity. </summary>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
+        /// <param name="type"> GeoJSON type identifier for Feature. </param>
+        /// <param name="properties"> Feature properties. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GeoJsonFeature"/> instance for mocking. </returns>
+        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = default, FeatureType @type = default, IDictionary<string, BinaryData> properties = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new GeoJsonFeature(geometry, @type, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
+        /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
+        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
+        {
+            bounds ??= new ChangeTrackingList<float>();
+
+            return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Return dataset's basic info. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerInfoMapResponse"/> instance for mocking. </returns>
+        public static TilerInfoMapResponse TilerInfoMapResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new TilerInfoMapResponse(additionalProperties);
+        }
+
+        /// <summary> TilerInfo. </summary>
+        /// <param name="bounds"> Bounds. </param>
+        /// <param name="bandMetadata"> Band Metadata. </param>
+        /// <param name="bandDescriptions"> Band Descriptions. </param>
+        /// <param name="dtype"> Data type. </param>
+        /// <param name="noDataType"> NoData Type. </param>
+        /// <param name="colorInterpretation"> Color interpretation. </param>
+        /// <param name="driver"> Driver. </param>
+        /// <param name="count"> Count. </param>
+        /// <param name="width"> Width. </param>
+        /// <param name="height"> Height. </param>
+        /// <param name="overviews"> Overviews. </param>
+        /// <param name="scales"> Scales. </param>
+        /// <param name="offsets"> Offsets. </param>
+        /// <param name="colormap"> Colormap. </param>
+        /// <param name="minZoom"> Minzoom. </param>
+        /// <param name="maxZoom"> Maxzoom. </param>
+        /// <param name="coordinateReferenceSystem"> Coordinate Reference System. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerInfo"/> instance for mocking. </returns>
+        public static TilerInfo TilerInfo(IEnumerable<float> bounds = default, IEnumerable<IList<BinaryData>> bandMetadata = default, IEnumerable<IList<string>> bandDescriptions = default, string dtype = default, NoDataType? noDataType = default, IEnumerable<string> colorInterpretation = default, string driver = default, int? count = default, int? width = default, int? height = default, IEnumerable<int> overviews = default, IEnumerable<int> scales = default, IEnumerable<int> offsets = default, IDictionary<string, IList<string>> colormap = default, int? minZoom = default, int? maxZoom = default, string coordinateReferenceSystem = default)
+        {
+            bounds ??= new ChangeTrackingList<float>();
+            bandMetadata ??= new ChangeTrackingList<IList<BinaryData>>();
+            bandDescriptions ??= new ChangeTrackingList<IList<string>>();
+            colorInterpretation ??= new ChangeTrackingList<string>();
+            overviews ??= new ChangeTrackingList<int>();
+            scales ??= new ChangeTrackingList<int>();
+            offsets ??= new ChangeTrackingList<int>();
+            colormap ??= new ChangeTrackingDictionary<string, IList<string>>();
+
+            return new TilerInfo(
+                bounds.ToList(),
+                bandMetadata.ToList(),
+                bandDescriptions.ToList(),
+                dtype,
+                noDataType,
+                colorInterpretation.ToList(),
+                driver,
+                count,
+                width,
+                height,
+                overviews.ToList(),
+                scales.ToList(),
+                offsets.ToList(),
+                colormap,
+                minZoom,
+                maxZoom,
+                coordinateReferenceSystem,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> GeoJSON Feature object containing rio-tiler model information. </summary>
+        /// <param name="type"> GeoJSON type identifier. </param>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
+        /// <param name="properties"> Properties. </param>
+        /// <param name="id"> Unique identifier for the feature. </param>
+        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerInfoGeoJsonFeature"/> instance for mocking. </returns>
+        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, IEnumerable<float> boundingBox = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, TilerInfo>();
+            boundingBox ??= new ChangeTrackingList<float>();
+
+            return new TilerInfoGeoJsonFeature(
+                @type,
+                geometry,
+                properties,
+                id,
+                boundingBox.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Return dataset's statistics. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="PlanetaryComputer.AssetStatisticsResponse"/> instance for mocking. </returns>
@@ -1294,26 +1555,14 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
-        /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
-        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
+        /// <summary> Return dataset's statistics. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerStacItemStatistics"/> instance for mocking. </returns>
+        public static TilerStacItemStatistics TilerStacItemStatistics(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            bounds ??= new ChangeTrackingList<float>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> GeoJSON Feature object representing a geographic entity. </summary>
-        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <param name="properties"> Feature properties. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.GeoJsonFeature"/> instance for mocking. </returns>
-        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = default, FeatureType @type = default, IDictionary<string, BinaryData> properties = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new GeoJsonFeature(geometry, @type, properties, additionalBinaryDataProperties: null);
+            return new TilerStacItemStatistics(additionalProperties);
         }
 
         /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
@@ -1336,146 +1585,6 @@ namespace Azure.Analytics.PlanetaryComputer
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new StacItemStatisticsGeoJsonProperties(statistics, additionalProperties);
-        }
-
-        /// <summary> GeoJSON Feature object containing rio-tiler model information. </summary>
-        /// <param name="type"> GeoJSON type identifier. </param>
-        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="properties"> Properties. </param>
-        /// <param name="id"> Unique identifier for the feature. </param>
-        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.TilerInfoGeoJsonFeature"/> instance for mocking. </returns>
-        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, IEnumerable<float> boundingBox = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, TilerInfo>();
-            boundingBox ??= new ChangeTrackingList<float>();
-
-            return new TilerInfoGeoJsonFeature(
-                @type,
-                geometry,
-                properties,
-                id,
-                boundingBox.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> TilerInfo. </summary>
-        /// <param name="bounds"> Bounds. </param>
-        /// <param name="bandMetadata"> Band Metadata. </param>
-        /// <param name="bandDescriptions"> Band Descriptions. </param>
-        /// <param name="dtype"> Data type. </param>
-        /// <param name="noDataType"> NoData Type. </param>
-        /// <param name="colorInterpretation"> Color interpretation. </param>
-        /// <param name="driver"> Driver. </param>
-        /// <param name="count"> Count. </param>
-        /// <param name="width"> Width. </param>
-        /// <param name="height"> Height. </param>
-        /// <param name="overviews"> Overviews. </param>
-        /// <param name="scales"> Scales. </param>
-        /// <param name="offsets"> Offsets. </param>
-        /// <param name="colormap"> Colormap. </param>
-        /// <param name="minZoom"> Minzoom. </param>
-        /// <param name="maxZoom"> Maxzoom. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.TilerInfo"/> instance for mocking. </returns>
-        public static TilerInfo TilerInfo(IEnumerable<float> bounds = default, IEnumerable<IList<BinaryData>> bandMetadata = default, IEnumerable<IList<string>> bandDescriptions = default, string dtype = default, NoDataType? noDataType = default, IEnumerable<string> colorInterpretation = default, string driver = default, int? count = default, int? width = default, int? height = default, IEnumerable<int> overviews = default, IEnumerable<int> scales = default, IEnumerable<int> offsets = default, IDictionary<string, IList<string>> colormap = default, int? minZoom = default, int? maxZoom = default, string coordinateReferenceSystem = default)
-        {
-            bounds ??= new ChangeTrackingList<float>();
-            bandMetadata ??= new ChangeTrackingList<IList<BinaryData>>();
-            bandDescriptions ??= new ChangeTrackingList<IList<string>>();
-            colorInterpretation ??= new ChangeTrackingList<string>();
-            overviews ??= new ChangeTrackingList<int>();
-            scales ??= new ChangeTrackingList<int>();
-            offsets ??= new ChangeTrackingList<int>();
-            colormap ??= new ChangeTrackingDictionary<string, IList<string>>();
-
-            return new TilerInfo(
-                bounds.ToList(),
-                bandMetadata.ToList(),
-                bandDescriptions.ToList(),
-                dtype,
-                noDataType,
-                colorInterpretation.ToList(),
-                driver,
-                count,
-                width,
-                height,
-                overviews.ToList(),
-                scales.ToList(),
-                offsets.ToList(),
-                colormap,
-                minZoom,
-                maxZoom,
-                coordinateReferenceSystem,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Return dataset's basic info. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="PlanetaryComputer.TilerInfoMapResponse"/> instance for mocking. </returns>
-        public static TilerInfoMapResponse TilerInfoMapResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new TilerInfoMapResponse(additionalProperties);
-        }
-
-        /// <summary> Response model for point query operations providing values at a specific location. </summary>
-        /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
-        /// <param name="values"> Array of pixel values at the queried point for each band. </param>
-        /// <param name="bandNames"> Names of each band in the raster data. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.TilerCoreModelsResponsesPoint"/> instance for mocking. </returns>
-        public static TilerCoreModelsResponsesPoint TilerCoreModelsResponsesPoint(IEnumerable<float> coordinates = default, IEnumerable<float> values = default, IEnumerable<string> bandNames = default)
-        {
-            coordinates ??= new ChangeTrackingList<float>();
-            values ??= new ChangeTrackingList<float>();
-            bandNames ??= new ChangeTrackingList<string>();
-
-            return new TilerCoreModelsResponsesPoint(coordinates.ToList(), values.ToList(), bandNames.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Parameters for requesting a rendered image from a collection. </summary>
-        /// <param name="cql"> Cql. </param>
-        /// <param name="zoom"> Zoom. </param>
-        /// <param name="geometry"> Geometry. </param>
-        /// <param name="renderParameters"> JSON-encoded visualization parameters. </param>
-        /// <param name="columns"> Width of the output image in pixels. </param>
-        /// <param name="rows"> Height of the output image in pixels. </param>
-        /// <param name="showBranding"> Whether to include branding on the output image. </param>
-        /// <param name="imageSize"> Image size. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.ImageParameters"/> instance for mocking. </returns>
-        public static ImageParameters ImageParameters(IDictionary<string, BinaryData> cql = default, float? zoom = default, GeoJsonGeometry geometry = default, string renderParameters = default, int columns = default, int rows = default, bool? showBranding = default, string imageSize = default)
-        {
-            cql ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ImageParameters(
-                cql,
-                zoom,
-                geometry,
-                renderParameters,
-                columns,
-                rows,
-                showBranding,
-                imageSize,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response model for image exports. </summary>
-        /// <param name="url"> URL of the exported image. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.ImageResponse"/> instance for mocking. </returns>
-        public static ImageResponse ImageResponse(Uri url = default)
-        {
-            return new ImageResponse(url, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Return dataset's statistics. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="PlanetaryComputer.TilerStacItemStatistics"/> instance for mocking. </returns>
-        public static TilerStacItemStatistics TilerStacItemStatistics(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new TilerStacItemStatistics(additionalProperties);
         }
 
         /// <summary>
@@ -1525,28 +1634,18 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> ClassMap legend response model. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="PlanetaryComputer.ClassMapLegendResponse"/> instance for mocking. </returns>
-        public static ClassMapLegendResponse ClassMapLegendResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <summary> Response model for point query operations providing values at a specific location. </summary>
+        /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
+        /// <param name="values"> Array of pixel values at the queried point for each band. </param>
+        /// <param name="bandNames"> Names of each band in the raster data. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerCoreModelsResponsesPoint"/> instance for mocking. </returns>
+        public static TilerCoreModelsResponsesPoint TilerCoreModelsResponsesPoint(IEnumerable<float> coordinates = default, IEnumerable<float> values = default, IEnumerable<string> bandNames = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            coordinates ??= new ChangeTrackingList<float>();
+            values ??= new ChangeTrackingList<float>();
+            bandNames ??= new ChangeTrackingList<string>();
 
-            return new ClassMapLegendResponse(additionalProperties);
-        }
-
-        /// <summary> Asset information for the specified point. </summary>
-        /// <param name="id"> STAC item ID. </param>
-        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
-        /// <param name="assets"> Asset information for the specified point. </param>
-        /// <param name="collectionId"> Collection ID. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemPointAsset"/> instance for mocking. </returns>
-        public static StacItemPointAsset StacItemPointAsset(string id = default, IEnumerable<float> boundingBox = default, IDictionary<string, StacAsset> assets = default, string collectionId = default)
-        {
-            boundingBox ??= new ChangeTrackingList<float>();
-            assets ??= new ChangeTrackingDictionary<string, StacAsset>();
-
-            return new StacItemPointAsset(id, boundingBox.ToList(), assets, collectionId, additionalBinaryDataProperties: null);
+            return new TilerCoreModelsResponsesPoint(coordinates.ToList(), values.ToList(), bandNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents GeoJSON with feature with an asset property. </summary>
@@ -1584,61 +1683,35 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         /// <param name="hash"> Unique hash identifier for the search query. </param>
         /// <param name="search"> Search. </param>
-        /// <param name="where"> SQL WHERE clause representing the search filters. </param>
-        /// <param name="orderBy"> SQL ORDER BY clause for sorting results. </param>
         /// <param name="lastUsed"> Timestamp when the search was last accessed. </param>
         /// <param name="useCount"> Number of times the search has been accessed. </param>
         /// <param name="metadata"> Additional metadata associated with the search. </param>
         /// <returns> A new <see cref="PlanetaryComputer.TilerStacSearchDefinition"/> instance for mocking. </returns>
-        public static TilerStacSearchDefinition TilerStacSearchDefinition(string hash = default, IDictionary<string, BinaryData> search = default, string @where = default, string orderBy = default, DateTimeOffset lastUsed = default, int useCount = default, MosaicMetadata metadata = default)
+        public static TilerStacSearchDefinition TilerStacSearchDefinition(string hash = default, IDictionary<string, BinaryData> search = default, DateTimeOffset lastUsed = default, int useCount = default, MosaicMetadata metadata = default)
         {
             search ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new TilerStacSearchDefinition(
                 hash,
                 search,
-                @where,
-                orderBy,
                 lastUsed,
                 useCount,
                 metadata,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Metadata information for mosaic or search results. </summary>
-        /// <param name="type"> Type of metadata resource. </param>
-        /// <param name="bounds"> Geographic bounding box in [west, south, east, north] format. </param>
-        /// <param name="minZoom"> Minimum zoom level supported. </param>
-        /// <param name="maxZoom"> Maximum zoom level supported. </param>
-        /// <param name="name"> Human-readable name for the resource. </param>
-        /// <param name="assets"> List of asset identifiers included in the resource. </param>
-        /// <param name="defaults"> Defaults. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.MosaicMetadata"/> instance for mocking. </returns>
-        public static MosaicMetadata MosaicMetadata(MosaicMetadataType? @type = default, string bounds = default, int? minZoom = default, int? maxZoom = default, string name = default, IEnumerable<string> assets = default, IDictionary<string, string> defaults = default)
+        /// <summary> Asset information for the specified point. </summary>
+        /// <param name="id"> STAC item ID. </param>
+        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
+        /// <param name="assets"> Asset information for the specified point. </param>
+        /// <param name="collectionId"> Collection ID. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemPointAsset"/> instance for mocking. </returns>
+        public static StacItemPointAsset StacItemPointAsset(string id = default, IEnumerable<float> boundingBox = default, IDictionary<string, StacAsset> assets = default, string collectionId = default)
         {
-            assets ??= new ChangeTrackingList<string>();
-            defaults ??= new ChangeTrackingDictionary<string, string>();
+            boundingBox ??= new ChangeTrackingList<float>();
+            assets ??= new ChangeTrackingDictionary<string, StacAsset>();
 
-            return new MosaicMetadata(
-                @type,
-                bounds,
-                minZoom,
-                maxZoom,
-                name,
-                assets.ToList(),
-                defaults,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response from a successful mosaic registration with search ID and related links. </summary>
-        /// <param name="searchId"> Unique identifier for the registered search. </param>
-        /// <param name="links"> Related links for the registered mosaic. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.TilerMosaicSearchRegistrationResult"/> instance for mocking. </returns>
-        public static TilerMosaicSearchRegistrationResult TilerMosaicSearchRegistrationResult(string searchId = default, IEnumerable<StacLink> links = default)
-        {
-            links ??= new ChangeTrackingList<StacLink>();
-
-            return new TilerMosaicSearchRegistrationResult(searchId, links.ToList(), additionalBinaryDataProperties: null);
+            return new StacItemPointAsset(id, boundingBox.ToList(), assets, collectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> UnsignedLink. </summary>

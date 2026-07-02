@@ -564,5 +564,27 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             }
             #endregion
         }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task ListOperations()
+        {
+            #region Snippet:Sample02_ListOperations
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            IngestionClient ingestionClient = client.GetIngestionClient();
+
+            // List all ingestion operations
+            Console.WriteLine("Listing ingestion operations:");
+            await foreach (LongRunningOperation operation in ingestionClient.GetOperationsAsync())
+            {
+                Console.WriteLine($"  Operation {operation.Id}: {operation.Status}");
+            }
+            #endregion
+        }
     }
 }

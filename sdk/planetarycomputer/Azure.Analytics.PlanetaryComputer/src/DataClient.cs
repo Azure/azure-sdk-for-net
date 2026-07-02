@@ -53,7 +53,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetAvailableAssets(collectionId, itemId, cancellationToken.ToRequestContext());
+            Response result = GetItemAvailableAssets(collectionId, itemId, default, default, default, default, default, default, cancellationToken.ToRequestContext());
             return Response.FromValue(DeserializeStringList(result.Content), result);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetAvailableAssetsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetItemAvailableAssetsAsync(collectionId, itemId, default, default, default, default, default, default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(DeserializeStringList(result.Content), result);
         }
 

@@ -53,1377 +53,6 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetAssetStatisticsRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/asset_statistics", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (categorical != null)
-            {
-                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
-            }
-            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
-            }
-            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
-            }
-            if (histogramBins != null)
-            {
-                uri.AppendQuery("histogram_bins", histogramBins, true);
-            }
-            if (histogramRange != null)
-            {
-                uri.AppendQuery("histogram_range", histogramRange, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAvailableAssetsRequest(string collectionId, string itemId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/assets", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetBoundsRequest(string collectionId, string itemId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/bounds", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCropGeoJsonRequest(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/crop.", false);
-            uri.AppendPath(format, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (coordinateReferenceSystem != null)
-            {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (height != null)
-            {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
-            }
-            if (width != null)
-            {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCropGeoJsonWithDimensionsRequest(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/crop/", false);
-            uri.AppendPath(width.ToString(), true);
-            uri.AppendPath("x", false);
-            uri.AppendPath(height.ToString(), true);
-            uri.AppendPath(".", false);
-            uri.AppendPath(format, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (coordinateReferenceSystem != null)
-            {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetGeoJsonStatisticsRequest(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/statistics", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (coordinateReferenceSystem != null)
-            {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (categorical != null)
-            {
-                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
-            }
-            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
-            }
-            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
-            }
-            if (histogramBins != null)
-            {
-                uri.AppendQuery("histogram_bins", histogramBins, true);
-            }
-            if (histogramRange != null)
-            {
-                uri.AppendQuery("histogram_range", histogramRange, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetInfoGeoJsonRequest(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/info.geojson", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetItemAssetDetailsRequest(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/info", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPartRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/crop/", false);
-            uri.AppendPath(minx.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
-            uri.AppendPath(".", false);
-            uri.AppendPath(format, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (dstCrs != null)
-            {
-                uri.AppendQuery("dst-crs", dstCrs, true);
-            }
-            if (coordinateReferenceSystem != null)
-            {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (height != null)
-            {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
-            }
-            if (width != null)
-            {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPartWithDimensionsRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/crop/", false);
-            uri.AppendPath(minx.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(width.ToString(), true);
-            uri.AppendPath("x", false);
-            uri.AppendPath(height.ToString(), true);
-            uri.AppendPath(".", false);
-            uri.AppendPath(format, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (dstCrs != null)
-            {
-                uri.AppendQuery("dst-crs", dstCrs, true);
-            }
-            if (coordinateReferenceSystem != null)
-            {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPointRequest(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/point/", false);
-            uri.AppendPath(longitude.ToString(), true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(latitude.ToString(), true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (coordinateReferenceSystem != null)
-            {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPreviewRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/preview", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (format != null)
-            {
-                uri.AppendQuery("format", format, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (dstCrs != null)
-            {
-                uri.AppendQuery("dst-crs", dstCrs, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (height != null)
-            {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
-            }
-            if (width != null)
-            {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPreviewWithFormatRequest(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/preview.", false);
-            uri.AppendPath(format, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (dstCrs != null)
-            {
-                uri.AppendQuery("dst-crs", dstCrs, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (height != null)
-            {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
-            }
-            if (width != null)
-            {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateStaticImageRequest(string collectionId, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/image/static", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetStaticImageRequest(string collectionId, string id, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/image/static/", false);
-            uri.AppendPath(id, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png");
-            return message;
-        }
-
-        internal HttpMessage CreateGetStatisticsRequest(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/statistics", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (maxSize != null)
-            {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
-            }
-            if (categorical != null)
-            {
-                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
-            }
-            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
-            }
-            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
-            }
-            if (histogramBins != null)
-            {
-                uri.AppendQuery("histogram_bins", histogramBins, true);
-            }
-            if (histogramRange != null)
-            {
-                uri.AppendQuery("histogram_range", histogramRange, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTileJsonRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/tilejson.json", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (tileFormat != null)
-            {
-                uri.AppendQuery("tile_format", tileFormat, true);
-            }
-            if (tileScale != null)
-            {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
-            }
-            if (minZoom != null)
-            {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
-            }
-            if (maxZoom != null)
-            {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTileRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/tiles/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(z.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(x.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(y.ToString(), true);
-            uri.AppendPath("@", false);
-            uri.AppendPath(scale.ToString(), true);
-            uri.AppendPath("x.", false);
-            uri.AppendPath(format, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            if (subdatasetName != null)
-            {
-                uri.AppendQuery("subdataset_name", subdatasetName, true);
-            }
-            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWmtsCapabilitiesRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/items/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/WMTSCapabilities.xml", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var @param in assets)
-                {
-                    uri.AppendQuery("assets", @param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBandIndices != null)
-            {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
-            }
-            if (noData != null)
-            {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (tileFormat != null)
-            {
-                uri.AppendQuery("tile_format", tileFormat, true);
-            }
-            if (tileScale != null)
-            {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
-            }
-            if (minZoom != null)
-            {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
-            }
-            if (maxZoom != null)
-            {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in rescale)
-                {
-                    uri.AppendQuery("rescale", @param, true);
-                }
-            }
-            if (colorMapName != null)
-            {
-                uri.AppendQuery("colormap_name", colorMapName, true);
-            }
-            if (colorMap != null)
-            {
-                uri.AppendQuery("colormap", colorMap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/xml");
-            return message;
-        }
-
         internal HttpMessage CreateGetClassMapLegendRequest(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -1510,13 +139,7106 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsAssetsForPointRequest(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
+        internal HttpMessage CreateRegisterMosaicsSearchRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
+            uri.AppendPath("/data/mosaic/register", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetTilesetsRequest(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTilesetMetadataRequest(string collectionId, string itemId, string tileMatrixSetId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string format, int? scale, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
             uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileByFormatRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, int? scale, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileByScaleRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string format, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileByScaleAndFormatRequest(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileNoTmsRequest(string collectionId, string itemId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, string format, int? scale, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileNoTmsByFormatRequest(string collectionId, string itemId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, int? scale, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileNoTmsByScaleRequest(string collectionId, string itemId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, string format, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTileNoTmsByScaleAndFormatRequest(string collectionId, string itemId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateCropFeatureRequest(string collectionId, string itemId, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string format, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/feature", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCropFeatureByFormatRequest(string collectionId, string itemId, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/feature.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCropFeatureWidthByHeightRequest(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/feature/", false);
+            uri.AppendPath(width.ToString(), true);
+            uri.AppendPath("x", false);
+            uri.AppendPath(height.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemBoundsRequest(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/bounds", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemInfoRequest(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assets, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/info", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemInfoGeoJsonRequest(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assets, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/info.geojson", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemAvailableAssetsRequest(string collectionId, string itemId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemAssetStatisticsRequest(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, IEnumerable<string> assetBandIndices, string noData, bool? unscale, string reproject, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<string> assetExpression, int? height, int? width, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/asset_statistics", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (categorical != null)
+            {
+                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
+            }
+            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
+            }
+            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
+            }
+            if (histogramBins != null)
+            {
+                uri.AppendQuery("histogram_bins", histogramBins, true);
+            }
+            if (histogramRange != null)
+            {
+                uri.AppendQuery("histogram_range", histogramRange, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (assetExpression != null && !(assetExpression is ChangeTrackingList<string> changeTrackingList6 && changeTrackingList6.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_expression", assetExpression, ",", escape: true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemStatisticsRequest(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? height, int? width, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/statistics", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (categorical != null)
+            {
+                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
+            }
+            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
+            }
+            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
+            }
+            if (histogramBins != null)
+            {
+                uri.AppendQuery("histogram_bins", histogramBins, true);
+            }
+            if (histogramRange != null)
+            {
+                uri.AppendQuery("histogram_range", histogramRange, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemFeatureStatisticsRequest(string collectionId, string itemId, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, int? maxSize, bool? categorical, IEnumerable<int> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, string destinationCrs, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? height, int? width, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/statistics", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (categorical != null)
+            {
+                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
+            }
+            if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
+            }
+            if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
+            }
+            if (histogramBins != null)
+            {
+                uri.AppendQuery("histogram_bins", histogramBins, true);
+            }
+            if (histogramRange != null)
+            {
+                uri.AppendQuery("histogram_range", histogramRange, true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemTileJsonRequest(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/tilejson.json", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemTileJsonByTmsRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/tilejson.json", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemWmtsCapabilitiesRequest(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/WMTSCapabilities.xml", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemWmtsCapabilitiesByTmsRequest(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/WMTSCapabilities.xml", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemPointRequest(string collectionId, string itemId, float longitude, float latitude, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, string resampling, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/point/", false);
+            uri.AppendPath(longitude.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(latitude.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemPreviewRequest(string collectionId, string itemId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/preview", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (dstCrs != null)
+            {
+                uri.AppendQuery("dst_crs", dstCrs, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemPreviewWithFormatRequest(string collectionId, string itemId, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/preview.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (dstCrs != null)
+            {
+                uri.AppendQuery("dst_crs", dstCrs, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemBboxCropRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string destinationCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetItemBboxCropWithDimensionsRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string destinationCrs, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/items/", false);
+            uri.AppendPath(itemId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(width.ToString(), true);
+            uri.AppendPath("x", false);
+            uri.AppendPath(height.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTilesetsRequest(string collectionId, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTilesetMetadataRequest(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileByScaleAndFormatRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileByFormatRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileByScaleRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileNoTmsByScaleAndFormatRequest(string collectionId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileNoTmsRequest(string collectionId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileNoTmsByFormatRequest(string collectionId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileNoTmsByScaleRequest(string collectionId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileJsonRequest(string collectionId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tilejson.json", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionTileJsonByTmsRequest(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/tilejson.json", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionWmtsCapabilitiesRequest(string collectionId, string ids, string bbox, string query, string sortby, string datetime, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/WMTSCapabilities.xml", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionWmtsCapabilitiesByTmsRequest(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortby, string datetime, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/WMTSCapabilities.xml", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionAssetsForTileRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionAssetsForTileNoTmsRequest(string collectionId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionAssetsForBboxRequest(string collectionId, float minx, float miny, float maxx, float maxy, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionInfoRequest(string collectionId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/info", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionBboxCropRequest(string collectionId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionBboxCropWithDimensionsRequest(string collectionId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(width.ToString(), true);
+            uri.AppendPath("x", false);
+            uri.AppendPath(height.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateCropCollectionFeatureRequest(string collectionId, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string format, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/feature", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCropCollectionFeatureByFormatRequest(string collectionId, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/feature.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCropCollectionFeatureWidthByHeightRequest(string collectionId, int width, int height, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/feature/", false);
+            uri.AppendPath(width.ToString(), true);
+            uri.AppendPath("x", false);
+            uri.AppendPath(height.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionPointRequest(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/point/", false);
+            uri.AppendPath(longitude.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(latitude.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCollectionPointAssetsRequest(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/point/", false);
             uri.AppendPath(longitude.ToString(), true);
             uri.AppendPath(",", false);
             uri.AppendPath(latitude.ToString(), true);
@@ -1545,9 +7267,52 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
+            if (ids != null)
+            {
+                uri.AppendQuery("ids", ids, true);
+            }
+            if (bbox != null)
+            {
+                uri.AppendQuery("bbox", bbox, true);
+            }
+            if (query != null)
+            {
+                uri.AppendQuery("query", query, true);
+            }
+            if (sortby != null)
+            {
+                uri.AppendQuery("sortby", sortby, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
             if (coordinateReferenceSystem != null)
             {
-                uri.AppendQuery("coord-crs", coordinateReferenceSystem, true);
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1557,11 +7322,777 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsAssetsForTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
+        internal HttpMessage CreateGetSearchTilesetsRequest(string searchId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTilesetMetadataRequest(string searchId, string tileMatrixSetId, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileByScaleAndFormatRequest(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileByFormatRequest(string searchId, string tileMatrixSetId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileByScaleRequest(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(tileMatrixSetId, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchAssetsForTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/tiles/", false);
             uri.AppendPath(tileMatrixSetId, true);
@@ -1596,6 +8127,33 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
             uri.AppendQuery("collection", collectionId, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1605,49 +8163,11 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsSearchInfoRequest(string searchId, RequestContext context)
+        internal HttpMessage CreateGetSearchTileJsonByTmsRequest(string searchId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/info", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateRegisterMosaicsSearchRequest(RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/register", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetMosaicsTileJsonRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
+            uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/", false);
             uri.AppendPath(tileMatrixSetId, true);
@@ -1656,7 +8176,14 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in assets)
                 {
@@ -1667,9 +8194,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null)
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
             }
             if (assetAsBand != null)
             {
@@ -1677,11 +8204,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
+                uri.AppendQuery("nodata", noData, true);
             }
             if (unscale != null)
             {
                 uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
             }
             if (scanLimit != null)
             {
@@ -1702,6 +8233,33 @@ namespace Azure.Analytics.PlanetaryComputer
             if (skipCovered != null)
             {
                 uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
             }
             if (algorithm != null)
             {
@@ -1729,7 +8287,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (buffer != null)
             {
-                uri.AppendQuery("buffer", buffer, true);
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
             }
             if (colorFormula != null)
             {
@@ -1747,7 +8305,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("pixel_selection", pixelSelection, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1766,6 +8324,10 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -1774,29 +8336,43 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsTileRequest(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetSearchWmtsCapabilitiesByTmsRequest(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
+            uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
-            uri.AppendPath("/tiles/", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(z.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(x.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(y.ToString(), true);
-            uri.AppendPath("@", false);
-            uri.AppendPath(scale.ToString(), true);
-            uri.AppendPath("x.", false);
-            uri.AppendPath(format, true);
+            uri.AppendPath("/WMTSCapabilities.xml", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in assets)
                 {
@@ -1807,9 +8383,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null)
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
             }
             if (assetAsBand != null)
             {
@@ -1817,11 +8393,100 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
+                uri.AppendQuery("nodata", noData, true);
             }
             if (unscale != null)
             {
                 uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchInfoRequest(string searchId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/info", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchBboxCropRequest(string searchId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
             }
             if (scanLimit != null)
             {
@@ -1843,6 +8508,33 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
             if (algorithm != null)
             {
                 uri.AppendQuery("algorithm", algorithm, true);
@@ -1851,9 +8543,25 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("algorithm_params", algorithmParams, true);
             }
-            if (buffer != null)
+            if (coordinateReferenceSystem != null)
             {
-                uri.AppendQuery("buffer", buffer, true);
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
             }
             if (colorFormula != null)
             {
@@ -1871,7 +8579,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("pixel_selection", pixelSelection, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1898,20 +8606,38 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetMosaicsWmtsCapabilitiesRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetSearchBboxCropWithDimensionsRequest(string searchId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
+            uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
             uri.AppendPath("/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/WMTSCapabilities.xml", false);
+            uri.AppendPath(width.ToString(), true);
+            uri.AppendPath("x", false);
+            uri.AppendPath(height.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in assets)
                 {
@@ -1922,9 +8648,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("expression", expression, true);
             }
-            if (assetBandIndices != null)
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQuery("asset_bidx", assetBandIndices, true);
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
             }
             if (assetAsBand != null)
             {
@@ -1932,11 +8658,62 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
+                uri.AppendQuery("nodata", noData, true);
             }
             if (unscale != null)
             {
                 uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
             }
             if (algorithm != null)
             {
@@ -1946,35 +8723,35 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("algorithm_params", algorithmParams, true);
             }
-            if (tileFormat != null)
+            if (coordinateReferenceSystem != null)
             {
-                uri.AppendQuery("tile_format", tileFormat, true);
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
             }
-            if (tileScale != null)
+            if (destinationCrs != null)
             {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+                uri.AppendQuery("dst_crs", destinationCrs, true);
             }
-            if (minZoom != null)
+            if (maxSize != null)
             {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
-            }
-            if (maxZoom != null)
-            {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (colorFormula != null)
             {
                 uri.AppendQuery("color_formula", colorFormula, true);
             }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
             if (resampling != null)
             {
                 uri.AppendQuery("resampling", resampling, true);
             }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var @param in rescale)
                 {
@@ -1997,7 +8774,1792 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchBboxAssetsRequest(string searchId, float minx, float miny, float maxx, float maxy, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/bbox/", false);
+            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCropSearchFeatureRequest(string searchId, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string format, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/feature", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCropSearchFeatureByFormatRequest(string searchId, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/feature.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCropSearchFeatureWidthByHeightRequest(string searchId, int width, int height, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/feature/", false);
+            uri.AppendPath(width.ToString(), true);
+            uri.AppendPath("x", false);
+            uri.AppendPath(height.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (maxSize != null)
+            {
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (destinationCrs != null)
+            {
+                uri.AppendQuery("dst_crs", destinationCrs, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchWmtsCapabilitiesRequest(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/WMTSCapabilities.xml", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileJsonRequest(string searchId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, int? padding, float? buffer, string colorFormula, string collectionId, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tilejson.json", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (tileFormat != null)
+            {
+                uri.AppendQuery("tile_format", tileFormat, true);
+            }
+            if (tileScale != null)
+            {
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
+            }
+            if (minZoom != null)
+            {
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
+            }
+            if (maxZoom != null)
+            {
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collection", collectionId, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colormapName != null)
+            {
+                uri.AppendQuery("colormap_name", colormapName, true);
+            }
+            if (colormap != null)
+            {
+                uri.AppendQuery("colormap", colormap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileNoTmsRequest(string searchId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileNoTmsByFormatRequest(string searchId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath(".", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (scale != null)
+            {
+                uri.AppendQuery("scale", TypeFormatters.ConvertToString(scale), true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileNoTmsByScaleRequest(string searchId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchTileNoTmsByScaleAndFormatRequest(string searchId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("@", false);
+            uri.AppendPath(scale.ToString(), true);
+            uri.AppendPath("x.", false);
+            uri.AppendPath(format, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (algorithm != null)
+            {
+                uri.AppendQuery("algorithm", algorithm, true);
+            }
+            if (algorithmParams != null)
+            {
+                uri.AppendQuery("algorithm_params", algorithmParams, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            if (buffer != null)
+            {
+                uri.AppendQuery("buffer", TypeFormatters.ConvertToString(buffer), true);
+            }
+            if (colorFormula != null)
+            {
+                uri.AppendQuery("color_formula", colorFormula, true);
+            }
+            if (collection != null)
+            {
+                uri.AppendQuery("collection", collection, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            if (pixelSelection != null)
+            {
+                uri.AppendQuery("pixel_selection", pixelSelection, true);
+            }
+            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
+            {
+                foreach (var @param in rescale)
+                {
+                    uri.AppendQuery("rescale", @param, true);
+                }
+            }
+            if (colorMapName != null)
+            {
+                uri.AppendQuery("colormap_name", colorMapName, true);
+            }
+            if (colorMap != null)
+            {
+                uri.AppendQuery("colormap", colorMap, true);
+            }
+            if (returnMask != null)
+            {
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
+            }
+            if (padding != null)
+            {
+                uri.AppendQuery("padding", TypeFormatters.ConvertToString(padding), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchAssetsForTileNoTmsRequest(string searchId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/tiles/", false);
+            uri.AppendPath(z.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(x.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(y.ToString(), true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (tileMatrixSetId != null)
+            {
+                uri.AppendQuery("TileMatrixSetId", tileMatrixSetId, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchPointRequest(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/point/", false);
+            uri.AppendPath(longitude.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(latitude.ToString(), true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (bidx != null && !(bidx is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            {
+                foreach (var @param in bidx)
+                {
+                    uri.AppendQuery("bidx", @param, true);
+                }
+            }
+            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
+            {
+                foreach (var @param in assets)
+                {
+                    uri.AppendQuery("assets", @param, true);
+                }
+            }
+            if (expression != null)
+            {
+                uri.AppendQuery("expression", expression, true);
+            }
+            if (assetBandIndices != null && !(assetBandIndices is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
+            {
+                uri.AppendQueryDelimited("asset_bidx", assetBandIndices, ",", escape: true);
+            }
+            if (assetAsBand != null)
+            {
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
+            }
+            if (noData != null)
+            {
+                uri.AppendQuery("nodata", noData, true);
+            }
+            if (unscale != null)
+            {
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
+            }
+            if (reproject != null)
+            {
+                uri.AppendQuery("reproject", reproject, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            if (resampling != null)
+            {
+                uri.AppendQuery("resampling", resampling, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSearchPointWithAssetsRequest(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/data/mosaic/searches/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendPath("/point/", false);
+            uri.AppendPath(longitude.ToString(), true);
+            uri.AppendPath(",", false);
+            uri.AppendPath(latitude.ToString(), true);
+            uri.AppendPath("/assets", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (scanLimit != null)
+            {
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
+            }
+            if (itemsLimit != null)
+            {
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
+            }
+            if (timeLimit != null)
+            {
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
+            }
+            if (exitWhenFull != null)
+            {
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
+            }
+            if (skipCovered != null)
+            {
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
+            }
+            if (subdatasetName != null)
+            {
+                uri.AppendQuery("subdataset_name", subdatasetName, true);
+            }
+            if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
+            }
+            if (crs != null)
+            {
+                uri.AppendQuery("crs", crs, true);
+            }
+            if (datetime != null)
+            {
+                uri.AppendQuery("datetime", datetime, true);
+            }
+            if (sel != null && !(sel is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var @param in sel)
+                {
+                    uri.AppendQuery("sel", @param, true);
+                }
+            }
+            if (selMethod != null)
+            {
+                uri.AppendQuery("sel_method", selMethod, true);
+            }
+            if (coordinateReferenceSystem != null)
+            {
+                uri.AppendQuery("coord_crs", coordinateReferenceSystem, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

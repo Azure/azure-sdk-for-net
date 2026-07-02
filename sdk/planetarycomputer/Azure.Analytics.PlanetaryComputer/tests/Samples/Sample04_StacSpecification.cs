@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             StacClient stacClient = client.GetStacClient();
 
             // Get STAC API conformance classes
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
             StacConformanceClasses conformance = response.Value;
 
             Console.WriteLine($"STAC API Conformance Classes ({conformance.ConformsTo.Count}):");
@@ -471,6 +471,85 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                     Console.WriteLine($"    - {item.Id}");
                 }
             }
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task GetLandingPage()
+        {
+            #region Snippet:Sample04_GetLandingPage
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            StacClient stacClient = client.GetStacClient();
+
+            // Get the STAC API landing page
+            Response<StacLandingPage> response = await stacClient.GetLandingPageAsync();
+            StacLandingPage landingPage = response.Value;
+
+            Console.WriteLine($"API Title: {landingPage.Title}");
+            Console.WriteLine($"API Description: {landingPage.Description}");
+            Console.WriteLine($"STAC Version: {landingPage.StacVersion}");
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only for sample compilation verification")]
+        public async Task ManageItemLifecycle()
+        {
+            #region Snippet:Sample04_ManageItemLifecycle
+#if SNIPPET
+            Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
+            PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
+#else
+            var client = GetTestClient();
+#endif
+            StacClient stacClient = client.GetStacClient();
+            string collectionId = "sample-lifecycle-collection";
+            string itemId = "sample-item-001";
+
+            // Create a STAC item
+            var geometry = new PolygonGeometry(new List<IList<IList<float>>>
+            {
+                new List<IList<float>>
+                {
+                    new List<float> { -84.39f, 33.68f },
+                    new List<float> { -84.37f, 33.68f },
+                    new List<float> { -84.37f, 33.70f },
+                    new List<float> { -84.39f, 33.70f },
+                    new List<float> { -84.39f, 33.68f }
+                }
+            });
+
+            var properties = new StacItemProperties(datetime: "2024-01-15T00:00:00Z");
+            var assets = new Dictionary<string, StacAsset>
+            {
+                ["image"] = new StacAsset("https://example.com/image.tif") { Type = "image/tiff" }
+            };
+
+            var item = new StacItemResource(
+                geometry: geometry,
+                id: itemId,
+                boundingBox: new[] { -84.39f, 33.68f, -84.37f, 33.70f },
+                properties: properties,
+                assets: assets);
+
+            // Create the item (long-running operation)
+            await stacClient.CreateItemAsync(WaitUntil.Completed, collectionId, item);
+            Console.WriteLine($"Created item: {itemId}");
+
+            // Replace (update) the item
+            item.Properties.Datetime = "2024-06-15T00:00:00Z";
+            await stacClient.ReplaceItemAsync(WaitUntil.Completed, collectionId, itemId, item);
+            Console.WriteLine($"Replaced item: {itemId}");
+
+            // Delete the item
+            await stacClient.DeleteItemAsync(WaitUntil.Completed, collectionId, itemId);
+            Console.WriteLine($"Deleted item: {itemId}");
             #endregion
         }
     }

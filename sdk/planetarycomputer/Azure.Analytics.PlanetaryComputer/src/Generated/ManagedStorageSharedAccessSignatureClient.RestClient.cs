@@ -18,7 +18,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetSignRequest(Uri href, int? durationInMinutes, RequestContext context)
+        internal HttpMessage CreateGetUrlRequest(Uri href, int? durationInMinutes, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -17,7 +17,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Tests are mapped from Python tests in test_planetary_computer_06_stac_item_tiler.py.
     /// </summary>
     [Category("Tiler")]
-    [AsyncOnly]
     public class TestPlanetaryComputer06StacItemTilerTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer06StacItemTilerTests(bool isAsync) : base(isAsync)
@@ -135,7 +134,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<IReadOnlyList<string>> response = await dataClient.GetAvailableAssetsAsync(
+            Response<IReadOnlyList<string>> response = await dataClient.GetItemAvailableAssetsAsync(
                 collectionId: collectionId,
                 itemId: itemId
             );
@@ -164,7 +163,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Bounds")]
-        public async Task Test06_04_GetBounds()
+        public async Task Test06_04_GetItemBounds()
         {
             // Arrange
             var client = GetTestClient();
@@ -176,7 +175,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<StacItemBounds> response = await dataClient.GetBoundsAsync(
+            Response<StacItemBounds> response = await dataClient.GetItemBoundsAsync(
                 collectionId: collectionId,
                 itemId: itemId
             );
@@ -208,7 +207,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Preview")]
-        public async Task Test06_05_GetPreview()
+        public async Task Test06_05_GetItemPreview()
         {
             // Arrange
             var client = GetTestClient();
@@ -221,14 +220,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Input - dimensions: 512x512");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetPreviewAsync(
+            Response<BinaryData> response = await dataClient.GetItemPreviewAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 format: TilerImageFormat.Png,
                 width: 512,
                 height: 512,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -259,7 +258,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Info")]
-        public async Task Test06_06_GetInfoGeoJson()
+        public async Task Test06_06_GetItemInfoGeoJson()
         {
             // Arrange
             var client = GetTestClient();
@@ -271,7 +270,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetInfoGeoJsonAsync(
+            Response<TilerInfoGeoJsonFeature> response = await dataClient.GetItemInfoGeoJsonAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 assets: new[] { "image" }
@@ -304,7 +303,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<TilerStacItemStatistics> response = await dataClient.GetStatisticsAsync(
+            Response<TilerStacItemStatistics> response = await dataClient.GetItemStatisticsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 assets: new[] { "image" }
@@ -325,7 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("WMTS")]
-        public async Task Test06_08_GetWmtsCapabilities()
+        public async Task Test06_08_GetItemWmtsCapabilities()
         {
             // Arrange
             var client = GetTestClient();
@@ -337,7 +336,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetWmtsCapabilitiesAsync(
+            Response<BinaryData> response = await dataClient.GetItemWmtsCapabilitiesAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 tileMatrixSetId: "WebMercatorQuad",
@@ -346,7 +345,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 minZoom: 7,
                 maxZoom: 14,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -386,7 +385,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<AssetStatisticsResponse> response = await dataClient.GetAssetStatisticsAsync(
+            Response<AssetStatisticsResponse> response = await dataClient.GetItemAssetStatisticsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 assets: new[] { "image" }
@@ -488,13 +487,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Geometry defined for cropping");
 
             // Act
-            Response<BinaryData> response = await dataClient.CropGeoJsonAsync(
+            Response<BinaryData> response = await dataClient.CropFeatureAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 format: "png",
                 body: feature,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -526,7 +525,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 #if NET462
         [LiveOnly(Reason = "Difference between request and record entry due to float values")]
 #endif
-        public async Task Test06_11_CropGeoJsonWithDimensions()
+        public async Task Test06_11_CropFeatureWidthByHeight()
         {
             // Arrange
             var client = GetTestClient();
@@ -555,7 +554,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Input - dimensions: 256x256");
 
             // Act
-            Response<BinaryData> response = await dataClient.CropGeoJsonWithDimensionsAsync(
+            Response<BinaryData> response = await dataClient.CropFeatureWidthByHeightAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 width: 256,
@@ -563,7 +562,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 format: "png",
                 body: feature,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -624,7 +623,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Geometry defined for statistics");
 
             // Act
-            Response<StacItemStatisticsGeoJson> response = await dataClient.GetGeoJsonStatisticsAsync(
+            Response<StacItemStatisticsGeoJson> response = await dataClient.GetItemFeatureStatisticsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 body: feature,
@@ -662,7 +661,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - bounds: [{minx}, {miny}, {maxx}, {maxy}]");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetPartAsync(
+            Response<BinaryData> response = await dataClient.GetItemBboxCropAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 minx: minx,
@@ -670,7 +669,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 maxx: maxx,
                 maxy: maxy,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
+                assetBandIndices: new[] { "image|1,2,3" },
                 format: "png"
             );
 
@@ -700,7 +699,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Part")]
-        public async Task Test06_14_GetPartWithDimensions()
+        public async Task Test06_14_GetItemBboxCropWithDimensions()
         {
             // Arrange
             var client = GetTestClient();
@@ -717,7 +716,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Input - dimensions: 256x256");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetPartWithDimensionsAsync(
+            Response<BinaryData> response = await dataClient.GetItemBboxCropWithDimensionsAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 minx: minx,
@@ -727,7 +726,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 width: 256,
                 height: 256,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
+                assetBandIndices: new[] { "image|1,2,3" },
                 format: "png"
             );
 
@@ -757,7 +756,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Point")]
-        public async Task Test06_15_GetPoint()
+        public async Task Test06_15_GetItemPoint()
         {
             // Arrange
             var client = GetTestClient();
@@ -771,7 +770,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - point: longitude={longitude}, latitude={latitude}");
 
             // Act
-            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetPointAsync(
+            Response<TilerCoreModelsResponsesPoint> response = await dataClient.GetItemPointAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 longitude: longitude,
@@ -794,7 +793,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("Preview")]
-        public async Task Test06_16_GetPreviewWithFormat()
+        public async Task Test06_16_GetItemPreviewWithFormat()
         {
             // Arrange
             var client = GetTestClient();
@@ -807,12 +806,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Input - format: JPEG");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetPreviewWithFormatAsync(
+            Response<BinaryData> response = await dataClient.GetItemPreviewWithFormatAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 format: "jpeg",
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -842,7 +841,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// </summary>
         [Test]
         [Category("TileJson")]
-        public async Task Test06_17_GetTileJson()
+        public async Task Test06_17_GetItemTileJson()
         {
             // Arrange
             var client = GetTestClient();
@@ -854,7 +853,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - item_id: {itemId}");
 
             // Act
-            Response<TileJsonMetadata> response = await dataClient.GetTileJsonAsync(
+            Response<TileJsonMetadata> response = await dataClient.GetItemTileJsonAsync(
                 collectionId: collectionId,
                 itemId: itemId,
                 tileMatrixSetId: "WebMercatorQuad",
@@ -863,7 +862,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 minZoom: 7,
                 maxZoom: 14,
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -908,7 +907,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 scale: 1,
                 format: "png",
                 assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
+                assetBandIndices: new[] { "image|1,2,3" }
             );
 
             // Assert
@@ -954,7 +953,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("\n=== Making Request ===");
             TestContext.WriteLine($"GET /data/collections/{collectionId}/items/{itemId}/assets");
 
-            Response<IReadOnlyList<string>> response = await dataClient.GetAvailableAssetsAsync(collectionId, itemId);
+            Response<IReadOnlyList<string>> response = await dataClient.GetItemAvailableAssetsAsync(collectionId, itemId);
 
             // Log raw response
             TestContext.WriteLine("\n=== Raw Response ===");

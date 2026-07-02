@@ -16,6 +16,8 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly string _value;
         /// <summary> Static STAC Catalog. </summary>
         private const string StaticCatalogValue = "StaticCatalog";
+        /// <summary> Ingestion STAC Geoparquet catalog. </summary>
+        private const string StacGeoparquetValue = "StacGeoparquet";
 
         /// <summary> Initializes a new instance of <see cref="IngestionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,6 +31,9 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Static STAC Catalog. </summary>
         public static IngestionType StaticCatalog { get; } = new IngestionType(StaticCatalogValue);
+
+        /// <summary> Ingestion STAC Geoparquet catalog. </summary>
+        public static IngestionType StacGeoparquet { get; } = new IngestionType(StacGeoparquetValue);
 
         /// <summary> Determines if two <see cref="IngestionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

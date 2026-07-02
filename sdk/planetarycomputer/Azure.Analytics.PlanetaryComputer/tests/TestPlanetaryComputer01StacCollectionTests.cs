@@ -17,7 +17,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
     /// Based on Python test: test_planetary_computer_01_stac_collection.py
     /// Complements existing StacClientTests.cs with collection listing and metadata operations.
     /// </summary>
-    [AsyncOnly]
     public class TestPlanetaryComputer01StacCollectionTests : PlanetaryComputerTestBase
     {
         public TestPlanetaryComputer01StacCollectionTests(bool isAsync) : base(isAsync)
@@ -152,24 +151,24 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test getting STAC conformance classes.
         /// Python equivalent: test_02_get_conformance_class
-        /// C# method: GetConformanceClass()
+        /// C# method: GetConformanceClassesAsync()
         /// </summary>
         [Test]
         [Category("STAC")]
         [Category("Conformance")]
-        public async Task Test01_02_GetConformanceClass()
+        public async Task Test01_02_GetConformanceClasses()
         {
             // Arrange
             PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
 
-            TestContext.WriteLine("Testing GetConformanceClass");
+            TestContext.WriteLine("Testing GetConformanceClasses");
 
             // Act
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
 
             // Assert
-            ValidateResponse(response.GetRawResponse(), "GetConformanceClass");
+            ValidateResponse(response.GetRawResponse(), "GetConformanceClasses");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacConformanceClasses conformance = response.Value;
@@ -313,7 +312,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test listing mosaics for a collection.
         /// Python equivalent: test_07_list_mosaics
-        /// C# method: GetMosaics(collectionId) -> list_mosaics
+        /// C# method: GetMosaicsAsync(collectionId) -> list_mosaics
         /// </summary>
         [Test]
         [Category("STAC")]
@@ -325,7 +324,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             StacClient stacClient = client.GetStacClient();
             string collectionId = TestEnvironment.CollectionId;
 
-            TestContext.WriteLine($"Testing GetMosaics (list) for collection: {collectionId}");
+            TestContext.WriteLine($"Testing GetMosaicsAsync (list) for collection: {collectionId}");
 
             // Act
             Response<IReadOnlyList<StacMosaic>> response = await stacClient.GetMosaicsAsync(collectionId);

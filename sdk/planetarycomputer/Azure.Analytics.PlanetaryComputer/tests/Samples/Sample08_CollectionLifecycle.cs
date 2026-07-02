@@ -68,7 +68,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             };
 
             // Start collection creation (asynchronous operation)
-            Operation createOperation = await stacClient.CreateCollectionAsync(
+            await stacClient.CreateCollectionAsync(
                 WaitUntil.Started,
                 collection
             );
@@ -107,7 +107,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             collection.Description = "Test collection - UPDATED";
 
             // Replace the collection with the updated version
-            Response<StacCollectionResource> updateResponse = await stacClient.CreateOrReplaceCollectionAsync(
+            Response<StacCollectionResource> updateResponse = await stacClient.ReplaceCollectionAsync(
                 collectionId,
                 collection
             );
@@ -139,7 +139,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "my-test-collection";
 
             // Start collection deletion (asynchronous operation)
-            Operation deleteOperation = await stacClient.DeleteCollectionAsync(
+            await stacClient.DeleteCollectionAsync(
                 WaitUntil.Started,
                 collectionId,
                 null

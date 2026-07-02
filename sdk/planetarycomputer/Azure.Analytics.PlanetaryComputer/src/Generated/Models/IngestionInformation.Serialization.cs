@@ -114,6 +114,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("sourceCatalogUrl"u8);
                 writer.WriteStringValue(SourceCatalogUrl.AbsoluteUri);
             }
+            if (Optional.IsDefined(StacGeoparquetUrl))
+            {
+                writer.WritePropertyName("stacGeoparquetUrl"u8);
+                writer.WriteStringValue(StacGeoparquetUrl.AbsoluteUri);
+            }
             if (Optional.IsDefined(SkipExistingItems))
             {
                 writer.WritePropertyName("skipExistingItems"u8);
@@ -180,6 +185,7 @@ namespace Azure.Analytics.PlanetaryComputer
             IngestionType importType = default;
             string displayName = default;
             Uri sourceCatalogUrl = default;
+            Uri stacGeoparquetUrl = default;
             bool? skipExistingItems = default;
             bool? keepOriginalAssets = default;
             DateTimeOffset creationTime = default;
@@ -209,6 +215,15 @@ namespace Azure.Analytics.PlanetaryComputer
                         continue;
                     }
                     sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("stacGeoparquetUrl"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stacGeoparquetUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("skipExistingItems"u8))
@@ -249,6 +264,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 importType,
                 displayName,
                 sourceCatalogUrl,
+                stacGeoparquetUrl,
                 skipExistingItems,
                 keepOriginalAssets,
                 creationTime,

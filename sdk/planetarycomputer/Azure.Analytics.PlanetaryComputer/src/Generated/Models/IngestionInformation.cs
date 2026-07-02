@@ -28,17 +28,19 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="importType"> Ingestion type. </param>
         /// <param name="displayName"> Ingestion name. </param>
         /// <param name="sourceCatalogUrl"> Source catalog URL. Required for StaticCatalog ingestion type. </param>
+        /// <param name="stacGeoparquetUrl"> Parquet catalog URL. Required for StacGeoparquet ingestion type. </param>
         /// <param name="skipExistingItems"> Skip processing existing items in the catalog. </param>
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
         /// <param name="creationTime"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionInformation(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionInformation(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, Uri stacGeoparquetUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ImportType = importType;
             DisplayName = displayName;
             SourceCatalogUrl = sourceCatalogUrl;
+            StacGeoparquetUrl = stacGeoparquetUrl;
             SkipExistingItems = skipExistingItems;
             KeepOriginalAssets = keepOriginalAssets;
             CreationTime = creationTime;
@@ -57,6 +59,9 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Source catalog URL. Required for StaticCatalog ingestion type. </summary>
         public Uri SourceCatalogUrl { get; set; }
+
+        /// <summary> Parquet catalog URL. Required for StacGeoparquet ingestion type. </summary>
+        public Uri StacGeoparquetUrl { get; set; }
 
         /// <summary> Skip processing existing items in the catalog. </summary>
         public bool? SkipExistingItems { get; set; }
