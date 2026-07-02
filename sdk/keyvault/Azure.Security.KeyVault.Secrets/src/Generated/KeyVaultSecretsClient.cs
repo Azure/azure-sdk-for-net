@@ -246,7 +246,7 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, secretVersion, content, context);
+                using HttpMessage message = CreateUpdateSecretRequest(secretName, secretVersion, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -276,7 +276,7 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, secretVersion, content, context);
+                using HttpMessage message = CreateUpdateSecretRequest(secretName, secretVersion, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

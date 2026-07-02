@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppKeyInfo
     {
+        /// <summary> The name of the key. </summary>
         [Obsolete("Please use WebAppKeyInfo.Properties.Name instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Name
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
+        /// <summary> The value of the key. </summary>
         [Obsolete("Please use WebAppKeyInfo.Properties.Value instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Value
