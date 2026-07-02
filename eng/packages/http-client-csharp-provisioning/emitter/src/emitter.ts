@@ -4,7 +4,6 @@
 import { EmitContext } from "@typespec/compiler";
 
 import { $onEmit as $onMgmtEmit } from "@azure-typespec/http-client-csharp-mgmt";
-import type { AzureMgmtEmitterOptions } from "@azure-typespec/http-client-csharp-mgmt";
 import { AzureProvisioningEmitterOptions } from "./options.js";
 
 export async function $onEmit(
@@ -14,5 +13,5 @@ export async function $onEmit(
   context.options["emitter-extension-path"] ??= import.meta.url;
   // Provisioning libraries use a flat namespace (no .Models sub-namespace)
   context.options["model-namespace"] = false;
-  await $onMgmtEmit(context as unknown as EmitContext<AzureMgmtEmitterOptions>);
+  await $onMgmtEmit(context);
 }
