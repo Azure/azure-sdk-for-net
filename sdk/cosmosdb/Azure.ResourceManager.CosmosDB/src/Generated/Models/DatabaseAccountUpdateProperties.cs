@@ -52,11 +52,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
-        /// <param name="diagnosticLogSettings"> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="capacity"> The object that represents all properties related to capacity enforcement on an account. </param>
-        /// <param name="capacityMode"> Indicates the capacityMode of the Cosmos DB account. </param>
-        /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
         /// <param name="keysMetadata"> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
         /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
@@ -65,11 +62,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
         /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
-        /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
-        /// <param name="softDeleteConfiguration"> The configuration for soft delete on the Cosmos DB account. </param>
         /// <param name="enforceHierarchicalPartitionKeyIdLastLevel"> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseAccountUpdateProperties(ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, DiagnosticLogSettings diagnosticLogSettings, bool? disableLocalAuth, CosmosDBAccountCapacity capacity, CapacityMode? capacityMode, bool? enableMaterializedViews, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enableAllVersionsAndDeletesChangeFeed, SoftDeleteConfiguration softDeleteConfiguration, bool? enforceHierarchicalPartitionKeyIdLastLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseAccountUpdateProperties(ConsistencyPolicy consistencyPolicy, IList<CosmosDBAccountLocation> locations, IList<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, IList<CosmosDBAccountCapability> capabilities, IList<CosmosDBVirtualNetworkRule> virtualNetworkRules, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, ApiProperties apiProperties, bool? isAnalyticalStorageEnabled, AnalyticalStorageConfiguration analyticalStorageConfiguration, CosmosDBAccountBackupPolicy backupPolicy, IList<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IList<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, CosmosDBAccountCapacity capacity, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, bool? enableBurstCapacity, CosmosDBMinimalTlsVersion? minimalTlsVersion, string customerManagedKeyStatus, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel, bool? enablePerRegionPerPartitionAutoscale, bool? enforceHierarchicalPartitionKeyIdLastLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsistencyPolicy = consistencyPolicy;
             Locations = locations;
@@ -93,11 +88,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Cors = cors;
             NetworkAclBypass = networkAclBypass;
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
-            DiagnosticLogSettings = diagnosticLogSettings;
             DisableLocalAuth = disableLocalAuth;
             Capacity = capacity;
-            CapacityMode = capacityMode;
-            EnableMaterializedViews = enableMaterializedViews;
             KeysMetadata = keysMetadata;
             EnablePartitionMerge = enablePartitionMerge;
             EnableBurstCapacity = enableBurstCapacity;
@@ -106,8 +98,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             EnablePriorityBasedExecution = enablePriorityBasedExecution;
             DefaultPriorityLevel = defaultPriorityLevel;
             EnablePerRegionPerPartitionAutoscale = enablePerRegionPerPartitionAutoscale;
-            EnableAllVersionsAndDeletesChangeFeed = enableAllVersionsAndDeletesChangeFeed;
-            SoftDeleteConfiguration = softDeleteConfiguration;
             EnforceHierarchicalPartitionKeyIdLastLevel = enforceHierarchicalPartitionKeyIdLastLevel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -200,10 +190,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("networkAclBypassResourceIds")]
         public IList<ResourceIdentifier> NetworkAclBypassResourceIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
-        /// <summary> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </summary>
-        [WirePath("diagnosticLogSettings")]
-        internal DiagnosticLogSettings DiagnosticLogSettings { get; set; }
-
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
@@ -211,14 +197,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
         [WirePath("capacity")]
         internal CosmosDBAccountCapacity Capacity { get; set; }
-
-        /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
-        [WirePath("capacityMode")]
-        public CapacityMode? CapacityMode { get; set; }
-
-        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
-        [WirePath("enableMaterializedViews")]
-        public bool? EnableMaterializedViews { get; set; }
 
         /// <summary> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
         [WirePath("keysMetadata")]
@@ -251,14 +229,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
         [WirePath("enablePerRegionPerPartitionAutoscale")]
         public bool? EnablePerRegionPerPartitionAutoscale { get; set; }
-
-        /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
-        [WirePath("enableAllVersionsAndDeletesChangeFeed")]
-        public bool? EnableAllVersionsAndDeletesChangeFeed { get; set; }
-
-        /// <summary> The configuration for soft delete on the Cosmos DB account. </summary>
-        [WirePath("softDeleteConfiguration")]
-        public SoftDeleteConfiguration SoftDeleteConfiguration { get; set; }
 
         /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
         [WirePath("enforceHierarchicalPartitionKeyIdLastLevel")]
@@ -297,24 +267,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
                 }
                 AnalyticalStorageConfiguration.SchemaType = value;
-            }
-        }
-
-        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
-        [WirePath("diagnosticLogSettings.enableFullTextQuery")]
-        public CosmosDBFullTextQueryState? DiagnosticLogEnableFullTextQuery
-        {
-            get
-            {
-                return DiagnosticLogSettings is null ? default : DiagnosticLogSettings.EnableFullTextQuery;
-            }
-            set
-            {
-                if (DiagnosticLogSettings is null)
-                {
-                    DiagnosticLogSettings = new DiagnosticLogSettings();
-                }
-                DiagnosticLogSettings.EnableFullTextQuery = value;
             }
         }
 

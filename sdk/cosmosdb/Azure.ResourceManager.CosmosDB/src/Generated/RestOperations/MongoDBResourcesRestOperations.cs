@@ -143,60 +143,6 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateMongoDBDatabaseRetrieveThroughputDistributionRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/mongodbDatabases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/throughputSettings/default/retrieveThroughputDistribution", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateMongoDBDatabaseRedistributeThroughputRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/mongodbDatabases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/throughputSettings/default/redistributeThroughput", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateGetMongoDBCollectionThroughputRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -247,64 +193,6 @@ namespace Azure.ResourceManager.CosmosDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateMongoDBContainerRetrieveThroughputDistributionRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/mongodbDatabases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionName, true);
-            uri.AppendPath("/throughputSettings/default/retrieveThroughputDistribution", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateMongoDBContainerRedistributeThroughputRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/mongodbDatabases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionName, true);
-            uri.AppendPath("/throughputSettings/default/redistributeThroughput", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -484,33 +372,6 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateMongoDBDatabasePartitionMergeRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/mongodbDatabases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/partitionMerge", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateGetMongoDBCollectionRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -635,35 +496,6 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetMongoDBCollectionPartitionMergeRequest(Guid subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/mongodbDatabases/", false);
-            uri.AppendPath(databaseName, true);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionName, true);
-            uri.AppendPath("/partitionMerge", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
 

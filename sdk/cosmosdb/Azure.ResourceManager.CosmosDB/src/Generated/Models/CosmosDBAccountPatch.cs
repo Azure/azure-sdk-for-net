@@ -410,42 +410,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
-        [WirePath("properties.capacityMode")]
-        public CapacityMode? CapacityMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountUpdateProperties();
-                }
-                Properties.CapacityMode = value;
-            }
-        }
-
-        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
-        [WirePath("properties.enableMaterializedViews")]
-        public bool? EnableMaterializedViews
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableMaterializedViews;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountUpdateProperties();
-                }
-                Properties.EnableMaterializedViews = value;
-            }
-        }
-
         /// <summary> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
         [WirePath("properties.keysMetadata")]
         public DatabaseAccountKeysMetadata KeysMetadata
@@ -582,42 +546,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
-        [WirePath("properties.enableAllVersionsAndDeletesChangeFeed")]
-        public bool? EnableAllVersionsAndDeletesChangeFeed
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableAllVersionsAndDeletesChangeFeed;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountUpdateProperties();
-                }
-                Properties.EnableAllVersionsAndDeletesChangeFeed = value;
-            }
-        }
-
-        /// <summary> The configuration for soft delete on the Cosmos DB account. </summary>
-        [WirePath("properties.softDeleteConfiguration")]
-        public SoftDeleteConfiguration SoftDeleteConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SoftDeleteConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountUpdateProperties();
-                }
-                Properties.SoftDeleteConfiguration = value;
-            }
-        }
-
         /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
         [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
         public bool? EnforceHierarchicalPartitionKeyIdLastLevel
@@ -669,24 +597,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     Properties = new DatabaseAccountUpdateProperties();
                 }
                 Properties.AnalyticalStorageSchemaType = value;
-            }
-        }
-
-        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
-        [WirePath("properties.diagnosticLogSettings.enableFullTextQuery")]
-        public CosmosDBFullTextQueryState? DiagnosticLogEnableFullTextQuery
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiagnosticLogEnableFullTextQuery;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountUpdateProperties();
-                }
-                Properties.DiagnosticLogEnableFullTextQuery = value;
             }
         }
 

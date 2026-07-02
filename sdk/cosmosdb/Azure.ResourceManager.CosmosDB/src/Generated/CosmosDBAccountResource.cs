@@ -75,29 +75,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string cosmosDBAccountApiVersion);
             _databaseAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseAccountsRestClient = new DatabaseAccounts(_databaseAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionRestClient = new Collection(_collectionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionPartitionRestClient = new CollectionPartition(_collectionPartitionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegion(_collectionPartitionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _collectionRegionRestClient = new CollectionRegion(_collectionRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseAccountRegionRestClient = new DatabaseAccountRegion(_databaseAccountRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _databaseRestClient = new Database(_databaseClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeId(_partitionKeyRangeIdClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegion(_partitionKeyRangeIdRegionClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _percentileRestClient = new Percentile(_percentileClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _percentileSourceTargetRestClient = new PercentileSourceTarget(_percentileSourceTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-04-01-preview");
+            _percentileTargetRestClient = new PercentileTarget(_percentileTargetClientDiagnostics, Pipeline, Endpoint, cosmosDBAccountApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1393,7 +1393,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1532,7 +1532,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1638,7 +1638,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1686,7 +1686,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1772,7 +1772,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1854,7 +1854,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1898,7 +1898,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1946,7 +1946,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1994,7 +1994,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2034,7 +2034,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2074,7 +2074,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2127,7 +2127,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2180,7 +2180,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2233,7 +2233,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2286,7 +2286,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2339,7 +2339,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2448,7 +2448,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2504,7 +2504,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2548,7 +2548,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2592,7 +2592,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2642,7 +2642,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2692,7 +2692,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2739,7 +2739,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2786,7 +2786,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2839,7 +2839,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3151,72 +3151,6 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of CosmosDBCopyJobs in the <see cref="CosmosDBAccountResource"/>. </summary>
-        /// <returns> An object representing collection of CosmosDBCopyJobs and their operations over a CosmosDBCopyJobResource. </returns>
-        public virtual CosmosDBCopyJobCollection GetCosmosDBCopyJobs()
-        {
-            return GetCachedClient(client => new CosmosDBCopyJobCollection(client, Id));
-        }
-
-        /// <summary> Get a Copy Job. </summary>
-        /// <param name="jobName"> Name of the Copy Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBCopyJobResource>> GetCosmosDBCopyJobAsync(string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            return await GetCosmosDBCopyJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Copy Job. </summary>
-        /// <param name="jobName"> Name of the Copy Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBCopyJobResource> GetCosmosDBCopyJob(string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            return GetCosmosDBCopyJobs().Get(jobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CosmosDBGraphs in the <see cref="CosmosDBAccountResource"/>. </summary>
-        /// <returns> An object representing collection of CosmosDBGraphs and their operations over a CosmosDBGraphResource. </returns>
-        public virtual CosmosDBGraphCollection GetCosmosDBGraphs()
-        {
-            return GetCachedClient(client => new CosmosDBGraphCollection(client, Id));
-        }
-
-        /// <summary> Gets the Graph resource under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="graphName"> Cosmos DB graph resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBGraphResource>> GetCosmosDBGraphAsync(string graphName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-
-            return await GetCosmosDBGraphs().GetAsync(graphName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the Graph resource under an existing Azure Cosmos DB database account with the provided name. </summary>
-        /// <param name="graphName"> Cosmos DB graph resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="graphName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CosmosDBGraphResource> GetCosmosDBGraph(string graphName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-
-            return GetCosmosDBGraphs().Get(graphName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBSqlDatabases in the <see cref="CosmosDBAccountResource"/>. </summary>
@@ -3714,72 +3648,6 @@ namespace Azure.ResourceManager.CosmosDB
             return GetGremlinRoleAssignments().Get(roleAssignmentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataTransferJobs in the <see cref="CosmosDBAccountResource"/>. </summary>
-        /// <returns> An object representing collection of DataTransferJobs and their operations over a DataTransferJobResource. </returns>
-        public virtual DataTransferJobCollection GetDataTransferJobs()
-        {
-            return GetCachedClient(client => new DataTransferJobCollection(client, Id));
-        }
-
-        /// <summary> Get a Data Transfer Job. </summary>
-        /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataTransferJobResource>> GetDataTransferJobAsync(string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            return await GetDataTransferJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Data Transfer Job. </summary>
-        /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataTransferJobResource> GetDataTransferJob(string jobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            return GetDataTransferJobs().Get(jobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurations in the <see cref="CosmosDBAccountResource"/>. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurations and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
-        {
-            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
-        }
-
-        /// <summary> Gets effective Network Security Perimeter Configuration for association. </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
-
-            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets effective Network Security Perimeter Configuration for association. </summary>
-        /// <param name="networkSecurityPerimeterConfigurationName"> The name for Network Security Perimeter configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
-
-            return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of NotebookWorkspaces in the <see cref="CosmosDBAccountResource"/>. </summary>
         /// <returns> An object representing collection of NotebookWorkspaces and their operations over a NotebookWorkspaceResource. </returns>
         public virtual NotebookWorkspaceCollection GetNotebookWorkspaces()
@@ -3869,39 +3737,6 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             return GetCosmosDBPrivateLinkResources().Get(groupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ChaosFaults in the <see cref="CosmosDBAccountResource"/>. </summary>
-        /// <returns> An object representing collection of ChaosFaults and their operations over a ChaosFaultResource. </returns>
-        public virtual ChaosFaultCollection GetChaosFaults()
-        {
-            return GetCachedClient(client => new ChaosFaultCollection(client, Id));
-        }
-
-        /// <summary> Get Chaos Fault for a CosmosdB account for a particular Chaos Fault. </summary>
-        /// <param name="chaosFault"> The name of the ChaosFault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosFaultResource>> GetChaosFaultAsync(string chaosFault, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(chaosFault, nameof(chaosFault));
-
-            return await GetChaosFaults().GetAsync(chaosFault, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get Chaos Fault for a CosmosdB account for a particular Chaos Fault. </summary>
-        /// <param name="chaosFault"> The name of the ChaosFault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chaosFault"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="chaosFault"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ChaosFaultResource> GetChaosFault(string chaosFault, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(chaosFault, nameof(chaosFault));
-
-            return GetChaosFaults().Get(chaosFault, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBServices in the <see cref="CosmosDBAccountResource"/>. </summary>
