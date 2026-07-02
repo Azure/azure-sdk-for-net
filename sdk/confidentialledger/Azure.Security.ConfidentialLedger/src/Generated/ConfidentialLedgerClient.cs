@@ -6,21 +6,21 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.ConfidentialLedger.Models;
 
 namespace Azure.Security.ConfidentialLedger
 {
     // Data plane generated client.
-    /// <summary> The ConfidentialLedger service client. </summary>
+    /// <summary> Write and retrieve ledger entries against the Confidential Ledger service. </summary>
     public partial class ConfidentialLedgerClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _ledgerEndpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -34,12 +34,45 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
+        /// <summary> Gets the constitution used for governance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// The constitution is a script that assesses and applies proposals from
+        /// consortium members.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitutionAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<Constitution>> GetConstitutionAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetConstitutionAsync(context).ConfigureAwait(false);
+            return Response.FromValue(Constitution.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the constitution used for governance. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// The constitution is a script that assesses and applies proposals from
+        /// consortium members.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitution(CancellationToken)']/*" />
+        public virtual Response<Constitution> GetConstitution(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetConstitution(context);
+            return Response.FromValue(Constitution.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets the constitution used for governance.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetConstitutionAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -48,7 +81,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitutionAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
+        public virtual async Task<Response> GetConstitutionAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
@@ -72,13 +105,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetConstitution(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitution(RequestContext)']/*" />
-        public virtual Response GetConstitution(RequestContext context = null)
+        public virtual Response GetConstitution(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
             scope.Start();
@@ -94,6 +132,34 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets quotes for all nodes of the Confidential Ledger. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// A quote is an SGX enclave measurement that can be used to verify the validity
+        /// of a node and its enclave.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotesAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<ConfidentialLedgerEnclaves>> GetEnclaveQuotesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetEnclaveQuotesAsync(context).ConfigureAwait(false);
+            return Response.FromValue(ConfidentialLedgerEnclaves.FromResponse(response), response);
+        }
+
+        /// <summary> Gets quotes for all nodes of the Confidential Ledger. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// A quote is an SGX enclave measurement that can be used to verify the validity
+        /// of a node and its enclave.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotes(CancellationToken)']/*" />
+        public virtual Response<ConfidentialLedgerEnclaves> GetEnclaveQuotes(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetEnclaveQuotes(context);
+            return Response.FromValue(ConfidentialLedgerEnclaves.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets quotes for all nodes of the Confidential Ledger.
         /// <list type="bullet">
@@ -102,13 +168,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEnclaveQuotesAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
+        public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
@@ -132,13 +203,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEnclaveQuotes(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotes(RequestContext)']/*" />
-        public virtual Response GetEnclaveQuotes(RequestContext context = null)
+        public virtual Response GetEnclaveQuotes(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
             scope.Start();
@@ -154,12 +230,53 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Writes a ledger entry. </summary>
+        /// <param name="entry"> Ledger entry. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> Comma separated tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
+        /// <remarks> A collection id may optionally be specified. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntryAsync(LedgerEntry,string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<LedgerWriteResult>> CreateLedgerEntryAsync(LedgerEntry entry, string collectionId = null, string tags = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entry, nameof(entry));
+
+            using RequestContent content = entry.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateLedgerEntryAsync(content, collectionId, tags, context).ConfigureAwait(false);
+            return Response.FromValue(LedgerWriteResult.FromResponse(response), response);
+        }
+
+        /// <summary> Writes a ledger entry. </summary>
+        /// <param name="entry"> Ledger entry. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="tags"> Comma separated tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
+        /// <remarks> A collection id may optionally be specified. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntry(LedgerEntry,string,string,CancellationToken)']/*" />
+        public virtual Response<LedgerWriteResult> CreateLedgerEntry(LedgerEntry entry, string collectionId = null, string tags = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(entry, nameof(entry));
+
+            using RequestContent content = entry.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateLedgerEntry(content, collectionId, tags, context);
+            return Response.FromValue(LedgerWriteResult.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Writes a ledger entry.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateLedgerEntryAsync(LedgerEntry,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -198,6 +315,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateLedgerEntry(LedgerEntry,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -227,11 +349,70 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
+        /// Gets the ledger entry at the specified transaction id. A collection id may
+        /// optionally be specified to indicate the collection from which to fetch the
+        /// value.
+        /// </summary>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// To return older ledger entries, the relevant sections of the ledger must be
+        /// read from disk and validated. To prevent blocking within the enclave, the
+        /// response will indicate whether the entry is ready and part of the response, or
+        /// if the loading is still ongoing.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<LedgerQueryResult>> GetLedgerEntryAsync(string transactionId, string collectionId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetLedgerEntryAsync(transactionId, collectionId, context).ConfigureAwait(false);
+            return Response.FromValue(LedgerQueryResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets the ledger entry at the specified transaction id. A collection id may
+        /// optionally be specified to indicate the collection from which to fetch the
+        /// value.
+        /// </summary>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// To return older ledger entries, the relevant sections of the ledger must be
+        /// read from disk and validated. To prevent blocking within the enclave, the
+        /// response will indicate whether the entry is ready and part of the response, or
+        /// if the loading is still ongoing.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,CancellationToken)']/*" />
+        public virtual Response<LedgerQueryResult> GetLedgerEntry(string transactionId, string collectionId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetLedgerEntry(transactionId, collectionId, context);
+            return Response.FromValue(LedgerQueryResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may
+        /// optionally be specified to indicate the collection from which to fetch the
+        /// value.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerEntryAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -244,7 +425,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, RequestContext context = null)
+        public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -263,11 +444,18 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may optionally be specified to indicate the collection from which to fetch the value.
+        /// [Protocol Method] Gets the ledger entry at the specified transaction id. A collection id may
+        /// optionally be specified to indicate the collection from which to fetch the
+        /// value.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerEntry(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -280,7 +468,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,RequestContext)']/*" />
-        public virtual Response GetLedgerEntry(string transactionId, string collectionId = null, RequestContext context = null)
+        public virtual Response GetLedgerEntry(string transactionId, string collectionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -298,12 +486,47 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceiptAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<TransactionReceipt>> GetReceiptAsync(string transactionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetReceiptAsync(transactionId, context).ConfigureAwait(false);
+            return Response.FromValue(TransactionReceipt.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a receipt certifying ledger contents at a particular transaction id. </summary>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceipt(string,CancellationToken)']/*" />
+        public virtual Response<TransactionReceipt> GetReceipt(string transactionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetReceipt(transactionId, context);
+            return Response.FromValue(TransactionReceipt.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets a receipt certifying ledger contents at a particular transaction id.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetReceiptAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -315,7 +538,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceiptAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
+        public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -341,6 +564,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetReceipt(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
@@ -350,7 +578,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceipt(string,RequestContext)']/*" />
-        public virtual Response GetReceipt(string transactionId, RequestContext context = null)
+        public virtual Response GetReceipt(string transactionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -368,12 +596,47 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatusAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<TransactionStatus>> GetTransactionStatusAsync(string transactionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetTransactionStatusAsync(transactionId, context).ConfigureAwait(false);
+            return Response.FromValue(TransactionStatus.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the status of an entry identified by a transaction id. </summary>
+        /// <param name="transactionId"> Identifies a write transaction. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatus(string,CancellationToken)']/*" />
+        public virtual Response<TransactionStatus> GetTransactionStatus(string transactionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetTransactionStatus(transactionId, context);
+            return Response.FromValue(TransactionStatus.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets the status of an entry identified by a transaction id.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTransactionStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -385,7 +648,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
+        public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -411,6 +674,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTransactionStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transactionId"> Identifies a write transaction. </param>
@@ -420,7 +688,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatus(string,RequestContext)']/*" />
-        public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
+        public virtual Response GetTransactionStatus(string transactionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
@@ -438,12 +706,41 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets the current value available in the ledger. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> A collection id may optionally be specified. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<LedgerEntry>> GetCurrentLedgerEntryAsync(string collectionId = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetCurrentLedgerEntryAsync(collectionId, context).ConfigureAwait(false);
+            return Response.FromValue(LedgerEntry.FromResponse(response), response);
+        }
+
+        /// <summary> Gets the current value available in the ledger. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> A collection id may optionally be specified. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(string,CancellationToken)']/*" />
+        public virtual Response<LedgerEntry> GetCurrentLedgerEntry(string collectionId = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetCurrentLedgerEntry(collectionId, context);
+            return Response.FromValue(LedgerEntry.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets the current value available in the ledger.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCurrentLedgerEntryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -453,7 +750,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCurrentLedgerEntryAsync(string collectionId = null, RequestContext context = null)
+        public virtual async Task<Response> GetCurrentLedgerEntryAsync(string collectionId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
@@ -477,6 +774,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCurrentLedgerEntry(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection id. </param>
@@ -484,7 +786,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(string,RequestContext)']/*" />
-        public virtual Response GetCurrentLedgerEntry(string collectionId = null, RequestContext context = null)
+        public virtual Response GetCurrentLedgerEntry(string collectionId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
             scope.Start();
@@ -500,6 +802,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a user from the Confidential Ledger.
         /// <list type="bullet">
@@ -513,12 +816,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -534,6 +838,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a user from the Confidential Ledger.
         /// <list type="bullet">
@@ -547,12 +852,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUser(string,RequestContext)']/*" />
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -568,6 +874,36 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets a user. </summary>
+        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<LedgerUser>> GetUserAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUserAsync(userId, context).ConfigureAwait(false);
+            return Response.FromValue(LedgerUser.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a user. </summary>
+        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUser(string,CancellationToken)']/*" />
+        public virtual Response<LedgerUser> GetUser(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUser(userId, context);
+            return Response.FromValue(LedgerUser.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets a user.
         /// <list type="bullet">
@@ -576,17 +912,23 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
+        public virtual async Task<Response> GetUserAsync(string userId, RequestContext context)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -610,17 +952,23 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUser(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUser(string,RequestContext)']/*" />
-        public virtual Response GetUser(string userId, RequestContext context = null)
+        public virtual Response GetUser(string userId, RequestContext context)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -650,12 +998,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUserAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
@@ -686,12 +1035,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUser(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
@@ -708,6 +1058,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a user with multiple roles from the Confidential Ledger.
         /// <list type="bullet">
@@ -721,12 +1072,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteLedgerUserAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteLedgerUserAsync(string userId, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteLedgerUser");
             scope.Start();
@@ -742,6 +1094,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a user with multiple roles from the Confidential Ledger.
         /// <list type="bullet">
@@ -755,12 +1108,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteLedgerUser(string,RequestContext)']/*" />
         public virtual Response DeleteLedgerUser(string userId, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteLedgerUser");
             scope.Start();
@@ -776,6 +1130,36 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets a user with multiple roles. </summary>
+        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUserAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<LedgerUserMultipleRoles>> GetLedgerUserAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetLedgerUserAsync(userId, context).ConfigureAwait(false);
+            return Response.FromValue(LedgerUserMultipleRoles.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a user with multiple roles. </summary>
+        /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUser(string,CancellationToken)']/*" />
+        public virtual Response<LedgerUserMultipleRoles> GetLedgerUser(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetLedgerUser(userId, context);
+            return Response.FromValue(LedgerUserMultipleRoles.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets a user with multiple roles.
         /// <list type="bullet">
@@ -784,17 +1168,23 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerUserAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUserAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLedgerUserAsync(string userId, RequestContext context = null)
+        public virtual async Task<Response> GetLedgerUserAsync(string userId, RequestContext context)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerUser");
             scope.Start();
@@ -818,17 +1208,23 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerUser(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userId"> The user id, either an AAD object ID or certificate fingerprint. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUser(string,RequestContext)']/*" />
-        public virtual Response GetLedgerUser(string userId, RequestContext context = null)
+        public virtual Response GetLedgerUser(string userId, RequestContext context)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerUser");
             scope.Start();
@@ -858,12 +1254,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateLedgerUserAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateLedgerUserAsync(string userId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateLedgerUser");
@@ -894,12 +1291,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateLedgerUser(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateLedgerUser(string userId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateLedgerUser");
@@ -914,6 +1312,28 @@ namespace Azure.Security.ConfidentialLedger
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a user defined endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the user defined endpoint in the ACL instance. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<Bundle>> GetUserDefinedEndpointAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUserDefinedEndpointAsync(context).ConfigureAwait(false);
+            return Response.FromValue(Bundle.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a user defined endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Returns the user defined endpoint in the ACL instance. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpoint(CancellationToken)']/*" />
+        public virtual Response<Bundle> GetUserDefinedEndpoint(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUserDefinedEndpoint(context);
+            return Response.FromValue(Bundle.FromResponse(response), response);
         }
 
         /// <summary>
@@ -922,6 +1342,11 @@ namespace Azure.Security.ConfidentialLedger
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedEndpointAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -930,7 +1355,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetUserDefinedEndpointAsync(RequestContext context = null)
+        public virtual async Task<Response> GetUserDefinedEndpointAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUserDefinedEndpoint");
             scope.Start();
@@ -954,13 +1379,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedEndpoint(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpoint(RequestContext)']/*" />
-        public virtual Response GetUserDefinedEndpoint(RequestContext context = null)
+        public virtual Response GetUserDefinedEndpoint(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUserDefinedEndpoint");
             scope.Start();
@@ -976,12 +1406,49 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Creates a user defined endpoint. </summary>
+        /// <param name="bundle"> Specify a user defined endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bundle"/> is null. </exception>
+        /// <remarks> Creates the user defined endpoint in the ACL instance. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedEndpointAsync(Bundle,CancellationToken)']/*" />
+        public virtual async Task<Response> CreateUserDefinedEndpointAsync(Bundle bundle, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(bundle, nameof(bundle));
+
+            using RequestContent content = bundle.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateUserDefinedEndpointAsync(content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Creates a user defined endpoint. </summary>
+        /// <param name="bundle"> Specify a user defined endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bundle"/> is null. </exception>
+        /// <remarks> Creates the user defined endpoint in the ACL instance. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedEndpoint(Bundle,CancellationToken)']/*" />
+        public virtual Response CreateUserDefinedEndpoint(Bundle bundle, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(bundle, nameof(bundle));
+
+            using RequestContent content = bundle.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateUserDefinedEndpoint(content, context);
+            return response;
+        }
+
         /// <summary>
         /// [Protocol Method] Creates a user defined endpoint.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateUserDefinedEndpointAsync(Bundle,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1018,6 +1485,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateUserDefinedEndpoint(Bundle,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1044,12 +1516,39 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Runtime options for user defined endpoints. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> It returns the runtime options. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetRuntimeOptionsAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<JsRuntimeOptions>> GetRuntimeOptionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetRuntimeOptionsAsync(context).ConfigureAwait(false);
+            return Response.FromValue(JsRuntimeOptions.FromResponse(response), response);
+        }
+
+        /// <summary> Runtime options for user defined endpoints. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> It returns the runtime options. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetRuntimeOptions(CancellationToken)']/*" />
+        public virtual Response<JsRuntimeOptions> GetRuntimeOptions(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetRuntimeOptions(context);
+            return Response.FromValue(JsRuntimeOptions.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Runtime options for user defined endpoints.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRuntimeOptionsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1058,7 +1557,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetRuntimeOptionsAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetRuntimeOptionsAsync(RequestContext context = null)
+        public virtual async Task<Response> GetRuntimeOptionsAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetRuntimeOptions");
             scope.Start();
@@ -1080,6 +1579,11 @@ namespace Azure.Security.ConfidentialLedger
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRuntimeOptions(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1088,7 +1592,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetRuntimeOptions(RequestContext)']/*" />
-        public virtual Response GetRuntimeOptions(RequestContext context = null)
+        public virtual Response GetRuntimeOptions(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetRuntimeOptions");
             scope.Start();
@@ -1119,16 +1623,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateRuntimeOptionsAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateRuntimeOptionsAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateRuntimeOptionsStableAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateRuntimeOptionsStableAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateRuntimeOptions");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateRuntimeOptionsStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRuntimeOptionsRequest(content, context);
+                using HttpMessage message = CreateUpdateRuntimeOptionsStableRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1153,16 +1657,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateRuntimeOptions(RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateRuntimeOptions(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateRuntimeOptionsStable(RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateRuntimeOptionsStable(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateRuntimeOptions");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateRuntimeOptionsStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRuntimeOptionsRequest(content, context);
+                using HttpMessage message = CreateUpdateRuntimeOptionsStableRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1172,12 +1676,47 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Module for user defined endpoints. </summary>
+        /// <param name="moduleName"> module name of the user defined endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        /// <remarks> It gets the module for the user defined endpoint. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointsModuleAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<ModuleDef>> GetUserDefinedEndpointsModuleAsync(string moduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(moduleName, nameof(moduleName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUserDefinedEndpointsModuleAsync(moduleName, context).ConfigureAwait(false);
+            return Response.FromValue(ModuleDef.FromResponse(response), response);
+        }
+
+        /// <summary> Module for user defined endpoints. </summary>
+        /// <param name="moduleName"> module name of the user defined endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        /// <remarks> It gets the module for the user defined endpoint. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointsModule(string,CancellationToken)']/*" />
+        public virtual Response<ModuleDef> GetUserDefinedEndpointsModule(string moduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(moduleName, nameof(moduleName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUserDefinedEndpointsModule(moduleName, context);
+            return Response.FromValue(ModuleDef.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Module for user defined endpoints.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedEndpointsModuleAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1188,7 +1727,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointsModuleAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUserDefinedEndpointsModuleAsync(string moduleName, RequestContext context = null)
+        public virtual async Task<Response> GetUserDefinedEndpointsModuleAsync(string moduleName, RequestContext context)
         {
             Argument.AssertNotNull(moduleName, nameof(moduleName));
 
@@ -1214,6 +1753,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedEndpointsModule(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moduleName"> module name of the user defined endpoint. </param>
@@ -1222,7 +1766,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedEndpointsModule(string,RequestContext)']/*" />
-        public virtual Response GetUserDefinedEndpointsModule(string moduleName, RequestContext context = null)
+        public virtual Response GetUserDefinedEndpointsModule(string moduleName, RequestContext context)
         {
             Argument.AssertNotNull(moduleName, nameof(moduleName));
 
@@ -1240,6 +1784,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a user defined function from the Confidential Ledger.
         /// <list type="bullet">
@@ -1275,6 +1820,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a user defined function from the Confidential Ledger.
         /// <list type="bullet">
@@ -1310,12 +1856,49 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets a user defined function. </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Returns the user defined function in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctionAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<UserDefinedFunction>> GetUserDefinedFunctionAsync(string functionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUserDefinedFunctionAsync(functionId, context).ConfigureAwait(false);
+            return Response.FromValue(UserDefinedFunction.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a user defined function. </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Returns the user defined function in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunction(string,CancellationToken)']/*" />
+        public virtual Response<UserDefinedFunction> GetUserDefinedFunction(string functionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUserDefinedFunction(functionId, context);
+            return Response.FromValue(UserDefinedFunction.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets a user defined function.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedFunctionAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1327,7 +1910,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctionAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUserDefinedFunctionAsync(string functionId, RequestContext context = null)
+        public virtual async Task<Response> GetUserDefinedFunctionAsync(string functionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
 
@@ -1353,6 +1936,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedFunction(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionId"> Identifies a user defined function. </param>
@@ -1362,7 +1950,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunction(string,RequestContext)']/*" />
-        public virtual Response GetUserDefinedFunction(string functionId, RequestContext context = null)
+        public virtual Response GetUserDefinedFunction(string functionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
 
@@ -1380,12 +1968,55 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Creates a user defined function. </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="userDefinedFunction"> Specify a user defined function of a Confidential Ledger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> or <paramref name="userDefinedFunction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates the user defined function in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedFunctionAsync(string,UserDefinedFunction,CancellationToken)']/*" />
+        public virtual async Task<Response<UserDefinedFunction>> CreateUserDefinedFunctionAsync(string functionId, UserDefinedFunction userDefinedFunction, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+            Argument.AssertNotNull(userDefinedFunction, nameof(userDefinedFunction));
+
+            using RequestContent content = userDefinedFunction.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateUserDefinedFunctionAsync(functionId, content, context).ConfigureAwait(false);
+            return Response.FromValue(UserDefinedFunction.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a user defined function. </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="userDefinedFunction"> Specify a user defined function of a Confidential Ledger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> or <paramref name="userDefinedFunction"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Creates the user defined function in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedFunction(string,UserDefinedFunction,CancellationToken)']/*" />
+        public virtual Response<UserDefinedFunction> CreateUserDefinedFunction(string functionId, UserDefinedFunction userDefinedFunction, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+            Argument.AssertNotNull(userDefinedFunction, nameof(userDefinedFunction));
+
+            using RequestContent content = userDefinedFunction.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateUserDefinedFunction(functionId, content, context);
+            return Response.FromValue(UserDefinedFunction.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates a user defined function.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateUserDefinedFunctionAsync(string,UserDefinedFunction,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1425,6 +2056,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateUserDefinedFunction(string,UserDefinedFunction,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionId"> Identifies a user defined function. </param>
@@ -1454,12 +2090,53 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Executes a user defined function. </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="userDefinedFunctionExecutionProperties"> Specify user defined function execution properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Executes the user defined function in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='ExecuteUserDefinedFunctionAsync(string,UserDefinedFunctionExecutionProperties,CancellationToken)']/*" />
+        public virtual async Task<Response<UserDefinedFunctionExecutionResponse>> ExecuteUserDefinedFunctionAsync(string functionId, UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using RequestContent content = userDefinedFunctionExecutionProperties?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await ExecuteUserDefinedFunctionAsync(functionId, content, context).ConfigureAwait(false);
+            return Response.FromValue(UserDefinedFunctionExecutionResponse.FromResponse(response), response);
+        }
+
+        /// <summary> Executes a user defined function. </summary>
+        /// <param name="functionId"> Identifies a user defined function. </param>
+        /// <param name="userDefinedFunctionExecutionProperties"> Specify user defined function execution properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Executes the user defined function in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='ExecuteUserDefinedFunction(string,UserDefinedFunctionExecutionProperties,CancellationToken)']/*" />
+        public virtual Response<UserDefinedFunctionExecutionResponse> ExecuteUserDefinedFunction(string functionId, UserDefinedFunctionExecutionProperties userDefinedFunctionExecutionProperties = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(functionId, nameof(functionId));
+
+            using RequestContent content = userDefinedFunctionExecutionProperties?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = ExecuteUserDefinedFunction(functionId, content, context);
+            return Response.FromValue(UserDefinedFunctionExecutionResponse.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Executes a user defined function.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ExecuteUserDefinedFunctionAsync(string,UserDefinedFunctionExecutionProperties,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1498,6 +2175,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ExecuteUserDefinedFunction(string,UserDefinedFunctionExecutionProperties,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionId"> Identifies a user defined function. </param>
@@ -1526,12 +2208,47 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Gets role actions for user defined roles. </summary>
+        /// <param name="roleName"> user defined role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        /// <remarks> user defined roles allow users to define and manage app specific AuthZ policy. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedRoleAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<UserDefinedRole>> GetUserDefinedRoleAsync(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleName, nameof(roleName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetUserDefinedRoleAsync(roleName, context).ConfigureAwait(false);
+            return Response.FromValue(UserDefinedRole.FromResponse(response), response);
+        }
+
+        /// <summary> Gets role actions for user defined roles. </summary>
+        /// <param name="roleName"> user defined role name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        /// <remarks> user defined roles allow users to define and manage app specific AuthZ policy. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedRole(string,CancellationToken)']/*" />
+        public virtual Response<UserDefinedRole> GetUserDefinedRole(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleName, nameof(roleName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetUserDefinedRole(roleName, context);
+            return Response.FromValue(UserDefinedRole.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets role actions for user defined roles
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedRoleAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1542,7 +2259,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedRoleAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUserDefinedRoleAsync(string roleName, RequestContext context = null)
+        public virtual async Task<Response> GetUserDefinedRoleAsync(string roleName, RequestContext context)
         {
             Argument.AssertNotNull(roleName, nameof(roleName));
 
@@ -1568,6 +2285,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedRole(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleName"> user defined role name. </param>
@@ -1576,7 +2298,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedRole(string,RequestContext)']/*" />
-        public virtual Response GetUserDefinedRole(string roleName, RequestContext context = null)
+        public virtual Response GetUserDefinedRole(string roleName, RequestContext context)
         {
             Argument.AssertNotNull(roleName, nameof(roleName));
 
@@ -1594,12 +2316,49 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        /// <summary> Creates new roles and their actions. </summary>
+        /// <param name="body"> Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> User defined roles allow users to define and manage app specific AuthZ policy. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedRoleStableAsync(UserDefinedRoles,CancellationToken)']/*" />
+        public virtual async Task<Response<UserDefinedRoles>> CreateUserDefinedRoleStableAsync(UserDefinedRoles body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateUserDefinedRoleStableAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(UserDefinedRoles.FromResponse(response), response);
+        }
+
+        /// <summary> Creates new roles and their actions. </summary>
+        /// <param name="body"> Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> User defined roles allow users to define and manage app specific AuthZ policy. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedRoleStable(UserDefinedRoles,CancellationToken)']/*" />
+        public virtual Response<UserDefinedRoles> CreateUserDefinedRoleStable(UserDefinedRoles body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateUserDefinedRoleStable(content, context);
+            return Response.FromValue(UserDefinedRoles.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Creates new roles and their actions
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateUserDefinedRoleStableAsync(UserDefinedRoles,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1609,16 +2368,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedRoleAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateUserDefinedRoleAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedRoleStableAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateUserDefinedRoleStableAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateUserDefinedRole");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateUserDefinedRoleStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateUserDefinedRoleRequest(content, context);
+                using HttpMessage message = CreateCreateUserDefinedRoleStableRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1636,6 +2395,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateUserDefinedRoleStable(UserDefinedRoles,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1643,16 +2407,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedRole(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateUserDefinedRole(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateUserDefinedRoleStable(RequestContent,RequestContext)']/*" />
+        public virtual Response CreateUserDefinedRoleStable(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateUserDefinedRole");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateUserDefinedRoleStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateUserDefinedRoleRequest(content, context);
+                using HttpMessage message = CreateCreateUserDefinedRoleStableRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1663,7 +2427,8 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Patch replaces the allowed action on existing roles,if the desire is to remove an existing action, the role must be deleted and recreated.
+        /// [Protocol Method] Patch replaces the allowed action on existing roles,if the desire is to remove
+        /// an existing action, the role must be deleted and recreated.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1677,16 +2442,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateUserDefinedRoleAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateUserDefinedRoleAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateUserDefinedRoleStableAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateUserDefinedRoleStableAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateUserDefinedRole");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateUserDefinedRoleStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateUserDefinedRoleRequest(content, context);
+                using HttpMessage message = CreateUpdateUserDefinedRoleStableRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1697,7 +2462,8 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary>
-        /// [Protocol Method] Patch replaces the allowed action on existing roles,if the desire is to remove an existing action, the role must be deleted and recreated.
+        /// [Protocol Method] Patch replaces the allowed action on existing roles,if the desire is to remove
+        /// an existing action, the role must be deleted and recreated.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1711,16 +2477,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateUserDefinedRole(RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateUserDefinedRole(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='UpdateUserDefinedRoleStable(RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateUserDefinedRoleStable(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateUserDefinedRole");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.UpdateUserDefinedRoleStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateUserDefinedRoleRequest(content, context);
+                using HttpMessage message = CreateUpdateUserDefinedRoleStableRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1730,6 +2496,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes user defined roles
         /// <list type="bullet">
@@ -1745,16 +2512,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserDefinedRoleAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteUserDefinedRoleAsync(string roleName, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserDefinedRoleStableAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteUserDefinedRoleStableAsync(string roleName, RequestContext context = null)
         {
             Argument.AssertNotNull(roleName, nameof(roleName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUserDefinedRole");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUserDefinedRoleStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteUserDefinedRoleRequest(roleName, context);
+                using HttpMessage message = CreateDeleteUserDefinedRoleStableRequest(roleName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1764,6 +2531,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes user defined roles
         /// <list type="bullet">
@@ -1779,16 +2547,16 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserDefinedRole(string,RequestContext)']/*" />
-        public virtual Response DeleteUserDefinedRole(string roleName, RequestContext context = null)
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserDefinedRoleStable(string,RequestContext)']/*" />
+        public virtual Response DeleteUserDefinedRoleStable(string roleName, RequestContext context = null)
         {
             Argument.AssertNotNull(roleName, nameof(roleName));
 
-            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUserDefinedRole");
+            using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUserDefinedRoleStable");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteUserDefinedRoleRequest(roleName, context);
+                using HttpMessage message = CreateDeleteUserDefinedRoleStableRequest(roleName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1796,6 +2564,30 @@ namespace Azure.Security.ConfidentialLedger
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Lists the consortium members. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Consortium members can manage the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConsortiumMembersAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<ConsortiumMember> GetConsortiumMembersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConsortiumMembersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConsortiumMembersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsortiumMember.DeserializeConsortiumMember(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
+        }
+
+        /// <summary> Lists the consortium members. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Consortium members can manage the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConsortiumMembers(CancellationToken)']/*" />
+        public virtual Pageable<ConsortiumMember> GetConsortiumMembers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConsortiumMembersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConsortiumMembersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsortiumMember.DeserializeConsortiumMember(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
         /// <summary>
@@ -1806,13 +2598,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetConsortiumMembersAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConsortiumMembersAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetConsortiumMembersAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetConsortiumMembersAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConsortiumMembersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConsortiumMembersNextPageRequest(nextLink, context);
@@ -1827,17 +2624,46 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetConsortiumMembers(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConsortiumMembers(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetConsortiumMembers(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetConsortiumMembers(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConsortiumMembersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConsortiumMembersNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
+        }
+
+        /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Collection ids are user-created collections of ledger entries. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollectionsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<Collection> GetCollectionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Collection.DeserializeCollection(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
+        }
+
+        /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Collection ids are user-created collections of ledger entries. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollections(CancellationToken)']/*" />
+        public virtual Pageable<Collection> GetCollections(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Collection.DeserializeCollection(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
         /// <summary>
@@ -1848,13 +2674,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCollectionsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollectionsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetCollectionsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetCollectionsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
@@ -1869,17 +2700,140 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetCollections(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollections(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetCollections(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetCollections(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
+        }
+
+        /// <summary> Gets a list of tags for a collection. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves the tags associated with a collection. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTagsAsync(string,CancellationToken)']/*" />
+        public virtual AsyncPageable<string> GetTagsAsync(string collectionId = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTagsRequest(collectionId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTagsNextPageRequest(nextLink, collectionId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetTags", "tags", "nextLink", context);
+        }
+
+        /// <summary> Gets a list of tags for a collection. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves the tags associated with a collection. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTags(string,CancellationToken)']/*" />
+        public virtual Pageable<string> GetTags(string collectionId = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTagsRequest(collectionId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTagsNextPageRequest(nextLink, collectionId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetTags", "tags", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of tags for a collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTagsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTagsAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTagsAsync(string collectionId, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTagsRequest(collectionId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTagsNextPageRequest(nextLink, collectionId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetTags", "tags", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of tags for a collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetTags(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTags(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTags(string collectionId, RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTagsRequest(collectionId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTagsNextPageRequest(nextLink, collectionId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetTags", "tags", "nextLink", context);
+        }
+
+        /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
+        /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
+        /// <param name="tag"> Single tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// A collection id may optionally be specified. Only entries in the specified (or
+        /// default) collection will be returned.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntriesAsync(string,string,string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<LedgerEntry> GetLedgerEntriesAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, string tag = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, tag, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, tag, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LedgerEntry.DeserializeLedgerEntry(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
+        }
+
+        /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
+        /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
+        /// <param name="tag"> Single tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        /// A collection id may optionally be specified. Only entries in the specified (or
+        /// default) collection will be returned.
+        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntries(string,string,string,string,CancellationToken)']/*" />
+        public virtual Pageable<LedgerEntry> GetLedgerEntries(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, string tag = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, tag, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, tag, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LedgerEntry.DeserializeLedgerEntry(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
         /// <summary>
@@ -1888,6 +2842,11 @@ namespace Azure.Security.ConfidentialLedger
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerEntriesAsync(string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1900,7 +2859,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntriesAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, string tag = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string collectionId, string fromTransactionId, string toTransactionId, string tag, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, tag, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, tag, context);
@@ -1915,6 +2874,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerEntries(string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection id. </param>
@@ -1925,11 +2889,35 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntries(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetLedgerEntries(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, string tag = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetLedgerEntries(string collectionId, string fromTransactionId, string toTransactionId, string tag, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, tag, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, tag, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
+        }
+
+        /// <summary> Gets details on a list of users. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> All users' object IDs and single role per user will be returned. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUsersAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<LedgerUser> GetUsersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUsersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUsersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LedgerUser.DeserializeLedgerUser(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUsers", "ledgerUsers", "nextLink", context);
+        }
+
+        /// <summary> Gets details on a list of users. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> All users' object IDs and single role per user will be returned. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUsers(CancellationToken)']/*" />
+        public virtual Pageable<LedgerUser> GetUsers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUsersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUsersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LedgerUser.DeserializeLedgerUser(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUsers", "ledgerUsers", "nextLink", context);
         }
 
         /// <summary>
@@ -1940,13 +2928,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUsersAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUsersAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetUsersAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetUsersAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUsersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUsersNextPageRequest(nextLink, context);
@@ -1961,17 +2954,46 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUsers(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUsers(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetUsers(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetUsers(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUsersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUsersNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUsers", "ledgerUsers", "nextLink", context);
+        }
+
+        /// <summary> Gets details on a list of users. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> All users' object IDs and multiple roles will be returned. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUsersAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<LedgerUserMultipleRoles> GetLedgerUsersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerUsersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerUsersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LedgerUserMultipleRoles.DeserializeLedgerUserMultipleRoles(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerUsers", "ledgerUsers", "nextLink", context);
+        }
+
+        /// <summary> Gets details on a list of users. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> All users' object IDs and multiple roles will be returned. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUsers(CancellationToken)']/*" />
+        public virtual Pageable<LedgerUserMultipleRoles> GetLedgerUsers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerUsersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerUsersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LedgerUserMultipleRoles.DeserializeLedgerUserMultipleRoles(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerUsers", "ledgerUsers", "nextLink", context);
         }
 
         /// <summary>
@@ -1982,13 +3004,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerUsersAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUsersAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetLedgerUsersAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetLedgerUsersAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerUsersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerUsersNextPageRequest(nextLink, context);
@@ -2003,17 +3030,46 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetLedgerUsers(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerUsers(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetLedgerUsers(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetLedgerUsers(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerUsersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerUsersNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerUsers", "ledgerUsers", "nextLink", context);
+        }
+
+        /// <summary> Retrieves a list of user defined functions present in the Confidential Ledger. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> User defined functions stored in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctionsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<UserDefinedFunction> GetUserDefinedFunctionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUserDefinedFunctionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUserDefinedFunctionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UserDefinedFunction.DeserializeUserDefinedFunction(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUserDefinedFunctions", "functions", "nextLink", context);
+        }
+
+        /// <summary> Retrieves a list of user defined functions present in the Confidential Ledger. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> User defined functions stored in the Confidential Ledger. </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctions(CancellationToken)']/*" />
+        public virtual Pageable<UserDefinedFunction> GetUserDefinedFunctions(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUserDefinedFunctionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUserDefinedFunctionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UserDefinedFunction.DeserializeUserDefinedFunction(e), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUserDefinedFunctions", "functions", "nextLink", context);
         }
 
         /// <summary>
@@ -2024,13 +3080,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedFunctionsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctionsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetUserDefinedFunctionsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetUserDefinedFunctionsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUserDefinedFunctionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUserDefinedFunctionsNextPageRequest(nextLink, context);
@@ -2045,13 +3106,18 @@ namespace Azure.Security.ConfidentialLedger
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetUserDefinedFunctions(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserDefinedFunctions(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetUserDefinedFunctions(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetUserDefinedFunctions(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUserDefinedFunctionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUserDefinedFunctionsNextPageRequest(nextLink, context);
@@ -2064,7 +3130,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/governance/constitution", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2078,7 +3144,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/governance/members", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2092,7 +3158,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/enclaveQuotes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2106,9 +3172,27 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/collections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTagsRequest(string collectionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/collections/tags", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2120,7 +3204,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
@@ -2150,7 +3234,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
@@ -2174,7 +3258,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2193,7 +3277,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendPath("/receipt", false);
@@ -2209,7 +3293,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendPath("/status", false);
@@ -2225,7 +3309,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/current", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
@@ -2243,7 +3327,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2257,7 +3341,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/ledgerUsers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2271,12 +3355,11 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users/", false);
-            uri.AppendPath(userId, false);
+            uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2286,9 +3369,9 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users/", false);
-            uri.AppendPath(userId, false);
+            uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2301,9 +3384,9 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users/", false);
-            uri.AppendPath(userId, false);
+            uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2318,12 +3401,11 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/ledgerUsers/", false);
-            uri.AppendPath(userId, false);
+            uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2333,9 +3415,9 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/ledgerUsers/", false);
-            uri.AppendPath(userId, false);
+            uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2348,9 +3430,9 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/ledgerUsers/", false);
-            uri.AppendPath(userId, false);
+            uri.AppendPath(userId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2365,7 +3447,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedEndpoints", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2379,11 +3461,10 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedEndpoints", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -2395,7 +3476,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedEndpoints/runtimeOptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2403,18 +3484,18 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateUpdateRuntimeOptionsRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRuntimeOptionsStableRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedEndpoints/runtimeOptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
             return message;
         }
@@ -2425,9 +3506,9 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedEndpoints/modules", false);
-            uri.AppendQuery("module_name", moduleName, false);
+            uri.AppendQuery("module_name", moduleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2440,7 +3521,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedFunctions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2454,12 +3535,11 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedFunctions/", false);
             uri.AppendPath(functionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2469,7 +3549,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedFunctions/", false);
             uri.AppendPath(functionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2484,7 +3564,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedFunctions/", false);
             uri.AppendPath(functionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2501,7 +3581,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/userDefinedFunctions/", false);
             uri.AppendPath(functionId, true);
             uri.AppendPath(":execute", false);
@@ -2519,7 +3599,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/roles", false);
             uri.AppendQuery("roleName", roleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2528,13 +3608,13 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateCreateUserDefinedRoleRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateUserDefinedRoleStableRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/roles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2544,34 +3624,33 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateUpdateUserDefinedRoleRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateUserDefinedRoleStableRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/roles", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteUserDefinedRoleRequest(string roleName, RequestContext context)
+        internal HttpMessage CreateDeleteUserDefinedRoleStableRequest(string roleName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/roles", false);
             uri.AppendQuery("roleName", roleName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2581,7 +3660,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2594,7 +3673,20 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTagsNextPageRequest(string nextLink, string collectionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2607,7 +3699,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2620,7 +3712,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2633,7 +3725,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2646,11 +3738,22 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

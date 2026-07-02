@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for stable API version 2026-02-23.
+
 ### Breaking Changes
 
 ### Bugs Fixed

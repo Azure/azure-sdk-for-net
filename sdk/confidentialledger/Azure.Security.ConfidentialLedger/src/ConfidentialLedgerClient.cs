@@ -12,10 +12,15 @@ using Azure.Security.ConfidentialLedger.Certificate;
 
 namespace Azure.Security.ConfidentialLedger
 {
+    [CodeGenSuppress("ConfidentialLedgerClient", typeof(Uri))]
+    [CodeGenSuppress("ConfidentialLedgerClient", typeof(Uri), typeof(ConfidentialLedgerClientOptions))]
     [CodeGenSuppress("PostLedgerEntry", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("PostLedgerEntryAsync", typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class ConfidentialLedgerClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private readonly Uri _ledgerEndpoint;
         private const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
@@ -80,6 +85,7 @@ namespace Azure.Security.ConfidentialLedger
                 transportOptions,
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
+            _endpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
         }
 
