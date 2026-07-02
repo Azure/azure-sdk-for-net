@@ -5,7 +5,9 @@
 .DESCRIPTION
     Samples published to the Azure samples browser are downloaded scoped to their own
     directory (samples/<service>/<sample>). A sample that references projects outside of
-    its own directory is broken for anyone who downloads it standalone.
+    its own directory is broken for anyone who downloads it standalone. A sample may only
+    use PackageReferences to published packages, or ProjectReferences to projects inside
+    its own directory.
 
     This static analysis flags, for every project under /samples:
       SAMPLE-001: A ProjectReference or Import whose path escapes the sample's own
@@ -110,7 +112,7 @@ foreach ($project in $projectFiles) {
 
         if (-not ($resolved.StartsWith($sampleRootPrefix, [System.StringComparison]::OrdinalIgnoreCase) -or $resolved.Equals($sampleRoot, [System.StringComparison]::OrdinalIgnoreCase))) {
             $sampleRootRel = Get-RelativePath $sampleRoot
-            LogError "SAMPLE-001: $($ref.Kind) '$($ref.Path)' in $rel escapes the sample directory '$sampleRootRel'. Samples must be self-contained for the Azure samples browser."
+            LogError "SAMPLE-001: $($ref.Kind) '$($ref.Path)' in $rel escapes the sample directory '$sampleRootRel'. Samples must be self-contained for the Azure samples browser: use PackageReferences to published packages, or ProjectReferences only to projects inside the sample's own directory."
         }
     }
 }
