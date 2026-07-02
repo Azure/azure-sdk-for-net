@@ -40,8 +40,13 @@ async function writeArmProviderSchemaSnapshot(
   fileName: string,
   schema: ArmProviderSchema
 ): Promise<void> {
+  const snapshot = convertArmProviderSchemaToArguments(schema);
+  snapshot.resources.sort((left: any, right: any) =>
+    (left.resourceIdPattern ?? "").localeCompare(right.resourceIdPattern ?? "")
+  );
+
   await context.program.host.writeFile(
     resolvePath(context.emitterOutputDir, fileName),
-    JSON.stringify(convertArmProviderSchemaToArguments(schema), null, 2)
+    JSON.stringify(snapshot, null, 2)
   );
 }
