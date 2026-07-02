@@ -124,4 +124,10 @@ Describe "Validate-SampleSelfContainment" -Tag "UnitTest" {
         $result.ExitCode | Should -Be 1
         $result.Output | Should -Match 'SAMPLE-001'
     }
+
+    It "exits 0 with a nothing-to-scan message when the samples directory does not exist" {
+        $result = Invoke-Validator "does-not-exist-$([Guid]::NewGuid().ToString('N'))"
+        $result.ExitCode | Should -Be 0
+        $result.Output | Should -Match 'nothing to scan'
+    }
 }

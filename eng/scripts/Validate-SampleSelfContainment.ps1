@@ -28,12 +28,14 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
 
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path.TrimEnd('\', '/')
-$SamplesRoot = if ($SamplesDirectory) { (Resolve-Path (Join-Path $RepoRoot $SamplesDirectory)).Path.TrimEnd('\', '/') } else { Join-Path $RepoRoot "samples" }
+$SamplesRoot = if ($SamplesDirectory) { Join-Path $RepoRoot $SamplesDirectory } else { Join-Path $RepoRoot "samples" }
 
 if (-not (Test-Path $SamplesRoot)) {
     Write-Host "Samples directory not found, nothing to scan: $SamplesRoot"
     exit 0
 }
+
+$SamplesRoot = (Resolve-Path $SamplesRoot).Path.TrimEnd('\', '/')
 
 [string[]] $errors = @()
 
