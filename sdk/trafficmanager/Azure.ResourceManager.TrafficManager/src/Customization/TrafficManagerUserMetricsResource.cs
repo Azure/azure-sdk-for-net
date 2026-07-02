@@ -14,8 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.TrafficManager
 {
     // Preserve the public resource type name shipped by the previous SDK.
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
