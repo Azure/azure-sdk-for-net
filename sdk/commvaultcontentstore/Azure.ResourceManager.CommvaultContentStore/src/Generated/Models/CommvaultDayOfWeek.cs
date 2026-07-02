@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The Day of Week Enum. </summary>
-    public readonly partial struct DayOfWeek : IEquatable<DayOfWeek>
+    public readonly partial struct CommvaultDayOfWeek : IEquatable<CommvaultDayOfWeek>
     {
         private readonly string _value;
         /// <summary> First Day of the Week. </summary>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Weekend Identifier. </summary>
         private const string WeekendDaysValue = "WEEKEND_DAYS";
 
-        /// <summary> Initializes a new instance of <see cref="DayOfWeek"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DayOfWeek(string value)
+        public CommvaultDayOfWeek(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -47,59 +47,59 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> First Day of the Week. </summary>
-        public static DayOfWeek Sunday { get; } = new DayOfWeek(SundayValue);
+        public static CommvaultDayOfWeek Sunday { get; } = new CommvaultDayOfWeek(SundayValue);
 
         /// <summary> Second Day of the Week. </summary>
-        public static DayOfWeek Monday { get; } = new DayOfWeek(MondayValue);
+        public static CommvaultDayOfWeek Monday { get; } = new CommvaultDayOfWeek(MondayValue);
 
         /// <summary> Third Day of the Week. </summary>
-        public static DayOfWeek Tuesday { get; } = new DayOfWeek(TuesdayValue);
+        public static CommvaultDayOfWeek Tuesday { get; } = new CommvaultDayOfWeek(TuesdayValue);
 
         /// <summary> Fourth Day of the Week. </summary>
-        public static DayOfWeek Wednesday { get; } = new DayOfWeek(WednesdayValue);
+        public static CommvaultDayOfWeek Wednesday { get; } = new CommvaultDayOfWeek(WednesdayValue);
 
         /// <summary> Fifth Day of the Week. </summary>
-        public static DayOfWeek Thursday { get; } = new DayOfWeek(ThursdayValue);
+        public static CommvaultDayOfWeek Thursday { get; } = new CommvaultDayOfWeek(ThursdayValue);
 
         /// <summary> Sixth Day of the Week. </summary>
-        public static DayOfWeek Friday { get; } = new DayOfWeek(FridayValue);
+        public static CommvaultDayOfWeek Friday { get; } = new CommvaultDayOfWeek(FridayValue);
 
         /// <summary> Seventh Day of the Week. </summary>
-        public static DayOfWeek Saturday { get; } = new DayOfWeek(SaturdayValue);
+        public static CommvaultDayOfWeek Saturday { get; } = new CommvaultDayOfWeek(SaturdayValue);
 
         /// <summary> Any Day of the week. </summary>
-        public static DayOfWeek Day { get; } = new DayOfWeek(DayValue);
+        public static CommvaultDayOfWeek Day { get; } = new CommvaultDayOfWeek(DayValue);
 
         /// <summary> Weekday Identifier. </summary>
-        public static DayOfWeek Weekday { get; } = new DayOfWeek(WeekdayValue);
+        public static CommvaultDayOfWeek Weekday { get; } = new CommvaultDayOfWeek(WeekdayValue);
 
         /// <summary> Weekend Identifier. </summary>
-        public static DayOfWeek WeekendDays { get; } = new DayOfWeek(WeekendDaysValue);
+        public static CommvaultDayOfWeek WeekendDays { get; } = new CommvaultDayOfWeek(WeekendDaysValue);
 
-        /// <summary> Determines if two <see cref="DayOfWeek"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultDayOfWeek"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DayOfWeek left, DayOfWeek right) => left.Equals(right);
+        public static bool operator ==(CommvaultDayOfWeek left, CommvaultDayOfWeek right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DayOfWeek"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultDayOfWeek"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DayOfWeek left, DayOfWeek right) => !left.Equals(right);
+        public static bool operator !=(CommvaultDayOfWeek left, CommvaultDayOfWeek right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DayOfWeek"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DayOfWeek(string value) => new DayOfWeek(value);
+        public static implicit operator CommvaultDayOfWeek(string value) => new CommvaultDayOfWeek(value);
 
-        /// <summary> Converts a string to a <see cref="DayOfWeek"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DayOfWeek?(string value) => value == null ? null : new DayOfWeek(value);
+        public static implicit operator CommvaultDayOfWeek?(string value) => value == null ? null : new CommvaultDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DayOfWeek other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultDayOfWeek other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatestLinkedSaaSResponse>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LatestLinkedSaaS");
             scope.Start();
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LatestLinkedSaaSResponse> response = Response.FromValue(LatestLinkedSaaSResponse.FromResponse(result), result);
+                Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatestLinkedSaaSResponse> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<LatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LatestLinkedSaaS");
             scope.Start();
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LatestLinkedSaaSResponse> response = Response.FromValue(LatestLinkedSaaSResponse.FromResponse(result), result);
+                Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -523,12 +523,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The content of the action request. </param>
+        /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudAccountResource>> LinkSaaSAsync(WaitUntil waitUntil, SaaSData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudAccountResource>> LinkSaaSAsync(WaitUntil waitUntil, CommvaultSaaSDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(details, nameof(details));
 
             using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LinkSaaS");
             scope.Start();
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaaSData.ToRequestContent(data), context);
+                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -582,12 +582,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The content of the action request. </param>
+        /// <param name="details"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CloudAccountResource> LinkSaaS(WaitUntil waitUntil, SaaSData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        public virtual ArmOperation<CloudAccountResource> LinkSaaS(WaitUntil waitUntil, CommvaultSaaSDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(details, nameof(details));
 
             using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LinkSaaS");
             scope.Start();
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaaSData.ToRequestContent(data), context);
+                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),

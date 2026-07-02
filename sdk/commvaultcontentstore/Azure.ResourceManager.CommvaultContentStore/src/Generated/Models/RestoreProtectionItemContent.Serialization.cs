@@ -15,66 +15,66 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of RestoreProtectionItemRequest. </summary>
-    public partial class RestoreProtectionItemRequest : IJsonModel<RestoreProtectionItemRequest>
+    public partial class RestoreProtectionItemContent : IJsonModel<RestoreProtectionItemContent>
     {
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemRequest"/> for deserialization. </summary>
-        internal RestoreProtectionItemRequest()
+        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/> for deserialization. </summary>
+        internal RestoreProtectionItemContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreProtectionItemRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RestoreProtectionItemContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRestoreProtectionItemRequest(document.RootElement, options);
+                        return DeserializeRestoreProtectionItemContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreProtectionItemRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreProtectionItemContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreProtectionItemRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreProtectionItemContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestoreProtectionItemRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RestoreProtectionItemContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreProtectionItemRequest IPersistableModel<RestoreProtectionItemRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RestoreProtectionItemContent IPersistableModel<RestoreProtectionItemContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestoreProtectionItemRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RestoreProtectionItemContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="restoreProtectionItemRequest"> The <see cref="RestoreProtectionItemRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RestoreProtectionItemRequest restoreProtectionItemRequest)
+        /// <param name="restoreProtectionItemContent"> The <see cref="RestoreProtectionItemContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RestoreProtectionItemContent restoreProtectionItemContent)
         {
-            if (restoreProtectionItemRequest == null)
+            if (restoreProtectionItemContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(restoreProtectionItemRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(restoreProtectionItemContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestoreProtectionItemRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RestoreProtectionItemContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreProtectionItemRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreProtectionItemContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("inPlaceRestore"u8);
             writer.WriteBooleanValue(InPlaceRestore);
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreProtectionItemRequest IJsonModel<RestoreProtectionItemRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RestoreProtectionItemContent IJsonModel<RestoreProtectionItemContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreProtectionItemRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RestoreProtectionItemContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreProtectionItemRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreProtectionItemContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestoreProtectionItemRequest(document.RootElement, options);
+            return DeserializeRestoreProtectionItemContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestoreProtectionItemRequest DeserializeRestoreProtectionItemRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestoreProtectionItemContent DeserializeRestoreProtectionItemContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestoreProtectionItemRequest(inPlaceRestore, restoreType, toTime, vmDestinationInfo, additionalBinaryDataProperties);
+            return new RestoreProtectionItemContent(inPlaceRestore, restoreType, toTime, vmDestinationInfo, additionalBinaryDataProperties);
         }
     }
 }

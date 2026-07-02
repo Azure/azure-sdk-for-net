@@ -14,59 +14,59 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Backup job response for a Protection Group. </summary>
-    public partial class BackupProtectionGroupResponse : IJsonModel<BackupProtectionGroupResponse>
+    /// <summary> Restore resource response for a Protected Item. </summary>
+    public partial class RestoreProtectionItemResult : IJsonModel<RestoreProtectionItemResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupProtectionGroupResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RestoreProtectionItemResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBackupProtectionGroupResponse(document.RootElement, options);
+                        return DeserializeRestoreProtectionItemResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupProtectionGroupResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreProtectionItemResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BackupProtectionGroupResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreProtectionItemResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupProtectionGroupResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RestoreProtectionItemResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupProtectionGroupResponse IPersistableModel<BackupProtectionGroupResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RestoreProtectionItemResult IPersistableModel<RestoreProtectionItemResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupProtectionGroupResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RestoreProtectionItemResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BackupProtectionGroupResponse"/> from. </param>
-        internal static BackupProtectionGroupResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestoreProtectionItemResult"/> from. </param>
+        internal static RestoreProtectionItemResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBackupProtectionGroupResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRestoreProtectionItemResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BackupProtectionGroupResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RestoreProtectionItemResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProtectionGroupResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreProtectionItemResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupProtectionGroupResponse IJsonModel<BackupProtectionGroupResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RestoreProtectionItemResult IJsonModel<RestoreProtectionItemResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupProtectionGroupResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RestoreProtectionItemResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProtectionGroupResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreProtectionItemResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupProtectionGroupResponse(document.RootElement, options);
+            return DeserializeRestoreProtectionItemResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupProtectionGroupResponse DeserializeBackupProtectionGroupResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestoreProtectionItemResult DeserializeRestoreProtectionItemResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupProtectionGroupResponse(taskId, jobIds, additionalBinaryDataProperties);
+            return new RestoreProtectionItemResult(taskId, jobIds, additionalBinaryDataProperties);
         }
     }
 }

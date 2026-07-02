@@ -12,41 +12,41 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The backup options for the VM backup. </summary>
-    public partial class BackupOptions
+    public partial class BackupConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackupOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupConfig"/>. </summary>
         /// <param name="jobDescription"> The name of the backup job to be shown in Commvault. </param>
-        /// <param name="backupCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
-        /// <param name="runSnapShotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
-        /// <param name="notifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
+        /// <param name="shouldCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
+        /// <param name="shouldRunSnapshotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
+        /// <param name="shouldNotifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobDescription"/> is null. </exception>
-        public BackupOptions(string jobDescription, bool backupCopyImmediately, bool runSnapShotBackup, bool notifyUserOnJobCompletion)
+        public BackupConfig(string jobDescription, bool shouldCopyImmediately, bool shouldRunSnapshotBackup, bool shouldNotifyUserOnJobCompletion)
         {
             Argument.AssertNotNull(jobDescription, nameof(jobDescription));
 
             JobDescription = jobDescription;
-            BackupCopyImmediately = backupCopyImmediately;
-            RunSnapShotBackup = runSnapShotBackup;
-            NotifyUserOnJobCompletion = notifyUserOnJobCompletion;
+            ShouldCopyImmediately = shouldCopyImmediately;
+            ShouldRunSnapshotBackup = shouldRunSnapshotBackup;
+            ShouldNotifyUserOnJobCompletion = shouldNotifyUserOnJobCompletion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupConfig"/>. </summary>
         /// <param name="backupLevel"> Indicates whether to stop backup or not for the VM. </param>
         /// <param name="jobDescription"> The name of the backup job to be shown in Commvault. </param>
-        /// <param name="backupCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
-        /// <param name="runSnapShotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
-        /// <param name="notifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
+        /// <param name="shouldCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
+        /// <param name="shouldRunSnapshotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
+        /// <param name="shouldNotifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupOptions(BackupLevel? backupLevel, string jobDescription, bool backupCopyImmediately, bool runSnapShotBackup, bool notifyUserOnJobCompletion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupConfig(BackupLevel? backupLevel, string jobDescription, bool shouldCopyImmediately, bool shouldRunSnapshotBackup, bool shouldNotifyUserOnJobCompletion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupLevel = backupLevel;
             JobDescription = jobDescription;
-            BackupCopyImmediately = backupCopyImmediately;
-            RunSnapShotBackup = runSnapShotBackup;
-            NotifyUserOnJobCompletion = notifyUserOnJobCompletion;
+            ShouldCopyImmediately = shouldCopyImmediately;
+            ShouldRunSnapshotBackup = shouldRunSnapshotBackup;
+            ShouldNotifyUserOnJobCompletion = shouldNotifyUserOnJobCompletion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string JobDescription { get; }
 
         /// <summary> Indicates whether to run backup immediately or not for the VM. </summary>
-        public bool BackupCopyImmediately { get; }
+        public bool ShouldCopyImmediately { get; }
 
         /// <summary> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </summary>
-        public bool RunSnapShotBackup { get; }
+        public bool ShouldRunSnapshotBackup { get; }
 
         /// <summary> Indicates whether to notify the user on job completion. </summary>
-        public bool NotifyUserOnJobCompletion { get; }
+        public bool ShouldNotifyUserOnJobCompletion { get; }
     }
 }

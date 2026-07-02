@@ -14,25 +14,25 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Request to count protected items for the provided CCA resource IDs across subscriptions. </summary>
-    public partial class CountProtectedItemsRequest
+    public partial class CountProtectedItemsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsContent"/>. </summary>
         /// <param name="resourceIds"> The list of CCA resource IDs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
-        public CountProtectedItemsRequest(IEnumerable<ResourceIdentifier> resourceIds)
+        public CountProtectedItemsContent(IEnumerable<ResourceIdentifier> resourceIds)
         {
             Argument.AssertNotNull(resourceIds, nameof(resourceIds));
 
             ResourceIds = resourceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsContent"/>. </summary>
         /// <param name="resourceIds"> The list of CCA resource IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CountProtectedItemsRequest(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CountProtectedItemsContent(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceIds = resourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

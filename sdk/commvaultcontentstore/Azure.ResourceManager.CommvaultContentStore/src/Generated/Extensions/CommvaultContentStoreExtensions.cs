@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaaSParameterRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaaSParameterContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<SaaSResourceDetailsData>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateResource(WaitUntil, ActivateSaaSParameterRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateResource(WaitUntil, ActivateSaaSParameterContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<SaaSResourceDetailsResponse> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<SaaSResourceDetailsData> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// Gets the count of protected items for provided CCA resource IDs across subscriptions.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreTenantResource.CountByProtectionGroupsAsync(CountProtectedItemsRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreTenantResource.CountByProtectionGroupsAsync(CountProtectedItemsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<CountProtectedItemsResponse>> CountByProtectionGroupsAsync(this TenantResource tenantResource, CountProtectedItemsRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CountProtectedItemsResult>> CountByProtectionGroupsAsync(this TenantResource tenantResource, CountProtectedItemsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// Gets the count of protected items for provided CCA resource IDs across subscriptions.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreTenantResource.CountByProtectionGroups(CountProtectedItemsRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreTenantResource.CountByProtectionGroups(CountProtectedItemsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<CountProtectedItemsResponse> CountByProtectionGroups(this TenantResource tenantResource, CountProtectedItemsRequest content, CancellationToken cancellationToken = default)
+        public static Response<CountProtectedItemsResult> CountByProtectionGroups(this TenantResource tenantResource, CountProtectedItemsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

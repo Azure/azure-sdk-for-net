@@ -15,29 +15,29 @@ using Azure.ResourceManager.CommvaultContentStore.Models;
 namespace Azure.ResourceManager.CommvaultContentStore
 {
     /// <summary></summary>
-    internal partial class SaaSResourceDetailsResponseOperationSource : IOperationSource<SaaSResourceDetailsResponse>
+    internal partial class SaaSResourceDetailsDataOperationSource : IOperationSource<SaaSResourceDetailsData>
     {
         /// <summary></summary>
-        internal SaaSResourceDetailsResponseOperationSource()
+        internal SaaSResourceDetailsDataOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SaaSResourceDetailsResponse IOperationSource<SaaSResourceDetailsResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        SaaSResourceDetailsData IOperationSource<SaaSResourceDetailsData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return SaaSResourceDetailsResponse.DeserializeSaaSResourceDetailsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return SaaSResourceDetailsData.DeserializeSaaSResourceDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SaaSResourceDetailsResponse> IOperationSource<SaaSResourceDetailsResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SaaSResourceDetailsData> IOperationSource<SaaSResourceDetailsData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SaaSResourceDetailsResponse.DeserializeSaaSResourceDetailsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return SaaSResourceDetailsData.DeserializeSaaSResourceDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

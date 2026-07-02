@@ -12,7 +12,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The types of operator. </summary>
-    public readonly partial struct Operator : IEquatable<Operator>
+    public readonly partial struct CommvaultMatchOperator : IEquatable<CommvaultMatchOperator>
     {
         private readonly string _value;
         /// <summary> The operator contains. </summary>
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> The operator ends with. </summary>
         private const string EndsWithValue = "endsWith";
         /// <summary> The operator equals. </summary>
-        private const string EqualsValue = "equals";
+        private const string EqualValue = "equals";
 
-        /// <summary> Initializes a new instance of <see cref="Operator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Operator(string value)
+        public CommvaultMatchOperator(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The operator contains. </summary>
-        public static Operator Contains { get; } = new Operator(ContainsValue);
+        public static CommvaultMatchOperator Contains { get; } = new CommvaultMatchOperator(ContainsValue);
 
         /// <summary> The operator does not contains. </summary>
-        public static Operator DoesNotContains { get; } = new Operator(DoesNotContainsValue);
+        public static CommvaultMatchOperator DoesNotContains { get; } = new CommvaultMatchOperator(DoesNotContainsValue);
 
         /// <summary> The operator does not equal. </summary>
-        public static Operator DoesNotEqual { get; } = new Operator(DoesNotEqualValue);
+        public static CommvaultMatchOperator DoesNotEqual { get; } = new CommvaultMatchOperator(DoesNotEqualValue);
 
         /// <summary> The operator starts with. </summary>
-        public static Operator StartsWith { get; } = new Operator(StartsWithValue);
+        public static CommvaultMatchOperator StartsWith { get; } = new CommvaultMatchOperator(StartsWithValue);
 
         /// <summary> The operator ends with. </summary>
-        public static Operator EndsWith { get; } = new Operator(EndsWithValue);
+        public static CommvaultMatchOperator EndsWith { get; } = new CommvaultMatchOperator(EndsWithValue);
 
         /// <summary> The operator equals. </summary>
-        public static Operator Equals { get; } = new Operator(EqualsValue);
+        public static CommvaultMatchOperator Equal { get; } = new CommvaultMatchOperator(EqualValue);
 
-        /// <summary> Determines if two <see cref="Operator"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultMatchOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Operator left, Operator right) => left.Equals(right);
+        public static bool operator ==(CommvaultMatchOperator left, CommvaultMatchOperator right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Operator"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CommvaultMatchOperator"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Operator left, Operator right) => !left.Equals(right);
+        public static bool operator !=(CommvaultMatchOperator left, CommvaultMatchOperator right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Operator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Operator(string value) => new Operator(value);
+        public static implicit operator CommvaultMatchOperator(string value) => new CommvaultMatchOperator(value);
 
-        /// <summary> Converts a string to a <see cref="Operator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CommvaultMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Operator?(string value) => value == null ? null : new Operator(value);
+        public static implicit operator CommvaultMatchOperator?(string value) => value == null ? null : new CommvaultMatchOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Operator other && Equals(other);
+        public override bool Equals(object obj) => obj is CommvaultMatchOperator other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Operator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CommvaultMatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -15,66 +15,66 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of StopBackupProtectionGroupRequest. </summary>
-    public partial class StopBackupProtectionGroupRequest : IJsonModel<StopBackupProtectionGroupRequest>
+    public partial class StopBackupProtectionGroupContent : IJsonModel<StopBackupProtectionGroupContent>
     {
-        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupRequest"/> for deserialization. </summary>
-        internal StopBackupProtectionGroupRequest()
+        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupContent"/> for deserialization. </summary>
+        internal StopBackupProtectionGroupContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StopBackupProtectionGroupRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StopBackupProtectionGroupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStopBackupProtectionGroupRequest(document.RootElement, options);
+                        return DeserializeStopBackupProtectionGroupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StopBackupProtectionGroupRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StopBackupProtectionGroupRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StopBackupProtectionGroupRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StopBackupProtectionGroupContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StopBackupProtectionGroupRequest IPersistableModel<StopBackupProtectionGroupRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StopBackupProtectionGroupContent IPersistableModel<StopBackupProtectionGroupContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StopBackupProtectionGroupRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StopBackupProtectionGroupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="stopBackupProtectionGroupRequest"> The <see cref="StopBackupProtectionGroupRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StopBackupProtectionGroupRequest stopBackupProtectionGroupRequest)
+        /// <param name="stopBackupProtectionGroupContent"> The <see cref="StopBackupProtectionGroupContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StopBackupProtectionGroupContent stopBackupProtectionGroupContent)
         {
-            if (stopBackupProtectionGroupRequest == null)
+            if (stopBackupProtectionGroupContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(stopBackupProtectionGroupRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(stopBackupProtectionGroupContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StopBackupProtectionGroupRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StopBackupProtectionGroupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopBackupProtectionGroupRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("reason"u8);
             writer.WriteStringValue(Reason);
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StopBackupProtectionGroupRequest IJsonModel<StopBackupProtectionGroupRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StopBackupProtectionGroupContent IJsonModel<StopBackupProtectionGroupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StopBackupProtectionGroupRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StopBackupProtectionGroupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StopBackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopBackupProtectionGroupRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StopBackupProtectionGroupContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStopBackupProtectionGroupRequest(document.RootElement, options);
+            return DeserializeStopBackupProtectionGroupContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StopBackupProtectionGroupRequest DeserializeStopBackupProtectionGroupRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static StopBackupProtectionGroupContent DeserializeStopBackupProtectionGroupContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StopBackupProtectionGroupRequest(reason, comment, additionalBinaryDataProperties);
+            return new StopBackupProtectionGroupContent(reason, comment, additionalBinaryDataProperties);
         }
     }
 }

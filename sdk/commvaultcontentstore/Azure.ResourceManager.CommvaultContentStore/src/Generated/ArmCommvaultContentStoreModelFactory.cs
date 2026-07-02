@@ -138,25 +138,25 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <returns> A new <see cref="Models.SaaSData"/> instance for mocking. </returns>
-        public static SaaSData SaaSData(string saaSResourceId = default)
+        /// <returns> A new <see cref="Models.CommvaultSaaSDetails"/> instance for mocking. </returns>
+        public static CommvaultSaaSDetails CommvaultSaaSDetails(string saaSResourceId = default)
         {
-            return new SaaSData(saaSResourceId, default);
+            return new CommvaultSaaSDetails(saaSResourceId, default);
         }
 
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
-        /// <returns> A new <see cref="Models.LatestLinkedSaaSResponse"/> instance for mocking. </returns>
-        public static LatestLinkedSaaSResponse LatestLinkedSaaSResponse(string saaSResourceId = default, bool? isHiddenSaaS = default)
+        /// <returns> A new <see cref="Models.LatestLinkedSaaSResult"/> instance for mocking. </returns>
+        public static LatestLinkedSaaSResult LatestLinkedSaaSResult(string saaSResourceId = default, bool? isHiddenSaaS = default)
         {
-            return new LatestLinkedSaaSResponse(saaSResourceId, isHiddenSaaS, default);
+            return new LatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, default);
         }
 
         /// <param name="saaSGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.ActivateSaaSParameterRequest"/> instance for mocking. </returns>
-        public static ActivateSaaSParameterRequest ActivateSaaSParameterRequest(string saaSGuid = default)
+        /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
+        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(string saaSGuid = default)
         {
-            return new ActivateSaaSParameterRequest(saaSGuid, default);
+            return new ActivateSaaSParameterContent(saaSGuid, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saaSResourceId"> Id of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.SaaSResourceDetailsResponse"/> instance for mocking. </returns>
-        public static SaaSResourceDetailsResponse SaaSResourceDetailsResponse(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saaSResourceId = default)
+        /// <returns> A new <see cref="Models.SaaSResourceDetailsData"/> instance for mocking. </returns>
+        public static SaaSResourceDetailsData SaaSResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saaSResourceId = default)
         {
-            return new SaaSResourceDetailsResponse(
+            return new SaaSResourceDetailsData(
                 id,
                 name,
                 resourceType,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <returns> A new <see cref="Models.Schedule"/> instance for mocking. </returns>
-        public static Schedule Schedule(BackUpType backupType = default, Frequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, DayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
+        public static Schedule Schedule(BackupType backupType = default, Frequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
         {
             weeklyDays ??= new ChangeTrackingList<WeeklyDays>();
 
@@ -373,17 +373,17 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="operator"> property of the rule. </param>
         /// <param name="value"> property of the rule. </param>
         /// <returns> A new <see cref="Models.Rule"/> instance for mocking. </returns>
-        public static Rule Rule(RuleProperty @property = default, Operator @operator = default, string value = default)
+        public static Rule Rule(RuleProperty @property = default, CommvaultMatchOperator @operator = default, string value = default)
         {
             return new Rule(@property, @operator, value, default);
         }
 
         /// <param name="reason"> The reason for stopping the backup. </param>
         /// <param name="comment"> Any further comments. </param>
-        /// <returns> A new <see cref="Models.StopBackupProtectionGroupRequest"/> instance for mocking. </returns>
-        public static StopBackupProtectionGroupRequest StopBackupProtectionGroupRequest(string reason = default, string comment = default)
+        /// <returns> A new <see cref="Models.StopBackupProtectionGroupContent"/> instance for mocking. </returns>
+        public static StopBackupProtectionGroupContent StopBackupProtectionGroupContent(string reason = default, string comment = default)
         {
-            return new StopBackupProtectionGroupRequest(reason, comment, default);
+            return new StopBackupProtectionGroupContent(reason, comment, default);
         }
 
         /// <param name="inPlaceRestore"> Check whether inplace or out of place restore. </param>
@@ -391,10 +391,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="toTime"> Time to restore. </param>
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
-        /// <returns> A new <see cref="Models.RestoreProtectionItemRequest"/> instance for mocking. </returns>
-        public static RestoreProtectionItemRequest RestoreProtectionItemRequest(bool inPlaceRestore = default, RestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
+        /// <returns> A new <see cref="Models.RestoreProtectionItemContent"/> instance for mocking. </returns>
+        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool inPlaceRestore = default, RestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
         {
-            return new RestoreProtectionItemRequest(inPlaceRestore, restoreType, toTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<VmInfo>()).ToList(), default), default);
+            return new RestoreProtectionItemContent(inPlaceRestore, restoreType, toTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<VmInfo>()).ToList(), default), default);
         }
 
         /// <param name="sourceVmGuid"> The GUID of VM to be restored. </param>
@@ -438,22 +438,22 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="taskId"> The Commvault response for taskId. </param>
         /// <param name="jobIds"> The jobIds returned from Commvault. </param>
-        /// <returns> A new <see cref="Models.RestoreProtectionItemResponse"/> instance for mocking. </returns>
-        public static RestoreProtectionItemResponse RestoreProtectionItemResponse(int taskId = default, IEnumerable<string> jobIds = default)
+        /// <returns> A new <see cref="Models.RestoreProtectionItemResult"/> instance for mocking. </returns>
+        public static RestoreProtectionItemResult RestoreProtectionItemResult(int taskId = default, IEnumerable<string> jobIds = default)
         {
             jobIds ??= new ChangeTrackingList<string>();
 
-            return new RestoreProtectionItemResponse(taskId, (jobIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new RestoreProtectionItemResult(taskId, (jobIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="vmList"> The vm list details. </param>
         /// <param name="backupOptions"> The backup options for the VM backup. </param>
-        /// <returns> A new <see cref="Models.BackupProtectionGroupRequest"/> instance for mocking. </returns>
-        public static BackupProtectionGroupRequest BackupProtectionGroupRequest(IEnumerable<VmListItem> vmList = default, BackupOptions backupOptions = default)
+        /// <returns> A new <see cref="Models.BackupProtectionGroupContent"/> instance for mocking. </returns>
+        public static BackupProtectionGroupContent BackupProtectionGroupContent(IEnumerable<VmListItem> vmList = default, BackupConfig backupOptions = default)
         {
             vmList ??= new ChangeTrackingList<VmListItem>();
 
-            return new BackupProtectionGroupRequest((vmList ?? new ChangeTrackingList<VmListItem>()).ToList(), backupOptions, default);
+            return new BackupProtectionGroupContent((vmList ?? new ChangeTrackingList<VmListItem>()).ToList(), backupOptions, default);
         }
 
         /// <param name="vmGuid"> The GUID of the VM to backup. </param>
@@ -465,29 +465,29 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="backupLevel"> Indicates whether to stop backup or not for the VM. </param>
         /// <param name="jobDescription"> The name of the backup job to be shown in Commvault. </param>
-        /// <param name="backupCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
-        /// <param name="runSnapShotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
-        /// <param name="notifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
-        /// <returns> A new <see cref="Models.BackupOptions"/> instance for mocking. </returns>
-        public static BackupOptions BackupOptions(BackupLevel? backupLevel = default, string jobDescription = default, bool backupCopyImmediately = default, bool runSnapShotBackup = default, bool notifyUserOnJobCompletion = default)
+        /// <param name="shouldCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
+        /// <param name="shouldRunSnapshotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
+        /// <param name="shouldNotifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
+        /// <returns> A new <see cref="Models.BackupConfig"/> instance for mocking. </returns>
+        public static BackupConfig BackupConfig(BackupLevel? backupLevel = default, string jobDescription = default, bool shouldCopyImmediately = default, bool shouldRunSnapshotBackup = default, bool shouldNotifyUserOnJobCompletion = default)
         {
-            return new BackupOptions(
+            return new BackupConfig(
                 backupLevel,
                 jobDescription,
-                backupCopyImmediately,
-                runSnapShotBackup,
-                notifyUserOnJobCompletion,
+                shouldCopyImmediately,
+                shouldRunSnapshotBackup,
+                shouldNotifyUserOnJobCompletion,
                 default);
         }
 
         /// <param name="taskId"> The Commvault response for taskId. </param>
         /// <param name="jobIds"> The jobIds returned from Commvault. </param>
-        /// <returns> A new <see cref="Models.BackupProtectionGroupResponse"/> instance for mocking. </returns>
-        public static BackupProtectionGroupResponse BackupProtectionGroupResponse(int taskId = default, IEnumerable<string> jobIds = default)
+        /// <returns> A new <see cref="Models.BackupProtectionGroupResult"/> instance for mocking. </returns>
+        public static BackupProtectionGroupResult BackupProtectionGroupResult(int taskId = default, IEnumerable<string> jobIds = default)
         {
             jobIds ??= new ChangeTrackingList<string>();
 
-            return new BackupProtectionGroupResponse(taskId, (jobIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new BackupProtectionGroupResult(taskId, (jobIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -534,19 +534,19 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <param name="resourceIds"> The list of CCA resource IDs. </param>
-        /// <returns> A new <see cref="Models.CountProtectedItemsRequest"/> instance for mocking. </returns>
-        public static CountProtectedItemsRequest CountProtectedItemsRequest(IEnumerable<ResourceIdentifier> resourceIds = default)
+        /// <returns> A new <see cref="Models.CountProtectedItemsContent"/> instance for mocking. </returns>
+        public static CountProtectedItemsContent CountProtectedItemsContent(IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new CountProtectedItemsRequest((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new CountProtectedItemsContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="count"> The count of protected items. </param>
-        /// <returns> A new <see cref="Models.CountProtectedItemsResponse"/> instance for mocking. </returns>
-        public static CountProtectedItemsResponse CountProtectedItemsResponse(string count = default)
+        /// <returns> A new <see cref="Models.CountProtectedItemsResult"/> instance for mocking. </returns>
+        public static CountProtectedItemsResult CountProtectedItemsResult(string count = default)
         {
-            return new CountProtectedItemsResponse(count, default);
+            return new CountProtectedItemsResult(count, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
