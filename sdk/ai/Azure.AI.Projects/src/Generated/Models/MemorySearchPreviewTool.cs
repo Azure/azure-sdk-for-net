@@ -10,6 +10,7 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
+    [Experimental("AAIP001")]
     internal partial class MemorySearchPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>
@@ -40,7 +41,6 @@ namespace Azure.AI.Projects
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        [Experimental("AAIP001")]
         internal MemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string memoryStoreName, string scope, MemorySearchResultOptions searchOptions, int? updateDelay) : base(@type, additionalBinaryDataProperties)
         {
             MemoryStoreName = memoryStoreName;

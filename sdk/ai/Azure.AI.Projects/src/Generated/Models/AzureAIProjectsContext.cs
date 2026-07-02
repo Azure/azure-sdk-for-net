@@ -134,7 +134,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.CreateMemoryRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateMemoryRequest))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.CreateMemoryRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.CreateOrUpdateRoutineRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateOrUpdateRoutineRequest))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.CreateOrUpdateRoutineRequest is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.CronTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CronTrigger))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.CronTrigger is experimental and may change in future versions.
@@ -185,7 +187,9 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(DeleteMemoryStoreResponse))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.DeleteMemoryStoreResponse is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DeleteScopeRequest))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DispatchRoutineAsyncRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DispatchRoutineAsyncRequest))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DispatchRoutineAsyncRequest is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.DispatchRoutineResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DispatchRoutineResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.DispatchRoutineResult is experimental and may change in future versions.
@@ -403,7 +407,9 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(InternalMCPTool))]
     [ModelReaderWriterBuildable(typeof(InternalMCPToolFilter))]
     [ModelReaderWriterBuildable(typeof(InternalMCPToolRequireApproval))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.InternalMemorySearchOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalMemorySearchOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.InternalMemorySearchOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalMemoryUpdateOptions))]
     [ModelReaderWriterBuildable(typeof(InternalRankingOptions))]
     [ModelReaderWriterBuildable(typeof(InternalTool))]
@@ -436,7 +442,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.MemorySearchPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.MemorySearchPreviewTool is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchResultOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchResultOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.MemorySearchResultOptions is experimental and may change in future versions.

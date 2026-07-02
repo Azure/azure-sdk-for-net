@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
@@ -14,14 +13,7 @@ namespace Extensions.Plugin;
 internal class SupportedPackages
 {
     private readonly string _name;
-    private HashSet<string> _experimentalEntity;
-
-    private static string GetDirectory(string package, [CallerFilePath] string pth = "")
-    {
-        var dirName = Path.GetDirectoryName(pth) ?? "";
-
-        return Path.Combine([dirName, package]);
-    }
+    private readonly HashSet<string> _experimentalEntity;
 
     private SupportedPackages(string name) {
         _name = name;
@@ -40,13 +32,13 @@ internal class SupportedPackages
 
     private static string FixNamespace(string fullyQualifiedName)
     {
-        if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Memory"))
+        if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Memory."))
         {
-            fullyQualifiedName = fullyQualifiedName.Replace("Azure.AI.Projects.Memory", "Azure.AI.Projects");
+            return fullyQualifiedName.Replace("Azure.AI.Projects.Memory.", "Azure.AI.Projects.");
         }
-        else if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Evaluation"))
+        else if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Evaluation."))
         {
-            fullyQualifiedName = fullyQualifiedName.Replace("Azure.AI.Projects.Evaluation", "Azure.AI.Projects");
+            return fullyQualifiedName.Replace("Azure.AI.Projects.Evaluation.", "Azure.AI.Projects.");
         }
         return fullyQualifiedName;
     }

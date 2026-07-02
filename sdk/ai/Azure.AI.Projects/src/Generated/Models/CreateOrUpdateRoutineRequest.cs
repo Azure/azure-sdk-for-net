@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The CreateOrUpdateRoutineRequest. </summary>
     internal partial class CreateOrUpdateRoutineRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
