@@ -10,6 +10,7 @@
       4. Rogue Directory.Packages.props files outside approved locations
       5. DirectoryPackagesPropsPath redirects outside the root Directory.Build.props
       6. Override files with incorrect casing (must be *.Packages.props)
+      7. PackageVersion items defined outside central package management
 
     Requires either -ServiceDirectory or -PackagePath to scope the scan.
 #>
@@ -197,6 +198,23 @@ if (Test-Path $overrideDir) {
             LogError "CPM-006: Override file has incorrect casing (expected *.Packages.props): $($file.Name)"
         }
     }
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Check 7: PackageVersion items defined outside central package management
+# ─────────────────────────────────────────────────────────────────────────────
+LogInfo "Checking for PackageVersion items outside central package management"
+
+$packageVersionFiles = $allFiles |
+    Select-String -Pattern '<PackageVersion\s+[^>]*\bInclude\b' |
+    Select-Object -ExpandProperty Path -Unique
+
+foreach ($file in $packageVersionFiles) {
+    $rel = Get-RelativePath $file
+    if ($rel -like 'eng/centralpackagemanagement/*' -or (Test-IsAllowlisted $rel)) {
+        continue
+    }
+    LogError "CPM-007: PackageVersion item defined outside central package management in: $rel"
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
