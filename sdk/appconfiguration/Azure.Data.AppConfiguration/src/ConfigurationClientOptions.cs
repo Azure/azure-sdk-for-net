@@ -18,10 +18,8 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
-        private const string AzConfigUsGovCloudHostName = "azconfig.azure.us";
-        private const string AzConfigChinaCloudHostName = "azconfig.azure.cn";
-        private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
-        private const string AppConfigChinaCloudHostName = "appconfig.azure.cn";
+        private const string AzConfigPublicCloudHostName = "azconfig.io";
+        private const string AppConfigStagingCloudHostName = "appconfig-staging.azure.com";
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.
@@ -104,20 +102,61 @@ namespace Azure.Data.AppConfiguration
 
         internal string GetDefaultScope(Uri uri)
         {
-            if (string.IsNullOrEmpty(Audience?.ToString()))
+            if (!string.IsNullOrEmpty(Audience?.ToString()))
             {
-                string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
-                return host switch
-                {
-                    _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
-                        => $"{AppConfigurationAudience.AzureGovernment}/.default",
-                    _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
-                        => $"{AppConfigurationAudience.AzureChina}/.default",
-                    _ => $"{AppConfigurationAudience.AzurePublicCloud}/.default"
-                };
+                return $"{Audience}/.default";
             }
 
-            return $"{Audience}/.default";
+            string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
+            return host switch
+            {
+                // The public cloud data-plane host ("azconfig.io") maps to a documented audience
+                // ("appconfig.azure.com") whose domain cannot be derived from the host, so it is mapped explicitly.
+                _ when IsHostInDomain(host, AzConfigPublicCloudHostName)
+                    => $"{AppConfigurationAudience.AzurePublicCloud}/.default",
+                // The staging host label is hyphenated ("appconfig-staging") and is not treated as a bare
+                // marker by the derivation below, so it is mapped explicitly.
+                _ when IsHostInDomain(host, AppConfigStagingCloudHostName)
+                    => $"https://{AppConfigStagingCloudHostName}/.default",
+                // All other clouds (including Azure US Government and Azure China) carry the audience
+                // domain in the host, so it is derived directly.
+                _ => $"{GetAudienceFromHost(host)}/.default"
+            };
         }
+
+        // CUSTOM: Returns true when the host is a subdomain of the domain, matching on a DNS label
+        // boundary so unrelated hosts such as "myazconfig.io" are not treated as "azconfig.io". The
+        // argument is always the store endpoint the user connects to, which always includes a leading
+        // store label, so an exact-equals check against the bare domain is unnecessary.
+        private static bool IsHostInDomain(string host, string domain) =>
+            host.EndsWith($".{domain}", StringComparison.InvariantCultureIgnoreCase);
+
+        // CUSTOM: Derives the Microsoft Entra audience from the endpoint host when no audience
+        // is explicitly configured and the host does not match a well-known cloud. The audience
+        // domain is anchored on the App Configuration service label ("appconfig"/"azconfig"),
+        // searching right-to-left so that leading store/region labels are ignored even if they
+        // happen to begin with the marker. For example, "<store>.<region>.appconfig.azure.com"
+        // yields "https://appconfig.azure.com". Falls back to the public cloud audience when no
+        // recognizable App Configuration marker is present.
+        private static string GetAudienceFromHost(string host)
+        {
+            string[] labels = host.Split('.');
+            for (int i = labels.Length - 1; i >= 0; i--)
+            {
+                if (IsAppConfigLabel(labels[i]))
+                {
+                    return $"https://{string.Join(".", labels, i, labels.Length - i)}";
+                }
+            }
+
+            return AppConfigurationAudience.AzurePublicCloud.ToString();
+        }
+
+        // CUSTOM: Matches the App Configuration service label exactly ("appconfig"/"azconfig"), so
+        // look-alike or hyphenated labels such as "appconfigfoo" or "appconfig-test" are not treated
+        // as the service marker.
+        private static bool IsAppConfigLabel(string label) =>
+            label.Equals("appconfig", StringComparison.InvariantCultureIgnoreCase) ||
+            label.Equals("azconfig", StringComparison.InvariantCultureIgnoreCase);
     }
 }

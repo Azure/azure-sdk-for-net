@@ -44,8 +44,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us/", $"{AppConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData(null, "https://localhost.azconfig.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(null, "https://localhost.azconfig.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(null, "https://localhost.azconfig.com", "https://azconfig.com/.default");
+                yield return new TestCaseData(null, "https://localhost.azconfig.com/", "https://azconfig.com/.default");
                 yield return new TestCaseData(new AppConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience", "my.custom.audience/.default");
                 yield return new TestCaseData(new AppConfigurationAudience("my.custom.audience"), "http://other.my.custom.audience/", "my.custom.audience/.default");
             }
@@ -62,17 +62,30 @@ namespace Azure.Data.AppConfiguration.Tests
                 yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                // staging is an explicitly recognized host
+                yield return new TestCaseData("https://contoso.appconfig-staging.azure.com", "https://appconfig-staging.azure.com/.default");
+                yield return new TestCaseData("https://contoso.appconfig-staging.azure.com/", "https://appconfig-staging.azure.com/.default");
+                // derived audience for hosts that do not match a well-known cloud, anchored on the exact appconfig/azconfig marker
+                yield return new TestCaseData("https://contoso.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
+                // derived audience is anchored on the appconfig/azconfig marker, so any leading labels (such as the store name) are ignored
+                yield return new TestCaseData("https://contoso.eastus.appconfig.sovereign.cloud", "https://appconfig.sovereign.cloud/.default");
+                // hyphenated labels other than the recognized staging host are not treated as a marker, so they fall back to the public cloud audience
+                yield return new TestCaseData("https://contoso.appconfig-test.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                // hosts without an appconfig/azconfig marker fall back to the public cloud audience
                 yield return new TestCaseData("http://other.my.custom.audience", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                // china cloud
-                yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
+                // well-known cloud suffixes only match on a DNS label boundary, so look-alike hosts are not misclassified
+                yield return new TestCaseData("https://myazconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("https://contoso.fooappconfig.azure.us", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                // china cloud: appconfig.* hosts derive the documented audience; azconfig.* hosts derive the valid azconfig.* audience
+                yield return new TestCaseData("http://other-23232.AZconfig.azure.cn", "https://azconfig.azure.cn/.default");
+                yield return new TestCaseData("https://contoso.azconfig.azure.cn", "https://azconfig.azure.cn/.default");
                 yield return new TestCaseData("https://other.APPconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.cn//", $"{AppConfigurationAudience.AzureChina}/.default");
-                // us gov cloud
-                yield return new TestCaseData("http://other-23232.AZconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
+                // us gov cloud: appconfig.* hosts derive the documented audience; azconfig.* hosts derive the valid azconfig.* audience
+                yield return new TestCaseData("http://other-23232.AZconfig.azure.us", "https://azconfig.azure.us/.default");
+                yield return new TestCaseData("https://contoso.azconfig.azure.us", "https://azconfig.azure.us/.default");
                 yield return new TestCaseData("https://other.APPconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.us/", $"{AppConfigurationAudience.AzureGovernment}/.default");
