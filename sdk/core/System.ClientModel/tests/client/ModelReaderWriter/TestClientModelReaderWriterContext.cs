@@ -42,9 +42,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(ResourceProviderData) => _resourceProviderData_Builder ??= new(),
                 Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Builder ??= new(),
                 Type t when t == typeof(ModelY) => _modelY_Builder ??= new(),
-                #pragma warning disable TEST001
+#pragma warning disable TEST001
                 Type t when t == typeof(ExperimentalModel) => _experimentalModel_Builder ??= new ExperimentalModel_Builder(),
-                #pragma warning restore TEST001
+#pragma warning restore TEST001
                 Type t when t == typeof(ListOfAset) => _listOfAset_Builder ??= new(),
                 Type t when t == typeof(DictionaryOfAset) => _dictionaryOfAset_Builder ??= new(),
                 _ => null

@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Identity;
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -188,7 +188,7 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
         // Act
         var message = await SendMessageAsync(pipeline);
 
-         Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
+        Assert.IsFalse(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
     }
 
     [Test]

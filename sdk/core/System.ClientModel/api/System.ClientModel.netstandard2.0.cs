@@ -282,6 +282,14 @@ namespace System.ClientModel.Primitives
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> GetRawPages();
     }
+    public abstract partial class ConditionalModelProxy<T> where T : class
+    {
+        protected ConditionalModelProxy(System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public System.ClientModel.Primitives.IPersistableModel<T> Model { get { throw null; } }
+        public virtual bool CanHandle(System.ReadOnlyMemory<byte> data) { throw null; }
+        public virtual bool CanHandle(ref System.Text.Json.Utf8JsonReader reader) { throw null; }
+        public virtual bool CanHandle(T model) { throw null; }
+    }
     public enum CredentialKind
     {
         None = 0,
@@ -521,7 +529,13 @@ namespace System.ClientModel.Primitives
         public ModelReaderWriterOptions(string format) { }
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
+        public object? ProxiedModel { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+        public void AddProxy<T>(System.ClientModel.Primitives.ConditionalModelProxy<T> proxy) where T : class { }
+        public void AddProxy<T>(System.ClientModel.Primitives.IJsonModel<T> proxy) { }
+        public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
+        public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
+        public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
     }
     public abstract partial class ModelReaderWriterTypeBuilder
     {

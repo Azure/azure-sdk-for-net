@@ -33,7 +33,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return WritePersistableOrEnumerable(model, options, ModelReaderWriterReflectionContext.Default);
+        return WritePersistableOrEnumerable(model, GetOptions(options), ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return WritePersistableOrEnumerable(model, options, ModelReaderWriterReflectionContext.Default);
+        return WritePersistableOrEnumerable(model, GetOptions(options), ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        return WritePersistableOrEnumerable(model, options, context);
+        return WritePersistableOrEnumerable(model, GetOptions(options), context);
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        return WritePersistableOrEnumerable(model, options, context);
+        return WritePersistableOrEnumerable(model, GetOptions(options), context);
     }
 
     private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
@@ -146,7 +146,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return model.Write(options);
+            return options.ResolveProxy(model).Write(options);
         }
     }
 
@@ -164,7 +164,7 @@ public static class ModelReaderWriter
     [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static T? Read<T>(BinaryData data, ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
+        return ReadInternal<T>(data, GetOptions(options), ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -190,7 +190,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(context));
         }
 
-        return ReadInternal<T>(data, options, context);
+        return ReadInternal<T>(data, GetOptions(options), context);
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ public static class ModelReaderWriter
     [RequiresUnreferencedCode("This method uses reflection.  Use the overload that takes a ModelReaderWriterContext to be AOT compatible.")]
     public static object? Read(BinaryData data, Type returnType, ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, ModelReaderWriterReflectionContext.Default);
+        return ReadInternal(data, returnType, GetOptions(options), ModelReaderWriterReflectionContext.Default);
     }
 
     /// <summary>
@@ -237,7 +237,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(context));
         }
 
-        return ReadInternal(data, returnType, options, context);
+        return ReadInternal(data, returnType, GetOptions(options), context);
     }
 
     private static T? ReadInternal<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
@@ -267,7 +267,7 @@ public static class ModelReaderWriter
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            return persistableModel.Create(data, options);
+            return options.ReadWithChain(persistableModel, data, returnType);
         }
         else
         {
@@ -295,4 +295,16 @@ public static class ModelReaderWriter
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
         => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static ModelReaderWriterOptions GetOptions(ModelReaderWriterOptions? options)
+    {
+        if (options is null)
+            return ModelReaderWriterOptions.Json;
+
+        if (options.IsCoreOwned)
+            return options;
+
+        return options.HasProxies ? new ModelReaderWriterOptions(options) : options;
+    }
 }
