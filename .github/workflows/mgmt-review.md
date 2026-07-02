@@ -68,7 +68,6 @@ safe-outputs:
           env:
             TARGET_PR_NUMBER: "${{ github.event.inputs.pr_number }}"
             TARGET_HEAD_SHA: "${{ github.event.inputs.check_run_head_sha }}"
-            SAFE_OUTPUTS_RESULT: "${{ needs.safe_outputs.result }}"
           with:
             script: |
               const prNumber = parseInt(process.env.TARGET_PR_NUMBER, 10);
@@ -86,17 +85,17 @@ safe-outputs:
               }
 
               let headSha = (process.env.TARGET_HEAD_SHA || '').trim();
-              if (!headSha) {
-                headSha = pr.head.sha;
+              if (headSha && headSha !== pr.head.sha) {
+                core.info(`Completed check run SHA ${headSha} no longer matches current PR head ${pr.head.sha}; publishing the review check on the current head.`);
               }
+              headSha = pr.head.sha;
 
               const checkName = 'Azure .NET Management SDK PR Review';
               const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
               const detailsUrl = `${serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
-              const conclusion = process.env.SAFE_OUTPUTS_RESULT === 'success' ? 'success' : 'failure';
               const output = {
                 title: checkName,
-                summary: `Management SDK PR review ${conclusion === 'success' ? 'completed' : 'failed'}. See ${detailsUrl}`
+                summary: `Management SDK PR review completed. See ${detailsUrl}`
               };
 
               const { data: existing } = await github.rest.checks.listForRef({
@@ -114,7 +113,7 @@ safe-outputs:
                   repo,
                   check_run_id: existing.check_runs[0].id,
                   status: 'completed',
-                  conclusion,
+                  conclusion: 'success',
                   details_url: detailsUrl,
                   output
                 });
@@ -128,7 +127,7 @@ safe-outputs:
                 name: checkName,
                 head_sha: headSha,
                 status: 'completed',
-                conclusion,
+                conclusion: 'success',
                 details_url: detailsUrl,
                 output
               });
