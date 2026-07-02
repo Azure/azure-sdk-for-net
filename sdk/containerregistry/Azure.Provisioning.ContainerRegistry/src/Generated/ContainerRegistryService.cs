@@ -15,7 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ContainerRegistry
 {
     /// <summary> An object that represents a container registry. </summary>
-    public partial class ContainerRegistry : ProvisionableResource
+    public partial class ContainerRegistryService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -29,7 +29,7 @@ namespace Azure.Provisioning.ContainerRegistry
         /// <summary> Creates a new ContainerRegistry. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerRegistry(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2025-11-01")
+        public ContainerRegistryService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2025-11-01")
         {
         }
 
@@ -422,9 +422,9 @@ namespace Azure.Provisioning.ContainerRegistry
         /// <summary> Creates a reference to an existing ContainerRegistry. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ContainerRegistry FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ContainerRegistryService FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ContainerRegistry result = new ContainerRegistry(bicepIdentifier, resourceVersion);
+            ContainerRegistryService result = new ContainerRegistryService(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }

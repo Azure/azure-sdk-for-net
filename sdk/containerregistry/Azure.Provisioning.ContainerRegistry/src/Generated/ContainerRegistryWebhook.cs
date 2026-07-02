@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private WebhookProperties _properties;
-        private ResourceReference<ContainerRegistry> _parent;
+        private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryWebhook. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.ContainerRegistry
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ContainerRegistry Parent
+        public ContainerRegistryService Parent
         {
             get
             {
@@ -200,7 +200,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<WebhookProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerRegistry>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

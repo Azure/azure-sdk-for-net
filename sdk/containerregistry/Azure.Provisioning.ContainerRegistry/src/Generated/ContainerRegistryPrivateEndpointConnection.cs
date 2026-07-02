@@ -19,7 +19,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PrivateEndpointConnectionProperties _properties;
-        private ResourceReference<ContainerRegistry> _parent;
+        private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.ContainerRegistry
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ContainerRegistry Parent
+        public ContainerRegistryService Parent
         {
             get
             {
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerRegistry>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
