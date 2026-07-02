@@ -960,10 +960,10 @@
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @diyellap @sabanermsft
+/sdk/computefleet/Azure.ResourceManager.*/                         @diyellap @sabanermsft @molikkidd_microsoft @soshekar @nithinram_microsoft
 
 # ServiceLabel: %Compute - Fleet %Mgmt
-# ServiceOwners:                                                   @diyellap @sabanermsft
+# ServiceOwners:                                                   @diyellap @sabanermsft @molikkidd_microsoft @soshekar @nithinram_microsoft
 
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/Azure.ResourceManager.*/                   @Azure/azure-sdk-write-acl
