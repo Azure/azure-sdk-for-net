@@ -13,6 +13,7 @@ using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
+    /// <summary> The container group profile properties. </summary>
     internal partial class ContainerGroupProfileProperties : IJsonModel<ContainerGroupProfileProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileProperties"/> for deserialization. </summary>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStringValue(TimeToLive.Value, "O");
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.Value.ToString());
+            writer.WriteStringValue(OSType.ToString());
             if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             DateTimeOffset? shutdownGracePeriod = default;
             ContainerGroupIPAddress ipAddress = default;
             DateTimeOffset? timeToLive = default;
-            ContainerInstanceOperatingSystemType? osType = default;
+            ContainerInstanceOperatingSystemType osType = default;
             IList<ContainerVolume> volumes = default;
             ContainerGroupDiagnostics diagnostics = default;
             ContainerGroupPriority? priority = default;
