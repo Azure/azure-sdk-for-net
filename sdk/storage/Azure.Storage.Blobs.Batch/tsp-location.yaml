@@ -1,0 +1,6 @@
+repo: Azure/azure-rest-api-specs
+directory: "specification/storage/data-plane/BlobStorage/SdkBatchCsharp"
+commit: 049bc1c86bb87ff7681d94cda1e194ba48926031
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
+additionalDirectories:
+- "specification/storage/data-plane/BlobStorage/Common"
