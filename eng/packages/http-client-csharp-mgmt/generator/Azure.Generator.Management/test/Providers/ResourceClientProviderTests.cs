@@ -232,6 +232,43 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_HeadAsBooleanAction_UsesStatusCodeReturn()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceHeadAsBooleanAction();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            var syncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "CheckNameExists");
+            Assert.That(syncMethod, Is.Not.Null);
+            var asyncMethod = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == "CheckNameExistsAsync");
+            Assert.That(asyncMethod, Is.Not.Null);
+
+            Assert.That(syncMethod!.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.That(syncMethod.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(bool)));
+            Assert.That(syncMethod.Signature.Parameters.Any(p => p.Name == "accept"), Is.False);
+
+            Assert.That(asyncMethod!.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncMethod.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.That(asyncMethod.Signature.ReturnType?.Arguments[0].Arguments[0].FrameworkType, Is.EqualTo(typeof(bool)));
+            Assert.That(asyncMethod.Signature.Parameters.Any(p => p.Name == "accept"), Is.False);
+
+            var syncBody = syncMethod.BodyStatements?.ToDisplayString();
+            Assert.That(syncBody, Is.Not.Null);
+            Assert.That(syncBody, Does.Contain("Response<bool> response = _testClientRestClient.CheckNameExists"));
+            Assert.That(syncBody, Does.Not.Contain("ModelReaderWriter.Read"));
+            Assert.That(syncBody, Does.Not.Contain("response.Value == null"));
+
+            var asyncBody = asyncMethod.BodyStatements?.ToDisplayString();
+            Assert.That(asyncBody, Is.Not.Null);
+            Assert.That(asyncBody, Does.Contain("Response<bool> response = await _testClientRestClient.CheckNameExistsAsync"));
+            Assert.That(asyncBody, Does.Not.Contain("ModelReaderWriter.Read"));
+            Assert.That(asyncBody, Does.Not.Contain("response.Value == null"));
+        }
+
+        [TestCase]
         public void Verify_ConstructorWithData()
         {
             var constructor = GetResourceClientProviderConstructorByName("data");

@@ -56,6 +56,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private readonly ParameterContextRegistry _parameterMappings;
 
+        private bool IsHeadAsBooleanOperation => _originalBodyType?.Equals(typeof(bool)) == true
+            && _serviceMethod.Operation.HttpMethod.Equals("HEAD", StringComparison.OrdinalIgnoreCase);
+
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
@@ -266,6 +269,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private TryExpression BuildTryExpression()
         {
             var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
+            if (IsHeadAsBooleanOperation && !ShouldApplyLroHandling)
+            {
+                return BuildHeadAsBooleanTryExpression();
+            }
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
@@ -297,6 +304,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 tryStatements.AddRange(BuildReturnStatements(responseVariable, _signature));
             }
             return new TryExpression(tryStatements);
+        }
+
+        private TryExpression BuildHeadAsBooleanTryExpression()
+        {
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            var arguments = _parameterMappings.PopulateArguments(idExpression, _convenienceMethod.Signature.Parameters, null, _signature.Parameters);
+            var responseDeclaration = Declare(
+                "response",
+                new CSharpType(typeof(Response<>), typeof(bool)),
+                _restClientField.Invoke(_convenienceMethod.Signature.Name, arguments, null, _isAsync),
+                out var responseVariable);
+            return new TryExpression([responseDeclaration, Return(responseVariable)]);
         }
 
         protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
@@ -538,7 +559,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             // if the return type is Response with no content, no need to check null.
             List<MethodBodyStatement> statements =
-                CheckIfReturnTypeIsResponseWithNoContent()
+                CheckIfReturnTypeIsResponseWithNoContent() || CheckIfReturnBodyTypeIsNonNullableValueType()
                 ? []
                 : [nullCheckStatement];
 
@@ -567,6 +588,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 var returnType = signature.ReturnType;
                 return returnType != null && (returnType.Equals(typeof(Response)) || returnType.Equals(typeof(Task<Response>)));
             }
+
+            bool CheckIfReturnBodyTypeIsNonNullableValueType()
+                => _returnBodyType is { IsValueType: true, IsNullable: false };
         }
     }
 }
