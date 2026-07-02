@@ -72,6 +72,8 @@
     "blazor",
     "byok",
     "centralus",
+    "chardet",
+    "chownr",
     "clippy",
     "colls",
     "contoso",
@@ -116,6 +118,9 @@
     "inotify",
     "interventional",
     "ints",
+    "isboolean",
+    "isinteger",
+    "isnumber",
     "intvl",
     "istio",
     "itsm",
@@ -131,6 +136,7 @@
     "lucene",
     "magento",
     "mgmt",
+    "minizlib",
     "miscs",
     "msal",
     "mtls",
@@ -198,7 +204,8 @@
     "westus",
     "wmem",
     "xero",
-    "xunit"
+    "xunit",
+    "yallist"
   ],
   "overrides": [
     {
@@ -588,6 +595,8 @@
         "adls",
         "asana",
         "byoa",
+        "cacerts",
+        "dbfs",
         "distcp",
         "eloqua",
         "exprired",
@@ -595,9 +604,12 @@
         "hana",
         "hcatalog",
         "hdfs",
+        "ilearner",
         "informix",
         "inprogress",
         "magento",
+        "mktorest",
+        "myshopify",
         "netezza",
         "oozie",
         "responsys",
@@ -611,6 +623,7 @@
         "usql",
         "vertica",
         "vsts",
+        "wtgctbg",
         "xero"
       ]
     },
