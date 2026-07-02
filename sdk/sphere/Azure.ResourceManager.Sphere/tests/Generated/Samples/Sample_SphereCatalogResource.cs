@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.Sphere.Samples
             SphereCatalogResource sphereCatalog = client.GetSphereCatalogResource(sphereCatalogResourceId);
 
             // invoke the operation and iterate over the result
-            int? maxCount = 10;
-            await foreach (SphereDeviceInsight item in sphereCatalog.GetDeviceInsightsAsync(maxCount: maxCount))
+            int? top = 10;
+            await foreach (SphereDeviceInsight item in sphereCatalog.GetDeviceInsightsAsync(top: top))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

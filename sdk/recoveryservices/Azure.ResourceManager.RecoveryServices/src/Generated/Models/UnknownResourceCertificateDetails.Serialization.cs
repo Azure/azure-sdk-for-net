@@ -131,11 +131,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (prop.NameEquals("certificate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    certificate = prop.Value.GetBytesFromBase64("D");
+                    DeserializeCertificate(prop, ref certificate);
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
