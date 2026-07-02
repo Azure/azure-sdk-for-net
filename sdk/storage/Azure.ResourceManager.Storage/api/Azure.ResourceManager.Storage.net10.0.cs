@@ -1,5 +1,55 @@
 namespace Azure.ResourceManager.Storage
 {
+    public partial class AdvancedPlatformMetricsRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>, System.Collections.IEnumerable
+    {
+        protected AdvancedPlatformMetricsRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> Get(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>> GetAsync(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> GetIfExists(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>> GetIfExistsAsync(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AdvancedPlatformMetricsRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>
+    {
+        public AdvancedPlatformMetricsRuleData() { }
+        public Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AdvancedPlatformMetricsRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AdvancedPlatformMetricsRuleResource() { }
+        public virtual Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class AzureResourceManagerStorageContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerStorageContext() { }
@@ -856,6 +906,9 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Get(Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.Models.GetAccountSasResult> GetAccountSas(Azure.ResourceManager.Storage.Models.AccountSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.GetAccountSasResult>> GetAccountSasAsync(Azure.ResourceManager.Storage.Models.AccountSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource> GetAdvancedPlatformMetricsRule(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource>> GetAdvancedPlatformMetricsRuleAsync(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleCollection GetAdvancedPlatformMetricsRules() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> GetAsync(Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobInventoryPolicyResource GetBlobInventoryPolicy() { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobServiceResource GetBlobService() { throw null; }
@@ -1057,6 +1110,7 @@ namespace Azure.ResourceManager.Storage
     {
         public static Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource GetAdvancedPlatformMetricsRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.BlobContainerResource GetBlobContainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.BlobInventoryPolicyResource GetBlobInventoryPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.BlobServiceResource GetBlobServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1348,6 +1402,7 @@ namespace Azure.ResourceManager.Storage.Mocking
     public partial class MockableStorageArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableStorageArmClient() { }
+        public virtual Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleResource GetAdvancedPlatformMetricsRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobContainerResource GetBlobContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobInventoryPolicyResource GetBlobInventoryPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobServiceResource GetBlobServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1474,6 +1529,73 @@ namespace Azure.ResourceManager.Storage.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdvancedPlatformMetricsFilterType : System.IEquatable<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdvancedPlatformMetricsFilterType(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType AllContainersFilter { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType ContainerListFilter { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType ContainerPrefixFilter { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType left, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType left, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AdvancedPlatformMetricsRuleConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>
+    {
+        public AdvancedPlatformMetricsRuleConfig() { }
+        public Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType? FilterType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> FilterValues { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AdvancedPlatformMetricsRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>
+    {
+        public AdvancedPlatformMetricsRuleProperties(bool enabled, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig ruleConfig) { }
+        public bool Enabled { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.MetricsEmitted> MetricsEmitted { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig RuleConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType? RuleType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdvancedPlatformMetricsRuleType : System.IEquatable<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdvancedPlatformMetricsRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType ContainerLevelCapacityMetrics { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType left, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType left, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AllowedCopyScope : System.IEquatable<Azure.ResourceManager.Storage.Models.AllowedCopyScope>
     {
         private readonly object _dummy;
@@ -1495,6 +1617,9 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public static Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy AccountImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays = default(int?), Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState? state = default(Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState?), bool? allowProtectedAppendWrites = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.AccountSasContent AccountSasContent(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService services = default(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService), Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType resourceTypes = default(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType), Azure.ResourceManager.Storage.Models.StorageAccountSasPermission permissions = default(Azure.ResourceManager.Storage.Models.StorageAccountSasPermission), string ipAddressOrRange = null, Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol? protocols = default(Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol?), System.DateTimeOffset? sharedAccessStartOn = default(System.DateTimeOffset?), System.DateTimeOffset sharedAccessExpireOn = default(System.DateTimeOffset), string keyToSign = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig AdvancedPlatformMetricsRuleConfig(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType? filterType = default(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType?), System.Collections.Generic.IEnumerable<string> filterValues = null) { throw null; }
+        public static Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData AdvancedPlatformMetricsRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType? ruleType = default(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType?), bool enabled = false, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.MetricsEmitted> metricsEmitted = null, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig ruleConfig = null) { throw null; }
         public static Azure.ResourceManager.Storage.BlobContainerData BlobContainerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, Azure.ResourceManager.Storage.Models.StoragePublicAccessType? publicAccess, System.DateTimeOffset? lastModifiedOn, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IDictionary<string, string> metadata, Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy immutabilityPolicy, Azure.ResourceManager.Storage.Models.LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry> updateHistory, int? immutabilityPeriodSinceCreationInDays, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays = default(int?), Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? state = default(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState?), bool? allowProtectedAppendWrites = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?), Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry> updateHistory = null) { throw null; }
@@ -1538,6 +1663,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? lastModifiedOn, System.Collections.Generic.IDictionary<string, string> metadata, int? shareQuota, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol, Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier, System.DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers, System.DateTimeOffset? snapshotOn, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? lastModifiedOn, System.Collections.Generic.IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, System.DateTimeOffset? nextAllowedQuotaDowngradeOn, System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol, Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier, System.DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers, System.DateTimeOffset? snapshotOn, Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default(int?), int? maxProvisionedStorageGiB = default(int?), int? minProvisionedIops = default(int?), int? maxProvisionedIops = default(int?), int? minProvisionedBandwidthMiBPerSec = default(int?), int? maxProvisionedBandwidthMiBPerSec = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default(int?), int? maxProvisionedStorageGiB = default(int?), int? minProvisionedIops = default(int?), int? maxProvisionedIops = default(int?), int? minProvisionedBandwidthMiBPerSec = default(int?), int? maxProvisionedBandwidthMiBPerSec = default(int?), double? guardrailIOScalar = default(double?), double? guardrailBandwidthScalar = default(double?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting FileSharePropertiesFileSharePaidBursting(bool? paidBurstingEnabled = default(bool?), int? paidBurstingMaxIops = default(int?), int? paidBurstingMaxBandwidthMibps = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileShareRecommendations FileShareRecommendations(int? baseIops = default(int?), double? ioScalar = default(double?), int? baseBandwidthMiBPerSec = default(int?), double? bandwidthScalar = default(double?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication FilesIdentityBasedAuthentication(Azure.ResourceManager.Storage.Models.DirectoryServiceOption directoryServiceOptions = default(Azure.ResourceManager.Storage.Models.DirectoryServiceOption), Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties activeDirectoryProperties = null, Azure.ResourceManager.Storage.Models.DefaultSharePermission? defaultSharePermission = default(Azure.ResourceManager.Storage.Models.DefaultSharePermission?), bool? isSmbOAuthEnabled = default(bool?)) { throw null; }
@@ -2489,6 +2615,8 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class FileShareLimits : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareLimits>
     {
         internal FileShareLimits() { }
+        public double? GuardrailBandwidthScalar { get { throw null; } }
+        public double? GuardrailIOScalar { get { throw null; } }
         public int? MaxProvisionedBandwidthMiBPerSec { get { throw null; } }
         public int? MaxProvisionedIops { get { throw null; } }
         public int? MaxProvisionedStorageGiB { get { throw null; } }
@@ -3138,6 +3266,23 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.ManagementPolicyVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricsEmitted : System.IEquatable<Azure.ResourceManager.Storage.Models.MetricsEmitted>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricsEmitted(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.MetricsEmitted ContainerBlobCount { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.MetricsEmitted ContainerUsedSize { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.MetricsEmitted other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.MetricsEmitted left, Azure.ResourceManager.Storage.Models.MetricsEmitted right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.MetricsEmitted (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.MetricsEmitted? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.MetricsEmitted left, Azure.ResourceManager.Storage.Models.MetricsEmitted right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NativeDataSharingProvisioningState : System.IEquatable<Azure.ResourceManager.Storage.Models.NativeDataSharingProvisioningState>
