@@ -81,14 +81,14 @@ ProvisioningVariable backendPoolName =
 infra.Add(backendPoolName);
 
 FrontDoorResource frontDoor =
-    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2021_06_01)
+    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2025_11_01)
     {
         Name = frontDoorName,
         Location = new AzureLocation("global"),
         EnabledState = FrontDoorEnabledState.Enabled,
         FrontendEndpoints =
         {
-            new FrontendEndpointData
+            new FrontendEndpoint(frontEndEndpointName.BicepIdentifier)
             {
                 Name = frontEndEndpointName,
                 HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
@@ -188,14 +188,14 @@ ProvisioningParameter backendAddress =
 infra.Add(backendAddress);
 
 FrontDoorResource frontDoor =
-    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2020_05_01)
+    new(nameof(frontDoor), FrontDoorResource.ResourceVersions.V2025_11_01)
     {
         Name = frontDoorName,
         Location = new AzureLocation("global"),
         EnabledState = FrontDoorEnabledState.Enabled,
         FrontendEndpoints =
         {
-            new FrontendEndpointData
+            new FrontendEndpoint("frontendEndpoint1")
             {
                 Name = "frontendEndpoint1",
                 HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
