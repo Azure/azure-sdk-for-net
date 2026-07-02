@@ -26,5 +26,11 @@
       The latest release (2.8.0) references a vulnerable System.Text.Json (8.0.4).
     -->
     <PackageReference Include="System.Text.Json" />
+
+    <!--
+      Required because the shared Azure.Core DiagnosticScope.cs uses ActivityContext.TryParse(isRemote:),
+      which is available since System.Diagnostics.DiagnosticSource 7.0; netstandard2.0 otherwise resolves an older version. The version is centrally managed.
+    -->
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
   </ItemGroup>
 </Project>
