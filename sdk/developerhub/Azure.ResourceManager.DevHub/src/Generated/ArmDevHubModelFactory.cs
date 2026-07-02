@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <returns> A new <see cref="Models.DevHubResourceTagsPatch"/> instance for mocking. </returns>
-        public static DevHubResourceTagsPatch DevHubResourceTagsPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.DevHubTagsPatch"/> instance for mocking. </returns>
+        public static DevHubTagsPatch DevHubTagsPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DevHubResourceTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new DevHubTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="templateName"> Template Name. </param>
