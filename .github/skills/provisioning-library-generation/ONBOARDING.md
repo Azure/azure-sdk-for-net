@@ -124,37 +124,15 @@ Confirm the package files contain the expected first-release metadata:
 - `src\Azure.Provisioning.{Service}.csproj` has version `1.0.0-beta.1`.
 - The solution includes both `src` and `tests` projects.
 
-## 8. Validate generated resources against Bicep reference
-
-Enumerate generated ARM resource types from generated resource constructors:
-
-```powershell
-Select-String sdk\{service}\Azure.Provisioning.{Service}\src\Generated\*.cs -Pattern 'base\(bicepIdentifier,\s*"(Microsoft\.[^"]+)"'
-```
-
-For each generated ARM resource type:
-
-1. Build the Bicep reference URL: `https://learn.microsoft.com/en-us/azure/templates/{lowercase-provider}/{lowercase-resource-type}?pivots=deployment-language-bicep`.
-2. Compare writable generated properties against the Bicep reference.
-3. Treat writable generated properties that do not exist in Bicep as suspicious.
-4. Treat Bicep-required writable properties that are generated as output-only as bugs.
-5. Always validate `Name`; it should be writable and required unless the resource is a singleton with a fixed name.
-6. Validate Bicep metadata properties:
-
-| Property | Validation rule |
-| --- | --- |
-| `Parent` | Must be a metadata property, not a regular generated Bicep property. It should not be generated from a Bicep schema property named `parent`. Its type must be a concrete resource type that inherits `ProvisionableResource`. |
-| `Scope` | Must be a metadata property, not a regular generated Bicep property. It should not be generated from a Bicep schema property named `scope`. Its type must be `ProvisionableResource` or a concrete resource type that inherits `ProvisionableResource`. |
-
-If discrepancies are found, document the exact resource, property, generated behavior, expected Bicep/schema behavior, and Bicep reference URL before deciding whether a generator customization or spec fix is needed.
-
-## 9. Run final checks
+## 8. Run final checks
 
 Before committing, run the pre-commit validation flow for the `provisioning` service directory. This covers formatting, API export, snippet updates, and regeneration checks.
 
 If spell check fails, add service-specific words to `sdk\provisioning\cspell.yaml`, not `.vscode\cspell.json`.
 
-## 10. Commit and open PRs
+Schema and Bicep-reference validation is handled by the dedicated provisioning PR review workflow. Do not duplicate that validation in this onboarding workflow.
+
+## 9. Commit and open PRs
 
 Commit the SDK changes with a concise present-tense message, for example:
 

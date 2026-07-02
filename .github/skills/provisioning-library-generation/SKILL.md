@@ -108,79 +108,9 @@ If the generator fails with errors:
 
 Do NOT attempt to automatically fix generator errors without user guidance.
 
-## Step 4: Validate Generated Schema Against Bicep Reference
+> Schema and Bicep-reference validation is handled by the dedicated provisioning PR review workflow. Do not duplicate that validation in this generation workflow.
 
-After the generator runs successfully, validate the generated resources against the official Azure Bicep documentation.
-
-### Locate the Schema Log
-
-The generator produces a `schema.log` file that contains the generated resource schemas:
-
-```
-sdk/provisioning/Azure.Provisioning.{Service}/src/Generated/schema.log
-```
-
-Each resource entry looks like:
-```
-resource NetworkSecurityPerimeter "Microsoft.Network/networkSecurityPerimeters@2025-05-01" = {
-  name: 'string'
-  location: 'string'
-  ...
-}
-```
-
-### Construct Bicep Reference URLs
-
-For each new resource type in the schema.log, construct the documentation URL:
-
-```
-https://learn.microsoft.com/en-us/azure/templates/{provider}/{resource-type}?pivots=deployment-language-bicep
-```
-
-**URL Construction Rules:**
-- Convert the resource type from the schema to lowercase
-- Use the provider and resource path from the `@` prefix (e.g., `Microsoft.Network/networkSecurityPerimeters`)
-
-**Examples:**
-| Schema Resource Type | Documentation URL |
-|---------------------|-------------------|
-| `Microsoft.Network/networkSecurityPerimeters` | `https://learn.microsoft.com/en-us/azure/templates/microsoft.network/networksecurityperimeters?pivots=deployment-language-bicep` |
-| `Microsoft.Network/networkSecurityPerimeters/profiles` | `https://learn.microsoft.com/en-us/azure/templates/microsoft.network/networksecurityperimeters/profiles?pivots=deployment-language-bicep` |
-| `Microsoft.DBforPostgreSQL/flexibleServers` | `https://learn.microsoft.com/en-us/azure/templates/microsoft.dbforpostgresql/flexibleservers?pivots=deployment-language-bicep` |
-
-### Compare and Validate
-
-For each new resource:
-1. **Fetch the Bicep reference** from the constructed URL
-2. **Compare property names** between schema.log and the Bicep reference
-3. **Check for**:
-   - **Incorrect property names**: Properties in schema.log that don't match the Bicep reference
-   - **Missing properties**: Properties in the Bicep reference that are not in schema.log
-   - **Extra writable properties**: Properties that are NOT marked `readonly` in schema.log but do NOT exist in the Bicep reference — these are potential issues since users could try to set properties that the service doesn't accept
-   - **Incorrectly readonly properties**: Properties marked `readonly` in schema.log but listed as writable/required in the Bicep reference — especially the `name` property, which must be settable for provisionable resources
-   - **Type mismatches**: Properties with different types
-
-**Note on readonly properties**: Properties marked `readonly` in schema.log (e.g., `provisioningState: readonly 'string'`) are output-only and don't need to match the Bicep reference for input validation. However, you **must also check the reverse**: if a property is writable/required in the Bicep reference but marked `readonly` in schema.log, this is a bug — the generated resource cannot be provisioned correctly.
-
-**Critical: Always validate the `name` property**: The `name` property is the resource identity and should almost always be writable and required (except for singleton resources with fixed names). If schema.log shows `name: readonly 'string'` but the Bicep reference shows `name` as required, this indicates the generator failed to detect the name parameter (e.g., the ARM parameter name doesn't end with "Name", like `addressId` instead of `suppressionListAddressName`). Fix this by adding a `CustomizeProperty` in the specification file:
-```csharp
-CustomizeProperty<{ResourceType}>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-```
-
-### If Discrepancies Are Found
-
-1. **Report the discrepancies** to the user with:
-   - Which resource type has issues
-   - Which properties are incorrect/missing
-   - Links to the Bicep reference
-2. **Stop and let the user decide** how to proceed — discrepancies may indicate:
-   - Issues with the management library
-   - Need for specification customizations
-   - Documentation being out of sync (less common)
-
-Do NOT attempt to automatically fix schema discrepancies without user guidance.
-
-## Step 5: Handle Breaking Changes (Version Updates Only)
+## Step 4: Handle Breaking Changes (Version Updates Only)
 
 When updating management library versions, compare the generated code with the previous version. Common breaking changes include:
 
@@ -218,7 +148,7 @@ CP0002:M:Azure.Provisioning.{Service}.{EnumType}.{Member}.get->System.Runtime.Se
 
 > Note: This baseline file approach is specifically supported for provisioning packages and is the only option for suppressing these particular ApiCompat errors.
 
-## Step 6: Fix Spell Check Issues
+## Step 5: Fix Spell Check Issues
 
 If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspell.yaml`:
 
@@ -231,11 +161,11 @@ If CI fails with "Unknown word" errors, add the words to `sdk/provisioning/cspel
 
 **Important:** Use `sdk/provisioning/cspell.yaml`, NOT `.vscode/cspell.json`.
 
-## Step 7: Run Pre-Commit Checks
+## Step 6: Run Pre-Commit Checks
 
 Before committing, invoke the `pre-commit-checks` skill with the service directory set to `provisioning`. This will handle code formatting, API export, and snippet updates.
 
-## Step 8: Update CHANGELOG and Commit
+## Step 7: Update CHANGELOG and Commit
 
 1. Update the CHANGELOG at `sdk/provisioning/Azure.Provisioning.{Service}/CHANGELOG.md`:
    ```markdown
