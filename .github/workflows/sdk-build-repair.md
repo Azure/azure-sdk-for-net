@@ -49,12 +49,12 @@ on:
   # label is allow-listed so the automatic path works. This is the prompt-injection /
   # abuse guard (gh-aw default roles are [admin, maintainer, write]).
   roles: [admin, maintainer, write]
-  bots: ["azure-sdk"]
+  bots: ["azure-sdk-automation[bot]"]
 
 # Master kill-switch (fail-safe) + PR-eligibility gate. The workflow stays dormant unless
 # the repo Actions variable SDK_BUILD_REPAIR_ENABLED is exactly 'true'. In addition, on the
 # automatic (pull_request) path the PR must be a genuine release-planner Auto SDK PR:
-# same-repo (no forks), opened by the `azure-sdk` release bot, targeting `main`, on an
+# same-repo (no forks), opened by the `azure-sdk-automation[bot]` release bot, targeting `main`, on an
 # `sdkauto/` branch. This gates *which PRs are eligible* (not just *who* can trigger), so a
 # stray label on an unrelated/untrusted PR cannot run the repair agent against its code. The
 # label name itself is filtered by `names:` under `on:` above. The manual /repair-build path
@@ -65,7 +65,7 @@ if: >-
       && (github.event_name != 'pull_request'
           || (github.event.pull_request.head.repo.full_name == github.repository
               && github.event.pull_request.base.ref == 'main'
-              && github.event.pull_request.user.login == 'azure-sdk'
+              && github.event.pull_request.user.login == 'azure-sdk-automation[bot]'
               && startsWith(github.event.pull_request.head.ref, 'sdkauto/'))) }}
 
 engine: copilot
@@ -155,7 +155,7 @@ azsdk tsp client customized-update \
 This workflow only repairs genuine **release-planner Auto SDK PRs**. Before building anything, use the read-only GitHub tools to confirm **all** of the following about PR #${{ github.event.pull_request.number || github.event.issue.number }}:
 
 - it is in **this same repository** (the head branch is not from a fork),
-- it was **opened by the `azure-sdk` release bot**,
+- it was **opened by the `azure-sdk-automation[bot]` release bot**,
 - its **base branch is `main`**, and
 - its **head branch starts with `sdkauto/`**.
 
