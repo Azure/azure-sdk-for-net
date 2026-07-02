@@ -2493,39 +2493,16 @@ namespace Azure.Storage.Files.DataLake
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
-                // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = null;
-                long contentLength = (content?.Length - content?.Position) ?? 0;
-                long? structuredContentLength = default;
-                string structuredBodyType = null;
-                if (content != null &&
-                    validationOptions != null &&
-                    validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
-                {
-                    // report progress in terms of caller bytes, not encoded bytes
-                    structuredContentLength = contentLength;
-                    structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                    content = content.WithNoDispose().WithProgress(progressHandler);
-                    content = validationOptions.PrecalculatedChecksum.IsEmpty
-                        ? new StructuredMessageEncodingStream(
-                            content,
-                            Constants.StructuredMessage.DefaultSegmentContentLength,
-                            StructuredMessage.Flags.StorageCrc64)
-                        : new StructuredMessagePrecalculatedCrcWrapperStream(
-                            content,
-                            validationOptions.PrecalculatedChecksum.Span);
-                    contentLength = content.Length - content.Position;
-                }
-                else
-                {
-                    // compute hash BEFORE attaching progress handler
-                    hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                        content,
-                        validationOptions,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
-                    content = content?.WithNoDispose().WithProgress(progressHandler);
-                }
+                ContentHasher.GetHashResult hashResult;
+                string structuredBodyType;
+                long? structuredContentLength;
+                (content, hashResult, structuredBodyType, structuredContentLength) = await ContentHasher.ApplyUploadEncodingInternal(
+                    content,
+                    validationOptions,
+                    allowStructuredMessage: true,
+                    progressHandler,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
 
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakeFileClient),
