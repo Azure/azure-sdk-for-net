@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -49,6 +50,44 @@ namespace Azure.AI.Translation.Document.Tests
 
             var expectedContent = "category\":\"myCategoryId";
             Assert.AreEqual(expectedContent, category);
+        }
+
+        [Test]
+        public void StartTranslationWithDeploymentName()
+        {
+            var input = new DocumentTranslationInput(new Uri("http://source"), new Uri("http://target"), "fr");
+            input.Targets[0].DeploymentName = "myDeployment";
+
+            var startTranslationDetails = new TranslationBatch(new List<DocumentTranslationInput> { input });
+            using RequestContent content = (RequestContent)startTranslationDetails;
+
+            var contentString = GetString(content);
+
+            Assert.IsTrue(
+                contentString.Contains("\"deploymentName\":\"myDeployment\""),
+                $"Expected serialized content to contain the deploymentName property. Actual: {contentString}");
+        }
+
+        [Test]
+        public void DocumentStatusResultDeserializesDeploymentName()
+        {
+            string json =
+                "{" +
+                "\"path\":\"https://target/doc.txt\"," +
+                "\"sourcePath\":\"https://source/doc.txt\"," +
+                "\"createdDateTimeUtc\":\"2026-03-01T00:00:00.0000000Z\"," +
+                "\"lastActionDateTimeUtc\":\"2026-03-01T00:05:00.0000000Z\"," +
+                "\"status\":\"Succeeded\"," +
+                "\"to\":\"es\"," +
+                "\"progress\":1.0," +
+                "\"id\":\"doc-1\"," +
+                "\"characterCharged\":100," +
+                "\"deploymentName\":\"myDeployment\"" +
+                "}";
+
+            DocumentStatusResult result = ModelReaderWriter.Read<DocumentStatusResult>(BinaryData.FromString(json));
+
+            Assert.AreEqual("myDeployment", result.DeploymentName);
         }
 
         private static string GetString(RequestContent content)

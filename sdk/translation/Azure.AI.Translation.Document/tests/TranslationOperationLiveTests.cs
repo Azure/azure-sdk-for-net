@@ -24,6 +24,9 @@ namespace Azure.AI.Translation.Document.Tests
         {
         }
 
+        // A document that embeds an image containing legible text, used to exercise image translation.
+        private const string ImageDocumentName = "test-doc-image.docx";
+
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -441,6 +444,84 @@ namespace Azure.AI.Translation.Document.Tests
             //Assert glossary has taken effect
             var translatedTextSplitBySpaces = translatedText.Split(' ');
             CollectionAssert.Contains(translatedTextSplitBySpaces, "glossaryTest");
+        }
+
+        [RecordedTest]
+        public async Task SingleSourceSingleTargetWithDeploymentNameTest()
+        {
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri target = await CreateTargetContainerAsync();
+
+            DocumentTranslationClient client = GetClient();
+
+            // "general" routes to the default NMT model, so no custom model deployment is required.
+            var input = new DocumentTranslationInput(source, target, "fr");
+            input.Targets[0].DeploymentName = "general";
+
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+
+            await operation.WaitForCompletionAsync();
+
+            if (operation.DocumentsSucceeded < 1)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(1, operation.DocumentsTotal);
+            Assert.AreEqual(1, operation.DocumentsSucceeded);
+
+            await foreach (DocumentStatusResult document in operation.GetValuesAsync())
+            {
+                // The service accepts the deployment name and translates successfully. The document
+                // status does not echo the deployment name back for the default ("general") model, so
+                // request-side serialization of deploymentName is verified separately in the mock tests.
+                Assert.AreEqual(DocumentTranslationStatus.Succeeded, document.Status);
+            }
+        }
+
+        [RecordedTest]
+        public async Task SingleSourceSingleTargetWithImageTranslationTest()
+        {
+            // The document must contain an image with legible text so image scanning has something to translate.
+            Uri source = await CreateSourceContainerFromFileAsync(ImageDocumentName);
+            Uri target = await CreateTargetContainerAsync();
+
+            DocumentTranslationClient client = GetClient();
+
+            var input = new DocumentTranslationInput(source, target, "fr");
+
+            // Enable translation of text embedded within images for the batch.
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(new[] { input }, translateTextWithinImage: true);
+
+            await operation.WaitForCompletionAsync();
+
+            if (operation.DocumentsSucceeded < 1)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(1, operation.DocumentsSucceeded);
+
+            await foreach (DocumentStatusResult document in operation.GetValuesAsync())
+            {
+                // The request enables image translation (verified on the wire) and the document translates
+                // successfully. Image scan usage (TotalImageScansSucceeded/ImageCharged/...) is only reported
+                // by the service when images are actually scanned, so it is not asserted here.
+                Assert.AreEqual(DocumentTranslationStatus.Succeeded, document.Status);
+            }
+        }
+
+        private async Task<Uri> CreateSourceContainerFromFileAsync(string fileName)
+        {
+            BlobContainerClient containerClient = GetBlobContainerClient("source" + Recording.GenerateId());
+            string filePath = Path.Combine("TestData", fileName);
+            using FileStream stream = File.OpenRead(filePath);
+            await containerClient.UploadBlobAsync(fileName, stream);
+            return containerClient.Uri;
         }
 
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
