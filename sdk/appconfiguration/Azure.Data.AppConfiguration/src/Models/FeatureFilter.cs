@@ -8,6 +8,7 @@ namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// A Feature filter represents a filter definition that should be evaluated by the consumer to determine if the feature is enabled.
+    /// This class is used in conjunction with <see cref="FeatureFlag"/> to define the filters that should be evaluated for a feature flag.
     /// </summary>
     [CodeGenType("FeatureFlagFilter")]
     public partial class FeatureFilter
