@@ -26,8 +26,7 @@ namespace Azure.AI.Translation.Document
             Version = version switch
             {
                 ServiceVersion.V2024_05_01 => "2024-05-01",
-                ServiceVersion.V2024_11_01_Preview => "2024-11-01-preview",
-                ServiceVersion.V2025_12_01_Preview => "2025-12-01-preview",
+                ServiceVersion.V2026_03_01 => "2026-03-01",
                 _ => throw new NotSupportedException()
             };
             AddLoggedHeadersAndQueryParameters();

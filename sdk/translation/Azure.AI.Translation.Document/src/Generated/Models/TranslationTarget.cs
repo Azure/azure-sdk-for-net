@@ -33,19 +33,24 @@ namespace Azure.AI.Translation.Document
         /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="categoryId"> Category / custom system for translation request. </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
         /// <param name="languageCode"> Target Language. </param>
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranslationTarget(Uri targetUri, string categoryId, string deploymentName, string languageCode, IList<TranslationGlossary> glossaries, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetUri = targetUri;
             CategoryId = categoryId;
+            DeploymentName = deploymentName;
             LanguageCode = languageCode;
             Glossaries = glossaries;
             StorageSource = storageSource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Deployment name of the custom translation model for the translation request. </summary>
+        public string DeploymentName { get; set; }
 
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }

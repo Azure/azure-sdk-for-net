@@ -9,11 +9,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
     // Data plane generated client.
     /// <summary> The SingleDocumentTranslation service client. </summary>
+    [CodeGenSuppress("Translate", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("TranslateAsync", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(CancellationToken))]
     public partial class SingleDocumentTranslationClient
     {
         /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
@@ -61,6 +64,7 @@ namespace Azure.AI.Translation.Document
         /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
         /// project details to this parameter to use your deployed customized system. Default value is: general.
         /// </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
         /// <param name="allowFallback">
         /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
         /// Possible values are: true (default) or false.
@@ -69,14 +73,14 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        public virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, string deploymentName = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
 
             using MultiPartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            Response response = await TranslateAsync(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context).ConfigureAwait(false);
+            Response response = await TranslateAsync(targetLanguage, content, content.ContentType, sourceLanguage, category, deploymentName, allowFallback, translateTextWithinImage, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
@@ -97,6 +101,7 @@ namespace Azure.AI.Translation.Document
         /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator
         /// project details to this parameter to use your deployed customized system. Default value is: general.
         /// </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
         /// <param name="allowFallback">
         /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
         /// Possible values are: true (default) or false.
@@ -105,14 +110,14 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        public virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, string deploymentName = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
 
             using MultiPartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            Response response = Translate(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
+            Response response = Translate(targetLanguage, content, content.ContentType, sourceLanguage, category, deploymentName, allowFallback, translateTextWithinImage, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -144,7 +149,7 @@ namespace Azure.AI.Translation.Document
 #pragma warning disable AZC0002
         public virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, CancellationToken cancellationToken)
 #pragma warning restore AZC0002
-            => await TranslateAsync(targetLanguage, documentTranslateContent, sourceLanguage, category, allowFallback, null, cancellationToken).ConfigureAwait(false);
+            => await TranslateAsync(targetLanguage, documentTranslateContent, sourceLanguage, category, null, allowFallback, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Submit a single document translation request to the Document Translation service. </summary>
         /// <param name="targetLanguage">
@@ -174,7 +179,7 @@ namespace Azure.AI.Translation.Document
 #pragma warning disable AZC0002
         public virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, CancellationToken cancellationToken)
 #pragma warning restore AZC0002
-            => Translate(targetLanguage, documentTranslateContent, sourceLanguage, category, allowFallback, null, cancellationToken);
+            => Translate(targetLanguage, documentTranslateContent, sourceLanguage, category, null, allowFallback, null, cancellationToken);
 
         /// <summary>
         /// [Protocol Method] Submit a single document translation request to the Document Translation service
@@ -186,7 +191,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TranslateAsync(string,DocumentTranslateContent,string,string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TranslateAsync(string,DocumentTranslateContent,string,string,string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -218,7 +223,7 @@ namespace Azure.AI.Translation.Document
         /// <returns> The response returned from the service. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
-            => await TranslateAsync(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, null, context).ConfigureAwait(false);
+            => await TranslateAsync(targetLanguage, content, contentType, sourceLanguage, category, null, allowFallback, null, context).ConfigureAwait(false);
 
         /// <summary>
         /// [Protocol Method] Submit a single document translation request to the Document Translation service
@@ -230,7 +235,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Translate(string,DocumentTranslateContent,string,string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Translate(string,DocumentTranslateContent,string,string,string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -262,6 +267,6 @@ namespace Azure.AI.Translation.Document
         /// <returns> The response returned from the service. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
-            => Translate(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, null, context);
+            => Translate(targetLanguage, content, contentType, sourceLanguage, category, null, allowFallback, null, context);
     }
 }

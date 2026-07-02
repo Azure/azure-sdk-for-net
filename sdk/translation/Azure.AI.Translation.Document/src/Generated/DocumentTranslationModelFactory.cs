@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 
@@ -41,17 +42,19 @@ namespace Azure.AI.Translation.Document
         /// <summary> Destination for the finished translated documents. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="categoryId"> Category / custom system for translation request. </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
         /// <param name="languageCode"> Target Language. </param>
         /// <param name="glossaries"> List of Glossary. </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <returns> A new <see cref="Document.TranslationTarget"/> instance for mocking. </returns>
-        public static TranslationTarget TranslationTarget(Uri targetUri = default, string categoryId = default, string languageCode = default, IEnumerable<TranslationGlossary> glossaries = default, TranslationStorageSource? storageSource = default)
+        public static TranslationTarget TranslationTarget(Uri targetUri = default, string categoryId = default, string deploymentName = default, string languageCode = default, IEnumerable<TranslationGlossary> glossaries = default, TranslationStorageSource? storageSource = default)
         {
             glossaries ??= new ChangeTrackingList<TranslationGlossary>();
 
             return new TranslationTarget(
                 targetUri,
                 categoryId,
+                deploymentName,
                 languageCode,
                 glossaries.ToList(),
                 storageSource,
@@ -115,6 +118,19 @@ namespace Azure.AI.Translation.Document
                 formatVersions.ToList(),
                 @type,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Document.TranslationTarget"/>. </summary>
+        /// <param name="targetUri"> Location of the folder / container with your documents. </param>
+        /// <param name="categoryId"> Category / custom system for translation request. </param>
+        /// <param name="languageCode"> Target Language. </param>
+        /// <param name="glossaries"> List of Glossary. </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        /// <returns> A new <see cref="Document.TranslationTarget"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TranslationTarget TranslationTarget(Uri targetUri, string categoryId, string languageCode, IEnumerable<TranslationGlossary> glossaries, TranslationStorageSource? storageSource)
+        {
+            return TranslationTarget(targetUri: targetUri, categoryId: categoryId, deploymentName: default, languageCode: languageCode, glossaries: glossaries, storageSource: storageSource);
         }
     }
 }
