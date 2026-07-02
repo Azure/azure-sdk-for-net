@@ -488,7 +488,8 @@ namespace Azure.Generator.Provisioning.Providers
                     ? [.. basePath, serializedName]
                     : new[] { serializedName };
 
-                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                var isOutput = (_resourceProjection?.WritableScopes.Count == 0)
+                    || (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
                         && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName);
                 var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
