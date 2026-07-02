@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         MachineLearningPrivateEndpoint IJsonModel<MachineLearningPrivateEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Reads the JSON representation and creates an instance of the model. </summary>
         protected virtual MachineLearningPrivateEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningPrivateEndpoint(id, subnetArmId, serializedAdditionalRawData);
         }
 
+        /// <summary> Writes the model to a <see cref="System.BinaryData"/> instance. </summary>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         BinaryData IPersistableModel<MachineLearningPrivateEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <summary> Creates an instance of the model from a <see cref="System.BinaryData"/> instance. </summary>
         protected virtual MachineLearningPrivateEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;

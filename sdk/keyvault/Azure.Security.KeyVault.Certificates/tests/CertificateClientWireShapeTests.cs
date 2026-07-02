@@ -10,10 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
-    // Unit-level guards for the five post-emit wire-shape patches applied by
-    // eng/Internalize-Generated.ps1, plus the MapApiVersion enum mapping and
-    // the CertificatePolicyAction null-throw contract. The recorded playback
-    // suite catches the same regressions, but these tests run without
+    // Unit-level guards for the client's wire shape (formerly enforced by the
+    // eng/Internalize-Generated.ps1 post-emit patches, now removed since the
+    // emitter produces the correct output natively), plus the MapApiVersion enum
+    // mapping and the CertificatePolicyAction null-throw contract. The recorded
+    // playback suite catches the same regressions, but these tests run without
     // cassettes so they fail fast in CI on a fresh emit.
     public class CertificateClientWireShapeTests
     {
@@ -39,40 +40,40 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 "GetCertificate (latest version) must emit /certificates/{name} without trailing slash to match recorded shape.");
         }
 
-        // Patch 3: contacts collection URL keeps trailing slash.
+        // Contacts collection URL uses the emitter-native shape (no trailing slash).
         [Test]
-        public async Task GetContacts_PathEndsWithTrailingSlash()
+        public async Task GetContacts_PathHasNoTrailingSlash()
         {
             var (client, transport) = NewClient(new MockResponse(200).WithJson(
-                @"{""id"":""https://example.vault.azure.net/certificates/contacts/""}"));
+                @"{""id"":""https://example.vault.azure.net/certificates/contacts""}"));
             await client.GetContactsAsync();
             string path = transport.SingleRequest.Uri.Path;
-            Assert.AreEqual("/certificates/contacts/", path,
-                "Contacts collection URL must include trailing slash to match recorded shape.");
+            Assert.AreEqual("/certificates/contacts", path,
+                "Contacts collection URL must use the emitter-native shape without a trailing slash.");
         }
 
-        // Patch 4: issuers LIST collection URL keeps trailing slash.
+        // Issuers LIST collection URL uses the emitter-native shape (no trailing slash).
         [Test]
-        public async Task GetPropertiesOfIssuers_PathEndsWithTrailingSlash()
+        public async Task GetPropertiesOfIssuers_PathHasNoTrailingSlash()
         {
             var (client, transport) = NewClient(new MockResponse(200).WithJson(
                 @"{""value"":[]}"));
             var pageable = client.GetPropertiesOfIssuersAsync();
             await foreach (var _ in pageable) { break; }
             string path = transport.SingleRequest.Uri.Path;
-            Assert.AreEqual("/certificates/issuers/", path,
-                "Issuers LIST URL must include trailing slash to match recorded shape.");
+            Assert.AreEqual("/certificates/issuers", path,
+                "Issuers LIST URL must use the emitter-native shape without a trailing slash.");
         }
 
-        // Patch 5: PurgeDeletedCertificate carries Accept: application/json.
+        // PurgeDeletedCertificate (204 No Content) uses the emitter-native shape
+        // and does not send an Accept header.
         [Test]
-        public async Task PurgeDeletedCertificate_RequestSetsAcceptJsonHeader()
+        public async Task PurgeDeletedCertificate_RequestDoesNotSetAcceptHeader()
         {
             var (client, transport) = NewClient(new MockResponse(204));
             await client.PurgeDeletedCertificateAsync("x");
-            Assert.IsTrue(transport.SingleRequest.Headers.TryGetValue("Accept", out string accept),
-                "PurgeDeletedCertificate must set Accept header (204 No Content path).");
-            Assert.AreEqual("application/json", accept);
+            Assert.IsFalse(transport.SingleRequest.Headers.TryGetValue("Accept", out _),
+                "PurgeDeletedCertificate must not send an Accept header (emitter-native 204 No Content path).");
         }
 
         // Patch 1: UpdateCertificate builds PATCH /certificates/{name}/{version}
@@ -121,12 +122,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Throws<ArgumentNullException>(() => { CertificatePolicyAction a = s; });
         }
 
-        // Patch 6 (regression guard for Azure/azure-sdk-for-net#60274):
+        // Regression guard for Azure/azure-sdk-for-net#60274:
         // Generated AsPages() loops used to expose the URI we used to fetch
         // the CURRENT page as that page's ContinuationToken, rather than
-        // result.NextLink (the URI for the NEXT page). The post-emit reorder
-        // makes page.ContinuationToken == result.NextLink so customers persisting
-        // tokens and resuming with AsPages(token) advance correctly.
+        // result.NextLink (the URI for the NEXT page). The emitter now yields
+        // result.NextLink so customers persisting tokens and resuming with
+        // AsPages(token) advance correctly.
         [Test]
         public async Task GetPropertiesOfCertificates_AsPages_ContinuationTokenIsNextLink()
         {
