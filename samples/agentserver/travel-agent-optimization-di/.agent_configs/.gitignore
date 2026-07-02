@@ -1,0 +1,8 @@
+# Only the `baseline/` directory is part of the sample. Any other directories
+# here (e.g. `cand_<id>/`) are produced by `azd ai agent optimize apply` and
+# are per-deployment artifacts — they should NOT be committed so that anyone
+# running the sample sees the optimizer produce fresh candidates of their own.
+*
+!.gitignore
+!baseline/
+!baseline/**

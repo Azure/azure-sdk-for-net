@@ -1,0 +1,28 @@
+# Foundry Agent Optimization eval config for the TravelAgent SDK sample.
+#
+# Used by the optimization service (`azd ai agent optimize`) to score baseline
+# vs. candidate prompt/instruction variants of the agent. Each candidate is
+# created in .agent_configs/cand_<id>/ and selected at runtime via the
+# OPTIMIZATION_CANDIDATE_ID env var (see Program.cs).
+name: smoke-core
+agent:
+    name: travel-agent-sample
+    kind: hosted
+    model: gpt-4.1-mini
+    config: .agent_configs/baseline
+    instruction_file: .agent_configs/baseline/instructions.md
+dataset:
+    name: smoke-core
+    version: "1.0"
+    local_uri: datasets/smoke-core
+evaluators:
+    - name: smoke-core
+      version: "1"
+      local_uri: evaluators/smoke-core/rubric_dimensions.json
+options:
+    eval_model: gpt-4.1-mini
+    # Optimizer reasoning model — must be a deployment that exists in the
+    # Foundry account. gpt-5 family recommended. Can be overridden on the
+    # CLI with `--optimize-model <name>`.
+    optimization_model: gpt-5
+max_samples: 15

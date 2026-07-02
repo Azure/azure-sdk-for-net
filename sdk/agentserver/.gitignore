@@ -19,3 +19,6 @@ __pycache__/
 specs/
 
 .specs/
+
+# Manual local validation tool - not part of CI
+Azure.AI.AgentServer.Optimization/tests/LiveApiTest/
