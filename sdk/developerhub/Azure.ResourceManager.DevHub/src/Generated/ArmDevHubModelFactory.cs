@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.DevHub.Models
         }
 
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
-        public static TagsObject TagsObject(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.IacProfileTagsPatch"/> instance for mocking. </returns>
+        public static IacProfileTagsPatch IacProfileTagsPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TagsObject(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new IacProfileTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="templateName"> Template Name. </param>

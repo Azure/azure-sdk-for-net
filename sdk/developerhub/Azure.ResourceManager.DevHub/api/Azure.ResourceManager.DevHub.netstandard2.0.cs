@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.DevHub
         Azure.ResourceManager.DevHub.DevHubWorkflowData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.DevHubWorkflowData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.DevHubWorkflowData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.DevHubWorkflowData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevHub.DevHubWorkflowResource> Update(Azure.ResourceManager.DevHub.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevHub.DevHubWorkflowResource>> UpdateAsync(Azure.ResourceManager.DevHub.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevHub.DevHubWorkflowResource> Update(Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevHub.DevHubWorkflowResource>> UpdateAsync(Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GitHubOAuthResponseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.GitHubOAuthResponseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.GitHubOAuthResponseData>
     {
@@ -319,8 +319,8 @@ namespace Azure.ResourceManager.DevHub
         Azure.ResourceManager.DevHub.IacProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.IacProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.IacProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.IacProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DevHub.IacProfileResource> Update(Azure.ResourceManager.DevHub.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevHub.IacProfileResource>> UpdateAsync(Azure.ResourceManager.DevHub.Models.TagsObject tagsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevHub.IacProfileResource> Update(Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevHub.IacProfileResource>> UpdateAsync(Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DevHub.Mocking
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.DevHub.Models
         public static Azure.ResourceManager.DevHub.Models.GitHubWorkflowProfile GitHubWorkflowProfile(string repositoryOwner = null, string repositoryName = null, string branchName = null, string dockerfile = null, string dockerBuildContext = null, Azure.ResourceManager.DevHub.Models.DevHubDeploymentProperties deploymentProperties = null, string @namespace = null, Azure.ResourceManager.DevHub.Models.DevHubContainerRegistryInfo acr = null, Azure.ResourceManager.DevHub.Models.GitHubWorkflowProfileOidcCredentials oidcCredentials = null, Azure.Core.ResourceIdentifier aksResourceId = null, string prUri = null, int? pullNumber = default(int?), Azure.ResourceManager.DevHub.Models.DevHubPullRequestStatus? prStatus = default(Azure.ResourceManager.DevHub.Models.DevHubPullRequestStatus?), Azure.ResourceManager.DevHub.Models.DevHubWorkflowRun lastWorkflowRun = null, Azure.ResourceManager.DevHub.Models.DevHubAuthorizationStatus? authStatus = default(Azure.ResourceManager.DevHub.Models.DevHubAuthorizationStatus?)) { throw null; }
         public static Azure.ResourceManager.DevHub.Models.GitHubWorkflowProfileOidcCredentials GitHubWorkflowProfileOidcCredentials(string azureClientId = null, string azureTenantId = null) { throw null; }
         public static Azure.ResourceManager.DevHub.IacProfileData IacProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevHub.Models.DevHubStageInfo> stages = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DevHub.Models.DevHubIacTemplateProperties> templates = null, string repositoryName = null, string repositoryMainBranch = null, string repositoryOwner = null, Azure.ResourceManager.DevHub.Models.DevHubAuthorizationStatus? authStatus = default(Azure.ResourceManager.DevHub.Models.DevHubAuthorizationStatus?), int? pullNumber = default(int?), Azure.ResourceManager.DevHub.Models.DevHubPullRequestStatus? prStatus = default(Azure.ResourceManager.DevHub.Models.DevHubPullRequestStatus?), string branchName = null, string storageAccountSubscription = null, string storageAccountResourceGroup = null, string storageAccountName = null, string storageContainerName = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.DevHub.Models.TagsObject TagsObject(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch IacProfileTagsPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
     }
     public partial class AzurePipelineProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.AzurePipelineProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.AzurePipelineProfile>
     {
@@ -1354,6 +1354,20 @@ namespace Azure.ResourceManager.DevHub.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.GitHubWorkflowProfileOidcCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.GitHubWorkflowProfileOidcCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class IacProfileTagsPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>
+    {
+        public IacProfileTagsPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.IacProfileTagsPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Origin : System.IEquatable<Azure.ResourceManager.DevHub.Models.Origin>
     {
@@ -1371,19 +1385,5 @@ namespace Azure.ResourceManager.DevHub.Models
         public static implicit operator Azure.ResourceManager.DevHub.Models.Origin? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevHub.Models.Origin left, Azure.ResourceManager.DevHub.Models.Origin right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TagsObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.TagsObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.TagsObject>
-    {
-        public TagsObject() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.DevHub.Models.TagsObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.DevHub.Models.TagsObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.DevHub.Models.TagsObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.TagsObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevHub.Models.TagsObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DevHub.Models.TagsObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.TagsObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.TagsObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevHub.Models.TagsObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
