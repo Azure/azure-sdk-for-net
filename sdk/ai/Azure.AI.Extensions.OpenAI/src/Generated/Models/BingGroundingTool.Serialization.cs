@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
-            BingGroundingSearchToolParameters bingGrounding = default;
+            BingGroundingSearchToolOptions bingGrounding = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("bing_grounding"u8))
                 {
-                    bingGrounding = BingGroundingSearchToolParameters.DeserializeBingGroundingSearchToolParameters(prop.Value, options);
+                    bingGrounding = BingGroundingSearchToolOptions.DeserializeBingGroundingSearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

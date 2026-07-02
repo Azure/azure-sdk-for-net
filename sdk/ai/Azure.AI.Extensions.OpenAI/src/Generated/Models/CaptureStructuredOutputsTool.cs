@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
-        internal CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base("capture_structured_outputs")
+        /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
+        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base("capture_structured_outputs")
         {
+            Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
+
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             OutputDefinition = outputDefinition;
         }
@@ -39,15 +42,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
-        public StructuredOutputDefinition OutputDefinition { get; }
+        public StructuredOutputDefinition OutputDefinition { get; set; }
     }
 }

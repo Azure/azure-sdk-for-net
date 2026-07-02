@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchOptions"/>. </summary>
-        internal MemorySearchOptions()
+        public MemorySearchOptions()
         {
         }
 
@@ -28,6 +28,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Maximum number of memory items to return. </summary>
-        public int? MaxMemories { get; }
+        public int? MaxMemories { get; set; }
     }
 }

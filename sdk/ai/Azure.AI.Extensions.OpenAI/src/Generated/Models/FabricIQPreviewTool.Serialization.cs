@@ -87,14 +87,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
-#else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(RequireApproval, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,7 +135,7 @@ namespace Azure.AI.Extensions.OpenAI
             string projectConnectionId = default;
             string serverLabel = default;
             Uri serverUri = default;
-            BinaryData requireApproval = default;
+            FabricIQPreviewToolRequireApprovalChoice requireApproval = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +170,7 @@ namespace Azure.AI.Extensions.OpenAI
                         requireApproval = null;
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApproval = FabricIQPreviewToolRequireApprovalChoice.DeserializeFabricIQPreviewToolRequireApprovalChoice(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class TelemetryTests
+public partial class ResponsesTelemetryTests
 {
     private const string McpAgentName = "mcp-telemetry-agent";
     private const string McpPrompt = "Please summarize the Azure REST API specifications Readme";

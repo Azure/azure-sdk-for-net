@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAI.Internal
 {
     /// <summary> The MCPToolRequireApproval. </summary>
     public partial class MCPToolRequireApproval : IJsonModel<MCPToolRequireApproval>
@@ -70,16 +71,6 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 throw new FormatException($"The model {nameof(MCPToolRequireApproval)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Always))
-            {
-                writer.WritePropertyName("always"u8);
-                writer.WriteObjectValue(Always, options);
-            }
-            if (Optional.IsDefined(Never))
-            {
-                writer.WritePropertyName("never"u8);
-                writer.WriteObjectValue(Never, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,35 +113,15 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            MCPToolFilter always = default;
-            MCPToolFilter never = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("always"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    always = MCPToolFilter.DeserializeMCPToolFilter(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("never"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    never = MCPToolFilter.DeserializeMCPToolFilter(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties);
+            return new MCPToolRequireApproval(additionalBinaryDataProperties);
         }
     }
 }

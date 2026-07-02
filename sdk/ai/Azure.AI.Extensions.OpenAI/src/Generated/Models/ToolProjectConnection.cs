@@ -15,8 +15,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ToolProjectConnection"/>. </summary>
         /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
-        internal ToolProjectConnection(string projectConnectionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public ToolProjectConnection(string projectConnectionId)
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -30,6 +33,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A project connection in a ToolProjectConnectionList attached to this tool. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
     }
 }

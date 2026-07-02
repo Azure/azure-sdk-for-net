@@ -14,7 +14,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class TelemetryTests
+public partial class ResponsesTelemetryTests
 {
     private const string CodeInterpreterAgentName = "codeinterpreter-telemetry-agent";
     private const string CodeInterpreterPrompt = "I need to solve the equation sin(x) + x^2 = 42";

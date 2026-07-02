@@ -9,28 +9,31 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    public partial class OpenApiTool : ResponseTool
+    public partial class OpenAPITool : ResponseTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiTool"/>. </summary>
-        /// <param name="openApi"> The openapi function definition. </param>
-        internal OpenApiTool(OpenApiFunctionDefinition openApi) : base("openapi")
+        /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionDefinition"/> is null. </exception>
+        public OpenAPITool(OpenApiFunctionDefinition functionDefinition) : base("openapi")
         {
+            Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
+
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
-            OpenApi = openApi;
+            FunctionDefinition = functionDefinition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenApiTool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="openApi"> The openapi function definition. </param>
+        /// <param name="functionDefinition"> The openapi function definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, OpenApiFunctionDefinition openApi, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal OpenAPITool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, OpenApiFunctionDefinition functionDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ToolConfigs = toolConfigs;
-            OpenApi = openApi;
+            FunctionDefinition = functionDefinition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +41,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The openapi function definition. </summary>
-        public OpenApiFunctionDefinition OpenApi { get; }
+        public OpenApiFunctionDefinition FunctionDefinition { get; set; }
     }
 }

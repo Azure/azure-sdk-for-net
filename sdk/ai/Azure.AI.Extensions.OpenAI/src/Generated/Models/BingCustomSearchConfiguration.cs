@@ -16,8 +16,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        internal BingCustomSearchConfiguration(string projectConnectionId, string instanceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> or <paramref name="instanceName"/> is null. </exception>
+        public BingCustomSearchConfiguration(string projectConnectionId, string instanceName)
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            Argument.AssertNotNull(instanceName, nameof(instanceName));
+
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;
         }
@@ -42,21 +46,21 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Project connection id for grounding with bing search. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> Name of the custom configuration instance given to config. </summary>
-        public string InstanceName { get; }
+        public string InstanceName { get; set; }
 
         /// <summary> The market where the results come from. </summary>
-        public string Market { get; }
+        public string Market { get; set; }
 
         /// <summary> The language to use for user interface strings when calling Bing API. </summary>
-        public string SetLang { get; }
+        public string SetLang { get; set; }
 
         /// <summary> The number of search results to return in the bing api response. </summary>
-        public long? Count { get; }
+        public long? Count { get; set; }
 
         /// <summary> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </summary>
-        public string Freshness { get; }
+        public string Freshness { get; set; }
     }
 }

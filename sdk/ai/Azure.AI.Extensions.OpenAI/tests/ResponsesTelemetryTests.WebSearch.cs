@@ -14,7 +14,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class TelemetryTests
+public partial class ResponsesTelemetryTests
 {
     private const string WebSearchAgentName = "websearch-telemetry-agent";
     private const string WebSearchPrompt = "What is the latest news about Azure AI today?";

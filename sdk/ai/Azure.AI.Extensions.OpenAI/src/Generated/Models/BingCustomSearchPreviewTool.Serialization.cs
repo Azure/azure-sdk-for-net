@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "bing_custom_search_preview";
-            BingCustomSearchToolParameters bingCustomSearchPreview = default;
+            BingCustomSearchToolOptions bingCustomSearchPreview = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("bing_custom_search_preview"u8))
                 {
-                    bingCustomSearchPreview = BingCustomSearchToolParameters.DeserializeBingCustomSearchToolParameters(prop.Value, options);
+                    bingCustomSearchPreview = BingCustomSearchToolOptions.DeserializeBingCustomSearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

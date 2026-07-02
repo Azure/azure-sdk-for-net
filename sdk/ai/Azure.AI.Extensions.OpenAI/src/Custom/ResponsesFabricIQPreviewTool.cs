@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
 using OpenAI.Responses;
 
@@ -18,5 +19,11 @@ namespace Azure.AI.Extensions.OpenAI
         internal FabricIQPreviewTool(): base(ResponseToolKind.FabricIQPreview)
         {
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [CodeGenMember("RequireApproval")]
+        public FabricIQPreviewToolRequireApprovalChoice RequireApproval { get; set; }
     }
 }

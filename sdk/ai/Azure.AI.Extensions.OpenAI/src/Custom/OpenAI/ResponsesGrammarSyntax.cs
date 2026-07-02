@@ -3,12 +3,12 @@
 
 namespace Azure.AI.Extensions.OpenAI;
 
-/// <summary> Specifies the grammar syntax used by a response grammar. </summary>
-[CodeGenType("GrammarSyntax1")]
-public enum ResponsesGrammarSyntax
-{
-    /// <summary> Uses Lark syntax. </summary>
-    Lark,
-    /// <summary> Uses regular expression syntax. </summary>
-    Regex
-}
+// /// <summary> Specifies the grammar syntax used by a response grammar. </summary>
+//[CodeGenType("GrammarSyntax1")]
+//public enum ResponsesGrammarSyntax
+//{
+//    /// <summary> Uses Lark syntax. </summary>
+//    Lark,
+//    /// <summary> Uses regular expression syntax. </summary>
+//    Regex
+//}

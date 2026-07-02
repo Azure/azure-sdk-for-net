@@ -73,7 +73,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabric_dataagent_preview"u8);
-            writer.WriteObjectValue(FabricDataagentPreview, options);
+            writer.WriteObjectValue(ToolOptions, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "fabric_dataagent_preview";
-            FabricDataAgentToolOptions fabricDataagentPreview = default;
+            FabricDataAgentToolOptions toolOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("fabric_dataagent_preview"u8))
                 {
-                    fabricDataagentPreview = FabricDataAgentToolOptions.DeserializeFabricDataAgentToolOptions(prop.Value, options);
+                    toolOptions = FabricDataAgentToolOptions.DeserializeFabricDataAgentToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MicrosoftFabricPreviewTool(@type, fabricDataagentPreview, additionalBinaryDataProperties);
+            return new MicrosoftFabricPreviewTool(@type, toolOptions, additionalBinaryDataProperties);
         }
     }
 }

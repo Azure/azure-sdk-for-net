@@ -18,8 +18,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="auth"> Open API authentication details. </param>
-        internal OpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, OpenApiAuthDetails auth)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="auth"/> is null. </exception>
+        public OpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, OpenApiAuthenticationDetails auth)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(specification, nameof(specification));
+            Argument.AssertNotNull(auth, nameof(auth));
+
             Name = name;
             Specification = specification;
             Auth = auth;
@@ -35,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> specification, OpenApiAuthDetails auth, IList<string> defaultParams, IReadOnlyList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenApiFunctionDefinition(string name, string description, IDictionary<string, BinaryData> specification, OpenApiAuthenticationDetails auth, IList<string> defaultParams, IReadOnlyList<OpenApiFunctionDefinitionFunction> functions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -47,10 +52,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the function to be called. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> A description of what the function does, used by the model to choose when and how to call the function. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The openapi function shape, described as a JSON Schema object.
@@ -81,7 +86,7 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, BinaryData> Specification { get; }
 
         /// <summary> Open API authentication details. </summary>
-        public OpenApiAuthDetails Auth { get; }
+        public OpenApiAuthenticationDetails Auth { get; set; }
 
         /// <summary> List of OpenAPI spec parameters that will use user-provided defaults. </summary>
         public IList<string> DefaultParams { get; }

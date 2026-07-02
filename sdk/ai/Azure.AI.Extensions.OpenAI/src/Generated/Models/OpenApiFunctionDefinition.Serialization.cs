@@ -174,7 +174,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> specification = default;
-            OpenApiAuthDetails auth = default;
+            OpenApiAuthenticationDetails auth = default;
             IList<string> defaultParams = default;
             IReadOnlyList<OpenApiFunctionDefinitionFunction> functions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -209,7 +209,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("auth"u8))
                 {
-                    auth = OpenApiAuthDetails.DeserializeOpenApiAuthDetails(prop.Value, options);
+                    auth = OpenApiAuthenticationDetails.DeserializeOpenApiAuthenticationDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("default_params"u8))

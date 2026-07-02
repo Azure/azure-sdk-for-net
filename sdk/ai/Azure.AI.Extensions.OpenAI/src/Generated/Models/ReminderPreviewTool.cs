@@ -21,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReminderPreviewTool"/>. </summary>
-        internal ReminderPreviewTool() : base("reminder_preview")
+        public ReminderPreviewTool() : base("reminder_preview")
         {
         }
 
@@ -38,9 +38,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
     }
 }

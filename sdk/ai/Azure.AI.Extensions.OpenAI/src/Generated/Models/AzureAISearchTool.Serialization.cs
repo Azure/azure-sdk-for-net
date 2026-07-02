@@ -141,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
-            AzureAISearchToolResource azureAISearch = default;
+            AzureAISearchToolOptions azureAISearch = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
-                    azureAISearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
+                    azureAISearch = AzureAISearchToolOptions.DeserializeAzureAISearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

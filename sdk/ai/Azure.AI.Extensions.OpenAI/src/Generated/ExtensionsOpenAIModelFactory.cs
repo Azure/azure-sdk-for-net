@@ -14,81 +14,13 @@ namespace Azure.AI.Extensions.OpenAI
     public static partial class ExtensionsOpenAIModelFactory
     {
 
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"></param>
-        /// <param name="fileData"></param>
-        /// <param name="fileUrl"></param>
-        /// <returns> A new <see cref="Internal.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
-        {
-            return new InputFileContentParam(
-                "input_file",
-                fileId,
-                filename,
-                fileData,
-                fileUrl,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The EmptyModelParam. </summary>
-        /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
-        public static EmptyModelParam EmptyModelParam()
-        {
-            return new EmptyModelParam(additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Custom tool. </summary>
-        /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
-        /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
-        /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
-        /// <param name="shouldDeferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        /// <returns> A new <see cref="OpenAI.CustomToolParam"/> instance for mocking. </returns>
-        public static CustomToolParam CustomToolParam(string name = default, string description = default, CustomToolParamFormat format = default, bool? shouldDeferLoading = default)
-        {
-            return new CustomToolParam(
-                "custom",
-                name,
-                description,
-                format,
-                shouldDeferLoading,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The input format for the custom tool. Default is unconstrained text.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.CustomTextFormatParam"/> and <see cref="OpenAI.CustomGrammarFormatParam"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.CustomToolParamFormat"/> instance for mocking. </returns>
-        public static CustomToolParamFormat CustomToolParamFormat(string @type = default)
-        {
-            return new UnknownCustomToolParamFormat(new CustomToolParamFormatType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Text format. </summary>
-        /// <returns> A new <see cref="OpenAI.CustomTextFormatParam"/> instance for mocking. </returns>
-        public static CustomTextFormatParam CustomTextFormatParam()
-        {
-            return new CustomTextFormatParam(CustomToolParamFormatType.Text, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Grammar format. </summary>
-        /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
-        /// <param name="definition"> The grammar definition. </param>
-        /// <returns> A new <see cref="OpenAI.CustomGrammarFormatParam"/> instance for mocking. </returns>
-        public static CustomGrammarFormatParam CustomGrammarFormatParam(ResponsesGrammarSyntax syntax = default, string definition = default)
-        {
-            return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
-        }
-
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BingGroundingTool"/> instance for mocking. </returns>
-        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingGroundingSearchToolParameters bingGrounding = default)
+        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingGroundingSearchToolOptions bingGrounding = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -121,12 +53,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingSearchToolParameters"/> instance for mocking. </returns>
-        public static BingGroundingSearchToolParameters BingGroundingSearchToolParameters(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
+        /// <returns> A new <see cref="OpenAI.BingGroundingSearchToolOptions"/> instance for mocking. </returns>
+        public static BingGroundingSearchToolOptions BingGroundingSearchToolOptions(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
         {
             searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchConfiguration>();
 
-            return new BingGroundingSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new BingGroundingSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Search configuration for Bing Grounding. </summary>
@@ -148,11 +80,11 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
-        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions fabricDataagentPreview = default)
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions = default)
         {
-            return new MicrosoftFabricPreviewTool("fabric_dataagent_preview", fabricDataagentPreview, additionalBinaryDataProperties: null);
+            return new MicrosoftFabricPreviewTool("fabric_dataagent_preview", toolOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
@@ -177,11 +109,11 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.SharepointPreviewTool"/> instance for mocking. </returns>
-        public static SharepointPreviewTool SharepointPreviewTool(SharepointGroundingToolParameters sharepointGroundingPreview = default)
+        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
         {
-            return new SharepointPreviewTool("sharepoint_grounding_preview", sharepointGroundingPreview, additionalBinaryDataProperties: null);
+            return new SharepointPreviewTool("sharepoint_grounding_preview", toolOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
@@ -189,12 +121,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolParameters"/> instance for mocking. </returns>
-        public static SharepointGroundingToolParameters SharepointGroundingToolParameters(IEnumerable<ToolProjectConnection> projectConnections = default)
+        /// <returns> A new <see cref="OpenAI.SharePointGroundingToolOptions"/> instance for mocking. </returns>
+        public static SharePointGroundingToolOptions SharePointGroundingToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
         {
             projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
 
-            return new SharepointGroundingToolParameters(projectConnections.ToList(), additionalBinaryDataProperties: null);
+            return new SharePointGroundingToolOptions(projectConnections.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
@@ -203,7 +135,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <returns> A new <see cref="OpenAI.AzureAISearchTool"/> instance for mocking. </returns>
-        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolResource azureAISearch = default)
+        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolOptions azureAISearch = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -221,12 +153,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchToolResource"/> instance for mocking. </returns>
-        public static AzureAISearchToolResource AzureAISearchToolResource(IEnumerable<AISearchIndexResource> indexes = default)
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolOptions"/> instance for mocking. </returns>
+        public static AzureAISearchToolOptions AzureAISearchToolOptions(IEnumerable<AzureAISearchToolIndex> indexes = default)
         {
-            indexes ??= new ChangeTrackingList<AISearchIndexResource>();
+            indexes ??= new ChangeTrackingList<AzureAISearchToolIndex>();
 
-            return new AzureAISearchToolResource(indexes.ToList(), additionalBinaryDataProperties: null);
+            return new AzureAISearchToolOptions(indexes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A AI Search Index resource. </summary>
@@ -236,10 +168,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
-        /// <returns> A new <see cref="OpenAI.AISearchIndexResource"/> instance for mocking. </returns>
-        public static AISearchIndexResource AISearchIndexResource(string projectConnectionId = default, string indexName = default, AzureAISearchQueryKind? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        /// <returns> A new <see cref="OpenAI.AzureAISearchToolIndex"/> instance for mocking. </returns>
+        public static AzureAISearchToolIndex AzureAISearchToolIndex(string projectConnectionId = default, string indexName = default, AzureAISearchQueryKind? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
         {
-            return new AISearchIndexResource(
+            return new AzureAISearchToolIndex(
                 projectConnectionId,
                 indexName,
                 queryType,
@@ -251,13 +183,13 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="openApi"> The openapi function definition. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiTool"/> instance for mocking. </returns>
-        public static OpenApiTool OpenApiTool(IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition openApi = default)
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <returns> A new <see cref="OpenAI.OpenAPITool"/> instance for mocking. </returns>
+        public static OpenAPITool OpenAPITool(IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
-            return new OpenApiTool("openapi", toolConfigs, openApi, additionalBinaryDataProperties: null);
+            return new OpenAPITool("openapi", toolConfigs, functionDefinition, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for an openapi function. </summary>
@@ -268,7 +200,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthenticationDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
         {
             specification ??= new ChangeTrackingDictionary<string, BinaryData>();
             defaultParams ??= new ChangeTrackingList<string>();
@@ -286,28 +218,28 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthDetails"/>.
         /// </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiAuthDetails"/> instance for mocking. </returns>
-        public static OpenApiAuthDetails OpenApiAuthDetails(string @type = default)
+        /// <returns> A new <see cref="OpenAI.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string @type = default)
         {
-            return new UnknownOpenApiAuthDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
+            return new UnknownOpenApiAuthenticationDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi anonymous authentication. </summary>
-        /// <returns> A new <see cref="OpenAI.OpenApiAnonymousAuthDetails"/> instance for mocking. </returns>
-        public static OpenApiAnonymousAuthDetails OpenApiAnonymousAuthDetails()
+        /// <returns> A new <see cref="OpenAI.OpenAPIAnonymousAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails()
         {
-            return new OpenApiAnonymousAuthDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
+            return new OpenAPIAnonymousAuthenticationDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi project connection authentication. </summary>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionAuthDetails"/> instance for mocking. </returns>
-        public static OpenApiProjectConnectionAuthDetails OpenApiProjectConnectionAuthDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
+        /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
         {
-            return new OpenApiProjectConnectionAuthDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
@@ -349,7 +281,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
-        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolParameters bingCustomSearchPreview = default)
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview = default)
         {
             return new BingCustomSearchPreviewTool("bing_custom_search_preview", bingCustomSearchPreview, additionalBinaryDataProperties: null);
         }
@@ -359,12 +291,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolParameters"/> instance for mocking. </returns>
-        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolOptions"/> instance for mocking. </returns>
+        public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
         {
             searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
 
-            return new BingCustomSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new BingCustomSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A bing custom search configuration. </summary>
@@ -390,17 +322,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
-        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolParameters browserAutomationPreview = default)
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview = default)
         {
             return new BrowserAutomationPreviewTool("browser_automation_preview", browserAutomationPreview, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolParameters"/> instance for mocking. </returns>
-        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
+        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolOptions"/> instance for mocking. </returns>
+        public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters connection = default)
         {
-            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolOptions(connection, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
@@ -437,10 +369,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
         /// <returns> A new <see cref="OpenAI.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
         {
-            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-
             return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
         }
 
@@ -534,7 +464,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
         /// <returns> A new <see cref="OpenAI.FabricIQPreviewTool"/> instance for mocking. </returns>
-        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApproval = default)
+        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, FabricIQPreviewToolRequireApprovalChoice requireApproval = default)
         {
             return new FabricIQPreviewTool(
                 "fabric_iq_preview",
@@ -546,27 +476,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The MCPToolRequireApproval. </summary>
-        /// <param name="always"></param>
-        /// <param name="never"></param>
-        /// <returns> A new <see cref="OpenAI.MCPToolRequireApproval"/> instance for mocking. </returns>
-        public static MCPToolRequireApproval MCPToolRequireApproval(MCPToolFilter always = default, MCPToolFilter never = default)
+        /// <returns> A new <see cref="Internal.MCPToolRequireApproval"/> instance for mocking. </returns>
+        public static MCPToolRequireApproval MCPToolRequireApproval()
         {
-            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> MCP tool filter. </summary>
-        /// <param name="toolNames"> List of allowed tool names. </param>
-        /// <param name="isReadOnly">
-        /// Indicates whether or not a tool modifies data or is read-only. If an
-        ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-        ///   it will match this filter.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.MCPToolFilter"/> instance for mocking. </returns>
-        public static MCPToolFilter MCPToolFilter(IEnumerable<string> toolNames = default, bool? isReadOnly = default)
-        {
-            toolNames ??= new ChangeTrackingList<string>();
-
-            return new MCPToolFilter(toolNames.ToList(), isReadOnly, additionalBinaryDataProperties: null);
+            return new MCPToolRequireApproval(additionalBinaryDataProperties: null);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -613,75 +526,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new ReminderPreviewTool("reminder_preview", name, description, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Automatic Code Interpreter Tool Parameters. </summary>
-        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
-        /// <param name="memoryLimit"></param>
-        /// <param name="networkPolicy"></param>
-        /// <returns> A new <see cref="OpenAI.AutoCodeInterpreterToolParam"/> instance for mocking. </returns>
-        public static AutoCodeInterpreterToolParam AutoCodeInterpreterToolParam(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, ContainerNetworkPolicyParam networkPolicy = default)
-        {
-            fileIds ??= new ChangeTrackingList<string>();
-
-            return new AutoCodeInterpreterToolParam("auto", fileIds.ToList(), memoryLimit, networkPolicy, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Network access policy for the container.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ContainerNetworkPolicyDisabledParam"/> and <see cref="OpenAI.ContainerNetworkPolicyAllowlistParam"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyParam"/> instance for mocking. </returns>
-        public static ContainerNetworkPolicyParam ContainerNetworkPolicyParam(string @type = default)
-        {
-            return new UnknownContainerNetworkPolicyParam(new ContainerNetworkPolicyParamType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
-        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyDisabledParam"/> instance for mocking. </returns>
-        public static ContainerNetworkPolicyDisabledParam ContainerNetworkPolicyDisabledParam()
-        {
-            return new ContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType.Disabled, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
-        /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
-        /// <param name="domainSecrets"> Optional domain-scoped secrets for allowlisted domains. </param>
-        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyAllowlistParam"/> instance for mocking. </returns>
-        public static ContainerNetworkPolicyAllowlistParam ContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains = default, IEnumerable<ContainerNetworkPolicyDomainSecretParam> domainSecrets = default)
-        {
-            allowedDomains ??= new ChangeTrackingList<string>();
-            domainSecrets ??= new ChangeTrackingList<ContainerNetworkPolicyDomainSecretParam>();
-
-            return new ContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType.Allowlist, additionalBinaryDataProperties: null, allowedDomains.ToList(), domainSecrets.ToList());
-        }
-
-        /// <summary> The ContainerNetworkPolicyDomainSecretParam. </summary>
-        /// <param name="domain"> The domain associated with the secret. </param>
-        /// <param name="name"> The name of the secret to inject for the domain. </param>
-        /// <param name="value"> The secret value to inject for the domain. </param>
-        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyDomainSecretParam"/> instance for mocking. </returns>
-        public static ContainerNetworkPolicyDomainSecretParam ContainerNetworkPolicyDomainSecretParam(string domain = default, string name = default, string value = default)
-        {
-            return new ContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Web search approximate location. </summary>
-        /// <param name="country"></param>
-        /// <param name="region"></param>
-        /// <param name="city"></param>
-        /// <param name="timezone"></param>
-        /// <returns> A new <see cref="OpenAI.WebSearchApproximateLocation"/> instance for mocking. </returns>
-        public static WebSearchApproximateLocation WebSearchApproximateLocation(string country = default, string region = default, string city = default, string timezone = default)
-        {
-            return new WebSearchApproximateLocation(
-                "approximate",
-                country,
-                region,
-                city,
-                timezone,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A web search configuration for bing custom search. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
@@ -691,175 +535,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Local shell tool. </summary>
-        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <returns> A new <see cref="OpenAI.LocalShellToolParam"/> instance for mocking. </returns>
-        public static LocalShellToolParam LocalShellToolParam(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new LocalShellToolParam("local_shell", name, description, toolConfigs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Shell tool. </summary>
-        /// <param name="environment"></param>
-        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <returns> A new <see cref="OpenAI.FunctionShellToolParam"/> instance for mocking. </returns>
-        public static FunctionShellToolParam FunctionShellToolParam(FunctionShellToolParamEnvironment environment = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new FunctionShellToolParam(
-                "shell",
-                environment,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The FunctionShellToolParamEnvironment.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="OpenAI.FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="OpenAI.ContainerAutoParam"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironment"/> instance for mocking. </returns>
-        public static FunctionShellToolParamEnvironment FunctionShellToolParamEnvironment(string @type = default)
-        {
-            return new UnknownFunctionShellToolParamEnvironment(new FunctionShellToolParamEnvironmentType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
-        /// <param name="skills"> An optional list of skills. </param>
-        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/> instance for mocking. </returns>
-        public static FunctionShellToolParamEnvironmentLocalEnvironmentParam FunctionShellToolParamEnvironmentLocalEnvironmentParam(IEnumerable<LocalSkillParam> skills = default)
-        {
-            skills ??= new ChangeTrackingList<LocalSkillParam>();
-
-            return new FunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType.Local, additionalBinaryDataProperties: null, skills.ToList());
-        }
-
-        /// <summary> The LocalSkillParam. </summary>
-        /// <param name="name"> The name of the skill. </param>
-        /// <param name="description"> The description of the skill. </param>
-        /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <returns> A new <see cref="OpenAI.LocalSkillParam"/> instance for mocking. </returns>
-        public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
-        {
-            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
-        /// <param name="containerId"> The ID of the referenced container. </param>
-        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
-        public static FunctionShellToolParamEnvironmentContainerReferenceParam FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = default)
-        {
-            return new FunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType.ContainerReference, additionalBinaryDataProperties: null, containerId);
-        }
-
-        /// <summary> The ContainerAutoParam. </summary>
-        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
-        /// <param name="memoryLimit"></param>
-        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
-        /// <param name="networkPolicy"></param>
-        /// <returns> A new <see cref="OpenAI.ContainerAutoParam"/> instance for mocking. </returns>
-        public static ContainerAutoParam ContainerAutoParam(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ContainerNetworkPolicyParam networkPolicy = default)
-        {
-            fileIds ??= new ChangeTrackingList<string>();
-            skills ??= new ChangeTrackingList<ContainerSkill>();
-
-            return new ContainerAutoParam(
-                FunctionShellToolParamEnvironmentType.ContainerAuto,
-                additionalBinaryDataProperties: null,
-                fileIds.ToList(),
-                memoryLimit,
-                skills.ToList(),
-                networkPolicy);
-        }
-
-        /// <summary>
-        /// The ContainerSkill.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.SkillReferenceParam"/> and <see cref="OpenAI.InlineSkillParam"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
-        public static ContainerSkill ContainerSkill(string @type = default)
-        {
-            return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SkillReferenceParam. </summary>
-        /// <param name="skillId"> The ID of the referenced skill. </param>
-        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
-        /// <returns> A new <see cref="OpenAI.SkillReferenceParam"/> instance for mocking. </returns>
-        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
-        {
-            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
-        }
-
-        /// <summary> The InlineSkillParam. </summary>
-        /// <param name="name"> The name of the skill. </param>
-        /// <param name="description"> The description of the skill. </param>
-        /// <param name="source"> Inline skill payload. </param>
-        /// <returns> A new <see cref="OpenAI.InlineSkillParam"/> instance for mocking. </returns>
-        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
-        {
-            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
-        }
-
-        /// <summary> Inline skill payload. </summary>
-        /// <param name="data"> Base64-encoded skill zip bundle. </param>
-        /// <returns> A new <see cref="OpenAI.InlineSkillSourceParam"/> instance for mocking. </returns>
-        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
-        {
-            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Namespace. </summary>
-        /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
-        /// <param name="description"> A description of the namespace shown to the model. </param>
-        /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        /// <returns> A new <see cref="OpenAI.NamespaceToolParam"/> instance for mocking. </returns>
-        public static NamespaceToolParam NamespaceToolParam(string name = default, string description = default, IEnumerable<BinaryData> tools = default)
-        {
-            tools ??= new ChangeTrackingList<BinaryData>();
-
-            return new NamespaceToolParam("namespace", name, description, tools.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FunctionToolParam. </summary>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        /// <param name="parameters"></param>
-        /// <param name="isStrict"></param>
-        /// <param name="shouldDeferLoading"> Whether this function should be deferred and discovered via tool search. </param>
-        /// <returns> A new <see cref="OpenAI.FunctionToolParam"/> instance for mocking. </returns>
-        public static FunctionToolParam FunctionToolParam(string name = default, string description = default, EmptyModelParam parameters = default, bool? isStrict = default, bool? shouldDeferLoading = default)
-        {
-            return new FunctionToolParam(
-                name,
-                description,
-                parameters,
-                isStrict,
-                "function",
-                shouldDeferLoading,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Tool search tool. </summary>
-        /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
-        /// <param name="description"></param>
-        /// <param name="parameters"></param>
-        /// <returns> A new <see cref="OpenAI.ToolSearchToolParam"/> instance for mocking. </returns>
-        public static ToolSearchToolParam ToolSearchToolParam(ToolSearchExecutionType? execution = default, string description = default, EmptyModelParam parameters = default)
-        {
-            return new ToolSearchToolParam("tool_search", execution, description, parameters, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The AgentReference. </summary>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
@@ -867,6 +542,70 @@ namespace Azure.AI.Extensions.OpenAI
         public static AgentReference AgentReference(string name = default, string version = default)
         {
             return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="csdlActionKind"></param>
+        /// <param name="actionId"></param>
+        /// <param name="parentActionId"></param>
+        /// <param name="previousActionId"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
+        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
+        {
+            return new AgentWorkflowPreviewActionResponseItem(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                csdlActionKind,
+                actionId,
+                parentActionId,
+                previousActionId,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="output"></param>
+        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
+        {
+            return new AgentStructuredOutputsResponseItem(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                output,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="internalConsentLink"></param>
+        /// <param name="serverLabel"></param>
+        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
+        {
+            return new OAuthConsentRequestResponseItem(
+                @type,
+                id,
+                agentReference,
+                responseId,
+                internalConsentLink,
+                serverLabel,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Bing grounding tool call. </summary>
@@ -888,24 +627,6 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="output"></param>
-        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
-        {
-            return new AgentStructuredOutputsResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                output,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1428,52 +1149,6 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 callId,
                 status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="csdlActionKind"></param>
-        /// <param name="actionId"></param>
-        /// <param name="parentActionId"></param>
-        /// <param name="previousActionId"></param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
-        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string csdlActionKind = default, string actionId = default, string parentActionId = default, string previousActionId = default, AgentWorkflowPreviewActionStatus? status = default)
-        {
-            return new AgentWorkflowPreviewActionResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                csdlActionKind,
-                actionId,
-                parentActionId,
-                previousActionId,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"></param>
-        /// <param name="responseId"></param>
-        /// <param name="internalConsentLink"></param>
-        /// <param name="serverLabel"></param>
-        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
-        {
-            return new OAuthConsentRequestResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                internalConsentLink,
-                serverLabel,
                 additionalBinaryDataProperties: null);
         }
 

@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal BingCustomSearchPreviewTool(BingCustomSearchToolParameters bingCustomSearchPreview) : base("bing_custom_search_preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearchPreview"/> is null. </exception>
+        public BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview) : base("bing_custom_search_preview")
         {
+            Argument.AssertNotNull(bingCustomSearchPreview, nameof(bingCustomSearchPreview));
+
             BingCustomSearchPreview = bingCustomSearchPreview;
         }
 
@@ -25,13 +28,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingCustomSearchPreviewTool(ResponseToolKind @type, BingCustomSearchToolParameters bingCustomSearchPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal BingCustomSearchPreviewTool(ResponseToolKind @type, BingCustomSearchToolOptions bingCustomSearchPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BingCustomSearchPreview = bingCustomSearchPreview;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
-        public BingCustomSearchToolParameters BingCustomSearchPreview { get; }
+        public BingCustomSearchToolOptions BingCustomSearchPreview { get; set; }
     }
 }

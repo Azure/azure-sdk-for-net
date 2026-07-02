@@ -72,7 +72,7 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("kind"u8);
+            writer.WritePropertyName("CSDLActionKind"u8);
             writer.WriteStringValue(CSDLActionKind);
             writer.WritePropertyName("action_id"u8);
             writer.WriteStringValue(ActionId);
@@ -166,7 +166,7 @@ namespace Azure.AI.Extensions.OpenAI
                     responseId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("kind"u8))
+                if (prop.NameEquals("CSDLActionKind"u8))
                 {
                     csdlActionKind = prop.Value.GetString();
                     continue;

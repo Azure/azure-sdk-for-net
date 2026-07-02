@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -17,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
-        internal FabricIQPreviewTool(string projectConnectionId) : base("fabric_iq_preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public FabricIQPreviewTool(string projectConnectionId) : base("fabric_iq_preview")
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -29,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricIQPreviewTool(ResponseToolKind @type, string projectConnectionId, string serverLabel, Uri serverUri, BinaryData requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal FabricIQPreviewTool(ResponseToolKind @type, string projectConnectionId, string serverLabel, Uri serverUri, FabricIQPreviewToolRequireApprovalChoice requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
@@ -39,53 +41,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the FabricIQ project connection. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> (Optional) The label of the FabricIQ MCP server to connect to. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
-        public Uri ServerUri { get; }
-
-        /// <summary>
-        /// (Optional) Whether the agent requires approval before executing actions. Default is always.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="MCPToolRequireApproval"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData RequireApproval { get; }
+        public Uri ServerUri { get; set; }
     }
 }

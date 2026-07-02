@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        internal AzureFunctionTool(AzureFunctionDefinition azureFunction) : base("azure_function")
+        /// <exception cref="ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
+        public AzureFunctionTool(AzureFunctionDefinition azureFunction) : base("azure_function")
         {
+            Argument.AssertNotNull(azureFunction, nameof(azureFunction));
+
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureFunction = azureFunction;
         }
@@ -38,6 +41,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The Azure Function Tool definition. </summary>
-        public AzureFunctionDefinition AzureFunction { get; }
+        public AzureFunctionDefinition AzureFunction { get; set; }
     }
 }

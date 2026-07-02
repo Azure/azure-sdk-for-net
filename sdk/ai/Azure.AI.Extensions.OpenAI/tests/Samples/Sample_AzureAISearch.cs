@@ -39,7 +39,7 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -89,7 +89,7 @@ public class Sample_AzureAISearch : ProjectsOpenAITestBase
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

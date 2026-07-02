@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal BingGroundingTool(BingGroundingSearchToolParameters bingGrounding) : base("bing_grounding")
+        /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
+        public BingGroundingTool(BingGroundingSearchToolOptions bingGrounding) : base("bing_grounding")
         {
+            Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
+
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             BingGrounding = bingGrounding;
         }
@@ -29,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingGroundingTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BingGroundingSearchToolParameters bingGrounding, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal BingGroundingTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BingGroundingSearchToolOptions bingGrounding, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
@@ -39,15 +42,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing grounding search tool parameters. </summary>
-        public BingGroundingSearchToolParameters BingGrounding { get; }
+        public BingGroundingSearchToolOptions BingGrounding { get; set; }
     }
 }

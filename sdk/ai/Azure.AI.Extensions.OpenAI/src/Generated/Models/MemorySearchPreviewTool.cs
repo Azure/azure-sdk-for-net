@@ -21,8 +21,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
-        internal MemorySearchPreviewTool(string memoryStoreName, string scope) : base("memory_search_preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="scope"/> is null. </exception>
+        public MemorySearchPreviewTool(string memoryStoreName, string scope) : base("memory_search_preview")
         {
+            Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
+            Argument.AssertNotNull(scope, nameof(scope));
+
             MemoryStoreName = memoryStoreName;
             Scope = scope;
         }
@@ -48,19 +52,19 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the memory store to use. </summary>
-        public string MemoryStoreName { get; }
+        public string MemoryStoreName { get; set; }
 
         /// <summary>
         /// The namespace used to group and isolate memories, such as a user ID.
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </summary>
-        public string Scope { get; }
+        public string Scope { get; set; }
 
         /// <summary> Options for searching the memory store. </summary>
-        public MemorySearchOptions SearchOptions { get; }
+        public MemorySearchOptions SearchOptions { get; set; }
 
         /// <summary> Time to wait before updating memories after inactivity (seconds). Default 300. </summary>
-        public int? UpdateDelayInSeconds { get; }
+        public int? UpdateDelayInSeconds { get; set; }
     }
 }

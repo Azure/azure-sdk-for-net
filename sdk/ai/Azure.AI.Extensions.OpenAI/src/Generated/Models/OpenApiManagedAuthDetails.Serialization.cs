@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-    public partial class OpenApiManagedAuthDetails : OpenApiAuthDetails, IJsonModel<OpenApiManagedAuthDetails>
+    public partial class OpenApiManagedAuthDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiManagedAuthDetails>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/> for deserialization. </summary>
         internal OpenApiManagedAuthDetails()
@@ -19,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OpenApiAuthDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override OpenApiAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,7 +86,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OpenApiAuthDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override OpenApiAuthenticationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenApiManagedAuthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

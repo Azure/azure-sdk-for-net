@@ -16,8 +16,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        internal AzureAISearchTool(AzureAISearchToolResource azureAISearch) : base("azure_ai_search")
+        /// <exception cref="ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
+        public AzureAISearchTool(AzureAISearchToolOptions azureAISearch) : base("azure_ai_search")
         {
+            Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
+
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureAISearch = azureAISearch;
         }
@@ -29,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolResource azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal AzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
@@ -39,15 +42,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
-        public AzureAISearchToolResource AzureAISearch { get; }
+        public AzureAISearchToolOptions AzureAISearch { get; set; }
     }
 }

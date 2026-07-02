@@ -73,7 +73,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sharepoint_grounding_preview"u8);
-            writer.WriteObjectValue(SharepointGroundingPreview, options);
+            writer.WriteObjectValue(ToolOptions, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "sharepoint_grounding_preview";
-            SharepointGroundingToolParameters sharepointGroundingPreview = default;
+            SharePointGroundingToolOptions toolOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("sharepoint_grounding_preview"u8))
                 {
-                    sharepointGroundingPreview = SharepointGroundingToolParameters.DeserializeSharepointGroundingToolParameters(prop.Value, options);
+                    toolOptions = SharePointGroundingToolOptions.DeserializeSharePointGroundingToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharepointPreviewTool(@type, sharepointGroundingPreview, additionalBinaryDataProperties);
+            return new SharepointPreviewTool(@type, toolOptions, additionalBinaryDataProperties);
         }
     }
 }

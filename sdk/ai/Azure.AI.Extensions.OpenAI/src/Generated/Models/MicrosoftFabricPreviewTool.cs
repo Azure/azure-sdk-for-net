@@ -15,23 +15,26 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
-        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        internal MicrosoftFabricPreviewTool(FabricDataAgentToolOptions fabricDataagentPreview) : base("fabric_dataagent_preview")
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
+        public MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions) : base("fabric_dataagent_preview")
         {
-            FabricDataagentPreview = fabricDataagentPreview;
+            Argument.AssertNotNull(toolOptions, nameof(toolOptions));
+
+            ToolOptions = toolOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftFabricPreviewTool(ResponseToolKind @type, FabricDataAgentToolOptions fabricDataagentPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal MicrosoftFabricPreviewTool(ResponseToolKind @type, FabricDataAgentToolOptions toolOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            FabricDataagentPreview = fabricDataagentPreview;
+            ToolOptions = toolOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
-        public FabricDataAgentToolOptions FabricDataagentPreview { get; }
+        public FabricDataAgentToolOptions ToolOptions { get; set; }
     }
 }

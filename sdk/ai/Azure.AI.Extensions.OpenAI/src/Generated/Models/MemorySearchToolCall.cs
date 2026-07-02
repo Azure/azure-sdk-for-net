@@ -23,7 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The status of the tool call. </summary>
-        public ToolCallStatus Status { get; }
+        public ToolCallStatus Status { get; set; }
 
         /// <summary> The results returned from the memory search. </summary>
         public IList<MemoryOutputItem> Memories { get; set; }

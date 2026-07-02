@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-    public partial class OpenApiManagedAuthDetails : OpenApiAuthDetails
+    public partial class OpenApiManagedAuthDetails : OpenApiAuthenticationDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
@@ -30,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Connection auth security details. </summary>
-        public OpenApiManagedSecurityScheme SecurityScheme { get; }
+        public OpenApiManagedSecurityScheme SecurityScheme { get; set; }
     }
 }

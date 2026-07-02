@@ -15,8 +15,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolConnectionParameters"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
-        internal BrowserAutomationToolConnectionParameters(string projectConnectionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public BrowserAutomationToolConnectionParameters(string projectConnectionId)
         {
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -30,6 +33,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the project connection to your Azure Playwright resource. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
     }
 }

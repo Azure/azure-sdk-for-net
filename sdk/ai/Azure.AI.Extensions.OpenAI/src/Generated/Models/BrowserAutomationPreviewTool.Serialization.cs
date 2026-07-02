@@ -117,7 +117,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "browser_automation_preview";
-            BrowserAutomationToolParameters browserAutomationPreview = default;
+            BrowserAutomationToolOptions browserAutomationPreview = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,7 +128,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    browserAutomationPreview = BrowserAutomationToolParameters.DeserializeBrowserAutomationToolParameters(prop.Value, options);
+                    browserAutomationPreview = BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

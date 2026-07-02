@@ -15,23 +15,26 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
-        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        internal SharepointPreviewTool(SharepointGroundingToolParameters sharepointGroundingPreview) : base("sharepoint_grounding_preview")
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
+        public SharepointPreviewTool(SharePointGroundingToolOptions toolOptions) : base("sharepoint_grounding_preview")
         {
-            SharepointGroundingPreview = sharepointGroundingPreview;
+            Argument.AssertNotNull(toolOptions, nameof(toolOptions));
+
+            ToolOptions = toolOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharepointPreviewTool(ResponseToolKind @type, SharepointGroundingToolParameters sharepointGroundingPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal SharepointPreviewTool(ResponseToolKind @type, SharePointGroundingToolOptions toolOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            SharepointGroundingPreview = sharepointGroundingPreview;
+            ToolOptions = toolOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
-        public SharepointGroundingToolParameters SharepointGroundingPreview { get; }
+        public SharePointGroundingToolOptions ToolOptions { get; set; }
     }
 }
