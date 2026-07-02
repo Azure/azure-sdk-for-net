@@ -48,11 +48,91 @@ safe-outputs:
     target: "${{ github.event.inputs.pr_number }}"
   submit-pull-request-review:
     max: 1
+    target: "${{ github.event.inputs.pr_number }}"
     footer: "if-body"
     allowed-events: [COMMENT, REQUEST_CHANGES]
   noop:
     report-as-issue: false
   jobs:
+    publish_pr_check:
+      description: "Publish a PR-head check run linking to this management review workflow run"
+      runs-on: ubuntu-latest
+      needs: safe_outputs
+      output: "Management review check run published"
+      permissions:
+        checks: write
+        pull-requests: read
+      steps:
+        - name: Publish management review check run
+          uses: actions/github-script@v9.0.0
+          env:
+            TARGET_PR_NUMBER: "${{ github.event.inputs.pr_number }}"
+            TARGET_HEAD_SHA: "${{ github.event.inputs.check_run_head_sha }}"
+          with:
+            script: |
+              const prNumber = parseInt(process.env.TARGET_PR_NUMBER, 10);
+              if (!Number.isInteger(prNumber) || prNumber <= 0) {
+                core.info(`No valid pull request number found: ${process.env.TARGET_PR_NUMBER || '<empty>'}`);
+                return;
+              }
+
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+              const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+              if (pr.head.repo?.full_name !== `${owner}/${repo}`) {
+                core.info(`Skipping check run publication for fork PR #${prNumber}; head repository is ${pr.head.repo?.full_name || '<unknown>'}.`);
+                return;
+              }
+
+              let headSha = (process.env.TARGET_HEAD_SHA || '').trim();
+              if (headSha && headSha !== pr.head.sha) {
+                core.info(`Completed check run SHA ${headSha} no longer matches current PR head ${pr.head.sha}; publishing the review check on the current head.`);
+              }
+              headSha = pr.head.sha;
+
+              const checkName = 'Azure .NET Management SDK PR Review';
+              const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
+              const detailsUrl = `${serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+              const output = {
+                title: checkName,
+                summary: `Management SDK PR review completed. See ${detailsUrl}`
+              };
+
+              const { data: existing } = await github.rest.checks.listForRef({
+                owner,
+                repo,
+                ref: headSha,
+                check_name: checkName,
+                filter: 'latest',
+                per_page: 1
+              });
+
+              if (existing.check_runs.length > 0) {
+                await github.rest.checks.update({
+                  owner,
+                  repo,
+                  check_run_id: existing.check_runs[0].id,
+                  status: 'completed',
+                  conclusion: 'success',
+                  details_url: detailsUrl,
+                  output
+                });
+                core.info(`Updated management review check run ${existing.check_runs[0].id} for ${headSha}.`);
+                return;
+              }
+
+              const { data: created } = await github.rest.checks.create({
+                owner,
+                repo,
+                name: checkName,
+                head_sha: headSha,
+                status: 'completed',
+                conclusion: 'success',
+                details_url: detailsUrl,
+                output
+              });
+              core.info(`Created management review check run ${created.id} for ${headSha}.`);
+
     dismiss_stale_change_requests:
       description: "Dismiss the prior management review change request after a newer non-blocking review"
       runs-on: ubuntu-latest
@@ -181,7 +261,7 @@ If CI is not failed and `github.event.inputs.check_run_conclusion` is not `failu
    - `sdk/<service>/Azure.ResourceManager.<Package>/tsp-location.yaml`, only when it is the only changed file or all other changed files are also on this low-risk list
 5. If any changed file is outside the allowlist, or matches an API/source/review-affecting path, continue with the full review. Treat unknown paths as full review.
 6. API/source/review-affecting paths always require full review, including `api/**`, `src/**`, `.csproj`, `CHANGELOG.md`, `.github/workflows/**`, and `.github/skills/**`.
-7. If the low-risk fast path applies, do not run the scanner or apply the full skill review. Submit a compact neutral `COMMENT` review and emit `dismiss_stale_change_requests`:
+7. If the low-risk fast path applies, do not run the scanner or apply the full skill review. Submit a compact neutral `COMMENT` review and emit `dismiss_stale_change_requests` and `publish_pr_check`:
 
 ```markdown
 ### Management SDK Review Summary
@@ -260,6 +340,7 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Use `COMMENT` if no blocking issue was found.
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
+- After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on same-repository PR heads.
 
 The review body should contain:
 
