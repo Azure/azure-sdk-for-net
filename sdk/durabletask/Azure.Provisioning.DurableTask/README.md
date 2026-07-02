@@ -43,7 +43,7 @@ DurableTaskScheduler scheduler =
                 Name = DurableTaskSchedulerSkuName.Dedicated,
                 Capacity = 1,
             },
-            PublicNetworkAccess = PublicNetworkAccess.Enabled,
+            PublicNetworkAccess = DurableTaskPublicNetworkAccess.Enabled,
         },
     };
 infra.Add(scheduler);
