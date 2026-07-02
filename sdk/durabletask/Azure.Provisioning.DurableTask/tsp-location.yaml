@@ -3,4 +3,4 @@ commit: 9010bcb089ee6a0a80ebf26b8f4434a90f41f4b5
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

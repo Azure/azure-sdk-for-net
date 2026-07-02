@@ -679,9 +679,9 @@ namespace Azure.ResourceManager.DurableTask
             }
         }
 
-        /// <summary> Gets a collection of SchedulerPrivateLinkResources in the <see cref="DurableTaskSchedulerResource"/>. </summary>
-        /// <returns> An object representing collection of SchedulerPrivateLinkResources and their operations over a DurableTaskSchedulerPrivateLinkResource. </returns>
-        public virtual DurableTaskSchedulerPrivateLinkResourceCollection GetSchedulerPrivateLinkResources()
+        /// <summary> Gets a collection of DurableTaskSchedulerPrivateLinkResources in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of DurableTaskSchedulerPrivateLinkResources and their operations over a DurableTaskSchedulerPrivateLinkResource. </returns>
+        public virtual DurableTaskSchedulerPrivateLinkResourceCollection GetDurableTaskSchedulerPrivateLinkResources()
         {
             return GetCachedClient(client => new DurableTaskSchedulerPrivateLinkResourceCollection(client, Id));
         }
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DurableTaskSchedulerPrivateLinkResource>> GetSchedulerPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskSchedulerPrivateLinkResource>> GetDurableTaskSchedulerPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            return await GetSchedulerPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetDurableTaskSchedulerPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a private link resource for the durable task scheduler. </summary>
@@ -705,16 +705,16 @@ namespace Azure.ResourceManager.DurableTask
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DurableTaskSchedulerPrivateLinkResource> GetSchedulerPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskSchedulerPrivateLinkResource> GetDurableTaskSchedulerPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            return GetSchedulerPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+            return GetDurableTaskSchedulerPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="DurableTaskSchedulerResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DurableTaskPrivateEndpointConnectionResource. </returns>
-        public virtual DurableTaskPrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of DurableTaskPrivateEndpointConnections in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of DurableTaskPrivateEndpointConnections and their operations over a DurableTaskPrivateEndpointConnectionResource. </returns>
+        public virtual DurableTaskPrivateEndpointConnectionCollection GetDurableTaskPrivateEndpointConnections()
         {
             return GetCachedClient(client => new DurableTaskPrivateEndpointConnectionCollection(client, Id));
         }
@@ -725,11 +725,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DurableTaskPrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DurableTaskPrivateEndpointConnectionResource>> GetDurableTaskPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetDurableTaskPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a private endpoint connection for the durable task scheduler. </summary>
@@ -738,11 +738,11 @@ namespace Azure.ResourceManager.DurableTask
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DurableTaskPrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<DurableTaskPrivateEndpointConnectionResource> GetDurableTaskPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetDurableTaskPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DurableTaskHubs in the <see cref="DurableTaskSchedulerResource"/>. </summary>
