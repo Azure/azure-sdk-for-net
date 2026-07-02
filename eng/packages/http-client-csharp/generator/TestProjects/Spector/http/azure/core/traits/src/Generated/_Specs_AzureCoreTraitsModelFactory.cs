@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure;
-
 namespace Specs.Azure.Core.Traits
 {
     public static partial class _Specs_AzureCoreTraitsModelFactory

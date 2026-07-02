@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell tool call. </summary>
-    internal partial class ItemFieldFunctionShellCall : ItemField
+    public partial class ItemFieldFunctionShellCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionShellCall"/>. </summary>
         /// <param name="id"> The unique ID of the shell tool call. Populated when this item is returned via API. </param>
