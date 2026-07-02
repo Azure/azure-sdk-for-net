@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class BlobTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BlobType value) => value switch
         {
             BlobType.Block => "BlockBlob",
@@ -19,11 +20,21 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BlobType ToBlobType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob")) return BlobType.Block;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob")) return BlobType.Page;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppendBlob")) return BlobType.Append;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob"))
+            {
+                return BlobType.Block;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob"))
+            {
+                return BlobType.Page;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AppendBlob"))
+            {
+                return BlobType.Append;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobType value.");
         }
     }

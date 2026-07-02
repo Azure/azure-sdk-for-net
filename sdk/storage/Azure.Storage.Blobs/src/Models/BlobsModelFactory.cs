@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.IO;
 using System.Text;
 using Azure.Core;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -15,6 +16,8 @@ namespace Azure.Storage.Blobs.Models
     /// This class holds BlobModelFactory overloads we need for backwards compatibility.
     /// </summary>
     [CodeGenType("StorageBlobsModelFactory")]
+    [CodeGenSuppress("BlobItem", typeof(string), typeof(bool), typeof(string), typeof(string), typeof(bool?), typeof(BlobItemProperties), typeof(IDictionary<string, string>), typeof(BlobTags), typeof(IDictionary<string, string>), typeof(bool?))]
+    [CodeGenSuppress("BlobProperties", typeof(DateTimeOffset?), typeof(DateTimeOffset), typeof(ETag), typeof(long), typeof(string), typeof(string), typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(long), typeof(BlobType), typeof(LeaseStatus), typeof(LeaseState), typeof(LeaseDurationType), typeof(string), typeof(CopyStatus), typeof(Uri), typeof(string), typeof(DateTimeOffset?), typeof(string), typeof(bool?), typeof(bool?), typeof(string), typeof(DateTimeOffset?), typeof(int?), typeof(string), typeof(bool), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(long), typeof(DateTimeOffset), typeof(bool), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(BlobImmutabilityPolicy), typeof(bool?))]
     public static partial class BlobsModelFactory
     {
         #region BlobContentInfo

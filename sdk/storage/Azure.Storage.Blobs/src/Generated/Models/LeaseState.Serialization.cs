@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class LeaseStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LeaseState value) => value switch
         {
             LeaseState.Available => "available",
@@ -21,13 +22,29 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static LeaseState ToLeaseState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available")) return LeaseState.Available;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "leased")) return LeaseState.Leased;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired")) return LeaseState.Expired;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "breaking")) return LeaseState.Breaking;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "broken")) return LeaseState.Broken;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available"))
+            {
+                return LeaseState.Available;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "leased"))
+            {
+                return LeaseState.Leased;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired"))
+            {
+                return LeaseState.Expired;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "breaking"))
+            {
+                return LeaseState.Breaking;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "broken"))
+            {
+                return LeaseState.Broken;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseState value.");
         }
     }

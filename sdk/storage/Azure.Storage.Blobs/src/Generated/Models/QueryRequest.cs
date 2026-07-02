@@ -5,30 +5,24 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Groups the set of query request settings. </summary>
     internal partial class QueryRequest
     {
         /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
-        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
-        public QueryRequest(string expression)
+        /// <param name="queryType"> Required. The type of the provided query expression. </param>
+        /// <param name="expression"> The query expression. The maximum size of the query expression is 256KiB. </param>
+        public QueryRequest(string queryType, string expression)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
-
-            QueryType = "SQL";
+            QueryType = queryType;
             Expression = expression;
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         /// <param name="queryType"> Required. The type of the provided query expression. </param>
-        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
-        /// <param name="inputSerialization"></param>
-        /// <param name="outputSerialization"></param>
+        /// <param name="expression"> The query expression. The maximum size of the query expression is 256KiB. </param>
+        /// <param name="inputSerialization"> The input serialization settings. </param>
+        /// <param name="outputSerialization"> The output serialization settings. </param>
         internal QueryRequest(string queryType, string expression, QuerySerialization inputSerialization, QuerySerialization outputSerialization)
         {
             QueryType = queryType;
@@ -36,9 +30,11 @@ namespace Azure.Storage.Blobs.Models
             InputSerialization = inputSerialization;
             OutputSerialization = outputSerialization;
         }
-        /// <summary> Gets or sets the input serialization. </summary>
+
+        /// <summary> The input serialization settings. </summary>
         public QuerySerialization InputSerialization { get; set; }
-        /// <summary> Gets or sets the output serialization. </summary>
+
+        /// <summary> The output serialization settings. </summary>
         public QuerySerialization OutputSerialization { get; set; }
     }
 }

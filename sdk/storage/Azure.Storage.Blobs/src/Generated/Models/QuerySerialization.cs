@@ -6,15 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The QuerySerialization. </summary>
+    /// <summary> The query serialization settings. </summary>
     internal partial class QuerySerialization
     {
         /// <summary> Initializes a new instance of <see cref="QuerySerialization"/>. </summary>
-        /// <param name="format"></param>
+        /// <param name="format"> The query format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public QuerySerialization(QueryFormat format)
         {
@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
             Format = format;
         }
 
-        /// <summary> Gets the format. </summary>
+        /// <summary> The query format. </summary>
         public QueryFormat Format { get; }
     }
 }

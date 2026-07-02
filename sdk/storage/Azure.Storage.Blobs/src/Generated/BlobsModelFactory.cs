@@ -6,11 +6,113 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class BlobsModelFactory
     {
+        /// <summary> The service properties. </summary>
+        /// <param name="logging"> The logging properties. </param>
+        /// <param name="hourMetrics"> The hour metrics properties. </param>
+        /// <param name="minuteMetrics"> The minute metrics properties. </param>
+        /// <param name="defaultServiceVersion"> The default service version. </param>
+        /// <param name="deleteRetentionPolicy"> The delete retention policy. </param>
+        /// <param name="staticWebsite"> The static website properties. </param>
+        /// <param name="cors"> The CORS properties. </param>
+        /// <returns> A new <see cref="Models.BlobServiceProperties"/> instance for mocking. </returns>
+        public static BlobServiceProperties BlobServiceProperties(BlobAnalyticsLogging logging = default, BlobMetrics hourMetrics = default, BlobMetrics minuteMetrics = default, string defaultServiceVersion = default, BlobRetentionPolicy deleteRetentionPolicy = default, BlobStaticWebsite staticWebsite = default, IEnumerable<BlobCorsRule> cors = default)
+        {
+            cors ??= new ChangeTrackingList<BlobCorsRule>();
+
+            return new BlobServiceProperties(
+                logging,
+                hourMetrics,
+                minuteMetrics,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                staticWebsite,
+                cors.ToList());
+        }
+
+        /// <summary> Azure Analytics logging settings. </summary>
+        /// <param name="version"></param>
+        /// <param name="delete"></param>
+        /// <param name="read"></param>
+        /// <param name="write"></param>
+        /// <param name="retentionPolicy"></param>
+        /// <returns> A new <see cref="Models.BlobAnalyticsLogging"/> instance for mocking. </returns>
+        public static BlobAnalyticsLogging BlobAnalyticsLogging(string version = default, bool delete = default, bool read = default, bool write = default, BlobRetentionPolicy retentionPolicy = default)
+        {
+            return new BlobAnalyticsLogging(version, delete, read, write, retentionPolicy);
+        }
+
+        /// <summary> The retention policy. </summary>
+        /// <param name="enabled"> Whether the policy is enabled. </param>
+        /// <param name="days"> The number of days to retain the logs. </param>
+        /// <param name="allowPermanentDelete"> Whether to allow permanent delete. </param>
+        /// <returns> A new <see cref="Models.BlobRetentionPolicy"/> instance for mocking. </returns>
+        public static BlobRetentionPolicy BlobRetentionPolicy(bool enabled = default, int? days = default, bool? allowPermanentDelete = default)
+        {
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
+        }
+
+        /// <summary> The metrics properties. </summary>
+        /// <param name="version"> The version of the metrics properties. </param>
+        /// <param name="enabled"> Whether the metrics are enabled. </param>
+        /// <param name="includeApis"> Whether to include API in the metrics. </param>
+        /// <param name="retentionPolicy"> The retention policy of the metrics. </param>
+        /// <returns> A new <see cref="Models.BlobMetrics"/> instance for mocking. </returns>
+        public static BlobMetrics BlobMetrics(string version = default, bool enabled = default, bool? includeApis = default, BlobRetentionPolicy retentionPolicy = default)
+        {
+            return new BlobMetrics(version, enabled, includeApis, retentionPolicy);
+        }
+
+        /// <summary> The properties that enable an account to host a static website. </summary>
+        /// <param name="enabled"> Indicates whether this account is hosting a static website. </param>
+        /// <param name="indexDocument"> The index document. </param>
+        /// <param name="errorDocument404Path"> The error document. </param>
+        /// <param name="defaultIndexDocumentPath"> Absolute path of the default index page. </param>
+        /// <returns> A new <see cref="Models.BlobStaticWebsite"/> instance for mocking. </returns>
+        public static BlobStaticWebsite BlobStaticWebsite(bool enabled = default, string indexDocument = default, string errorDocument404Path = default, string defaultIndexDocumentPath = default)
+        {
+            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
+        }
+
+        /// <summary> A Cross-Origin Resource Sharing (CORS) rule. </summary>
+        /// <param name="allowedOrigins"></param>
+        /// <param name="allowedMethods"></param>
+        /// <param name="allowedHeaders"></param>
+        /// <param name="exposedHeaders"></param>
+        /// <param name="maxAgeInSeconds"></param>
+        /// <returns> A new <see cref="Models.BlobCorsRule"/> instance for mocking. </returns>
+        public static BlobCorsRule BlobCorsRule(string allowedOrigins = default, string allowedMethods = default, string allowedHeaders = default, string exposedHeaders = default, int maxAgeInSeconds = default)
+        {
+            return new BlobCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+        }
+
+        /// <summary> A signed identifier. </summary>
+        /// <param name="id"></param>
+        /// <param name="accessPolicy"></param>
+        /// <returns> A new <see cref="Models.BlobSignedIdentifier"/> instance for mocking. </returns>
+        public static BlobSignedIdentifier BlobSignedIdentifier(string id = default, BlobAccessPolicy accessPolicy = default)
+        {
+            return new BlobSignedIdentifier(id, accessPolicy);
+        }
+
+        /// <summary> Represents an access policy. </summary>
+        /// <param name="policyStartsOn"> The date-time the policy is active. </param>
+        /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
+        /// <param name="permissions"> The permissions for the policy. </param>
+        /// <returns> A new <see cref="Models.BlobAccessPolicy"/> instance for mocking. </returns>
+        public static BlobAccessPolicy BlobAccessPolicy(DateTimeOffset? policyStartsOn = default, DateTimeOffset? policyExpiresOn = default, string permissions = default)
+        {
+            return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
+        }
     }
 }
