@@ -13,12 +13,12 @@ namespace Azure.Messaging.ServiceBus.Primitives
         public static string GetFormattedLockTokens(IEnumerable<Guid> lockTokens)
         {
             // ReceiveAndDelete messages have empty lock tokens, so skip them to avoid noisy logs.
-            return string.Join(", ", lockTokens.Where(static token => token != Guid.Empty));
+            return $"[{string.Join(", ", lockTokens.Where(static token => token != Guid.Empty))}]";
         }
 
         public static string GetFormattedSequenceNumbers(IEnumerable<long> sequenceNumbers)
         {
-            return string.Join(", ", sequenceNumbers);
+            return $"[{string.Join(", ", sequenceNumbers)}]";
         }
 
         /// <summary>
