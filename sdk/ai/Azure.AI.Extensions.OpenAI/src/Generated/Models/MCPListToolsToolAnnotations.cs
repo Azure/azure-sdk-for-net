@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The MCPListToolsToolAnnotations. </summary>
-    internal partial class MCPListToolsToolAnnotations
+    public partial class MCPListToolsToolAnnotations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

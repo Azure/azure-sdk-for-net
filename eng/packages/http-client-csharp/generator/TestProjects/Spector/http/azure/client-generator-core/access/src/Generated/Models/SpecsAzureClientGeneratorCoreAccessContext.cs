@@ -13,17 +13,17 @@ using Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
 
 namespace Specs.Azure.ClientGenerator.Core.Access
 {
-    [ModelReaderWriterBuildable(typeof(AbstractModel))]
-    [ModelReaderWriterBuildable(typeof(BaseModel))]
-    [ModelReaderWriterBuildable(typeof(InnerModel))]
-    [ModelReaderWriterBuildable(typeof(NoDecoratorModelInInternal))]
+    [ModelReaderWriterBuildable(typeof(_RelativeModelInOperation.AbstractModel))]
+    [ModelReaderWriterBuildable(typeof(_RelativeModelInOperation.BaseModel))]
+    [ModelReaderWriterBuildable(typeof(_RelativeModelInOperation.InnerModel))]
+    [ModelReaderWriterBuildable(typeof(_InternalOperation.NoDecoratorModelInInternal))]
     [ModelReaderWriterBuildable(typeof(NoDecoratorModelInPublic))]
-    [ModelReaderWriterBuildable(typeof(OuterModel))]
-    [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInInternal))]
+    [ModelReaderWriterBuildable(typeof(_RelativeModelInOperation.OuterModel))]
+    [ModelReaderWriterBuildable(typeof(_InternalOperation.PublicDecoratorModelInInternal))]
     [ModelReaderWriterBuildable(typeof(PublicDecoratorModelInPublic))]
-    [ModelReaderWriterBuildable(typeof(RealModel))]
+    [ModelReaderWriterBuildable(typeof(_RelativeModelInOperation.RealModel))]
     [ModelReaderWriterBuildable(typeof(SharedModel))]
-    [ModelReaderWriterBuildable(typeof(UnknownAbstractModel))]
+    [ModelReaderWriterBuildable(typeof(_RelativeModelInOperation.UnknownAbstractModel))]
     public partial class SpecsAzureClientGeneratorCoreAccessContext : ModelReaderWriterContext
     {
     }

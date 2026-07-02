@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell exec action. </summary>
-    internal partial class FunctionShellAction : IJsonModel<FunctionShellAction>
+    public partial class FunctionShellAction : IJsonModel<FunctionShellAction>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellAction"/> for deserialization. </summary>
         internal FunctionShellAction()

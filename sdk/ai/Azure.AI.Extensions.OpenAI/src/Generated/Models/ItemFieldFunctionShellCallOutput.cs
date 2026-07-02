@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell call output. </summary>
-    internal partial class ItemFieldFunctionShellCallOutput : ItemField
+    public partial class ItemFieldFunctionShellCallOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionShellCallOutput"/>. </summary>
         /// <param name="id"> The unique ID of the shell call output. Populated when this item is returned via API. </param>

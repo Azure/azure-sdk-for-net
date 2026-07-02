@@ -9,7 +9,8 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class InternalSummaryTextObject : InternalMessageContent, IJsonModel<InternalSummaryTextObject>
+    /// <summary> Summary text. </summary>
+    public partial class InternalSummaryTextObject : InternalMessageContent, IJsonModel<InternalSummaryTextObject>
     {
         /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/> for deserialization. </summary>
         internal InternalSummaryTextObject()

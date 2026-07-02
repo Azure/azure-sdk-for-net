@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Message. </summary>
-    internal partial class ItemFieldMessage : ItemField
+    public partial class ItemFieldMessage : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/>. </summary>
         /// <param name="id"> The unique ID of the message. </param>

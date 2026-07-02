@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="FunctionAndCustomToolCallOutput"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="Projects.FunctionAndCustomToolCallOutput"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
