@@ -313,9 +313,12 @@ namespace Azure.AI.Translation.Document.Tests
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
-            Assert.AreEqual(1, operation.DocumentsTotal);
+            // As of the 2026-03-01 service version, image files (e.g. .jpg) are a supported translation
+            // format, so both documents are counted. The text document succeeds; the (non-image) .jpg
+            // content fails to process.
+            Assert.AreEqual(2, operation.DocumentsTotal);
             Assert.AreEqual(1, operation.DocumentsSucceeded);
-            Assert.AreEqual(0, operation.DocumentsFailed);
+            Assert.AreEqual(1, operation.DocumentsFailed);
             Assert.AreEqual(0, operation.DocumentsCanceled);
             Assert.AreEqual(0, operation.DocumentsInProgress);
             Assert.AreEqual(0, operation.DocumentsNotStarted);
