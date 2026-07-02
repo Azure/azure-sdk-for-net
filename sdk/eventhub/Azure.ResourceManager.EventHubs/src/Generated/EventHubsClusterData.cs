@@ -117,5 +117,23 @@ namespace Azure.ResourceManager.EventHubs
                 Properties.SupportsScaling = value;
             }
         }
+
+        /// <summary> A value that indicates whether the cluster is zone redundant. </summary>
+        [WirePath("properties.zoneRedundant")]
+        public bool? ZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.ZoneRedundant = value;
+            }
+        }
     }
 }

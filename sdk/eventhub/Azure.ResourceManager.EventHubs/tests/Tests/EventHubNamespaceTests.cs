@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var updateNamespaceParameter = eventHubNamespace.Data;
             updateNamespaceParameter.Tags.Add("key1", "value1");
             updateNamespaceParameter.Tags.Add("key2", "value2");
-            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(WaitUntil.Completed, updateNamespaceParameter);
+            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(updateNamespaceParameter);
 
             //validate
             Assert.AreEqual(eventHubNamespace2.Value.Data.Tags.Count, 2);
