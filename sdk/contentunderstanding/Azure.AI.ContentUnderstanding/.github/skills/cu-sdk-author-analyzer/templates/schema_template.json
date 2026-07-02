@@ -1,0 +1,81 @@
+{
+  "_comment": "Starter template for a single-doc-type custom analyzer. Copy to .local_only/schemas/<name>_v1.json, replace placeholders, then run create_and_test.py. See SKILL.md Step 2 for the baseAnalyzerId table and field-description rules. Keys beginning with '_' (_comment, _optional_*) are documentation aids; the local validator strips them before submission.",
+  "baseAnalyzerId": "prebuilt-document",
+  "description": "REPLACE: one-line description of what this analyzer extracts.",
+  "config": {
+    "_comment": "estimateFieldSourceAndConfidence is required for any field with method=extract. Other knobs (enableOcr, enableLayout, enableFormula) are optional; defaults are usually fine.",
+    "estimateFieldSourceAndConfidence": true,
+    "returnDetails": true,
+    "_optional_enableOcr": true,
+    "_optional_enableLayout": true,
+    "_optional_enableFormula": false
+  },
+  "models": {
+    "_comment": "Required when using fieldSchema unless the resource has defaults set via samples/sample_update_defaults.py. Leaving it set is always safe.",
+    "completion": "gpt-4.1",
+    "embedding": "text-embedding-3-large"
+  },
+  "fieldSchema": {
+    "name": "REPLACE_schema_name_v1",
+    "description": "REPLACE: schema purpose.",
+    "fields": {
+      "exampleExtractField": {
+        "_comment": "method=extract: copy text verbatim from a specific location. Requires estimateSourceAndConfidence=true.",
+        "type": "string",
+        "method": "extract",
+        "description": "REPLACE: value printed after the 'EXAMPLE LABEL:' anchor near the top of the page. Reference text anchors (labels, headings), not visual appearance.",
+        "estimateSourceAndConfidence": true
+      },
+      "exampleGenerateField": {
+        "_comment": "method=generate: AI synthesizes a value from the whole document. Use for summaries, derived values, free-form interpretation. estimateSourceAndConfidence is N/A here.",
+        "type": "string",
+        "method": "generate",
+        "description": "REPLACE: a one-sentence summary of the document's purpose."
+      },
+      "exampleClassifyField": {
+        "_comment": "method=classify: AI picks one of the enum values. Use for fixed categorical fields.",
+        "type": "string",
+        "method": "classify",
+        "description": "REPLACE: high-level document type.",
+        "enum": ["invoice", "receipt", "contract", "report", "other"]
+      },
+      "exampleDateField": {
+        "type": "date",
+        "method": "extract",
+        "description": "REPLACE: date printed after the 'DATE:' label. Not to be confused with other dates such as a due date or service date.",
+        "estimateSourceAndConfidence": true
+      },
+      "exampleAmountField": {
+        "type": "number",
+        "method": "extract",
+        "description": "REPLACE: amount on the row labelled 'TOTAL' in the totals table at the bottom. Excludes any 'Subtotal' or 'Previous Balance' values.",
+        "estimateSourceAndConfidence": true
+      },
+      "exampleNestedObjectField": {
+        "_comment": "Nested object (no array). Use when a single logical entity has several sub-fields (e.g. an address block).",
+        "type": "object",
+        "method": "extract",
+        "description": "REPLACE: the multi-line address block under the 'BILL TO:' heading.",
+        "properties": {
+          "name":   { "type": "string", "method": "extract", "description": "REPLACE: company or person name on the first line." },
+          "street": { "type": "string", "method": "extract", "description": "REPLACE: street address on the second line." },
+          "city":   { "type": "string", "method": "extract", "description": "REPLACE: city on the third line." }
+        }
+      },
+      "exampleArrayField": {
+        "_comment": "Array of objects (line items / table rows). Wire key is 'items' (verified against the typed SDK's item_definition serialization).",
+        "type": "array",
+        "method": "extract",
+        "description": "REPLACE: each row of the line-items table.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "itemCode":    { "type": "string", "method": "extract", "description": "REPLACE: value in the ITEM CODE column." },
+            "description": { "type": "string", "method": "extract", "description": "REPLACE: value in the DESCRIPTION column." },
+            "amount":      { "type": "number", "method": "extract", "description": "REPLACE: value in the AMOUNT column." }
+          }
+        }
+      }
+    }
+  }
+}
