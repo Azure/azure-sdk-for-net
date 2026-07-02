@@ -110,6 +110,9 @@ namespace Azure.Generator.Management.Providers
 
         internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || _originalResourceDataType.Equals(type);
 
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementProviderBodyDependencyHelper.GetBodyDependencyTypes(Methods);
+
         internal bool TryGetResourceDataTypeOverride(CSharpType originalType, out CSharpType resourceDataType)
         {
             if (_originalResourceDataType.Equals(originalType) &&
