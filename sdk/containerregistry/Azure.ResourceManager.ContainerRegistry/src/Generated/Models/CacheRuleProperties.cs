@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="CacheRuleProperties"/>. </summary>
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the cache rule. </param>
+        /// <param name="additionalAuthenticationProperties"> Authentication configuration used by the cache rule to access the upstream source repository. </param>
         /// <param name="sourceRepository"> Source repository pulled from upstream. </param>
         /// <param name="targetRepository">
         /// Target repository specified in docker pull command.
@@ -33,9 +34,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="createdOn"> The creation date of the cache rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRuleProperties(ResourceIdentifier credentialSetResourceId, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheRuleProperties(ResourceIdentifier credentialSetResourceId, AdditionalAuthenticationProperties additionalAuthenticationProperties, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialSetResourceId = credentialSetResourceId;
+            AdditionalAuthenticationProperties = additionalAuthenticationProperties;
             SourceRepository = sourceRepository;
             TargetRepository = targetRepository;
             CreatedOn = createdOn;
@@ -46,6 +48,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The ARM resource ID of the credential store which is associated with the cache rule. </summary>
         [WirePath("credentialSetResourceId")]
         public ResourceIdentifier CredentialSetResourceId { get; set; }
+
+        /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
+        [WirePath("additionalAuthenticationProperties")]
+        public AdditionalAuthenticationProperties AdditionalAuthenticationProperties { get; set; }
 
         /// <summary> Source repository pulled from upstream. </summary>
         [WirePath("sourceRepository")]

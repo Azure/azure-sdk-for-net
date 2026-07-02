@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
 
         private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         /// <summary>
         /// Lists all the container registries under the specified subscription.
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

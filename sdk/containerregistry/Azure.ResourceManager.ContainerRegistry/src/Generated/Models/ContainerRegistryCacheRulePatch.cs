@@ -60,5 +60,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 Properties.CredentialSetResourceId = value;
             }
         }
+
+        /// <summary> Authentication configuration used by the cache rule to access the upstream source repository. </summary>
+        [WirePath("properties.additionalAuthenticationProperties")]
+        public AdditionalAuthenticationProperties AdditionalAuthenticationProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalAuthenticationProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheRuleUpdateProperties();
+                }
+                Properties.AdditionalAuthenticationProperties = value;
+            }
+        }
     }
 }
