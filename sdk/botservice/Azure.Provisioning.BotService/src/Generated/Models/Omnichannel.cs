@@ -8,14 +8,14 @@
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Omnichannel channel definition. </summary>
-    public partial class Omnichannel : BotChannelProperties
+    public partial class OmniChannel : BotChannelProperties
     {
-        /// <summary> Creates a new Omnichannel. </summary>
-        public Omnichannel()
+        /// <summary> Creates a new OmniChannel. </summary>
+        public OmniChannel()
         {
         }
 
-        /// <summary> Define all the provisionable properties for Omnichannel. </summary>
+        /// <summary> Define all the provisionable properties for OmniChannel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -23,7 +23,7 @@ namespace Azure.Provisioning.BotService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for Omnichannel that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for OmniChannel that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

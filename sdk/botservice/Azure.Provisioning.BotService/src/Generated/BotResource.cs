@@ -16,7 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Bot resource definition. </summary>
-    public partial class Bot : ProvisionableResource
+    public partial class BotResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -29,10 +29,10 @@ namespace Azure.Provisioning.BotService
         private BicepValue<ETag> _eTag;
         private BicepList<string> _zones;
 
-        /// <summary> Creates a new Bot. </summary>
+        /// <summary> Creates a new BotResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public Bot(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.BotService/botServices", resourceVersion ?? "2023-09-15-preview")
+        public BotResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.BotService/botServices", resourceVersion ?? "2023-09-15-preview")
         {
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Define all the provisionable properties for Bot. </summary>
+        /// <summary> Define all the provisionable properties for BotResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -188,17 +188,17 @@ namespace Azure.Provisioning.BotService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing Bot. </summary>
+        /// <summary> Creates a reference to an existing BotResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static Bot FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static BotResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            Bot result = new Bot(bicepIdentifier, resourceVersion);
+            BotResource result = new BotResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for Bot that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for BotResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.BotService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private NetworkSecurityPerimeterConfigurationProperties _properties;
-        private ResourceReference<Bot> _parent;
+        private ResourceReference<BotResource> _parent;
 
         /// <summary> Creates a new BotServiceNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Bot Parent
+        public BotResource Parent
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.BotService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkSecurityPerimeterConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Bot>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BotResource>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

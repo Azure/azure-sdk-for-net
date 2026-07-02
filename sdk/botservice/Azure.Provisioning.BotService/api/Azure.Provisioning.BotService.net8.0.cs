@@ -20,28 +20,6 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<string> UriFragment { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class Bot : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public Bot(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceKind> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.BotProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.BotServiceSku Sku { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.BotService.Bot FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
-            public static readonly string V2023_09_15_PREVIEW;
-        }
-    }
     public partial class BotChannel : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BotChannel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -50,7 +28,7 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceKind> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.Bot Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BotService.BotChannelProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.BotService.BotServiceSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -81,7 +59,7 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceKind> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.Bot Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BotService.BotConnectionSettingProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.BotService.BotServiceSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -165,6 +143,28 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BotResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public BotResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceKind> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotServiceSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.BotService.BotResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZPROVISION001")]
+            public static readonly string V2023_09_15_PREVIEW;
+        }
+    }
     public enum BotServiceAccessMode
     {
         Enforced = 0,
@@ -189,7 +189,7 @@ namespace Azure.Provisioning.BotService
         public BotServiceNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.Bot Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BotService.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -224,7 +224,7 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.Bot Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServicePrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -506,9 +506,9 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.BotServiceNspAccessRuleSubscription> Subscriptions { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class Omnichannel : Azure.Provisioning.BotService.BotChannelProperties
+    public partial class OmniChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
-        public Omnichannel() { }
+        public OmniChannel() { }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class OutlookChannel : Azure.Provisioning.BotService.BotChannelProperties

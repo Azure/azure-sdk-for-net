@@ -18,8 +18,8 @@ public class BasicBotServiceTests
                 #region Snippet:BotServiceBasic
                 Infrastructure infra = new();
 
-                Bot bot =
-                    new(nameof(bot), Bot.ResourceVersions.V2023_09_15_PREVIEW)
+                BotResource bot =
+                    new(nameof(bot), BotResource.ResourceVersions.V2023_09_15_PREVIEW)
                     {
                         Kind = BotServiceKind.Bot,
                         Sku = new BotServiceSku
