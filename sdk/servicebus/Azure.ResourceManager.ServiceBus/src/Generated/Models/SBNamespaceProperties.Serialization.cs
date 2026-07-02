@@ -159,6 +159,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("geoDataReplication"u8);
                 writer.WriteObjectValue(GeoDataReplication, options);
             }
+            if (Optional.IsDefined(IpAddressType))
+            {
+                writer.WritePropertyName("ipAddressType"u8);
+                writer.WriteStringValue(IpAddressType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -217,6 +222,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             int? premiumMessagingPartitions = default;
             PlatformCapabilities platformCapabilities = default;
             GeoDataReplicationProperties geoDataReplication = default;
+            IpAddressType? ipAddressType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -349,6 +355,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     geoDataReplication = GeoDataReplicationProperties.DeserializeGeoDataReplicationProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("ipAddressType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddressType = new IpAddressType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -371,6 +386,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 premiumMessagingPartitions,
                 platformCapabilities,
                 geoDataReplication,
+                ipAddressType,
                 additionalBinaryDataProperties);
         }
     }

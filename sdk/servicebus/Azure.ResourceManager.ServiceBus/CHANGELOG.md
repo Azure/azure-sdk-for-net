@@ -4,7 +4,13 @@
 
 ### Features Added
 
+- Added support for the `2026-01-01` API version.
+- Added the `IpAddressType` property (`IPv4` / `DualStack`) to `ServiceBusNamespaceData`, enabling IPv4-only or dual-stack (IPv4 and IPv6) namespaces.
+
 ### Breaking Changes
+
+- Removed the `ClusterArmId` property from `ServiceBusNamespaceReplicaLocation`. This property had no effect for Service Bus namespaces.
+- The namespace update (PATCH) operation is now synchronous in API version `2026-01-01`. The long-running `Update(WaitUntil, ServiceBusNamespacePatch, CancellationToken)` and `UpdateAsync(WaitUntil, ServiceBusNamespacePatch, CancellationToken)` overloads on `ServiceBusNamespaceResource` have been removed; use `Update(ServiceBusNamespacePatch, CancellationToken)` / `UpdateAsync(ServiceBusNamespacePatch, CancellationToken)` instead.
 
 ### Bugs Fixed
 

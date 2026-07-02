@@ -101,8 +101,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 ["tag4"] = "value4"
 },
             };
-            ArmOperation<ServiceBusNamespaceResource> lro = await serviceBusNamespace.UpdateAsync(WaitUntil.Completed, patch);
-            ServiceBusNamespaceResource result = lro.Value;
+            ServiceBusNamespaceResource result = await serviceBusNamespace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

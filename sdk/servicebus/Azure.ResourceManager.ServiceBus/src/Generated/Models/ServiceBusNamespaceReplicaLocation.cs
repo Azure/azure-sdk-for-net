@@ -25,13 +25,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceReplicaLocation"/>. </summary>
         /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
         /// <param name="roleType"> GeoDR Role Types. </param>
-        /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNamespaceReplicaLocation(string locationName, GeoDRRoleType? roleType, string clusterArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceBusNamespaceReplicaLocation(string locationName, GeoDRRoleType? roleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationName = locationName;
             RoleType = roleType;
-            ClusterArmId = clusterArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,9 +40,5 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> GeoDR Role Types. </summary>
         [WirePath("roleType")]
         public GeoDRRoleType? RoleType { get; set; }
-
-        /// <summary> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </summary>
-        [WirePath("clusterArmId")]
-        public string ClusterArmId { get; set; }
     }
 }

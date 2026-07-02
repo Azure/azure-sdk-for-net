@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
-            var serviceBusNamespace2 = await serviceBusNamespace.UpdateAsync(WaitUntil.Completed, parameters);
+            var serviceBusNamespace2 = await serviceBusNamespace.UpdateAsync(parameters);
 
             //validate
             Assert.AreEqual(serviceBusNamespace2.Value.Data.Tags.Count, 2);
