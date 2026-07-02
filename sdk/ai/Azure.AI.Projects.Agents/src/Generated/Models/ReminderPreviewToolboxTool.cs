@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A reminder tool stored in a toolbox. </summary>
+    [Experimental("AAIP001")]
     public partial class ReminderPreviewToolboxTool : ToolboxTool
     {
         /// <summary> Initializes a new instance of <see cref="ReminderPreviewToolboxTool"/>. </summary>

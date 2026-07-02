@@ -8,7 +8,16 @@
 # experimental usage; internal use across the assembly is by design. File-scoped
 # pragmas would be wiped on every codegen regen of the ~27 affected generated
 # files and add no review value.
-nowarn:AAIP001
+nowarn:AAIP001 T:Azure.AI.Projects.AIProjectClient
+nowarn:AAIP001 M:Azure.AI.Projects.InternalTool.DeserializeInternalTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationRuleAction.DeserializeEvaluationRuleAction(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+
+# Suppress the factory methods, which cannot be marked as experimental.
+# TODO: remove these suppressions when the PR
+nowarn:AAIP001 M:Azure.AI.Projects.AzureAIProjectsModelFactory.EvaluatorVersion(System.String,System.Collections.Generic.IDictionary{System.String,System.String},Azure.AI.Projects.EvaluatorType,System.Collections.Generic.IEnumerable{Azure.AI.Projects.Evaluation.EvaluatorCategory},Azure.AI.Projects.Evaluation.EvaluatorDefinition,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.String})
+nowarn:AAIP001 M:Azure.AI.Projects.AzureAIProjectsModelFactory.EvaluatorMetric(System.Nullable{Azure.AI.Projects.Evaluation.EvaluatorMetricType},System.Nullable{Azure.AI.Projects.Evaluation.EvaluatorMetricDirection},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Boolean})
+nowarn:AAIP001 M:Azure.AI.Projects.AzureAIProjectsModelFactory.CodeBasedEvaluatorDefinition(System.BinaryData,System.BinaryData,System.Collections.Generic.IDictionary{System.String,Azure.AI.Projects.Evaluation.EvaluatorMetric},System.String)
+nowarn:AAIP001 M:Azure.AI.Projects.AzureAIProjectsModelFactory.MemoryStoreDefaultOptions(System.Boolean,System.String,System.Boolean)
 
 # OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
 # wraps (ResponseItem, OpenAIContext, etc.). The library is intentionally a

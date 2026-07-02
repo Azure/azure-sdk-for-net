@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput
     {
         /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/>. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A bing custom search configuration. </summary>
+    [Experimental("AAIP001")]
     internal partial class BingCustomSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

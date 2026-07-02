@@ -5,12 +5,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
+    [Experimental("AAIP001")]
     public partial class A2APreviewTool : ProjectsAgentTool, IJsonModel<A2APreviewTool>
     {
         /// <param name="data"> The data to parse. </param>

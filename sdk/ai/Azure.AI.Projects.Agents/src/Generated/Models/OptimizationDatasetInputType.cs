@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Discriminator values for the dataset input union. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct OptimizationDatasetInputType : IEquatable<OptimizationDatasetInputType>
     {
         private readonly string _value;

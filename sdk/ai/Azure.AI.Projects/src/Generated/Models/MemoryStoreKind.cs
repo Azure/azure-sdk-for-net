@@ -4,9 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
+    [Experimental("AAIP001")]
     internal readonly partial struct MemoryStoreKind : IEquatable<MemoryStoreKind>
     {
         private readonly string _value;

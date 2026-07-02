@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Dispatches a routine through the responses API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentResponsesApiRoutineAction : RoutineAction
     {
         /// <summary> Initializes a new instance of <see cref="AgentResponsesApiRoutineAction"/>. </summary>

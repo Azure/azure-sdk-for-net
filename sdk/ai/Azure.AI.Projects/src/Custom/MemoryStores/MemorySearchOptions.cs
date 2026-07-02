@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
 /// <summary> Options that describe a memory-store search request. </summary>
+[Experimental("AAIP001")]
 public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 {
     /*

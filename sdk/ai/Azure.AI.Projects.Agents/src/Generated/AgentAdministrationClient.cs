@@ -481,7 +481,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
-        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// enforces session ownership using the provided user identity for session-mutating operations.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -502,7 +502,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
-        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// enforces session ownership using the provided user identity for session-mutating operations.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>

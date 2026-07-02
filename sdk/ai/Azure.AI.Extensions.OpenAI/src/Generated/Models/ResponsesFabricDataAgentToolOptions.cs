@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The fabric data agent tool parameters. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesFabricDataAgentToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

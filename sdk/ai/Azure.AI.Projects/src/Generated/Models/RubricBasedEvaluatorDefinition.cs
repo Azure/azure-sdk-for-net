@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
+    [Experimental("AAIP001")]
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition
     {
         /// <summary> Initializes a new instance of <see cref="RubricBasedEvaluatorDefinition"/>. </summary>

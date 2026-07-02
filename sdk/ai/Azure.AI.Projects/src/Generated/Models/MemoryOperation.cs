@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Represents a single memory operation (create, update, or delete) performed on a memory item. </summary>
+    [Experimental("AAIP001")]
     public partial class MemoryOperation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
