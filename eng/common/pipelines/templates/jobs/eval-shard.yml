@@ -14,6 +14,10 @@ parameters:
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
     default: false
+  - name: threshold
+    # Pass-rate gate forwarded to the invoke template (`vally eval --threshold` + shard verdict).
+    type: number
+    default: 0.8
   - name: preEvalTemplate
     # Optional repo-specific setup run before the eval (e.g. start a bot/agent). Placeholder by default.
     type: string
@@ -106,6 +110,7 @@ jobs:
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
           UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+          threshold: ${{ parameters.threshold }}
 
       # Optional repo-specific teardown after the eval.
       - ${{ if parameters.postEvalTemplate }}:

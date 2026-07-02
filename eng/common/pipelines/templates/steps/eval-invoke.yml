@@ -9,6 +9,10 @@ parameters:
   - name: UseAzSdkAuthentication
     type: boolean
     default: false
+  - name: threshold
+    # Pass-rate gate passed to `vally eval --threshold` and the shard verdict in invoke-eval-shard.js.
+    type: number
+    default: 0.8
   - name: azureSubscription
     type: string
     default: opensource-api-connection
@@ -27,7 +31,7 @@ steps:
             --eval-args "$(evalArgs)" \
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-            --threshold 0.8
+            --threshold ${{ parameters.threshold }}
       env:
         GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
 
@@ -37,7 +41,7 @@ steps:
           --eval-args "$(evalArgs)" \
           --shard-name "$(shardName)" \
           --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-          --threshold 0.8
+          --threshold ${{ parameters.threshold }}
       displayName: 'vally eval $(shardName)'
       workingDirectory: ${{ parameters.vallyRoot }}
       env:

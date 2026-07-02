@@ -19,8 +19,9 @@ parameters:
       - 'evals/workflow-scenarios/mock/*.eval.yaml'
   - name: mcpSetupTemplate
     # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Differs per tier.
+    # Required (no default): each repo passes its own build template — the example under
+    # steps/eval-mcp-setup.yml is tools-repo specific and not a valid default elsewhere.
     type: string
-    default: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
   - name: evalInvokeTemplate
     # SWAP POINT: runs `vally eval` per shard. Default = the conditional common invoke template.
     type: string
@@ -29,6 +30,18 @@ parameters:
     # When true, the invoke step runs under AzureCLI@2 (live MCP inherits the service connection).
     type: boolean
     default: false
+  - name: threshold
+    # Pass-rate gate forwarded to `vally eval --threshold` and the shard verdict. Repos may override.
+    type: number
+    default: 0.8
+  - name: preEvalTemplate
+    # Optional repo-specific setup before the eval runs. Blank by default.
+    type: string
+    default: ''
+  - name: postEvalTemplate
+    # Optional repo-specific teardown after the eval runs. Blank by default.
+    type: string
+    default: ''
   - name: failOnFailedTests
     type: boolean
     default: false
@@ -48,6 +61,7 @@ extends:
           - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
             parameters:
               mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
+
           - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
@@ -62,6 +76,9 @@ extends:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
               UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+              threshold: ${{ parameters.threshold }}
+              preEvalTemplate: ${{ parameters.preEvalTemplate }}
+              postEvalTemplate: ${{ parameters.postEvalTemplate }}
               shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
 
       - stage: Summary
