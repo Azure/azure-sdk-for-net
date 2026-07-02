@@ -7,67 +7,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> Add/Remove (Virtual Machine) DbNode model. </summary>
     public partial class CloudVmClusterDBNodeContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
         /// <param name="dbServerOcids"> Db servers ocids. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbServerOcids"/> is null. </exception>
-        public CloudVmClusterDBNodeContent(IEnumerable<string> dbServerOcids)
-        {
-            Argument.AssertNotNull(dbServerOcids, nameof(dbServerOcids));
-
-            DBServerOcids = dbServerOcids.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
-        /// <param name="dbServerOcids"> Db servers ocids. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterDBNodeContent(IList<string> dbServerOcids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudVmClusterDBNodeContent(IList<string> dbServerOcids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DBServerOcids = dbServerOcids;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/> for deserialization. </summary>
-        internal CloudVmClusterDBNodeContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Db servers ocids. </summary>

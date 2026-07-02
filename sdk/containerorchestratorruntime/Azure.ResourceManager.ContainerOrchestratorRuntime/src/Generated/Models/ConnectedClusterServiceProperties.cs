@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     /// <summary> Properties for the service resource. </summary>
     public partial class ConnectedClusterServiceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceProperties"/>. </summary>
         public ConnectedClusterServiceProperties()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterServiceProperties"/>. </summary>
         /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
         /// <param name="provisioningState"> Resource provision state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterServiceProperties(Guid? rpObjectId, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedClusterServiceProperties(Guid? rpObjectId, ContainerOrchestratorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RpObjectId = rpObjectId;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The object id of the service principal of the RP provisioned in the tenant. </summary>
         public Guid? RpObjectId { get; }
+
         /// <summary> Resource provision state. </summary>
         public ContainerOrchestratorProvisioningState? ProvisioningState { get; }
     }

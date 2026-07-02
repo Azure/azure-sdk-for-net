@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public readonly partial struct DnsResolverState : IEquatable<DnsResolverState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DnsResolverState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DnsResolverState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ConnectedValue = "Connected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Connected. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DnsResolverState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Connected. </summary>
         public static DnsResolverState Connected { get; } = new DnsResolverState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> Gets the Disconnected. </summary>
         public static DnsResolverState Disconnected { get; } = new DnsResolverState(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="DnsResolverState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsResolverState left, DnsResolverState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsResolverState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsResolverState left, DnsResolverState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsResolverState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsResolverState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsResolverState(string value) => new DnsResolverState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsResolverState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsResolverState?(string value) => value == null ? null : new DnsResolverState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsResolverState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsResolverState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

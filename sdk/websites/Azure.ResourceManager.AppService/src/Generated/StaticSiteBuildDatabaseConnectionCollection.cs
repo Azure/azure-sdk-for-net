@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteBuildDatabaseConnectionCollection : ArmCollection, IEnumerable<StaticSiteBuildDatabaseConnectionResource>, IAsyncEnumerable<StaticSiteBuildDatabaseConnectionResource>
     {
-        private readonly ClientDiagnostics _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSiteBuildDatabaseConnectionStaticSitesRestClient;
+        private readonly ClientDiagnostics _databaseConnectionsClientDiagnostics;
+        private readonly DatabaseConnections _databaseConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildDatabaseConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StaticSiteBuildDatabaseConnectionCollection for mocking. </summary>
         protected StaticSiteBuildDatabaseConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildDatabaseConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildDatabaseConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteBuildDatabaseConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildDatabaseConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StaticSiteBuildDatabaseConnectionResource.ResourceType, out string staticSiteBuildDatabaseConnectionStaticSitesApiVersion);
-            _staticSiteBuildDatabaseConnectionStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildDatabaseConnectionStaticSitesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(StaticSiteBuildDatabaseConnectionResource.ResourceType, out string staticSiteBuildDatabaseConnectionApiVersion);
+            _databaseConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildDatabaseConnectionResource.ResourceType.Namespace, Diagnostics);
+            _databaseConnectionsRestClient = new DatabaseConnections(_databaseConnectionsClientDiagnostics, Pipeline, Endpoint, staticSiteBuildDatabaseConnectionApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StaticSiteBuildResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteBuildResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteBuildResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Create or update a database connection for a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_CreateOrUpdateBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_CreateOrUpdateBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="data"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<StaticSiteBuildDatabaseConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateOrUpdateBuildDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<StaticSiteBuildDatabaseConnectionResource>(Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, StaticSiteDatabaseConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<StaticSiteBuildDatabaseConnectionResource> operation = new AppServiceArmOperation<StaticSiteBuildDatabaseConnectionResource>(Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Create or update a database connection for a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_CreateOrUpdateBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_CreateOrUpdateBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="data"> A JSON representation of the database connection request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<StaticSiteBuildDatabaseConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string databaseConnectionName, StaticSiteDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateOrUpdateBuildDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, data, cancellationToken);
-                var uri = _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<StaticSiteBuildDatabaseConnectionResource>(Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, StaticSiteDatabaseConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<StaticSiteBuildDatabaseConnectionResource> operation = new AppServiceArmOperation<StaticSiteBuildDatabaseConnectionResource>(Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.AppService
         /// Returns overview of a database connection for a static site build by name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<StaticSiteBuildDatabaseConnectionResource>> GetAsync(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Get");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildDatabaseConnectionStaticSitesRestClient.GetBuildDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.AppService
         /// Returns overview of a database connection for a static site build by name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<StaticSiteBuildDatabaseConnectionResource> Get(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Get");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildDatabaseConnectionStaticSitesRestClient.GetBuildDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,51 @@ namespace Azure.ResourceManager.AppService
         /// Returns overviews of database connections for a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnections</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteBuildDatabaseConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteBuildDatabaseConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteBuildDatabaseConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildDatabaseConnectionResource(Client, StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e)), _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new DatabaseConnectionsGetBuildDatabaseConnectionsAsyncCollectionResultOfT(
+                _databaseConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "StaticSiteBuildDatabaseConnectionCollection.GetAll"), data => new StaticSiteBuildDatabaseConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Returns overviews of database connections for a static site build
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnections</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +318,68 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteBuildDatabaseConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteBuildDatabaseConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildDatabaseConnectionStaticSitesRestClient.CreateGetBuildDatabaseConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBuildDatabaseConnectionResource(Client, StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(e)), _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildDatabaseConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StaticSiteDatabaseConnectionData, StaticSiteBuildDatabaseConnectionResource>(new DatabaseConnectionsGetBuildDatabaseConnectionsCollectionResultOfT(
+                _databaseConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "StaticSiteBuildDatabaseConnectionCollection.GetAll"), data => new StaticSiteBuildDatabaseConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Exists");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildDatabaseConnectionStaticSitesRestClient.GetBuildDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteDatabaseConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteDatabaseConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +393,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Exists");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildDatabaseConnectionStaticSitesRestClient.GetBuildDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteDatabaseConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteDatabaseConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +450,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<StaticSiteBuildDatabaseConnectionResource>> GetIfExistsAsync(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _staticSiteBuildDatabaseConnectionStaticSitesRestClient.GetBuildDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteDatabaseConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteDatabaseConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteBuildDatabaseConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +511,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/databaseConnections/{databaseConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBuildDatabaseConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseConnections_GetBuildDatabaseConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildDatabaseConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseConnectionName"> Name of the database connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<StaticSiteBuildDatabaseConnectionResource> GetIfExists(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseConnectionName, nameof(databaseConnectionName));
 
-            using var scope = _staticSiteBuildDatabaseConnectionStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseConnectionsClientDiagnostics.CreateScope("StaticSiteBuildDatabaseConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _staticSiteBuildDatabaseConnectionStaticSitesRestClient.GetBuildDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteDatabaseConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteDatabaseConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteBuildDatabaseConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBuildDatabaseConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +578,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StaticSiteBuildDatabaseConnectionResource> IAsyncEnumerable<StaticSiteBuildDatabaseConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

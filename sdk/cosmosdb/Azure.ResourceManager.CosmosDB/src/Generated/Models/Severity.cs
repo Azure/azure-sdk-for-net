@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct Severity : IEquatable<Severity>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="Severity"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Severity(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string WarningValue = "Warning";
         private const string ErrorValue = "Error";
 
-        /// <summary> Warning. </summary>
+        /// <summary> Initializes a new instance of <see cref="Severity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public Severity(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Warning. </summary>
         public static Severity Warning { get; } = new Severity(WarningValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> Gets the Error. </summary>
         public static Severity Error { get; } = new Severity(ErrorValue);
+
         /// <summary> Determines if two <see cref="Severity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Severity left, Severity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="Severity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Severity left, Severity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Severity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="Severity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator Severity(string value) => new Severity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="Severity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator Severity?(string value) => value == null ? null : new Severity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Severity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(Severity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

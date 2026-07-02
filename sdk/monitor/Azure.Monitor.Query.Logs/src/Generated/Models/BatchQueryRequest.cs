@@ -26,13 +26,8 @@ namespace Azure.Monitor.Query.Logs.Models
         /// Primary Workspace ID of the query. This is the Workspace ID from the Properties
         /// blade in the Azure portal.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/> or <paramref name="workspace"/> is null. </exception>
         public BatchQueryRequest(string id, QueryBody body, string workspace)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(workspace, nameof(workspace));
-
             Id = id;
             Headers = new ChangeTrackingDictionary<string, string>();
             Body = body;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsASecurityUserRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkManagerSecurityUserRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerSecurityUserRuleGet.json
             // this example is just showing the usage of "SecurityUserRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteASecurityUserRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkManagerSecurityUserRuleDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerSecurityUserRuleDelete.json
             // this example is just showing the usage of "SecurityUserRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await networkManagerSecurityUserRule.DeleteAsync(WaitUntil.Completed, force: force);
+            await networkManagerSecurityUserRule.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateASecurityUserRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkManagerSecurityUserRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerSecurityUserRulePut.json
             // this example is just showing the usage of "SecurityUserRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
                 DestinationPortRanges = { "22" },
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<NetworkManagerSecurityUserRuleResource> lro = await networkManagerSecurityUserRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerSecurityUserRuleResource> lro = await networkManagerSecurityUserRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerSecurityUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

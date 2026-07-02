@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Tests
 {
-    public class RelayNamespaceTests: RelayTestBase
+    public class RelayNamespaceTests : RelayTestBase
     {
         private ResourceGroupResource _resourceGroup;
 
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Relay.Tests
             RelayNamespaceCollection _relayNamespaceCollection = _resourceGroup.GetRelayNamespaces();
 
             RelayNamespaceData relayNamespaceData = new RelayNamespaceData(DefaultLocation)
+            {
+                Sku = new Models.RelaySku("Standard")
                 {
-                    Sku = new Models.RelaySku("Standard")
-                    {
-                        Tier = "Standard"
-                    }
-                };
+                    Tier = "Standard"
+                }
+            };
 
             _relayNamespace = (await _relayNamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, relayNamespaceData)).Value;
             Assert.AreEqual(RelaySkuName.Standard, _relayNamespace.Data.Sku.Name);

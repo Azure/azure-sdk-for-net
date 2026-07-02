@@ -7,265 +7,583 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ApplicationGateway data model.
-    /// Application gateway resource.
-    /// </summary>
+    /// <summary> Application gateway resource. </summary>
     public partial class ApplicationGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         public ApplicationGatewayData()
         {
-            AvailabilityZones = new ChangeTrackingList<string>();
-            GatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
-            AuthenticationCertificates = new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>();
-            TrustedRootCertificates = new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>();
-            TrustedClientCertificates = new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>();
-            SslCertificates = new ChangeTrackingList<ApplicationGatewaySslCertificate>();
-            FrontendIPConfigurations = new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>();
-            FrontendPorts = new ChangeTrackingList<ApplicationGatewayFrontendPort>();
-            Probes = new ChangeTrackingList<ApplicationGatewayProbe>();
-            BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
-            BackendHttpSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>();
-            BackendSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendSettings>();
-            HttpListeners = new ChangeTrackingList<ApplicationGatewayHttpListener>();
-            Listeners = new ChangeTrackingList<ApplicationGatewayListener>();
-            SslProfiles = new ChangeTrackingList<ApplicationGatewaySslProfile>();
-            UrlPathMaps = new ChangeTrackingList<ApplicationGatewayUrlPathMap>();
-            RequestRoutingRules = new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
-            RoutingRules = new ChangeTrackingList<ApplicationGatewayRoutingRule>();
-            RewriteRuleSets = new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
-            RedirectConfigurations = new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>();
-            PrivateLinkConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>();
-            PrivateEndpointConnections = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
-            CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
-            LoadDistributionPolicies = new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="availabilityZones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="identity"> The identity of the application gateway, if configured. </param>
-        /// <param name="sku"> SKU of the application gateway resource. </param>
-        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
-        /// <param name="operationalState"> Operational state of the application gateway resource. </param>
-        /// <param name="gatewayIPConfigurations"> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="authenticationCertificates"> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="trustedRootCertificates"> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="trustedClientCertificates"> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="sslCertificates"> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="frontendIPConfigurations"> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="frontendPorts"> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="probes"> Probes of the application gateway resource. </param>
-        /// <param name="backendAddressPools"> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="backendHttpSettingsCollection"> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="backendSettingsCollection"> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="httpListeners"> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
-        /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
-        /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
-        /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
-        /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
-        /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
-        /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
-        /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
-        /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
-        /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
-        /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
-        /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
-        /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
-        /// <param name="globalConfiguration"> Global Configuration. </param>
-        /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
-        internal ApplicationGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> availabilityZones, ManagedServiceIdentity identity, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IList<ApplicationGatewaySslCertificate> sslCertificates, IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IList<ApplicationGatewayFrontendPort> frontendPorts, IList<ApplicationGatewayProbe> probes, IList<ApplicationGatewayBackendAddressPool> backendAddressPools, IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IList<ApplicationGatewayBackendSettings> backendSettingsCollection, IList<ApplicationGatewayHttpListener> httpListeners, IList<ApplicationGatewayListener> listeners, IList<ApplicationGatewaySslProfile> sslProfiles, IList<ApplicationGatewayUrlPathMap> urlPathMaps, IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IList<ApplicationGatewayRoutingRule> routingRules, IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, WritableSubResource firewallPolicy, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ApplicationGatewayData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPropertiesFormat properties, ETag? eTag, IList<string> zones, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            AvailabilityZones = availabilityZones;
+            Properties = properties;
+            ETag = eTag;
+            Zones = zones;
             Identity = identity;
-            Sku = sku;
-            SslPolicy = sslPolicy;
-            OperationalState = operationalState;
-            GatewayIPConfigurations = gatewayIPConfigurations;
-            AuthenticationCertificates = authenticationCertificates;
-            TrustedRootCertificates = trustedRootCertificates;
-            TrustedClientCertificates = trustedClientCertificates;
-            SslCertificates = sslCertificates;
-            FrontendIPConfigurations = frontendIPConfigurations;
-            FrontendPorts = frontendPorts;
-            Probes = probes;
-            BackendAddressPools = backendAddressPools;
-            BackendHttpSettingsCollection = backendHttpSettingsCollection;
-            BackendSettingsCollection = backendSettingsCollection;
-            HttpListeners = httpListeners;
-            Listeners = listeners;
-            SslProfiles = sslProfiles;
-            UrlPathMaps = urlPathMaps;
-            RequestRoutingRules = requestRoutingRules;
-            RoutingRules = routingRules;
-            RewriteRuleSets = rewriteRuleSets;
-            RedirectConfigurations = redirectConfigurations;
-            WebApplicationFirewallConfiguration = webApplicationFirewallConfiguration;
-            FirewallPolicy = firewallPolicy;
-            EnableHttp2 = enableHttp2;
-            EnableFips = enableFips;
-            AutoscaleConfiguration = autoscaleConfiguration;
-            PrivateLinkConfigurations = privateLinkConfigurations;
-            PrivateEndpointConnections = privateEndpointConnections;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            CustomErrorConfigurations = customErrorConfigurations;
-            ForceFirewallPolicyAssociation = forceFirewallPolicyAssociation;
-            LoadDistributionPolicies = loadDistributionPolicies;
-            GlobalConfiguration = globalConfiguration;
-            DefaultPredefinedSslPolicy = defaultPredefinedSslPolicy;
         }
+
+        /// <summary> Properties of the application gateway. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         [WirePath("zones")]
-        public IList<string> AvailabilityZones { get; }
+        public IList<string> Zones { get; }
+
         /// <summary> The identity of the application gateway, if configured. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> SKU of the application gateway resource. </summary>
         [WirePath("properties.sku")]
-        public ApplicationGatewaySku Sku { get; set; }
-        /// <summary> SSL policy of the application gateway resource. </summary>
-        [WirePath("properties.sslPolicy")]
-        public ApplicationGatewaySslPolicy SslPolicy { get; set; }
-        /// <summary> Operational state of the application gateway resource. </summary>
-        [WirePath("properties.operationalState")]
-        public ApplicationGatewayOperationalState? OperationalState { get; }
-        /// <summary> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.gatewayIPConfigurations")]
-        public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations { get; }
-        /// <summary> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.authenticationCertificates")]
-        public IList<ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates { get; }
-        /// <summary> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.trustedRootCertificates")]
-        public IList<ApplicationGatewayTrustedRootCertificate> TrustedRootCertificates { get; }
-        /// <summary> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.trustedClientCertificates")]
-        public IList<ApplicationGatewayTrustedClientCertificate> TrustedClientCertificates { get; }
-        /// <summary> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.sslCertificates")]
-        public IList<ApplicationGatewaySslCertificate> SslCertificates { get; }
-        /// <summary> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.frontendIPConfigurations")]
-        public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get; }
-        /// <summary> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.frontendPorts")]
-        public IList<ApplicationGatewayFrontendPort> FrontendPorts { get; }
-        /// <summary> Probes of the application gateway resource. </summary>
-        [WirePath("properties.probes")]
-        public IList<ApplicationGatewayProbe> Probes { get; }
-        /// <summary> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.backendAddressPools")]
-        public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; }
-        /// <summary> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.backendHttpSettingsCollection")]
-        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; }
-        /// <summary> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.backendSettingsCollection")]
-        public IList<ApplicationGatewayBackendSettings> BackendSettingsCollection { get; }
-        /// <summary> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.httpListeners")]
-        public IList<ApplicationGatewayHttpListener> HttpListeners { get; }
-        /// <summary> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.listeners")]
-        public IList<ApplicationGatewayListener> Listeners { get; }
-        /// <summary> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.sslProfiles")]
-        public IList<ApplicationGatewaySslProfile> SslProfiles { get; }
-        /// <summary> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.urlPathMaps")]
-        public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; }
-        /// <summary> Request routing rules of the application gateway resource. </summary>
-        [WirePath("properties.requestRoutingRules")]
-        public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; }
-        /// <summary> Routing rules of the application gateway resource. </summary>
-        [WirePath("properties.routingRules")]
-        public IList<ApplicationGatewayRoutingRule> RoutingRules { get; }
-        /// <summary> Rewrite rules for the application gateway resource. </summary>
-        [WirePath("properties.rewriteRuleSets")]
-        public IList<ApplicationGatewayRewriteRuleSet> RewriteRuleSets { get; }
-        /// <summary> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
-        [WirePath("properties.redirectConfigurations")]
-        public IList<ApplicationGatewayRedirectConfiguration> RedirectConfigurations { get; }
-        /// <summary> Web application firewall configuration. </summary>
-        [WirePath("properties.webApplicationFirewallConfiguration")]
-        public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
-        /// <summary> Reference to the FirewallPolicy resource. </summary>
-        internal WritableSubResource FirewallPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.firewallPolicy.id")]
-        public ResourceIdentifier FirewallPolicyId
+        public ApplicationGatewaySku Sku
         {
-            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
             set
             {
-                if (FirewallPolicy is null)
-                    FirewallPolicy = new WritableSubResource();
-                FirewallPolicy.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> SSL policy of the application gateway resource. </summary>
+        [WirePath("properties.sslPolicy")]
+        public ApplicationGatewaySslPolicy SslPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SslPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.SslPolicy = value;
+            }
+        }
+
+        /// <summary> Operational state of the application gateway resource. </summary>
+        [WirePath("properties.operationalState")]
+        public ApplicationGatewayOperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
+
+        /// <summary> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.gatewayIPConfigurations")]
+        public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.GatewayIPConfigurations;
+            }
+        }
+
+        /// <summary> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.authenticationCertificates")]
+        public IList<ApplicationGatewayAuthenticationCertificate> AuthenticationCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.AuthenticationCertificates;
+            }
+        }
+
+        /// <summary> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.trustedRootCertificates")]
+        public IList<ApplicationGatewayTrustedRootCertificate> TrustedRootCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.TrustedRootCertificates;
+            }
+        }
+
+        /// <summary> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.trustedClientCertificates")]
+        public IList<ApplicationGatewayTrustedClientCertificate> TrustedClientCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.TrustedClientCertificates;
+            }
+        }
+
+        /// <summary> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.sslCertificates")]
+        public IList<ApplicationGatewaySslCertificate> SslCertificates
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.SslCertificates;
+            }
+        }
+
+        /// <summary> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.frontendIPConfigurations")]
+        public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.FrontendIPConfigurations;
+            }
+        }
+
+        /// <summary> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.frontendPorts")]
+        public IList<ApplicationGatewayFrontendPort> FrontendPorts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.FrontendPorts;
+            }
+        }
+
+        /// <summary> Probes of the application gateway resource. </summary>
+        [WirePath("properties.probes")]
+        public IList<ApplicationGatewayProbe> Probes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.Probes;
+            }
+        }
+
+        /// <summary> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.backendAddressPools")]
+        public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.BackendAddressPools;
+            }
+        }
+
+        /// <summary> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.backendHttpSettingsCollection")]
+        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.BackendHttpSettingsCollection;
+            }
+        }
+
+        /// <summary> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.backendSettingsCollection")]
+        public IList<ApplicationGatewayBackendSettings> BackendSettingsCollection
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.BackendSettingsCollection;
+            }
+        }
+
+        /// <summary> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.httpListeners")]
+        public IList<ApplicationGatewayHttpListener> HttpListeners
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.HttpListeners;
+            }
+        }
+
+        /// <summary> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.listeners")]
+        public IList<ApplicationGatewayListener> Listeners
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.Listeners;
+            }
+        }
+
+        /// <summary> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.sslProfiles")]
+        public IList<ApplicationGatewaySslProfile> SslProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.SslProfiles;
+            }
+        }
+
+        /// <summary> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.urlPathMaps")]
+        public IList<ApplicationGatewayUrlPathMap> UrlPathMaps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.UrlPathMaps;
+            }
+        }
+
+        /// <summary> Request routing rules of the application gateway resource. </summary>
+        [WirePath("properties.requestRoutingRules")]
+        public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.RequestRoutingRules;
+            }
+        }
+
+        /// <summary> Routing rules of the application gateway resource. </summary>
+        [WirePath("properties.routingRules")]
+        public IList<ApplicationGatewayRoutingRule> RoutingRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.RoutingRules;
+            }
+        }
+
+        /// <summary> Rewrite rules for the application gateway resource. </summary>
+        [WirePath("properties.rewriteRuleSets")]
+        public IList<ApplicationGatewayRewriteRuleSet> RewriteRuleSets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.RewriteRuleSets;
+            }
+        }
+
+        /// <summary> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.redirectConfigurations")]
+        public IList<ApplicationGatewayRedirectConfiguration> RedirectConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.RedirectConfigurations;
+            }
+        }
+
+        /// <summary> Web application firewall configuration. </summary>
+        [WirePath("properties.webApplicationFirewallConfiguration")]
+        public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebApplicationFirewallConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.WebApplicationFirewallConfiguration = value;
             }
         }
 
         /// <summary> Whether HTTP2 is enabled on the application gateway resource. </summary>
         [WirePath("properties.enableHttp2")]
-        public bool? EnableHttp2 { get; set; }
+        public bool? EnableHttp2
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableHttp2;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.EnableHttp2 = value;
+            }
+        }
+
         /// <summary> Whether FIPS is enabled on the application gateway resource. </summary>
         [WirePath("properties.enableFips")]
-        public bool? EnableFips { get; set; }
+        public bool? EnableFips
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableFips;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.EnableFips = value;
+            }
+        }
+
         /// <summary> Autoscale Configuration. </summary>
         [WirePath("properties.autoscaleConfiguration")]
-        public ApplicationGatewayAutoscaleConfiguration AutoscaleConfiguration { get; set; }
+        public ApplicationGatewayAutoscaleConfiguration AutoscaleConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoscaleConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.AutoscaleConfiguration = value;
+            }
+        }
+
         /// <summary> PrivateLink configurations on application gateway. </summary>
         [WirePath("properties.privateLinkConfigurations")]
-        public IList<ApplicationGatewayPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
+        public IList<ApplicationGatewayPrivateLinkConfiguration> PrivateLinkConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.PrivateLinkConfigurations;
+            }
+        }
+
         /// <summary> Private Endpoint connections on application gateway. </summary>
         [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> The resource GUID property of the application gateway resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> The provisioning state of the application gateway resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Custom error configurations of the application gateway resource. </summary>
         [WirePath("properties.customErrorConfigurations")]
-        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; }
+        public IList<ApplicationGatewayCustomError> CustomErrorConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.CustomErrorConfigurations;
+            }
+        }
+
         /// <summary> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </summary>
         [WirePath("properties.forceFirewallPolicyAssociation")]
-        public bool? ForceFirewallPolicyAssociation { get; set; }
+        public bool? ForceFirewallPolicyAssociation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceFirewallPolicyAssociation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.ForceFirewallPolicyAssociation = value;
+            }
+        }
+
         /// <summary> Load distribution policies of the application gateway resource. </summary>
         [WirePath("properties.loadDistributionPolicies")]
-        public IList<ApplicationGatewayLoadDistributionPolicy> LoadDistributionPolicies { get; }
+        public IList<ApplicationGatewayLoadDistributionPolicy> LoadDistributionPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.LoadDistributionPolicies;
+            }
+        }
+
+        /// <summary> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </summary>
+        [WirePath("properties.entraJWTValidationConfigs")]
+        public IList<ApplicationGatewayEntraJwtValidationConfig> EntraJwtValidationConfigs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                return Properties.EntraJwtValidationConfigs;
+            }
+        }
+
         /// <summary> Global Configuration. </summary>
         [WirePath("properties.globalConfiguration")]
-        public ApplicationGatewayGlobalConfiguration GlobalConfiguration { get; set; }
+        public ApplicationGatewayGlobalConfiguration GlobalConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.GlobalConfiguration = value;
+            }
+        }
+
         /// <summary> The default predefined SSL Policy applied on the application gateway resource. </summary>
         [WirePath("properties.defaultPredefinedSslPolicy")]
-        public ApplicationGatewaySslPolicyName? DefaultPredefinedSslPolicy { get; }
+        public ApplicationGatewaySslPolicyName? DefaultPredefinedSslPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultPredefinedSslPolicy;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.firewallPolicy.id")]
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirewallPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.FirewallPolicyId = value;
+            }
+        }
     }
 }

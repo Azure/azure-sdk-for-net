@@ -6,8 +6,8 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-     /// The CallAutomation Event Data.
-     /// </summary>
+    /// The CallAutomation Event Data.
+    /// </summary>
     public abstract class CallAutomationEventBase
     {
         /// <summary> Call connection ID. </summary>

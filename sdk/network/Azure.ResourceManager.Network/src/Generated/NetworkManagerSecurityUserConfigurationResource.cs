@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a NetworkManagerSecurityUserConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerSecurityUserConfigurationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkManagerSecurityUserConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetNetworkManagerSecurityUserConfiguration method.
+    /// A class representing a NetworkManagerSecurityUserConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerSecurityUserConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetNetworkManagerSecurityUserConfigurations method.
     /// </summary>
     public partial class NetworkManagerSecurityUserConfigurationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkManagerSecurityUserConfigurationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkManagerName"> The networkManagerName. </param>
-        /// <param name="configurationName"> The configurationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics;
-        private readonly SecurityUserConfigurationsRestOperations _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient;
+        private readonly ClientDiagnostics _securityUserConfigurationsClientDiagnostics;
+        private readonly SecurityUserConfigurations _securityUserConfigurationsRestClient;
         private readonly NetworkManagerSecurityUserConfigurationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityUserConfigurations";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerSecurityUserConfigurationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkManagerSecurityUserConfigurationResource for mocking. </summary>
         protected NetworkManagerSecurityUserConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerSecurityUserConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkManagerSecurityUserConfigurationResource(ArmClient client, NetworkManagerSecurityUserConfigurationData data) : this(client, data.Id)
@@ -54,140 +43,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerSecurityUserConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkManagerSecurityUserConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkManagerSecurityUserConfigurationSecurityUserConfigurationsApiVersion);
-            _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient = new SecurityUserConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerSecurityUserConfigurationSecurityUserConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string networkManagerSecurityUserConfigurationApiVersion);
+            _securityUserConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _securityUserConfigurationsRestClient = new SecurityUserConfigurations(_securityUserConfigurationsClientDiagnostics, Pipeline, Endpoint, networkManagerSecurityUserConfigurationApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkManagerSecurityUserConfigurationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of NetworkManagerSecurityUserRulesResources in the NetworkManagerSecurityUserConfiguration. </summary>
-        /// <returns> An object representing collection of NetworkManagerSecurityUserRulesResources and their operations over a NetworkManagerSecurityUserRulesResource. </returns>
-        public virtual NetworkManagerSecurityUserRulesCollection GetAllNetworkManagerSecurityUserRules()
-        {
-            return GetCachedClient(client => new NetworkManagerSecurityUserRulesCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a network manager security user configuration rule collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkManagerSecurityUserRulesResource>> GetNetworkManagerSecurityUserRulesAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetAllNetworkManagerSecurityUserRules().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a network manager security user configuration rule collection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkManagerSecurityUserRulesResource> GetNetworkManagerSecurityUserRules(string ruleCollectionName, CancellationToken cancellationToken = default)
-        {
-            return GetAllNetworkManagerSecurityUserRules().Get(ruleCollectionName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves a network manager security user configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkManagerSecurityUserConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Get");
+            using DiagnosticScope scope = _securityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerSecurityUserConfigurationData> response = Response.FromValue(NetworkManagerSecurityUserConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerSecurityUserConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,33 +143,41 @@ namespace Azure.ResourceManager.Network
         /// Retrieves a network manager security user configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkManagerSecurityUserConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Get");
+            using DiagnosticScope scope = _securityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerSecurityUserConfigurationData> response = Response.FromValue(NetworkManagerSecurityUserConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerSecurityUserConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,36 +191,43 @@ namespace Azure.ResourceManager.Network
         /// Deletes a network manager security user configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserConfigurations_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Delete");
+            using DiagnosticScope scope = _securityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics, Pipeline, _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_securityUserConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -284,36 +241,43 @@ namespace Azure.ResourceManager.Network
         /// Deletes a network manager security user configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserConfigurations_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Delete");
+            using DiagnosticScope scope = _securityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var operation = new NetworkArmOperation(_networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics, Pipeline, _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_securityUserConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -324,23 +288,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a network manager security user configuration.
+        /// Update a NetworkManagerSecurityUserConfiguration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,16 +316,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Update");
+            using DiagnosticScope scope = _securityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkManagerSecurityUserConfigurationResource>(Response.FromValue(new NetworkManagerSecurityUserConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkManagerSecurityUserConfigurationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerSecurityUserConfigurationData> response = Response.FromValue(NetworkManagerSecurityUserConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkManagerSecurityUserConfigurationResource> operation = new NetworkArmOperation<NetworkManagerSecurityUserConfigurationResource>(Response.FromValue(new NetworkManagerSecurityUserConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -372,23 +344,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a network manager security user configuration.
+        /// Update a NetworkManagerSecurityUserConfiguration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,16 +372,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Update");
+            using DiagnosticScope scope = _securityUserConfigurationsClientDiagnostics.CreateScope("NetworkManagerSecurityUserConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _networkManagerSecurityUserConfigurationSecurityUserConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkManagerSecurityUserConfigurationResource>(Response.FromValue(new NetworkManagerSecurityUserConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkManagerSecurityUserConfigurationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerSecurityUserConfigurationData> response = Response.FromValue(NetworkManagerSecurityUserConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkManagerSecurityUserConfigurationResource> operation = new NetworkArmOperation<NetworkManagerSecurityUserConfigurationResource>(Response.FromValue(new NetworkManagerSecurityUserConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -417,6 +397,39 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of NetworkManagerSecurityUserRules in the <see cref="NetworkManagerSecurityUserConfigurationResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkManagerSecurityUserRules and their operations over a NetworkManagerSecurityUserRulesResource. </returns>
+        public virtual NetworkManagerSecurityUserRulesCollection GetAllNetworkManagerSecurityUserRules()
+        {
+            return GetCachedClient(client => new NetworkManagerSecurityUserRulesCollection(client, Id));
+        }
+
+        /// <summary> Gets a network manager security user configuration rule collection. </summary>
+        /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkManagerSecurityUserRulesResource>> GetNetworkManagerSecurityUserRulesAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+
+            return await GetAllNetworkManagerSecurityUserRules().GetAsync(ruleCollectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a network manager security user configuration rule collection. </summary>
+        /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkManagerSecurityUserRulesResource> GetNetworkManagerSecurityUserRules(string ruleCollectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
+
+            return GetAllNetworkManagerSecurityUserRules().Get(ruleCollectionName, cancellationToken);
         }
     }
 }

@@ -11,17 +11,25 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class DataMaskingStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataMaskingState value) => value switch
         {
-            DataMaskingState.Disabled => "Disabled",
             DataMaskingState.Enabled => "Enabled",
+            DataMaskingState.Disabled => "Disabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataMaskingState ToDataMaskingState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataMaskingState.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataMaskingState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return DataMaskingState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return DataMaskingState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingState value.");
         }
     }

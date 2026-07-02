@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupSupportedFeatureType : IEquatable<BackupSupportedFeatureType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupSupportedFeatureType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupSupportedFeatureType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string DataSourceTypeValue = "DataSourceType";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSupportedFeatureType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupSupportedFeatureType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupSupportedFeatureType Invalid { get; } = new BackupSupportedFeatureType(InvalidValue);
-        /// <summary> DataSourceType. </summary>
+
+        /// <summary> Gets the DataSourceType. </summary>
         public static BackupSupportedFeatureType DataSourceType { get; } = new BackupSupportedFeatureType(DataSourceTypeValue);
+
         /// <summary> Determines if two <see cref="BackupSupportedFeatureType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupSupportedFeatureType left, BackupSupportedFeatureType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupSupportedFeatureType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupSupportedFeatureType left, BackupSupportedFeatureType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupSupportedFeatureType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupSupportedFeatureType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupSupportedFeatureType(string value) => new BackupSupportedFeatureType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupSupportedFeatureType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupSupportedFeatureType?(string value) => value == null ? null : new BackupSupportedFeatureType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupSupportedFeatureType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupSupportedFeatureType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

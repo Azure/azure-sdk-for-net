@@ -4,10 +4,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -49,13 +49,14 @@ namespace Azure.ResourceManager.Network.Tests
             //Create network Watcher
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             var properties = new NetworkWatcherData { Location = location };
-            await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
+            await resourceGroup.GetNetworkWatchers().CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties, System.Threading.CancellationToken.None);
 
             ConnectivityContent connectivityParameters =
                 new ConnectivityContent(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
-            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(WaitUntil.Completed, connectivityParameters);
-            Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
+            Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(WaitUntil.Completed, connectivityParameters, System.Threading.CancellationToken.None);
+            Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();
+            ;
 
             //Validation
             Assert.AreEqual("Reachable", connectivityCheck.Value.NetworkConnectionStatus.ToString());

@@ -7,74 +7,76 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> RuntimeProtectionStatus represents the runtime protection status of the bare metal machine. </summary>
     public partial class RuntimeProtectionStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RuntimeProtectionStatus"/>. </summary>
         internal RuntimeProtectionStatus()
         {
+            AgentHealthStatusIssues = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RuntimeProtectionStatus"/>. </summary>
+        /// <param name="agentHealthStatus"> The runtime protection agent health status. </param>
+        /// <param name="agentHealthStatusIssues"> The runtime protection agent health status issues, if present. </param>
+        /// <param name="agentLicenseStatus"> The runtime protection agent license status. </param>
+        /// <param name="definitionUpdateMode"> The definition update mode for runtime protection. </param>
         /// <param name="definitionsLastUpdated"> The timestamp when the malware definitions were last updated. </param>
         /// <param name="definitionsVersion"> The version of the malware definitions. </param>
+        /// <param name="enforcementLevel"> The enforcement level set for the runtime protection on the bare metal machine. </param>
         /// <param name="scanCompletedOn"> The timestamp of the most recently completed scan, or empty if there has never been a scan. </param>
         /// <param name="scanScheduledOn"> The timestamp of the most recently scheduled scan, or empty if no scan has been scheduled. </param>
         /// <param name="scanStartedOn"> The timestamp of the most recently started scan, or empty if there has never been a scan. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeProtectionStatus(DateTimeOffset? definitionsLastUpdated, string definitionsVersion, DateTimeOffset? scanCompletedOn, DateTimeOffset? scanScheduledOn, DateTimeOffset? scanStartedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RuntimeProtectionStatus(RuntimeProtectionAgentHealthStatus? agentHealthStatus, IReadOnlyList<string> agentHealthStatusIssues, RuntimeProtectionAgentLicenseStatus? agentLicenseStatus, RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode, DateTimeOffset? definitionsLastUpdated, string definitionsVersion, RuntimeProtectionEnforcementLevel? enforcementLevel, DateTimeOffset? scanCompletedOn, DateTimeOffset? scanScheduledOn, DateTimeOffset? scanStartedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AgentHealthStatus = agentHealthStatus;
+            AgentHealthStatusIssues = agentHealthStatusIssues;
+            AgentLicenseStatus = agentLicenseStatus;
+            DefinitionUpdateMode = definitionUpdateMode;
             DefinitionsLastUpdated = definitionsLastUpdated;
             DefinitionsVersion = definitionsVersion;
+            EnforcementLevel = enforcementLevel;
             ScanCompletedOn = scanCompletedOn;
             ScanScheduledOn = scanScheduledOn;
             ScanStartedOn = scanStartedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The runtime protection agent health status. </summary>
+        public RuntimeProtectionAgentHealthStatus? AgentHealthStatus { get; }
+
+        /// <summary> The runtime protection agent health status issues, if present. </summary>
+        public IReadOnlyList<string> AgentHealthStatusIssues { get; }
+
+        /// <summary> The runtime protection agent license status. </summary>
+        public RuntimeProtectionAgentLicenseStatus? AgentLicenseStatus { get; }
+
+        /// <summary> The definition update mode for runtime protection. </summary>
+        public RuntimeProtectionDefinitionUpdateMode? DefinitionUpdateMode { get; }
 
         /// <summary> The timestamp when the malware definitions were last updated. </summary>
         public DateTimeOffset? DefinitionsLastUpdated { get; }
+
         /// <summary> The version of the malware definitions. </summary>
         public string DefinitionsVersion { get; }
+
+        /// <summary> The enforcement level set for the runtime protection on the bare metal machine. </summary>
+        public RuntimeProtectionEnforcementLevel? EnforcementLevel { get; }
+
         /// <summary> The timestamp of the most recently completed scan, or empty if there has never been a scan. </summary>
         public DateTimeOffset? ScanCompletedOn { get; }
+
         /// <summary> The timestamp of the most recently scheduled scan, or empty if no scan has been scheduled. </summary>
         public DateTimeOffset? ScanScheduledOn { get; }
+
         /// <summary> The timestamp of the most recently started scan, or empty if there has never been a scan. </summary>
         public DateTimeOffset? ScanStartedOn { get; }
     }

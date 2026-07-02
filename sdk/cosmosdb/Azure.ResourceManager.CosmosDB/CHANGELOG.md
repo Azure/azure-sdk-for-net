@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.14 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from Swagger to TypeSpec-based generation
+
+## 1.4.1 (2026-06-03)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.4.0 (2025-12-05)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-12-01' to 'package-2025-10-15'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/60bcde388a845febb60fc2bda17983ca59af219a/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/readme.md.
 
 ## 1.4.0-beta.13 (2025-08-04)
 

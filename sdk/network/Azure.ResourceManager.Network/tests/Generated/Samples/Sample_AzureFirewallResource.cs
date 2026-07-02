@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewall()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithAdditionalProperties()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallGetWithAdditionalProperties.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithAdditionalProperties.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithIpGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallGetWithIpGroups.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithIpGroups.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithZones()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallGetWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithZones.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureFirewallWithManagementSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallGetWithMgmtSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallGetWithMgmtSubnet.json
             // this example is just showing the usage of "AzureFirewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAzureFirewall()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallDelete.json
             // this example is just showing the usage of "AzureFirewalls_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            await azureFirewall.DeleteAsync(WaitUntil.Completed);
+            await azureFirewall.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAzureFirewallTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallUpdateTags.json
             // this example is just showing the usage of "AzureFirewalls_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<AzureFirewallResource> lro = await azureFirewall.UpdateAsync(WaitUntil.Completed, networkTagsObject);
+            ArmOperation<AzureFirewallResource> lro = await azureFirewall.UpdateAsync(WaitUntil.Completed, networkTagsObject, cancellationToken: System.Threading.CancellationToken.None);
             AzureFirewallResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLearnedPrefixes_AzureFirewallListLearnedPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallListLearnedIPPrefixes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallListLearnedIPPrefixes.json
             // this example is just showing the usage of "AzureFirewalls_ListLearnedPrefixes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            ArmOperation<LearnedIPPrefixesListResult> lro = await azureFirewall.GetLearnedPrefixesAsync(WaitUntil.Completed);
+            ArmOperation<LearnedIPPrefixesListResult> lro = await azureFirewall.GetLearnedPrefixesAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             LearnedIPPrefixesListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PacketCapture_AzureFirewallPacketCapture()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPacketCapture.json
             // this example is just showing the usage of "AzureFirewalls_PacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -305,7 +305,7 @@ Destinations = {"10.1.2.0"},
 DestinationPorts = {"123", "80"},
 }},
             };
-            await azureFirewall.PacketCaptureAsync(WaitUntil.Completed, content);
+            await azureFirewall.PacketCaptureAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -314,7 +314,7 @@ DestinationPorts = {"123", "80"},
         [Ignore("Only validating compilation of examples")]
         public async Task PacketCaptureOperation_AzureFirewallPacketCaptureOperation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/AzureFirewallPacketCaptureOperation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AzureFirewallPacketCaptureOperation.json
             // this example is just showing the usage of "AzureFirewalls_PacketCaptureOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,7 +358,7 @@ DestinationPorts = {"123", "80"},
 }},
                 Operation = AzureFirewallPacketCaptureOperationType.Status,
             };
-            ArmOperation<AzureFirewallPacketCaptureResult> lro = await azureFirewall.PacketCaptureOperationAsync(WaitUntil.Completed, content);
+            ArmOperation<AzureFirewallPacketCaptureResult> lro = await azureFirewall.PacketCaptureOperationAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             AzureFirewallPacketCaptureResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

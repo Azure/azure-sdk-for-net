@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a WebSiteSlotPrivateAccess along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotPrivateAccessResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotPrivateAccessResource method.
+    /// A class representing a WebSiteSlotPrivateAccess along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotPrivateAccessResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotPrivateAccess method.
     /// </summary>
     public partial class WebSiteSlotPrivateAccessResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotPrivateAccessResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="slot"> The slot. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _webSiteSlotPrivateAccessWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteSlotPrivateAccessWebAppsRestClient;
+        private readonly ClientDiagnostics _privateAccessOperationGroupClientDiagnostics;
+        private readonly PrivateAccessOperationGroup _privateAccessOperationGroupRestClient;
         private readonly PrivateAccessData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/privateAccess";
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotPrivateAccessResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WebSiteSlotPrivateAccessResource for mocking. </summary>
         protected WebSiteSlotPrivateAccessResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotPrivateAccessResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteSlotPrivateAccessResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotPrivateAccessResource(ArmClient client, PrivateAccessData data) : this(client, data.Id)
@@ -54,117 +43,51 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotPrivateAccessResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteSlotPrivateAccessResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebSiteSlotPrivateAccessResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteSlotPrivateAccessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webSiteSlotPrivateAccessWebAppsApiVersion);
-            _webSiteSlotPrivateAccessWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotPrivateAccessWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string webSiteSlotPrivateAccessApiVersion);
+            _privateAccessOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _privateAccessOperationGroupRestClient = new PrivateAccessOperationGroup(_privateAccessOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotPrivateAccessApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PrivateAccessData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPrivateAccessSlot</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotPrivateAccessResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteSlotPrivateAccessResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _webSiteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _webSiteSlotPrivateAccessWebAppsRestClient.GetPrivateAccessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPrivateAccessSlot</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotPrivateAccessResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteSlotPrivateAccessResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _webSiteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _webSiteSlotPrivateAccessWebAppsRestClient.GetPrivateAccessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -172,20 +95,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_PutPrivateAccessVnetSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateAccessOperationGroup_PutPrivateAccessVnetSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotPrivateAccessResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotPrivateAccessResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,16 +120,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.CreateOrUpdate");
+            using DiagnosticScope scope = _privateAccessOperationGroupClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webSiteSlotPrivateAccessWebAppsRestClient.PutPrivateAccessVnetSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _webSiteSlotPrivateAccessWebAppsRestClient.CreatePutPrivateAccessVnetSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<WebSiteSlotPrivateAccessResource>(Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateAccessOperationGroupRestClient.CreatePutPrivateAccessVnetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, PrivateAccessData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<WebSiteSlotPrivateAccessResource> operation = new AppServiceArmOperation<WebSiteSlotPrivateAccessResource>(Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -220,20 +151,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_PutPrivateAccessVnetSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateAccessOperationGroup_PutPrivateAccessVnetSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteSlotPrivateAccessResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotPrivateAccessResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,17 +176,121 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSlotPrivateAccessWebAppsClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.CreateOrUpdate");
+            using DiagnosticScope scope = _privateAccessOperationGroupClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webSiteSlotPrivateAccessWebAppsRestClient.PutPrivateAccessVnetSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var uri = _webSiteSlotPrivateAccessWebAppsRestClient.CreatePutPrivateAccessVnetSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<WebSiteSlotPrivateAccessResource>(Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateAccessOperationGroupRestClient.CreatePutPrivateAccessVnetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, PrivateAccessData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<WebSiteSlotPrivateAccessResource> operation = new AppServiceArmOperation<WebSiteSlotPrivateAccessResource>(Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateAccessOperationGroup_GetPrivateAccessSlot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotPrivateAccessResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WebSiteSlotPrivateAccessResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateAccessOperationGroupClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateAccessOperationGroupRestClient.CreateGetPrivateAccessSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateAccessOperationGroup_GetPrivateAccessSlot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteSlotPrivateAccessResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WebSiteSlotPrivateAccessResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateAccessOperationGroupClientDiagnostics.CreateScope("WebSiteSlotPrivateAccessResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateAccessOperationGroupRestClient.CreateGetPrivateAccessSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new WebSiteSlotPrivateAccessResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

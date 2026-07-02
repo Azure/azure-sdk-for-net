@@ -1,15 +1,60 @@
 # Release History
 
-## 1.2.0-beta.7 (Unreleased)
+## 1.2.0-beta.11 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.10 (2026-03-20)
+
+### Bugs Fixed
+- Improved error reporting during streaming response processing.
+- Fixed issue on streaming event deserialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/55585).
+- Fix OpenAPI tool call serialization during telemetry collection [issue](https://github.com/Azure/azure-sdk-for-net/issues/57183).
+- Fix function arguments serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/53817).
+
+### Sample updates
+- Added code to show how to force tool use in Azure AI Search with streaming example. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/54056).
+- Added sample, demonstrating the logging of network requests.
+- Added sample for generation of structured outputs. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/53390)
+
+## 1.2.0-beta.9 (2026-02-23)
+
+### Features Added
+- Added support for `CodeInterpreterToolCallContent` from `Microsoft.Extensions.AI` abstractions when executing `HostedCodeInterpreterTool` tool.
+
+### Bugs Fixed
+- Fixed a performance issue in `PersistentAgentsChatClient.GetStreamingResponseAsync` [issue](https://github.com/Azure/azure-sdk-for-net/issues/54326).
+
+## 1.2.0-beta.8 (2025-12-01)
+
+### Features Added
+- Added support for Computer usage.
+- Improved handling of errors by `PersistentAgentsChatClient` in the streaming scenarios.
+
+### Bugs Fixed
+- Fix the issue with `PersistentAgentsChatClient` when the run in incomplete state is encountered [issue](https://github.com/microsoft/agent-framework/issues/2298).
+
+### Sample updates
+- Added sample for Computer usage.
+
+## 1.2.0-beta.7 (2025-10-28)
 
 ### Breaking Changes
 - The `trust` parameter for `MCPApproval` constructor was renamed to `requireApproval`.
 
 ### Bugs Fixed
+- Relax the validation of previous conversation in the `PersistentAgentsChatClient`.
 
 ### Other Changes
+- Expand AIFunction support to also include any AIFunctionDeclaration.
+- Add an extension AsAITool method that makes it easy to add any persistent ToolDefinition to ChatOptions.Tools.
+- Add HostedMcpServerTool support for `PersistentAgentsChatClient`.
 
 ## 1.2.0-beta.6 (2025-10-10)
 

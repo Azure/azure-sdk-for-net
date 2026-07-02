@@ -7,49 +7,69 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
     /// This property allows you to specify the type of the OS that is included in the
     /// disk if creating a VM from user-image or a specialized VHD. Possible values
-    /// are: **Windows,** **Linux.**
+    /// are: <b>Windows,</b> <b>Linux.</b>
     /// </summary>
     public readonly partial struct ComputeFleetOperatingSystemType : IEquatable<ComputeFleetOperatingSystemType>
     {
         private readonly string _value;
+        /// <summary> Windows OS type. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> Linux OS type. </summary>
+        private const string LinuxValue = "Linux";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetOperatingSystemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetOperatingSystemType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
+            _value = value;
+        }
 
         /// <summary> Windows OS type. </summary>
         public static ComputeFleetOperatingSystemType Windows { get; } = new ComputeFleetOperatingSystemType(WindowsValue);
+
         /// <summary> Linux OS type. </summary>
         public static ComputeFleetOperatingSystemType Linux { get; } = new ComputeFleetOperatingSystemType(LinuxValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetOperatingSystemType left, ComputeFleetOperatingSystemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetOperatingSystemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetOperatingSystemType left, ComputeFleetOperatingSystemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetOperatingSystemType(string value) => new ComputeFleetOperatingSystemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetOperatingSystemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetOperatingSystemType?(string value) => value == null ? null : new ComputeFleetOperatingSystemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetOperatingSystemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetOperatingSystemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

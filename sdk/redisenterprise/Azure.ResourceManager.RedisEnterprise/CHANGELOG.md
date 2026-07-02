@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2026-06-28)
+
+### Features Added
+
+- Upgraded API version to `2025-08-01-preview`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.3.0 (2025-11-10)
+
+### Features Added
+- Updated api-version to `2025-07-01`.
+
+### Breaking Changes
+- Added a new required property: PublicNetworkAccess for Cluster.
+- Updated the default value of AccessKeysAuthentication property for Database to 'Disabled'.
 
 ## 1.2.1 (2025-07-25)
 

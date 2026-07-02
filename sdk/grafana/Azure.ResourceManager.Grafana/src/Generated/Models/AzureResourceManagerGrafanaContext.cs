@@ -6,20 +6,24 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Grafana.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DashboardDefinitionData))]
+    [ModelReaderWriterBuildable(typeof(DashboardDefinitionListResponse))]
+    [ModelReaderWriterBuildable(typeof(DashboardDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(DashboardDefinitionResource))]
     [ModelReaderWriterBuildable(typeof(EnterpriseConfigurations))]
     [ModelReaderWriterBuildable(typeof(EnterpriseDetails))]
     [ModelReaderWriterBuildable(typeof(GrafanaAvailablePlugin))]
-    [ModelReaderWriterBuildable(typeof(GrafanaAvailablePluginListResponse))]
+    [ModelReaderWriterBuildable(typeof(GrafanaAvailablePluginListResult))]
     [ModelReaderWriterBuildable(typeof(GrafanaConfigurations))]
     [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricData))]
     [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricPatch))]
@@ -33,6 +37,7 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(GrafanaSecuritySettings))]
     [ModelReaderWriterBuildable(typeof(GrafanaSmtpSettings))]
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(ManagedDashboardData))]
     [ModelReaderWriterBuildable(typeof(ManagedDashboardListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedDashboardPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedDashboardProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedDashboardResource))]
     [ModelReaderWriterBuildable(typeof(ManagedGrafanaData))]
     [ModelReaderWriterBuildable(typeof(ManagedGrafanaListResponse))]
@@ -55,13 +61,15 @@ namespace Azure.ResourceManager.Grafana
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelData))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceTrialQuota))]
     [ModelReaderWriterBuildable(typeof(MonitorWorkspaceIntegration))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionTerm))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnifiedAlertingScreenshots))]

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AzureFirewallSkuName : IEquatable<AzureFirewallSkuName>
     {
         private readonly string _value;
+        /// <summary> AZFW_VNet. </summary>
+        private const string AzfwVnetValue = "AZFW_VNet";
+        /// <summary> AZFW_Hub. </summary>
+        private const string AzfwHubValue = "AZFW_Hub";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzfwVnetValue = "AZFW_VNet";
-        private const string AzfwHubValue = "AZFW_Hub";
+            _value = value;
+        }
 
         /// <summary> AZFW_VNet. </summary>
         public static AzureFirewallSkuName AzfwVnet { get; } = new AzureFirewallSkuName(AzfwVnetValue);
+
         /// <summary> AZFW_Hub. </summary>
         public static AzureFirewallSkuName AzfwHub { get; } = new AzureFirewallSkuName(AzfwHubValue);
+
         /// <summary> Determines if two <see cref="AzureFirewallSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFirewallSkuName left, AzureFirewallSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFirewallSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFirewallSkuName left, AzureFirewallSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFirewallSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFirewallSkuName(string value) => new AzureFirewallSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFirewallSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFirewallSkuName?(string value) => value == null ? null : new AzureFirewallSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFirewallSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFirewallSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

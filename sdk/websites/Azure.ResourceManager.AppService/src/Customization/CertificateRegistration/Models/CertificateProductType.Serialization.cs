@@ -1,0 +1,29 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.AppService.Models
+{
+    [Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static partial class CertificateProductTypeExtensions
+    {
+        public static string ToSerialString(this CertificateProductType value) => value switch
+        {
+            CertificateProductType.StandardDomainValidatedSsl => "StandardDomainValidatedSsl",
+            CertificateProductType.StandardDomainValidatedWildCardSsl => "StandardDomainValidatedWildCardSsl",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateProductType value.")
+        };
+
+        public static CertificateProductType ToCertificateProductType(this string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardDomainValidatedSsl")) return CertificateProductType.StandardDomainValidatedSsl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardDomainValidatedWildCardSsl")) return CertificateProductType.StandardDomainValidatedWildCardSsl;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateProductType value.");
+        }
+    }
+}

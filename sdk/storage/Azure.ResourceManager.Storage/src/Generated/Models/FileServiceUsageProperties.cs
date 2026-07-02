@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
     public partial class FileServiceUsageProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileServiceUsageProperties"/>. </summary>
         internal FileServiceUsageProperties()
@@ -56,29 +28,33 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="fileShareRecommendations"> Constants used for calculating recommended provisioned IOPS and bandwidth for a file share in the storage account. </param>
         /// <param name="burstingConstants"> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </param>
         /// <param name="storageAccountUsage"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceUsageProperties(FileServiceAccountLimits storageAccountLimits, FileShareLimits fileShareLimits, FileShareRecommendations fileShareRecommendations, BurstingConstants burstingConstants, FileServiceAccountUsage storageAccountUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileServiceUsageProperties(FileServiceAccountLimits storageAccountLimits, FileShareLimits fileShareLimits, FileShareRecommendations fileShareRecommendations, BurstingConstants burstingConstants, FileServiceAccountUsage storageAccountUsage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountLimits = storageAccountLimits;
             FileShareLimits = fileShareLimits;
             FileShareRecommendations = fileShareRecommendations;
             BurstingConstants = burstingConstants;
             StorageAccountUsage = storageAccountUsage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </summary>
         [WirePath("storageAccountLimits")]
         public FileServiceAccountLimits StorageAccountLimits { get; }
+
         /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
         [WirePath("fileShareLimits")]
         public FileShareLimits FileShareLimits { get; }
+
         /// <summary> Constants used for calculating recommended provisioned IOPS and bandwidth for a file share in the storage account. </summary>
         [WirePath("fileShareRecommendations")]
         public FileShareRecommendations FileShareRecommendations { get; }
+
         /// <summary> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </summary>
         [WirePath("burstingConstants")]
         public BurstingConstants BurstingConstants { get; }
+
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </summary>
         [WirePath("storageAccountUsage")]
         public FileServiceAccountUsage StorageAccountUsage { get; }

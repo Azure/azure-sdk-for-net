@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigurationPolicyGroupDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupDelete.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnServerConfigurationPolicyGroupResource vpnServerConfigurationPolicyGroup = client.GetVpnServerConfigurationPolicyGroupResource(vpnServerConfigurationPolicyGroupResourceId);
 
             // invoke the operation
-            await vpnServerConfigurationPolicyGroup.DeleteAsync(WaitUntil.Completed);
+            await vpnServerConfigurationPolicyGroup.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationPolicyGroupPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupPut.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,17 +102,15 @@ namespace Azure.ResourceManager.Network.Samples
                 Priority = 0,
                 PolicyMembers = {new VpnServerConfigurationPolicyGroupMember
 {
-Name = "policy1",
 AttributeType = VpnPolicyMemberAttributeType.RadiusAzureGroupId,
 AttributeValue = "6ad1bd08",
 }, new VpnServerConfigurationPolicyGroupMember
 {
-Name = "policy2",
 AttributeType = VpnPolicyMemberAttributeType.CertificateGroupId,
 AttributeValue = "red.com",
 }},
             };
-            ArmOperation<VpnServerConfigurationPolicyGroupResource> lro = await vpnServerConfigurationPolicyGroup.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VpnServerConfigurationPolicyGroupResource> lro = await vpnServerConfigurationPolicyGroup.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnServerConfigurationPolicyGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

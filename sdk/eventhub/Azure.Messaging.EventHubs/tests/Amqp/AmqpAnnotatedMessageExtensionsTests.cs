@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of AmqpAnnotatedMessage is not being cloned.");
+                Assert.That(knownMembers.Contains(property.Name), $"The property: {property.Name} of AmqpAnnotatedMessage is not being cloned.");
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of AmqpMessageHeader is not being cloned.");
+                Assert.That(knownMembers.Contains(property.Name), $"The property: {property.Name} of AmqpMessageHeader is not being cloned.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var property in getterSetterProperties)
             {
-                Assert.That(knownMembers.Contains(property.Name), $"The property: { property.Name } of AmqpMessageProperties is not being cloned.");
+                Assert.That(knownMembers.Contains(property.Name), $"The property: {property.Name} of AmqpMessageProperties is not being cloned.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var headerProperty in typeof(AmqpMessageHeader).GetProperties(BindingFlags.Public | BindingFlags.GetProperty))
             {
-                Assert.That(headerProperty.GetValue(clone), Is.EqualTo(headerProperty.GetValue(source)), $"The header property: { headerProperty.Name } should match.");
+                Assert.That(headerProperty.GetValue(clone), Is.EqualTo(headerProperty.GetValue(source)), $"The header property: {headerProperty.Name} should match.");
             }
 
             // Properties
@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var propertiesProperty in typeof(AmqpMessageProperties).GetProperties(BindingFlags.Public | BindingFlags.GetProperty))
             {
-                Assert.That(propertiesProperty.GetValue(clone), Is.EqualTo(propertiesProperty.GetValue(source)), $"The message property: { propertiesProperty.Name } should match.");
+                Assert.That(propertiesProperty.GetValue(clone), Is.EqualTo(propertiesProperty.GetValue(source)), $"The message property: {propertiesProperty.Name} should match.");
             }
 
             // Footer
@@ -279,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 AmqpMessageBodyType.Sequence => AmqpMessageBody.FromSequence(new[] { new List<object> { 1, 2, 3 } }),
                 AmqpMessageBodyType.Value => AmqpMessageBody.FromValue("This is a value"),
-                _ => throw new ArgumentException($"Unsupported body type { bodyType }", nameof(bodyType))
+                _ => throw new ArgumentException($"Unsupported body type {bodyType}", nameof(bodyType))
             };
 
             var message = new AmqpAnnotatedMessage(body);

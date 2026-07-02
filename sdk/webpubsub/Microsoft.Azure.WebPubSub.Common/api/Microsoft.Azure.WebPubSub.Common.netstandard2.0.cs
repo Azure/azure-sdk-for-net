@@ -41,7 +41,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Runtime.Serialization.DataMemberAttribute(Name="roles")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("roles")]
         public string[] Roles { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
@@ -53,7 +52,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         public string UserId { get { throw null; } set { } }
         public void ClearStates() { }
         public void SetState(string key, System.BinaryData value) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
     [System.Runtime.Serialization.DataContractAttribute]
@@ -77,9 +75,24 @@ namespace Microsoft.Azure.WebPubSub.Common
         public string ErrorMessage { get { throw null; } set { } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
+    public partial class JoinedGroupEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
+    {
+        public JoinedGroupEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, string group) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="group")]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("group")]
+        public string Group { get { throw null; } }
+    }
+    [System.Runtime.Serialization.DataContractAttribute]
+    public partial class LeftGroupEventRequest : Microsoft.Azure.WebPubSub.Common.WebPubSubEventRequest
+    {
+        public LeftGroupEventRequest(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext context, string group) : base (default(Microsoft.Azure.WebPubSub.Common.WebPubSubConnectionContext)) { }
+        [System.Runtime.Serialization.DataMemberAttribute(Name="group")]
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("group")]
+        public string Group { get { throw null; } }
+    }
+    [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttConnectEventErrorResponse : Microsoft.Azure.WebPubSub.Common.EventErrorResponse
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties mqtt) { }
         public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV311ConnectReturnCode code, string? reason) { }
         public MqttConnectEventErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV500ConnectReasonCode code, string? reason) { }
@@ -109,7 +122,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Runtime.Serialization.DataMemberAttribute(Name="mqtt")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("mqtt")]
         public Microsoft.Azure.WebPubSub.Common.MqttConnectProperties Mqtt { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Microsoft.Azure.WebPubSub.Common.EventErrorResponse CreateErrorResponse(Microsoft.Azure.WebPubSub.Common.WebPubSubErrorCode code, string? message = null) { throw null; }
         public Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponse CreateMqttResponse(string userId, System.Collections.Generic.IEnumerable<string> groups, System.Collections.Generic.IEnumerable<string> roles) { throw null; }
         public Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse CreateMqttV311ErrorResponse(Microsoft.Azure.WebPubSub.Common.MqttV311ConnectReturnCode code, string? message = null) { throw null; }
@@ -318,12 +330,10 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("dataType")]
         public Microsoft.Azure.WebPubSub.Common.WebPubSubDataType DataType { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         public System.Collections.Generic.IReadOnlyDictionary<string, object> States { get { throw null; } }
         public void ClearStates() { }
         public void SetState(string key, System.BinaryData value) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
     [System.Runtime.Serialization.DataContractAttribute]
@@ -338,11 +348,53 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("thumbprint")]
         public string Thumbprint { get { throw null; } }
     }
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.Json.SourceGeneration", "10.0.14.27113")]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.ConnectEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.ConnectEventResponse))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.JoinedGroupEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.LeftGroupEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponse))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponseProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequestProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttUserProperty))]
+    [System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute(PropertyNamingPolicy=System.Text.Json.Serialization.JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition=System.Text.Json.Serialization.JsonIgnoreCondition.Never, WriteIndented=false)]
+    public partial class WebPubSubCommonJsonSerializerContext : System.Text.Json.Serialization.JsonSerializerContext, System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver
+    {
+        public WebPubSubCommonJsonSerializerContext() : base (default(System.Text.Json.JsonSerializerOptions)) { }
+        public WebPubSubCommonJsonSerializerContext(System.Text.Json.JsonSerializerOptions options) : base (default(System.Text.Json.JsonSerializerOptions)) { }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.ConnectEventRequest> ConnectEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.ConnectEventResponse> ConnectEventResponse { get { throw null; } }
+        public static Microsoft.Azure.WebPubSub.Common.WebPubSubCommonJsonSerializerContext Default { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest> DisconnectedEventRequest { get { throw null; } }
+        protected override System.Text.Json.JsonSerializerOptions? GeneratedSerializerOptions { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<int> Int32 { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>> IReadOnlyListMqttUserProperty { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.JoinedGroupEventRequest> JoinedGroupEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.LeftGroupEventRequest> LeftGroupEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse> MqttConnectEventErrorResponse { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties> MqttConnectEventErrorResponseProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventRequest> MqttConnectEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponse> MqttConnectEventResponse { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponseProperties> MqttConnectEventResponseProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectProperties> MqttConnectProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequest> MqttDisconnectedEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequestProperties> MqttDisconnectedEventRequestProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttUserProperty> MqttUserProperty { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<string> String { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<string[]> StringArray { get { throw null; } }
+        public override System.Text.Json.Serialization.Metadata.JsonTypeInfo? GetTypeInfo(System.Type type) { throw null; }
+        System.Text.Json.Serialization.Metadata.JsonTypeInfo? global::System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver.GetTypeInfo(System.Type type, System.Text.Json.JsonSerializerOptions options) { throw null; }
+    }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class WebPubSubConnectionContext
     {
         public WebPubSubConnectionContext(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, string hub, string connectionId, string userId = null, string signature = null, string origin = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> connectionStates = null, System.Collections.Generic.IReadOnlyDictionary<string, string[]> headers = null) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public WebPubSubConnectionContext(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, string hub, string connectionId, string userId, string signature, string origin, System.Collections.Generic.IReadOnlyDictionary<string, object> states, System.Collections.Generic.IReadOnlyDictionary<string, string[]> headers) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="connectionId")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("connectionId")]
@@ -368,7 +420,6 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Runtime.Serialization.DataMemberAttribute(Name="signature")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("signature")]
         public string Signature { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Runtime.Serialization.IgnoreDataMemberAttribute]
         [System.Text.Json.Serialization.JsonIgnoreAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("states")]
@@ -405,5 +456,6 @@ namespace Microsoft.Azure.WebPubSub.Common
     {
         System = 0,
         User = 1,
+        GroupPresence = 2,
     }
 }

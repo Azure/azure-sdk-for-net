@@ -3,14 +3,14 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using Azure.ResourceManager.Resources;
-using NUnit.Framework;
-using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
-using Azure.ResourceManager.Network.Models;
-using Azure.Core;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -51,9 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     DnsServers = { "10.1.1.1", "10.1.2.4" }
                 },
-                Subnets = { new SubnetData() {
-                    Name = "default",
-                    AddressPrefix = "10.0.1.0/24",
+                Subnets = { new SubnetData() {AddressPrefix = "10.0.1.0/24",
                     PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
@@ -62,23 +60,23 @@ namespace Azure.ResourceManager.Network.Tests
 
         private async Task<StorageAccountResource> CreateStorageAccount(string storageAccountName)
         {
-            var parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage,TestEnvironment.Location);
-            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, parameters)).Value;
+            var parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage, TestEnvironment.Location);
+            return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, parameters, System.Threading.CancellationToken.None)).Value;
         }
 
         private async Task CleanUpVirtualNetwork()
         {
             if (virtualNetwork != null)
             {
-                await virtualNetwork.DeleteAsync(WaitUntil.Completed);
+                await virtualNetwork.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             }
             if (privateDnsZone != null)
             {
-                await privateDnsZone.DeleteAsync(WaitUntil.Completed);
+                await privateDnsZone.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             }
             if (storageAccountId != null)
             {
-                await ArmClient.GetStorageAccountResource(storageAccountId).DeleteAsync(WaitUntil.Completed);
+                await ArmClient.GetStorageAccountResource(storageAccountId).DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             }
         }
 
@@ -115,9 +113,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Subnet = virtualNetwork.Data.Subnets[0],
                 PrivateLinkServiceConnections = {
                     new NetworkPrivateLinkServiceConnection
-                    {
-                        Name = privateLinkServiceName,
-                        // TODO: externalize or create the service on-demand, like virtual network
+                    {// TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/providers/Microsoft.Storage/storageAccounts/{storageAccount.Name}",
                         PrivateLinkServiceId = storageAccountId,
                         RequestMessage = "SDK test",
@@ -126,7 +122,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
             };
 
-            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, privateEndpointData)).Value;
+            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, privateEndpointData, System.Threading.CancellationToken.None)).Value;
             Assert.AreEqual(privateEndpointName, privateEndpoint.Data.Name);
             Assert.AreEqual(TestEnvironment.Location, privateEndpoint.Data.Location);
             Assert.IsEmpty(privateEndpoint.Data.Tags);
@@ -139,7 +135,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // update
             privateEndpointData.Tags.Add("test", "test");
-            privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, privateEndpointData)).Value;
+            privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, privateEndpointData, System.Threading.CancellationToken.None)).Value;
             Assert.AreEqual(privateEndpointName, privateEndpoint.Data.Name);
             Assert.AreEqual(TestEnvironment.Location, privateEndpoint.Data.Location);
             Assert.That(privateEndpoint.Data.Tags, Has.Count.EqualTo(1));
@@ -151,7 +147,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(privateEndpointName, privateEndpoint.Data.Name);
 
             // delete
-            await privateEndpoint.DeleteAsync(WaitUntil.Completed);
+            await privateEndpoint.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // list all
             privateEndpoints = (await _subscription.GetPrivateEndpointsAsync().ToEnumerableAsync());
@@ -191,9 +187,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Subnet = virtualNetwork.Data.Subnets[0],
                 PrivateLinkServiceConnections = {
                     new NetworkPrivateLinkServiceConnection
-                    {
-                        Name = privateLinkServiceName,
-                        // TODO: externalize or create the service on-demand, like virtual network
+                    {// TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktest7669/providers/Microsoft.KeyVault/vaults/TierRuanKeyVaultJustTest",
                         PrivateLinkServiceId = storageAccountId,
                         RequestMessage = "SDK test",
@@ -202,7 +196,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
             };
 
-            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, privateEndpointData)).Value;
+            var privateEndpoint = (await privateEndpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, privateEndpointData, System.Threading.CancellationToken.None)).Value;
 
             var privateDnsZoneName = Recording.GenerateAssetName("private_dns_zone");
             var privateDnsZoneResourceId = new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{resourceGroup.Data.Name}/Microsoft.Network/privateDnsZones/{privateDnsZoneName}");
@@ -210,12 +204,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupCollection = privateEndpoint.GetPrivateDnsZoneGroups();
-            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {
+            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData
+            {
                 PrivateDnsZoneConfigs = {
                     new PrivateDnsZoneConfig
-                    {
-                        Name = privateDnsZoneName,
-                        PrivateDnsZoneId = privateDnsZone.Id,
+                    {PrivateDnsZoneId = privateDnsZone.Id,
                     }
                 }
             })).Value;
@@ -241,17 +234,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(privateDnsZone.Id, privateDnsZoneGroup.Data.PrivateDnsZoneConfigs[0].PrivateDnsZoneId);
 
             // update
-            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {})).Value;
+            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData { }, System.Threading.CancellationToken.None)).Value;
             Assert.IsEmpty(privateDnsZoneGroup.Data.PrivateDnsZoneConfigs);
 
             // delete
-            await privateDnsZoneGroup.DeleteAsync(WaitUntil.Completed);
+            await privateDnsZoneGroup.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             // list again
             groups = (await privateDnsZoneGroupCollection.GetAllAsync().ToEnumerableAsync());
             Assert.IsEmpty(groups);
 
-            await privateEndpoint.DeleteAsync(WaitUntil.Completed);
+            await privateEndpoint.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         [Test]

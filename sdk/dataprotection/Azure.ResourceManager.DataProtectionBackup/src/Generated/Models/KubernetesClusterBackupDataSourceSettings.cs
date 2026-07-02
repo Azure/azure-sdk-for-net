@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </param>
-        public KubernetesClusterBackupDataSourceSettings(bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded)
+        public KubernetesClusterBackupDataSourceSettings(bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded) : base("KubernetesClusterBackupDatasourceParameters")
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IncludedVolumeTypes = new ChangeTrackingList<DataProtectionAksVolumeType>();
@@ -27,12 +28,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ExcludedResourceTypes = new ChangeTrackingList<string>();
             LabelSelectors = new ChangeTrackingList<string>();
             BackupHookReferences = new ChangeTrackingList<NamespacedName>();
-            ObjectType = "KubernetesClusterBackupDatasourceParameters";
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </param>
         /// <param name="includedVolumeTypes"> Gets or sets the include volume types property. This property sets the volume types to be included during backup. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="excludedResourceTypes"> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during backup. </param>
         /// <param name="labelSelectors"> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during backup. </param>
         /// <param name="backupHookReferences"> Gets or sets the backup hook references. This property sets the hook reference to be executed during backup. </param>
-        internal KubernetesClusterBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool isSnapshotVolumesEnabled, IList<DataProtectionAksVolumeType> includedVolumeTypes, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType, serializedAdditionalRawData)
+        internal KubernetesClusterBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool isSnapshotVolumesEnabled, IList<DataProtectionAksVolumeType> includedVolumeTypes, bool isClusterScopeResourcesIncluded, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, IList<NamespacedName> backupHookReferences) : base(objectType, additionalBinaryDataProperties)
         {
             IsSnapshotVolumesEnabled = isSnapshotVolumesEnabled;
             IncludedVolumeTypes = includedVolumeTypes;
@@ -53,30 +53,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ExcludedResourceTypes = excludedResourceTypes;
             LabelSelectors = labelSelectors;
             BackupHookReferences = backupHookReferences;
-            ObjectType = objectType ?? "KubernetesClusterBackupDatasourceParameters";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/> for deserialization. </summary>
-        internal KubernetesClusterBackupDataSourceSettings()
-        {
         }
 
         /// <summary> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </summary>
         public bool IsSnapshotVolumesEnabled { get; set; }
+
         /// <summary> Gets or sets the include volume types property. This property sets the volume types to be included during backup. </summary>
         public IList<DataProtectionAksVolumeType> IncludedVolumeTypes { get; }
+
         /// <summary> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </summary>
         public bool IsClusterScopeResourcesIncluded { get; set; }
+
         /// <summary> Gets or sets the include namespaces property. This property sets the namespaces to be included during backup. </summary>
         public IList<string> IncludedNamespaces { get; }
+
         /// <summary> Gets or sets the exclude namespaces property. This property sets the namespaces to be excluded during backup. </summary>
         public IList<string> ExcludedNamespaces { get; }
+
         /// <summary> Gets or sets the include resource types property. This property sets the resource types to be included during backup. </summary>
         public IList<string> IncludedResourceTypes { get; }
+
         /// <summary> Gets or sets the exclude resource types property. This property sets the resource types to be excluded during backup. </summary>
         public IList<string> ExcludedResourceTypes { get; }
+
         /// <summary> Gets or sets the LabelSelectors property. This property sets the resource with such label selectors to be included during backup. </summary>
         public IList<string> LabelSelectors { get; }
+
         /// <summary> Gets or sets the backup hook references. This property sets the hook reference to be executed during backup. </summary>
         public IList<NamespacedName> BackupHookReferences { get; }
     }

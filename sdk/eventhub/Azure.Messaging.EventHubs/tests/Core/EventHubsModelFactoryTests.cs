@@ -218,7 +218,7 @@ namespace Azure.Messaging.EventHubs.Tests
             while (store.Count < eventLimit)
             {
                 var eventData = new EventData(new BinaryData("Test"));
-                Assert.That(() => batch.TryAdd(eventData), Is.True, $"The batch contains { store.Count } events; adding another should be permitted.");
+                Assert.That(() => batch.TryAdd(eventData), Is.True, $"The batch contains {store.Count} events; adding another should be permitted.");
 
                 messages.Add(converter.CreateMessageFromEvent(eventData));
             }

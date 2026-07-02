@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The updatable properties of the CloudExadataInfrastructure. </summary>
     public partial class CloudExadataInfrastructureUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureUpdateProperties"/>. </summary>
         public CloudExadataInfrastructureUpdateProperties()
@@ -55,27 +27,31 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="computeCount"> The number of compute servers for the cloud Exadata infrastructure. </param>
         /// <param name="storageCount"> The number of storage servers for the cloud Exadata infrastructure. </param>
         /// <param name="maintenanceWindow"> maintenanceWindow property. </param>
-        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </param>
+        /// <param name="customerContacts"> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. . </param>
         /// <param name="displayName"> The name for the Exadata infrastructure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudExadataInfrastructureUpdateProperties(int? computeCount, int? storageCount, OracleDatabaseMaintenanceWindow maintenanceWindow, IList<OracleCustomerContact> customerContacts, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudExadataInfrastructureUpdateProperties(int? computeCount, int? storageCount, OracleDatabaseMaintenanceWindow maintenanceWindow, IList<OracleCustomerContact> customerContacts, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeCount = computeCount;
             StorageCount = storageCount;
             MaintenanceWindow = maintenanceWindow;
             CustomerContacts = customerContacts;
             DisplayName = displayName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of compute servers for the cloud Exadata infrastructure. </summary>
         public int? ComputeCount { get; set; }
+
         /// <summary> The number of storage servers for the cloud Exadata infrastructure. </summary>
         public int? StorageCount { get; set; }
+
         /// <summary> maintenanceWindow property. </summary>
         public OracleDatabaseMaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. </summary>
+
+        /// <summary> The list of customer email addresses that receive information from Oracle about the specified OCI Database service resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a cloud Exadata infrastructure instance. . </summary>
         public IList<OracleCustomerContact> CustomerContacts { get; }
+
         /// <summary> The name for the Exadata infrastructure. </summary>
         public string DisplayName { get; set; }
     }

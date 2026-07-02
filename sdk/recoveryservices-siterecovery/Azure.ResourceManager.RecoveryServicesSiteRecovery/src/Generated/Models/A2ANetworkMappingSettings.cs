@@ -15,25 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ANetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="A2ANetworkMappingSettings"/>. </summary>
-        internal A2ANetworkMappingSettings()
+        internal A2ANetworkMappingSettings() : base("AzureToAzure")
         {
-            InstanceType = "AzureToAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ANetworkMappingSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryFabricLocation"> The primary fabric location. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location. </param>
-        internal A2ANetworkMappingSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation) : base(instanceType, serializedAdditionalRawData)
+        internal A2ANetworkMappingSettings(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation) : base(instanceType, additionalBinaryDataProperties)
         {
             PrimaryFabricLocation = primaryFabricLocation;
             RecoveryFabricLocation = recoveryFabricLocation;
-            InstanceType = instanceType ?? "AzureToAzure";
         }
 
         /// <summary> The primary fabric location. </summary>
         public AzureLocation? PrimaryFabricLocation { get; }
+
         /// <summary> The recovery fabric location. </summary>
         public AzureLocation? RecoveryFabricLocation { get; }
     }

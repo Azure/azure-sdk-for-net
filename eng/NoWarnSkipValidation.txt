@@ -1,0 +1,71 @@
+# NoWarn skip-validation list
+#
+# Projects listed here are temporarily excluded from the NoWarn validation enforced by
+# eng/NoWarnValidation.targets (diagnostic AZSDK0002).
+#
+# This is the unverified backlog. Every entry represents a project whose existing <NoWarn>
+# entries have NOT been reviewed by the SDK team. The goal is to drive this list to empty by
+# investigating each project, fixing root causes where possible, narrowing the rest to scoped
+# #pragma warning disable, and only as a last resort recording an approval in
+# eng/analyzerallowlist/<ProjectName>.txt with a justification comment.
+#
+# Format: one project name per line (matching $(MSBuildProjectName)). Lines starting with
+# `#` and blank lines are ignored. Keep the list alphabetical so diffs stay readable.
+#
+# See https://github.com/Azure/azure-sdk-for-net/issues/55312
+#
+# To remove a project from this list, see the workflow in eng/analyzerallowlist/README.md.
+Azure.AI.Agents.Persistent
+Azure.AI.AnomalyDetector
+Azure.AI.Inference
+Azure.AI.Language.QuestionAnswering.Inference
+Azure.AI.OpenAI
+Azure.AI.OpenAI.Assistants
+Azure.AI.TextAnalytics
+Azure.AI.VoiceLive.Snippets
+Azure.Analytics.Purview.DataMap
+Azure.Analytics.Synapse.Artifacts
+Azure.Core.Experimental
+Azure.Identity
+Azure.Maps.Geolocation
+Azure.Maps.Rendering
+Azure.Maps.Routing
+Azure.Maps.Search
+Azure.Maps.TimeZones
+Azure.Maps.Weather
+Azure.Messaging.EventGrid
+Azure.Messaging.EventGrid.SystemEvents
+Azure.Messaging.ServiceBus
+Azure.Monitor.Ingestion
+Azure.Monitor.OpenTelemetry.AspNetCore
+Azure.Projects
+Azure.Projects.AI
+Azure.Projects.Provisioning
+Azure.Provisioning
+Azure.Provisioning.Deployment
+Azure.Provisioning.Dns
+Azure.Provisioning.Storage
+Azure.ResourceManager.InformaticaDataManagement
+Azure.Storage.Blobs
+Azure.Storage.Blobs.Batch
+Azure.Storage.Blobs.ChangeFeed
+Azure.Storage.Common
+Azure.Storage.DataMovement
+Azure.Storage.DataMovement.Blobs
+Azure.Storage.DataMovement.Files.Shares
+Azure.Storage.Files.DataLake
+Azure.Storage.Files.Shares
+Azure.Storage.Internal.Avro
+Azure.Storage.Queues
+Azure.Verticals.AgriFood.Farming
+Microsoft.Azure.WebJobs.Extensions.EventGrid
+Microsoft.Azure.WebJobs.Extensions.EventHubs
+Microsoft.Azure.WebJobs.Extensions.ServiceBus
+Microsoft.Azure.WebJobs.Extensions.SignalRService
+Microsoft.Azure.WebJobs.Extensions.Storage
+Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
+Microsoft.Azure.WebJobs.Extensions.Storage.Common
+Microsoft.Azure.WebJobs.Extensions.Storage.Queues
+Microsoft.Azure.WebJobs.Extensions.Tables
+Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
+Microsoft.ClientModel.TestFramework

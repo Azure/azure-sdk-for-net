@@ -13,79 +13,62 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityTask data model.
-    /// Security task that we recommend to do in order to strengthen security
-    /// </summary>
+    /// <summary> Security task that we recommend to do in order to strengthen security. </summary>
     public partial class SecurityTaskData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
-        public SecurityTaskData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Describes properties of a task. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityTaskPropertiesInfo properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> State of the task (Active, Resolved etc.). </param>
-        /// <param name="createdOn"> The time this task was discovered in UTC. </param>
-        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
-        /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string state, DateTimeOffset? createdOn, SecurityTaskProperties securityTaskParameters, DateTimeOffset? lastStateChangedOn, string subState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            State = state;
-            CreatedOn = createdOn;
-            SecurityTaskParameters = securityTaskParameters;
-            LastStateChangedOn = lastStateChangedOn;
-            SubState = subState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Describes properties of a task. </summary>
+        internal SecurityTaskPropertiesInfo Properties { get; set; }
 
         /// <summary> State of the task (Active, Resolved etc.). </summary>
-        public string State { get; }
+        public string State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The time this task was discovered in UTC. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskProperties SecurityTaskParameters { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The time this task's details were last changed in UTC. </summary>
-        public DateTimeOffset? LastStateChangedOn { get; }
+        public DateTimeOffset? LastStateChangedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastStateChangedOn;
+            }
+        }
+
         /// <summary> Additional data on the state of the task. </summary>
-        public string SubState { get; }
+        public string SubState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubState;
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreate.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
                 FlowTimeoutInMinutes = 10,
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithBgpCommunities()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateWithBgpCommunities.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateWithBgpCommunities.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,12 +93,11 @@ namespace Azure.ResourceManager.Network.Samples
                 Subnets = {new SubnetData
 {
 AddressPrefix = "10.0.0.0/24",
-Name = "test-1",
 }},
                 BgpCommunities = new VirtualNetworkBgpCommunities("12076:20000"),
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -112,7 +111,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithDelegatedSubnets()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateSubnetWithDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateSubnetWithDelegation.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,13 +143,11 @@ AddressPrefix = "10.0.0.0/24",
 Delegations = {new ServiceDelegation
 {
 ServiceName = "Microsoft.Sql/managedInstances",
-Name = "myDelegation",
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("westcentralus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -164,7 +161,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithEncryption()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateWithEncryption.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateWithEncryption.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -193,7 +190,6 @@ Name = "test-1",
                 Subnets = {new SubnetData
 {
 AddressPrefix = "10.0.0.0/24",
-Name = "test-1",
 }},
                 Encryption = new VirtualNetworkEncryption(true)
                 {
@@ -201,7 +197,7 @@ Name = "test-1",
                 },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -215,7 +211,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithIpamPool()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateWithIpamPool.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateWithIpamPool.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -252,11 +248,10 @@ IpamPoolPrefixAllocations = {new IpamPoolPrefixAllocation
 NumberOfIPAddresses = "80",
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/nm1/ipamPools/testIpamPool"),
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -270,7 +265,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithServiceEndpoints()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateServiceEndpoints.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateServiceEndpoints.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,11 +298,10 @@ ServiceEndpoints = {new ServiceEndpointProperties
 {
 Service = "Microsoft.Storage",
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -321,7 +315,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithServiceEndpointsAndServiceEndpointPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateServiceEndpointPolicy.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateServiceEndpointPolicy.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,11 +352,10 @@ ServiceEndpointPolicies = {new ServiceEndpointPolicyData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/vnetTest/providers/Microsoft.Network/serviceEndpointPolicies/ServiceEndpointPolicy1"),
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus2euap"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -376,7 +369,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateSubnet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateSubnet.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -405,11 +398,10 @@ Name = "test-1",
                 Subnets = {new SubnetData
 {
 AddressPrefix = "10.0.0.0/24",
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -423,7 +415,7 @@ Name = "test-1",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateVirtualNetworkWithSubnetContainingAddressPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkCreateSubnetWithAddressPrefixes.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkCreateSubnetWithAddressPrefixes.json
             // this example is just showing the usage of "VirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -452,11 +444,10 @@ Name = "test-1",
                 Subnets = {new SubnetData
 {
 AddressPrefixes = {"10.0.0.0/28", "10.0.1.0/28"},
-Name = "test-2",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -470,7 +461,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGet.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -503,7 +494,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGetWithSubnetDelegation.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -536,7 +527,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkWithServiceAssociationLinks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -569,7 +560,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworksInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkList.json
             // this example is just showing the usage of "VirtualNetworks_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -604,7 +595,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGet.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -633,7 +624,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGetWithSubnetDelegation.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -662,7 +653,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkWithServiceAssociationLinks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -691,7 +682,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGet.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -732,7 +723,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGetWithSubnetDelegation.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -773,7 +764,7 @@ Name = "test-2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkWithServiceAssociationLinks()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
             // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

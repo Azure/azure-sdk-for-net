@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation
         /// The position of this payload
         /// </summary>
 
-        public TimeSpan Offset { get;}
+        public TimeSpan Offset { get; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.

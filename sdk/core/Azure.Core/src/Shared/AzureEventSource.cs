@@ -10,7 +10,7 @@ using System.Diagnostics.Tracing;
 
 namespace Azure.Core.Diagnostics
 {
-    internal abstract class AzureEventSource: EventSource
+    internal abstract class AzureEventSource : EventSource
     {
         private protected const string EventSourceRequiresUnreferencedCodeMessage = "EventSource will serialize the whole object graph. Trimmer will not safely handle this case because properties may be trimmed. This can be suppressed if the object is a primitive type";
         private protected const string EventSourceSuppressMessage = "Parameters to this method are primitive and are trimmer safe.";
@@ -41,7 +41,7 @@ namespace Azure.Core.Diagnostics
             AzureEventSourceListener.TraitValue
         };
 
-        protected AzureEventSource(string eventSourceName): base(
+        protected AzureEventSource(string eventSourceName) : base(
             DeduplicateName(eventSourceName),
             EventSourceSettings.Default,
             MainEventSourceTraits

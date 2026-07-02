@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_P2SVpnGatewayPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/P2SVpnGatewayPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayPut.json
             // this example is just showing the usage of "P2sVpnGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,7 +74,6 @@ StaticRoutes = {},
 },
 },
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/p2sVpnGateways/p2sVpnGateway1/p2sConnectionConfigurations/P2SConnectionConfig1"),
-Name = "P2SConnectionConfig1",
 }},
                 VpnGatewayScaleUnit = 1,
                 VpnServerConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnServerConfiguration1"),
@@ -86,7 +85,7 @@ Name = "P2SConnectionConfig1",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<P2SVpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ArmOperation<P2SVpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             P2SVpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -100,7 +99,7 @@ Name = "P2SConnectionConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +132,7 @@ Name = "P2SConnectionConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_P2SVpnGatewayListByResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/P2SVpnGatewayListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayListByResourceGroup.json
             // this example is just showing the usage of "P2sVpnGateways_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +167,7 @@ Name = "P2SConnectionConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,7 +196,7 @@ Name = "P2SConnectionConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

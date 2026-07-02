@@ -20,6 +20,63 @@ namespace Azure.ResourceManager.HealthDataAIServices
     /// <summary> Holder for private endpoint connections. </summary>
     public partial class HealthDataAIServicesPrivateEndpointConnectionResourceData : ResourceData, IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateEndpointConnectionResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthDataAIServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateEndpointConnectionResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthDataAIServicesPrivateEndpointConnectionResourceData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthDataAIServicesPrivateEndpointConnectionResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="healthDataAIServicesPrivateEndpointConnectionResourceData"> The <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HealthDataAIServicesPrivateEndpointConnectionResourceData healthDataAIServicesPrivateEndpointConnectionResourceData)
+        {
+            if (healthDataAIServicesPrivateEndpointConnectionResourceData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(healthDataAIServicesPrivateEndpointConnectionResourceData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceData"/> from. </param>
+        internal static HealthDataAIServicesPrivateEndpointConnectionResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -43,6 +100,21 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -75,8 +147,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PrivateEndpointConnectionProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -130,68 +202,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthDataAIServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateEndpointConnectionResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HealthDataAIServicesPrivateEndpointConnectionResourceData IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthDataAIServicesPrivateEndpointConnectionResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthDataAIServicesPrivateEndpointConnectionResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthDataAIServicesPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="healthDataAIServicesPrivateEndpointConnectionResourceData"> The <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HealthDataAIServicesPrivateEndpointConnectionResourceData healthDataAIServicesPrivateEndpointConnectionResourceData)
-        {
-            if (healthDataAIServicesPrivateEndpointConnectionResourceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(healthDataAIServicesPrivateEndpointConnectionResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceData"/> from. </param>
-        internal static HealthDataAIServicesPrivateEndpointConnectionResourceData FromResponse(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

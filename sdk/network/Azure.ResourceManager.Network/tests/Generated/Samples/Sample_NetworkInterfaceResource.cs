@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkInterface()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceGet.json
             // this example is just showing the usage of "NetworkInterfaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteNetworkInterface()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceDelete.json
             // this example is just showing the usage of "NetworkInterfaces_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            await networkInterface.DeleteAsync(WaitUntil.Completed);
+            await networkInterface.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateNetworkInterfaceTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceUpdateTags.json
             // this example is just showing the usage of "NetworkInterfaces_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEffectiveRouteTable_ShowNetworkInterfaceEffectiveRouteTables()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceEffectiveRouteTableList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceEffectiveRouteTableList.json
             // this example is just showing the usage of "NetworkInterfaces_GetEffectiveRouteTable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ArmOperation<EffectiveRouteListResult> lro = await networkInterface.GetEffectiveRouteTableAsync(WaitUntil.Completed);
+            ArmOperation<EffectiveRouteListResult> lro = await networkInterface.GetEffectiveRouteTableAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             EffectiveRouteListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetEffectiveNetworkSecurityGroups_ListNetworkInterfaceEffectiveNetworkSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceEffectiveNSGList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceEffectiveNSGList.json
             // this example is just showing the usage of "NetworkInterfaces_ListEffectiveNetworkSecurityGroups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ArmOperation<EffectiveNetworkSecurityGroupListResult> lro = await networkInterface.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed);
+            ArmOperation<EffectiveNetworkSecurityGroupListResult> lro = await networkInterface.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             EffectiveNetworkSecurityGroupListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkInterfaceLoadBalancers_NetworkInterfaceLoadBalancerList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceLoadBalancerList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceLoadBalancerList.json
             // this example is just showing the usage of "NetworkInterfaceLoadBalancers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LoadBalancerResource item in networkInterface.GetNetworkInterfaceLoadBalancersAsync())
+            await foreach (LoadBalancerResource item in networkInterface.GetNetworkInterfaceLoadBalancersAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

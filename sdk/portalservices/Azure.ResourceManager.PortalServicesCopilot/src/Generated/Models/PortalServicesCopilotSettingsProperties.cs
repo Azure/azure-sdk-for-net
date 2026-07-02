@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsProperties"/>. </summary>
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
-        public PortalServicesCopilotSettingsProperties(bool accessControlEnabled)
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        public PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled)
         {
-            AccessControlEnabled = accessControlEnabled;
+            IsAccessControlEnabled = isAccessControlEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsProperties"/>. </summary>
-        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalServicesCopilotSettingsProperties(bool accessControlEnabled, PortalServicesResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled, PortalServicesResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AccessControlEnabled = accessControlEnabled;
+            IsAccessControlEnabled = isAccessControlEnabled;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
-        public bool AccessControlEnabled { get; set; }
+        public bool IsAccessControlEnabled { get; set; }
 
         /// <summary> The status of the last provisioning operation performed on the resource. </summary>
         public PortalServicesResourceProvisioningState? ProvisioningState { get; }

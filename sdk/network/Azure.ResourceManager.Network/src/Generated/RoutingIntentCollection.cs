@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,72 +26,83 @@ namespace Azure.ResourceManager.Network
     public partial class RoutingIntentCollection : ArmCollection, IEnumerable<RoutingIntentResource>, IAsyncEnumerable<RoutingIntentResource>
     {
         private readonly ClientDiagnostics _routingIntentClientDiagnostics;
-        private readonly RoutingIntentRestOperations _routingIntentRestClient;
+        private readonly RoutingIntent _routingIntentRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingIntentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RoutingIntentCollection for mocking. </summary>
         protected RoutingIntentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoutingIntentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIntentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RoutingIntentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routingIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RoutingIntentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RoutingIntentResource.ResourceType, out string routingIntentApiVersion);
-            _routingIntentRestClient = new RoutingIntentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routingIntentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _routingIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RoutingIntentResource.ResourceType.Namespace, Diagnostics);
+            _routingIntentRestClient = new RoutingIntent(_routingIntentClientDiagnostics, Pipeline, Endpoint, routingIntentApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != VirtualHubResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualHubResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualHubResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a RoutingIntent resource if it doesn't exist else updates the existing RoutingIntent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="routingIntentName"> The name of the per VirtualHub singleton Routing Intent resource. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to create or update RoutingIntent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<RoutingIntentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routingIntentName, RoutingIntentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _routingIntentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<RoutingIntentResource>(new RoutingIntentOperationSource(Client), _routingIntentClientDiagnostics, Pipeline, _routingIntentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, RoutingIntentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<RoutingIntentResource> operation = new NetworkArmOperation<RoutingIntentResource>(
+                    new RoutingIntentResourceOperationSource(Client),
+                    _routingIntentClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +116,51 @@ namespace Azure.ResourceManager.Network
         /// Creates a RoutingIntent resource if it doesn't exist else updates the existing RoutingIntent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="routingIntentName"> The name of the per VirtualHub singleton Routing Intent resource. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to create or update RoutingIntent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<RoutingIntentResource> CreateOrUpdate(WaitUntil waitUntil, string routingIntentName, RoutingIntentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _routingIntentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, data, cancellationToken);
-                var operation = new NetworkArmOperation<RoutingIntentResource>(new RoutingIntentOperationSource(Client), _routingIntentClientDiagnostics, Pipeline, _routingIntentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, RoutingIntentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<RoutingIntentResource> operation = new NetworkArmOperation<RoutingIntentResource>(
+                    new RoutingIntentResourceOperationSource(Client),
+                    _routingIntentClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the details of a RoutingIntent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RoutingIntentResource>> GetAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Get");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _routingIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoutingIntentData> response = Response.FromValue(RoutingIntentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the details of a RoutingIntent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RoutingIntentResource> Get(string routingIntentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Get");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Get");
             scope.Start();
             try
             {
-                var response = _routingIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoutingIntentData> response = Response.FromValue(RoutingIntentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the details of all RoutingIntent child resources of the VirtualHub.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoutingIntentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _routingIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _routingIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoutingIntentResource(Client, RoutingIntentData.DeserializeRoutingIntentData(e)), _routingIntentClientDiagnostics, Pipeline, "RoutingIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RoutingIntentData, RoutingIntentResource>(new RoutingIntentGetAllAsyncCollectionResultOfT(
+                _routingIntentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RoutingIntentCollection.GetAll"), data => new RoutingIntentResource(Client, data));
         }
 
         /// <summary>
         /// Retrieves the details of all RoutingIntent child resources of the VirtualHub.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoutingIntentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _routingIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _routingIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoutingIntentResource(Client, RoutingIntentData.DeserializeRoutingIntentData(e)), _routingIntentClientDiagnostics, Pipeline, "RoutingIntentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RoutingIntentData, RoutingIntentResource>(new RoutingIntentGetAllCollectionResultOfT(
+                _routingIntentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RoutingIntentCollection.GetAll"), data => new RoutingIntentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Exists");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _routingIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RoutingIntentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoutingIntentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoutingIntentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string routingIntentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Exists");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _routingIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RoutingIntentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoutingIntentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoutingIntentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<RoutingIntentResource>> GetIfExistsAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _routingIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RoutingIntentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoutingIntentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoutingIntentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RoutingIntentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoutingIntent_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoutingIntents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoutingIntentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="routingIntentName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<RoutingIntentResource> GetIfExists(string routingIntentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
-            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
+            using DiagnosticScope scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _routingIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _routingIntentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routingIntentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RoutingIntentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoutingIntentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoutingIntentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RoutingIntentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RoutingIntentResource> IAsyncEnumerable<RoutingIntentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

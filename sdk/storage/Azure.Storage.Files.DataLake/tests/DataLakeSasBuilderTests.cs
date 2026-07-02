@@ -208,9 +208,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -251,9 +251,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -292,9 +292,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -340,9 +340,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -382,9 +382,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeDirectoryClient directory = test.FileSystem.GetRootDirectoryClient();
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             // Give UnknownGuid rights
             IList<PathAccessControlItem> accessControlList = new List<PathAccessControlItem>()
@@ -433,9 +433,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -475,9 +475,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -510,9 +510,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
             DataLakeFileClient file = await directory.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -597,9 +597,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeDirectoryClient subdirectory3 = await subdirectory2.CreateSubDirectoryAsync(GetNewDirectoryName());
             DataLakeFileClient file = await subdirectory3.CreateFileAsync(GetNewFileName());
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -641,9 +641,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             DataLakeSasBuilder dataLakeSasBuilder = new DataLakeSasBuilder
             {
@@ -686,9 +686,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             // Make a SAS with the DirectoryDepth/sdd
             DataLakeSasBuilder dataLakeSasBuilder = new(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1))
@@ -732,9 +732,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
 
+            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             // Make a SAS with the DirectoryDepth/sdd
             DataLakeSasBuilder dataLakeSasBuilder = new(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1))
@@ -776,6 +776,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasBuilder dataLakeSasBuilder = BuildDataLakeSasBuilder(
                 includePath: true,
                 includeDelegatedObjectId: true,
+                includeRequestHeaders: true,
+                includeRequestQueryParameters: true,
                 fileSystemName: containerName,
                 path: fileName,
                 constants);
@@ -801,16 +803,94 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(_sasPermissions.ToPermissionsString(), sasQueryParameters.Permissions);
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
+            Assert.AreEqual(SasExtensions.ConvertRequestDictToKeyList(constants.Sas.RequestHeaders), sasQueryParameters.RequestHeaders);
+            Assert.AreEqual(SasExtensions.ConvertRequestDictToKeyList(constants.Sas.RequestQueryParameters), sasQueryParameters.RequestQueryParameters);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_Path_PreservesIdentityBindingAndRequestPins()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            Uri pathUri = new Uri("https://" + constants.Sas.Account + ".dfs.core.windows.net/" + fileSystemName + "/" + fileName);
+            DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(pathUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            DataLakeSasBuilder builder = BuildDataLakeSasBuilder(
+                includePath: true,
+                includeDelegatedObjectId: true,        // sduoid
+                includeRequestHeaders: true,           // srh
+                includeRequestQueryParameters: true,   // srq
+                fileSystemName: fileSystemName,
+                path: fileName,
+                constants);
+
+            // Act
+            string viaClient = pathClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, pathClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaDirect);
+
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaClient);
+
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_FileSystem_PreservesIdentityBindingAndRequestPins()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string fileSystemName = GetNewFileSystemName();
+            Uri fileSystemUri = new Uri("https://" + constants.Sas.Account + ".dfs.core.windows.net/" + fileSystemName);
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(fileSystemUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            DataLakeSasBuilder builder = BuildDataLakeSasBuilder(
+                includePath: false,
+                includeDelegatedObjectId: true,        // sduoid
+                includeRequestHeaders: true,           // srh
+                includeRequestQueryParameters: true,   // srq
+                fileSystemName: fileSystemName,
+                path: null,
+                constants);
+
+            // Act
+            string viaClient = fileSystemClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, fileSystemClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaDirect);
+
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaClient);
+
+            Assert.AreEqual(viaDirect, viaClient);
         }
 
         private DataLakeSasBuilder BuildDataLakeSasBuilder(
             bool includePath,
             bool includeDelegatedObjectId,
+            bool includeRequestHeaders,
+            bool includeRequestQueryParameters,
             string fileSystemName,
             string path,
             TestConstants constants)
@@ -836,6 +916,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             if (includeDelegatedObjectId)
             {
                 builder.DelegatedUserObjectId = constants.Sas.DelegatedObjectId;
+            }
+            if (includeRequestHeaders)
+            {
+                builder.RequestHeaders = constants.Sas.RequestHeaders;
+            }
+            if (includeRequestQueryParameters)
+            {
+                builder.RequestQueryParameters = constants.Sas.RequestQueryParameters;
             }
 
             builder.SetPermissions(_sasPermissions);
@@ -872,7 +960,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 null,
                 null,
                 null,
-                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                constants.Sas.KeyDelegatedTenantId,
                 constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
@@ -880,6 +968,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 resource,
                 null,
                 constants.Sas.EncryptionScope,
+                SasExtensions.FormatRequestHeadersForSasSigning(constants.Sas.RequestHeaders),
+                SasExtensions.FormatRequestQueryParametersForSasSigning(constants.Sas.RequestQueryParameters),
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
@@ -904,6 +994,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 SignedExpiresOn = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
                 SignedVersion = constants.Sas.KeyVersion,
+                SignedDelegatedUserTenantId = constants.Sas.KeyDelegatedTenantId,
                 Value = constants.Sas.KeyValue
             };
     }

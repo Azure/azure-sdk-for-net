@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public readonly partial struct SecurityDomainActivationState : IEquatable<SecurityDomainActivationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SecurityDomainActivationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SecurityDomainActivationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotDefinedValue = "NotDefined";
         private const string NotActivatedValue = "NotActivated";
         private const string ActiveValue = "Active";
         private const string FailedValue = "Failed";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> NotDefined. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityDomainActivationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SecurityDomainActivationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotDefined. </summary>
         public static SecurityDomainActivationState NotDefined { get; } = new SecurityDomainActivationState(NotDefinedValue);
-        /// <summary> NotActivated. </summary>
+
+        /// <summary> Gets the NotActivated. </summary>
         public static SecurityDomainActivationState NotActivated { get; } = new SecurityDomainActivationState(NotActivatedValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static SecurityDomainActivationState Active { get; } = new SecurityDomainActivationState(ActiveValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static SecurityDomainActivationState Failed { get; } = new SecurityDomainActivationState(FailedValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static SecurityDomainActivationState Unknown { get; } = new SecurityDomainActivationState(UnknownValue);
+
         /// <summary> Determines if two <see cref="SecurityDomainActivationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityDomainActivationState left, SecurityDomainActivationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityDomainActivationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityDomainActivationState left, SecurityDomainActivationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityDomainActivationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityDomainActivationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityDomainActivationState(string value) => new SecurityDomainActivationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityDomainActivationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityDomainActivationState?(string value) => value == null ? null : new SecurityDomainActivationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityDomainActivationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityDomainActivationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The NfsFileType. </summary>
+    /// <summary> The NFS file type. </summary>
     public readonly partial struct NfsFileType : IEquatable<NfsFileType>
     {
         private readonly string _value;
+        /// <summary> Regular. </summary>
+        private const string RegularValue = "Regular";
+        /// <summary> Directory. </summary>
+        private const string DirectoryValue = "Directory";
+        /// <summary> SymLink. </summary>
+        private const string SymLinkValue = "SymLink";
 
         /// <summary> Initializes a new instance of <see cref="NfsFileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NfsFileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegularValue = "Regular";
-        private const string DirectoryValue = "Directory";
-        private const string SymLinkValue = "SymLink";
+            _value = value;
+        }
 
         /// <summary> Regular. </summary>
         public static NfsFileType Regular { get; } = new NfsFileType(RegularValue);
+
         /// <summary> Directory. </summary>
         public static NfsFileType Directory { get; } = new NfsFileType(DirectoryValue);
+
         /// <summary> SymLink. </summary>
         public static NfsFileType SymLink { get; } = new NfsFileType(SymLinkValue);
+
         /// <summary> Determines if two <see cref="NfsFileType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NfsFileType left, NfsFileType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NfsFileType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NfsFileType left, NfsFileType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NfsFileType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NfsFileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NfsFileType(string value) => new NfsFileType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NfsFileType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NfsFileType?(string value) => value == null ? null : new NfsFileType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NfsFileType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NfsFileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

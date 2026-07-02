@@ -1,0 +1,8 @@
+{
+  "apiVersions": {
+    "ResourceChanges": "2020-09-01-preview",
+    "ResourceGraphApi": "2024-04-01",
+    "ResourceHistory": "2021-06-01-preview",
+    "GraphQueryApi": "2024-04-01"
+  }
+}

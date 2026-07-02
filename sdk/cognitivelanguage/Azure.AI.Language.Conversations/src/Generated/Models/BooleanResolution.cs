@@ -15,24 +15,18 @@ namespace Azure.AI.Language.Conversations.Models
     {
         /// <summary> Initializes a new instance of <see cref="BooleanResolution"/>. </summary>
         /// <param name="value"> A resolution for boolean expressions. </param>
-        internal BooleanResolution(bool value)
+        internal BooleanResolution(bool value) : base(ResolutionKind.BooleanResolution)
         {
-            ResolutionKind = ResolutionKind.BooleanResolution;
             Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="BooleanResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> A resolution for boolean expressions. </param>
-        internal BooleanResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, bool value) : base(resolutionKind, serializedAdditionalRawData)
+        internal BooleanResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool value) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BooleanResolution"/> for deserialization. </summary>
-        internal BooleanResolution()
-        {
         }
 
         /// <summary> A resolution for boolean expressions. </summary>

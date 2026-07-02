@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetApplicationGatewayPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayPrivateEndpointConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayPrivateEndpointConnectionGet.json
             // this example is just showing the usage of "ApplicationGatewayPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteApplicationGatewayPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayPrivateEndpointConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayPrivateEndpointConnectionDelete.json
             // this example is just showing the usage of "ApplicationGatewayPrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayPrivateEndpointConnectionResource applicationGatewayPrivateEndpointConnection = client.GetApplicationGatewayPrivateEndpointConnectionResource(applicationGatewayPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await applicationGatewayPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await applicationGatewayPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateApplicationGatewayPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ApplicationGatewayPrivateEndpointConnectionUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayPrivateEndpointConnectionUpdate.json
             // this example is just showing the usage of "ApplicationGatewayPrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,9 +103,8 @@ namespace Azure.ResourceManager.Network.Samples
                     Status = "Approved",
                     Description = "approved it for some reason.",
                 },
-                Name = "connection1",
             };
-            ArmOperation<ApplicationGatewayPrivateEndpointConnectionResource> lro = await applicationGatewayPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ApplicationGatewayPrivateEndpointConnectionResource> lro = await applicationGatewayPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ApplicationGatewayPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

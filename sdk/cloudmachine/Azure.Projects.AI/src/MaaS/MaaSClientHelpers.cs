@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using OpenAI;
-using System;
-using System.ClientModel.Primitives;
 
 namespace Azure.AI.Models
 {

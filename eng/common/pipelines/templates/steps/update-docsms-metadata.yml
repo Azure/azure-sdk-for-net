@@ -29,6 +29,12 @@ parameters:
   - name: PackageSourceOverride
     type: string
     default: ''
+  - name: NpmConfigUserConfig
+    type: string
+    default: ''
+  - name: NpmConfigRegistry
+    type: string
+    default: ''
 steps:
   - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
     - pwsh: |
@@ -91,7 +97,17 @@ steps:
           -RepoId '${{ parameters.RepoId }}' `
           -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
       displayName: Apply Documentation Updates
+      env:
+        ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
+          npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}
+        ${{ if ne(parameters.NpmConfigRegistry, '') }}:
+          npm_config_registry: ${{ parameters.NpmConfigRegistry }}
 
+    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+      parameters:
+        TokenOwners:
+          - ${{ parameters.TargetDocRepoOwner }}
+        ScriptDirectory: ${{ parameters.ScriptDirectory }}
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
       parameters:
         BaseRepoBranch: $(TargetBranchName)
@@ -101,3 +117,5 @@ steps:
         TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         WorkingDirectory: $(DocRepoLocation)
         ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+        AuthToken: $(GH_TOKEN)
+

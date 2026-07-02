@@ -15,508 +15,513 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HDInsightOnDemandLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
-        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </param>
-        /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
-        /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
-        /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLiveExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup)
-        {
-            Argument.AssertNotNull(clusterSize, nameof(clusterSize));
-            Argument.AssertNotNull(timeToLiveExpression, nameof(timeToLiveExpression));
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-            Argument.AssertNotNull(hostSubscriptionId, nameof(hostSubscriptionId));
-            Argument.AssertNotNull(tenant, nameof(tenant));
-            Argument.AssertNotNull(clusterResourceGroup, nameof(clusterResourceGroup));
-
-            ClusterSize = clusterSize;
-            TimeToLiveExpression = timeToLiveExpression;
-            Version = version;
-            LinkedServiceName = linkedServiceName;
-            HostSubscriptionId = hostSubscriptionId;
-            Tenant = tenant;
-            ClusterResourceGroup = clusterResourceGroup;
-            AdditionalLinkedServiceNames = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            ScriptActions = new ChangeTrackingList<DataFactoryScriptAction>();
-            LinkedServiceType = "HDInsightOnDemand";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </param>
-        /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
-        /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
-        /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key for the service principal id. </param>
-        /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterNamePrefix"> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterUserName"> The username to access the cluster. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterPassword"> The password to access the cluster. </param>
-        /// <param name="clusterSshUserName"> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterSshPassword"> The password to SSH remotely connect cluster’s node (for Linux). </param>
-        /// <param name="additionalLinkedServiceNames"> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </param>
-        /// <param name="hcatalogLinkedServiceName"> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </param>
-        /// <param name="clusterType"> The cluster type. Type: string (or Expression with resultType string). </param>
-        /// <param name="sparkVersion"> The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string). </param>
-        /// <param name="coreConfiguration"> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </param>
-        /// <param name="hBaseConfiguration"> Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster. </param>
-        /// <param name="hdfsConfiguration"> Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster. </param>
-        /// <param name="hiveConfiguration"> Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster. </param>
-        /// <param name="mapReduceConfiguration"> Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster. </param>
-        /// <param name="oozieConfiguration"> Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster. </param>
-        /// <param name="stormConfiguration"> Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster. </param>
-        /// <param name="yarnConfiguration"> Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="headNodeSize"> Specifies the size of the head node for the HDInsight cluster. </param>
-        /// <param name="dataNodeSize"> Specifies the size of the data node for the HDInsight cluster. </param>
-        /// <param name="zookeeperNodeSize"> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </param>
-        /// <param name="scriptActions"> Custom script actions to run on HDI ondemand cluster once it's up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </param>
-        /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
-        /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup, DataFactoryElement<string> clusterNamePrefix, DataFactoryElement<string> clusterUserName, DataFactorySecret clusterPassword, DataFactoryElement<string> clusterSshUserName, DataFactorySecret clusterSshPassword, IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, DataFactoryElement<string> clusterType, DataFactoryElement<string> sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, string encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<DataFactoryScriptAction> scriptActions, DataFactoryElement<string> virtualNetworkId, DataFactoryElement<string> subnetName, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> HDInsight ondemand linked service properties. </param>
+        /// <param name="linkedServiceName"></param>
+        /// <param name="servicePrincipalKey"></param>
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, HDInsightOnDemandLinkedServiceTypeProperties typeProperties, DataFactoryLinkedServiceReference linkedServiceName, DataFactorySecret servicePrincipalKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ClusterSize = clusterSize;
-            TimeToLiveExpression = timeToLiveExpression;
-            Version = version;
+            TypeProperties = typeProperties;
             LinkedServiceName = linkedServiceName;
-            HostSubscriptionId = hostSubscriptionId;
-            ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            ClusterResourceGroup = clusterResourceGroup;
-            ClusterNamePrefix = clusterNamePrefix;
-            ClusterUserName = clusterUserName;
-            ClusterPassword = clusterPassword;
-            ClusterSshUserName = clusterSshUserName;
-            ClusterSshPassword = clusterSshPassword;
-            AdditionalLinkedServiceNames = additionalLinkedServiceNames;
-            HcatalogLinkedServiceName = hcatalogLinkedServiceName;
-            ClusterType = clusterType;
-            SparkVersion = sparkVersion;
-            CoreConfiguration = coreConfiguration;
-            HBaseConfiguration = hBaseConfiguration;
-            HdfsConfiguration = hdfsConfiguration;
-            HiveConfiguration = hiveConfiguration;
-            MapReduceConfiguration = mapReduceConfiguration;
-            OozieConfiguration = oozieConfiguration;
-            StormConfiguration = stormConfiguration;
-            YarnConfiguration = yarnConfiguration;
-            EncryptedCredential = encryptedCredential;
-            HeadNodeSize = headNodeSize;
-            DataNodeSize = dataNodeSize;
-            ZookeeperNodeSize = zookeeperNodeSize;
-            ScriptActions = scriptActions;
-            VirtualNetworkId = virtualNetworkId;
-            SubnetName = subnetName;
-            Credential = credential;
-            LinkedServiceType = linkedServiceType ?? "HDInsightOnDemand";
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/> for deserialization. </summary>
-        internal HDInsightOnDemandLinkedService()
-        {
-        }
+        /// <summary> HDInsight ondemand linked service properties. </summary>
+        internal HDInsightOnDemandLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </summary>
-        public DataFactoryElement<int> ClusterSize { get; set; }
+        public DataFactoryElement<int> ClusterSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterSize = value;
+            }
+        }
+
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TimeToLiveExpression { get; set; }
+        public DataFactoryElement<string> TimeToLiveExpression
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TimeToLiveExpression;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.TimeToLiveExpression = value;
+            }
+        }
+
         /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Version { get; set; }
-        /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public DataFactoryElement<string> Version
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Version;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.Version = value;
+            }
+        }
+
         /// <summary> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> HostSubscriptionId { get; set; }
+        public DataFactoryElement<string> HostSubscriptionId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HostSubscriptionId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.HostSubscriptionId = value;
+            }
+        }
+
         /// <summary> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The key for the service principal id. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterResourceGroup { get; set; }
+        public DataFactoryElement<string> ClusterResourceGroup
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterResourceGroup;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterResourceGroup = value;
+            }
+        }
+
+        /// <summary> HDInsight On-demand cluster resource group authentication type. </summary>
+        public HDInsightOnDemandClusterResourceGroupAuthenticationType? ClusterResourceGroupAuthType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterResourceGroupAuthType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterResourceGroupAuthType = value;
+            }
+        }
+
         /// <summary> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterNamePrefix { get; set; }
+        public DataFactoryElement<string> ClusterNamePrefix
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterNamePrefix;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterNamePrefix = value;
+            }
+        }
+
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterUserName { get; set; }
-        /// <summary> The password to access the cluster. </summary>
-        public DataFactorySecret ClusterPassword { get; set; }
+        public DataFactoryElement<string> ClusterUserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterUserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterUserName = value;
+            }
+        }
+
         /// <summary> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterSshUserName { get; set; }
-        /// <summary> The password to SSH remotely connect cluster’s node (for Linux). </summary>
-        public DataFactorySecret ClusterSshPassword { get; set; }
-        /// <summary> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </summary>
-        public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; }
-        /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>
-        public DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
+        public DataFactoryElement<string> ClusterSshUserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterSshUserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterSshUserName = value;
+            }
+        }
+
         /// <summary> The cluster type. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterType { get; set; }
+        public DataFactoryElement<string> ClusterType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClusterType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClusterType = value;
+            }
+        }
+
         /// <summary> The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SparkVersion { get; set; }
-        /// <summary>
-        /// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData CoreConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData HBaseConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData HdfsConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData HiveConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData MapReduceConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData OozieConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData StormConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData YarnConfiguration { get; set; }
+        public DataFactoryElement<string> SparkVersion
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SparkVersion;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.SparkVersion = value;
+            }
+        }
+
+        /// <summary> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </summary>
+        public BinaryData CoreConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CoreConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.CoreConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData HBaseConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HBaseConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.HBaseConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData HdfsConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HdfsConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.HdfsConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData HiveConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HiveConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.HiveConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData MapReduceConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MapReduceConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.MapReduceConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData OozieConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.OozieConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.OozieConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData StormConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.StormConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.StormConfiguration = value;
+            }
+        }
+
+        /// <summary> Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster. </summary>
+        public BinaryData YarnConfiguration
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.YarnConfiguration;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.YarnConfiguration = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
-        /// <summary>
-        /// Specifies the size of the head node for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData HeadNodeSize { get; set; }
-        /// <summary>
-        /// Specifies the size of the data node for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData DataNodeSize { get; set; }
-        /// <summary>
-        /// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ZookeeperNodeSize { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
+        /// <summary> Specifies the size of the head node for the HDInsight cluster. </summary>
+        public BinaryData HeadNodeSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HeadNodeSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.HeadNodeSize = value;
+            }
+        }
+
+        /// <summary> Specifies the size of the data node for the HDInsight cluster. </summary>
+        public BinaryData DataNodeSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DataNodeSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.DataNodeSize = value;
+            }
+        }
+
+        /// <summary> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </summary>
+        public BinaryData ZookeeperNodeSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ZookeeperNodeSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.ZookeeperNodeSize = value;
+            }
+        }
+
         /// <summary> Custom script actions to run on HDI ondemand cluster once it's up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
-        public IList<DataFactoryScriptAction> ScriptActions { get; }
+        public IList<DataFactoryScriptAction> ScriptActions
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                return TypeProperties.ScriptActions;
+            }
+        }
+
         /// <summary> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> VirtualNetworkId { get; set; }
+        public DataFactoryElement<string> VirtualNetworkId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.VirtualNetworkId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.VirtualNetworkId = value;
+            }
+        }
+
         /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SubnetName { get; set; }
+        public DataFactoryElement<string> SubnetName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SubnetName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.SubnetName = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
     }
 }

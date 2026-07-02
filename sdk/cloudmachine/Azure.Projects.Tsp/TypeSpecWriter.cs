@@ -28,7 +28,8 @@ public static class TypeSpecWriter
     public static void WriteServer(Stream output, Type service)
     {
         string name = service.Name;
-        if (name.StartsWith("I")) name = name.Substring(1);
+        if (name.StartsWith("I"))
+            name = name.Substring(1);
 
         StreamWriter writer = new(output);
         writer.WriteLine("import \"@typespec/http\";");
@@ -120,7 +121,8 @@ public static class TypeSpecWriter
         string httpVerb = ReadHttpVerb(method);
 
         var methodName = method.Name;
-        if (methodName.EndsWith("Async")) methodName = methodName.Substring(0, methodName.Length - "Async".Length);
+        if (methodName.EndsWith("Async"))
+            methodName = methodName.Substring(0, methodName.Length - "Async".Length);
         writer.Write($"{httpVerb} @route(\"{ToCamel(methodName)}\") {methodName}(");
 
         bool first = true;
@@ -155,7 +157,8 @@ public static class TypeSpecWriter
         writer.WriteLine($"    @statusCode statusCode: 200;");
 
         Type returnType = method.ReturnType;
-        if (returnType == typeof(Task)) returnType = typeof(void);
+        if (returnType == typeof(Task))
+            returnType = typeof(void);
         else if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
             returnType = returnType.GetGenericArguments()[0];
 

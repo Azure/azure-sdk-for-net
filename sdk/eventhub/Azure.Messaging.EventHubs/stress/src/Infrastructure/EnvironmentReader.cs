@@ -35,7 +35,7 @@ internal static class EnvironmentReader
 
         if (!File.Exists(filePath))
         {
-            throw new FileNotFoundException($"The environment file was not found.in '{ filePath }'");
+            throw new FileNotFoundException($"The environment file was not found.in '{filePath}'");
         }
 
         var environment = new Dictionary<string, string>();
@@ -57,7 +57,7 @@ internal static class EnvironmentReader
 
             if (separator == -1)
             {
-                throw new FormatException($"The environment file is malformed at line { count }: '{ line.ToString() }'");
+                throw new FormatException($"The environment file is malformed at line {count}: '{line.ToString()}'");
             }
 
             try

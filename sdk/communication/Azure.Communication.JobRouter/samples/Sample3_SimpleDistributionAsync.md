@@ -103,7 +103,8 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     options: new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerExpiresAfter: TimeSpan.FromMinutes(5),
-        mode: new RoundRobinMode()) { Name = "Simple round robin" });
+        mode: new RoundRobinMode())
+    { Name = "Simple round robin" });
 
 // Create queue
 string queueId = "queue-id-1";
@@ -124,7 +125,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
-        Channels = { new RouterChannel("general",5), },
+        Channels = { new RouterChannel("general", 5), },
         Queues = { queueId },
         AvailableForOffers = true, // register worker upon creation
     });
@@ -176,7 +177,8 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     options: new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerExpiresAfter: TimeSpan.FromMinutes(5),
-        mode: new BestWorkerMode()) { Name = "Default best worker mode" });
+        mode: new BestWorkerMode())
+    { Name = "Default best worker mode" });
 
 // Create queue
 string queueId = "queue-id-1";
@@ -192,7 +194,7 @@ string worker3Id = "worker-id-3";
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
     {
-        Channels = { new RouterChannel("general",10), },
+        Channels = { new RouterChannel("general", 10), },
         Queues = { queueId },
         Labels =
         {
@@ -208,7 +210,7 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
-        Channels = { new RouterChannel("general",10), },
+        Channels = { new RouterChannel("general", 10), },
         Queues = { queueId },
         Labels =
         {

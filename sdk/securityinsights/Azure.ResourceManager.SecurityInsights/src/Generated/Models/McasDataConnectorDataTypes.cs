@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -19,27 +20,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts) : base(alerts)
         {
             Argument.AssertNotNull(alerts, nameof(alerts));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
         /// <param name="alerts"> Alerts data type connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="discoveryLogs"> Discovery log data type connection. </param>
-        internal McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts, IDictionary<string, BinaryData> serializedAdditionalRawData, DataConnectorDataTypeCommon discoveryLogs) : base(alerts, serializedAdditionalRawData)
+        internal McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorDataTypeCommon discoveryLogs) : base(alerts, additionalBinaryDataProperties)
         {
             DiscoveryLogs = discoveryLogs;
         }
 
         /// <summary> Discovery log data type connection. </summary>
+        [WirePath("discoveryLogs")]
         internal DataConnectorDataTypeCommon DiscoveryLogs { get; set; }
+
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         [WirePath("discoveryLogs.state")]
         public SecurityInsightsDataTypeConnectionState? DiscoveryLogsState
         {
-            get => DiscoveryLogs is null ? default(SecurityInsightsDataTypeConnectionState?) : DiscoveryLogs.State;
+            get
+            {
+                return DiscoveryLogs is null ? default : DiscoveryLogs.State;
+            }
             set
             {
-                DiscoveryLogs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
+                DiscoveryLogs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : default;
             }
         }
     }

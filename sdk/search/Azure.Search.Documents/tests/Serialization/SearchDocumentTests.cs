@@ -5,8 +5,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -101,7 +104,8 @@ namespace Azure.Search.Documents.Tests
             public void Check(Func<SearchDocument, string, T> getter = null)
             {
                 SearchDocument doc = null;
-                try { doc = ToDocument(JsonValue, "Value"); }
+                try
+                { doc = ToDocument(JsonValue, "Value"); }
                 catch (Exception ex) { Assert.Fail($"Failed to parse {JsonValue}: {ex}"); }
 
                 if (CanReadDictionary)
@@ -307,7 +311,7 @@ namespace Azure.Search.Documents.Tests
             };
 
         [TestCaseSource(nameof(NullableBooleanValues))]
-        public void GetNullableBools(TestValue<bool?> test) => test.Check((d,n) => d.GetBoolean(n));
+        public void GetNullableBools(TestValue<bool?> test) => test.Check((d, n) => d.GetBoolean(n));
         private static TestValue<bool?>[] NullableBooleanValues => GetNullableValues(BooleanValues);
 
         [TestCaseSource(nameof(BooleanCollectionValues))]
@@ -350,7 +354,7 @@ namespace Azure.Search.Documents.Tests
                 TestValue<IReadOnlyList<string>>.Exact("[\"a\", \"b\", \"\"]", new string[] { "a", "b", "" }));
 
         [TestCaseSource(nameof(Int32Values))]
-        public void GetInt32s(TestValue<int> test) => test.Check((d,n) => d.GetInt32(n).Value);
+        public void GetInt32s(TestValue<int> test) => test.Check((d, n) => d.GetInt32(n).Value);
         private static TestValue<int>[] Int32Values =>
             new[]
             {
@@ -773,6 +777,48 @@ namespace Azure.Search.Documents.Tests
             // Go just a little too far
             json = Wrap(json);
             Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<SearchDocument>(json));
+        }
+
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/40768
+        // A SearchDocument that leads with OData (@search.*) properties must be
+        // deserializable on the async path even when the converter is invoked
+        // over a non-final block (isFinalBlock == false). Previously the OData
+        // properties were skipped with Utf8JsonReader.Skip(), which throws
+        // "Cannot skip tokens on partial JSON" in that situation.
+        [Test]
+        public async Task DeserializeAsyncWithODataPropertiesOnPartialBlock()
+        {
+            // Build a document that begins with @search.* OData properties
+            // (the ones the SDK skips) followed by user fields, large enough
+            // that the async JSON reader processes it across buffer chunks.
+            var sb = new StringBuilder();
+            sb.Append('{');
+            sb.Append("\"@search.score\":2.5,");
+            sb.Append("\"@search.rerankerScore\":3.1,");
+            sb.Append("\"@search.captions\":[{\"text\":\"excerpt\",\"highlights\":\"<em>excerpt</em>\"}],");
+            sb.Append("\"id\":\"doc-1\",\"title\":\"artifact\",\"content\":\"")
+              .Append(new string('a', 20_000)).Append('"');
+            sb.Append('}');
+            byte[] document = Encoding.UTF8.GetBytes(sb.ToString());
+
+            // Append trailing whitespace so the reader is on a non-final block
+            // when it finishes the object - the production condition where the
+            // document is not the last bytes the reader sees.
+            byte[] documentThenMore = document.Concat(Encoding.UTF8.GetBytes(new string(' ', 64_000))).ToArray();
+
+            SearchDocument doc;
+            using (var stream = new MemoryStream(documentThenMore))
+            {
+                doc = await JsonSerializer.DeserializeAsync<SearchDocument>(
+                    stream,
+                    JsonSerialization.SerializerOptions);
+            }
+
+            Assert.IsNotNull(doc);
+            Assert.AreEqual("doc-1", doc["id"]);
+            Assert.AreEqual("artifact", doc["title"]);
+            // OData properties are not surfaced on the document.
+            Assert.IsFalse(doc.ContainsKey("@search.score"));
         }
     }
 }

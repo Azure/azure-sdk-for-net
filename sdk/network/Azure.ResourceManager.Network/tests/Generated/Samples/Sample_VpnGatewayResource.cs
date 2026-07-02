@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VpnGatewayDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayDelete.json
             // this example is just showing the usage of "VpnGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayResource vpnGateway = client.GetVpnGatewayResource(vpnGatewayResourceId);
 
             // invoke the operation
-            await vpnGateway.DeleteAsync(WaitUntil.Completed);
+            await vpnGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VpnGatewayUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayUpdateTags.json
             // this example is just showing the usage of "VpnGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<VpnGatewayResource> lro = await vpnGateway.UpdateAsync(WaitUntil.Completed, vpnGatewayParameters);
+            ArmOperation<VpnGatewayResource> lro = await vpnGateway.UpdateAsync(WaitUntil.Completed, vpnGatewayParameters, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reset_ResetVpnGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayReset.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayReset.json
             // this example is just showing the usage of "VpnGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayResource vpnGateway = client.GetVpnGatewayResource(vpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<VpnGatewayResource> lro = await vpnGateway.ResetAsync(WaitUntil.Completed);
+            ArmOperation<VpnGatewayResource> lro = await vpnGateway.ResetAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVpnGatewayWithFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayStartPacketCaptureFilterData.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayStartPacketCaptureFilterData.json
             // this example is just showing the usage of "VpnGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVpnGatewayWithoutFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayStartPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayStartPacketCapture.json
             // this example is just showing the usage of "VpnGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnGatewayResource vpnGateway = client.GetVpnGatewayResource(vpnGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await vpnGateway.StartPacketCaptureAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StopPacketCapture_StopPacketCaptureOnVpnGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayStopPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayStopPacketCapture.json
             // this example is just showing the usage of "VpnGateways_StopPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
-            ArmOperation<string> lro = await vpnGateway.StopPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnGateway.StopPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

@@ -5,18 +5,20 @@ pr:
     - feature/*
     - hotfix/*
     - release/*
-    - pipelinev3*
+    - sdkauto/*
   paths:
     include:
     - "*"
-
     exclude:
-    - eng/packages/http-client-csharp/
+    - .github/skills/azsdk-common-*/**
 
 parameters:
   - name: Service
     type: string
     default: auto
+  - name: SkipPrValidation
+    type: boolean
+    default: false
   # Switch to canary to test canary 1es branch. 1es template validation will set this parameter
   # to canary on run.
   - name: oneESTemplateTag
@@ -30,12 +32,12 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
+    SkipPrValidation: ${{ parameters.SkipPrValidation }}
     # Short term hack to get 1es canary validation working until we can fix manual runs with 'auto'
     ${{ if and(eq(parameters.oneESTemplateTag, 'canary'), eq(parameters.Service, 'auto')) }}:
       ServiceDirectory: template
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
-    CheckAOTCompat: true
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/

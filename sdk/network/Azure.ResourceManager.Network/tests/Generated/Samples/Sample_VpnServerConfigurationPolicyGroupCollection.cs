@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigurationPolicyGroupPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupPut.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,17 +47,15 @@ namespace Azure.ResourceManager.Network.Samples
                 Priority = 0,
                 PolicyMembers = {new VpnServerConfigurationPolicyGroupMember
 {
-Name = "policy1",
 AttributeType = VpnPolicyMemberAttributeType.RadiusAzureGroupId,
 AttributeValue = "6ad1bd08",
 }, new VpnServerConfigurationPolicyGroupMember
 {
-Name = "policy2",
 AttributeType = VpnPolicyMemberAttributeType.CertificateGroupId,
 AttributeValue = "red.com",
 }},
             };
-            ArmOperation<VpnServerConfigurationPolicyGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationPolicyGroupName, data);
+            ArmOperation<VpnServerConfigurationPolicyGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationPolicyGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnServerConfigurationPolicyGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -71,7 +69,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,7 +103,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ConfigurationPolicyGroupListByVpnServerConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupListByVpnServerConfiguration.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupListByVpnServerConfiguration.json
             // this example is just showing the usage of "configurationPolicyGroups_ListByVpnServerConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +139,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +169,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

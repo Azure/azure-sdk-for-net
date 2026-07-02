@@ -2,21 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
 using Azure;
 using Azure.AI.Translation.Text;
 using Azure.Core;
 using Azure.Core.Extensions;
-
-//TODO: there is no way to only suppress a single member of a static class so we need to have everything custom here.
-[assembly: CodeGenSuppressType("AITranslationTextClientBuilderExtensions")]
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="TextTranslationClient"/> to client builder. </summary>
+    //TODO: there is no way to only suppress a single member of a static class so we need to have everything custom here.
+    [CodeGenType("TranslationTextClientBuilderExtensions")]
     public static partial class TextTranslationClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="TextTranslationClient"/> instance. </summary>

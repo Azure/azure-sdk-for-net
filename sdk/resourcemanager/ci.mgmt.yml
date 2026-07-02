@@ -12,19 +12,6 @@ trigger:
     - common/ManagementTestShared
     - common/ManagementCoreShared
 
-pr:
-  branches:
-    include:
-      - main
-      - feature/*
-      - hotfix/*
-      - release/*
-  paths:
-    include:
-    - sdk/resourcemanager
-    - common/ManagementTestShared
-    - common/ManagementCoreShared
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

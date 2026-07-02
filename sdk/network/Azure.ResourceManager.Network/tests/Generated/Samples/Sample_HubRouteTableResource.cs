@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteTableGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubRouteTableGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/HubRouteTableGet.json
             // this example is just showing the usage of "HubRouteTables_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RouteTableDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubRouteTableDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/HubRouteTableDelete.json
             // this example is just showing the usage of "HubRouteTables_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             HubRouteTableResource hubRouteTable = client.GetHubRouteTableResource(hubRouteTableResourceId);
 
             // invoke the operation
-            await hubRouteTable.DeleteAsync(WaitUntil.Completed);
+            await hubRouteTable.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RouteTablePut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/HubRouteTablePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/HubRouteTablePut.json
             // this example is just showing the usage of "HubRouteTables_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Routes = { new HubRoute("route1", "CIDR", new string[] { "10.0.0.0/8", "20.0.0.0/8", "30.0.0.0/8" }, "ResourceId", "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azureFirewall1") },
                 Labels = { "label1", "label2" },
             };
-            ArmOperation<HubRouteTableResource> lro = await hubRouteTable.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HubRouteTableResource> lro = await hubRouteTable.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             HubRouteTableResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

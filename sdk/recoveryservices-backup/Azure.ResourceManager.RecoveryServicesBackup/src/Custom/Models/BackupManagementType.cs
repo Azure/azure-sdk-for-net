@@ -5,9 +5,9 @@
 
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    // The model defined in the new definitions is not used, and the missing values ​​are added back through custom code.
     public readonly partial struct BackupManagementType
     {
         private const string BackupProtectedItemCountSummaryValue = "BackupProtectedItemCountSummary";

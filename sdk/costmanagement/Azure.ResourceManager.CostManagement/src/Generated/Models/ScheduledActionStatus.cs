@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ScheduledActionStatus : IEquatable<ScheduledActionStatus>
     {
         private readonly string _value;
+        /// <summary> Scheduled action is saved and will be run. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Scheduled action is expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> Scheduled action is saved but will not be run. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
-        private const string ExpiredValue = "Expired";
+        /// <summary> Scheduled action is saved and will be run. </summary>
+        public static ScheduledActionStatus Enabled { get; } = new ScheduledActionStatus(EnabledValue);
+
+        /// <summary> Scheduled action is expired. </summary>
+        public static ScheduledActionStatus Expired { get; } = new ScheduledActionStatus(ExpiredValue);
 
         /// <summary> Scheduled action is saved but will not be run. </summary>
         public static ScheduledActionStatus Disabled { get; } = new ScheduledActionStatus(DisabledValue);
-        /// <summary> Scheduled action is saved and will be run. </summary>
-        public static ScheduledActionStatus Enabled { get; } = new ScheduledActionStatus(EnabledValue);
-        /// <summary> Scheduled action is expired. </summary>
-        public static ScheduledActionStatus Expired { get; } = new ScheduledActionStatus(ExpiredValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionStatus left, ScheduledActionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionStatus left, ScheduledActionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionStatus(string value) => new ScheduledActionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionStatus?(string value) => value == null ? null : new ScheduledActionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

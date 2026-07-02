@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Automation.Tests
 {
@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.Automation.Tests
         protected AutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$..uri");
+            ConfigureRecording();
         }
 
         protected AutomationManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            ConfigureRecording();
+        }
+
+        private void ConfigureRecording()
+        {
             JsonPathSanitizers.Add("$..uri");
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [SetUp]

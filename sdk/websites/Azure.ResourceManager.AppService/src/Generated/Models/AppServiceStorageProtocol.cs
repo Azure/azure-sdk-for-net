@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct AppServiceStorageProtocol : IEquatable<AppServiceStorageProtocol>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceStorageProtocol"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceStorageProtocol(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SmbValue = "Smb";
         private const string HttpValue = "Http";
         private const string NfsValue = "Nfs";
 
-        /// <summary> Smb. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceStorageProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceStorageProtocol(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Smb. </summary>
         public static AppServiceStorageProtocol Smb { get; } = new AppServiceStorageProtocol(SmbValue);
-        /// <summary> Http. </summary>
+
+        /// <summary> Gets the Http. </summary>
         public static AppServiceStorageProtocol Http { get; } = new AppServiceStorageProtocol(HttpValue);
-        /// <summary> Nfs. </summary>
+
+        /// <summary> Gets the Nfs. </summary>
         public static AppServiceStorageProtocol Nfs { get; } = new AppServiceStorageProtocol(NfsValue);
+
         /// <summary> Determines if two <see cref="AppServiceStorageProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceStorageProtocol left, AppServiceStorageProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceStorageProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceStorageProtocol left, AppServiceStorageProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceStorageProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceStorageProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceStorageProtocol(string value) => new AppServiceStorageProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceStorageProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceStorageProtocol?(string value) => value == null ? null : new AppServiceStorageProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceStorageProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceStorageProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -26,8 +27,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
+        /// <param name="description"> The description of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag)
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, string description, ETag eTag)
         {
             Name = name;
             Status = status;
@@ -39,6 +41,7 @@ namespace Azure.Data.AppConfiguration
             SizeInBytes = sizeInBytes;
             ItemCount = itemCount;
             Tags = tags;
+            Description = description;
             ETag = eTag;
         }
 
@@ -62,13 +65,19 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? ExpiresOn { get; }
         private long? _retentionPeriod;
         /// <summary> The amount of time that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
-        public TimeSpan? RetentionPeriod {
+        public TimeSpan? RetentionPeriod
+        {
             get
             {
                 return _retentionPeriod != null ? TimeSpan.FromSeconds((double)_retentionPeriod) : null;
             }
             set
             {
+                if (value == null)
+                {
+                    _retentionPeriod = null;
+                    return;
+                }
                 var seconds = value.Value.TotalSeconds;
                 long secondsLong;
                 try

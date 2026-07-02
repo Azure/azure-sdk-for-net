@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,50 +15,71 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     internal readonly partial struct ProtectionIntentItemType : IEquatable<ProtectionIntentItemType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProtectionIntentItemType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProtectionIntentItemType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string AzureResourceItemValue = "AzureResourceItem";
         private const string RecoveryServiceVaultItemValue = "RecoveryServiceVaultItem";
         private const string AzureWorkloadContainerAutoProtectionIntentValue = "AzureWorkloadContainerAutoProtectionIntent";
         private const string AzureWorkloadAutoProtectionIntentValue = "AzureWorkloadAutoProtectionIntent";
-        private const string AzureWorkloadSqlAutoProtectionIntentValue = "AzureWorkloadSQLAutoProtectionIntent";
+        private const string AzureWorkloadSQLAutoProtectionIntentValue = "AzureWorkloadSQLAutoProtectionIntent";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionIntentItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProtectionIntentItemType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static ProtectionIntentItemType Invalid { get; } = new ProtectionIntentItemType(InvalidValue);
-        /// <summary> AzureResourceItem. </summary>
+
+        /// <summary> Gets the AzureResourceItem. </summary>
         public static ProtectionIntentItemType AzureResourceItem { get; } = new ProtectionIntentItemType(AzureResourceItemValue);
-        /// <summary> RecoveryServiceVaultItem. </summary>
+
+        /// <summary> Gets the RecoveryServiceVaultItem. </summary>
         public static ProtectionIntentItemType RecoveryServiceVaultItem { get; } = new ProtectionIntentItemType(RecoveryServiceVaultItemValue);
-        /// <summary> AzureWorkloadContainerAutoProtectionIntent. </summary>
+
+        /// <summary> Gets the AzureWorkloadContainerAutoProtectionIntent. </summary>
         public static ProtectionIntentItemType AzureWorkloadContainerAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadContainerAutoProtectionIntentValue);
-        /// <summary> AzureWorkloadAutoProtectionIntent. </summary>
+
+        /// <summary> Gets the AzureWorkloadAutoProtectionIntent. </summary>
         public static ProtectionIntentItemType AzureWorkloadAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadAutoProtectionIntentValue);
-        /// <summary> AzureWorkloadSQLAutoProtectionIntent. </summary>
-        public static ProtectionIntentItemType AzureWorkloadSqlAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadSqlAutoProtectionIntentValue);
+
+        /// <summary> Gets the AzureWorkloadSQLAutoProtectionIntent. </summary>
+        public static ProtectionIntentItemType AzureWorkloadSQLAutoProtectionIntent { get; } = new ProtectionIntentItemType(AzureWorkloadSQLAutoProtectionIntentValue);
+
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProtectionIntentItemType left, ProtectionIntentItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProtectionIntentItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProtectionIntentItemType left, ProtectionIntentItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProtectionIntentItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProtectionIntentItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProtectionIntentItemType(string value) => new ProtectionIntentItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProtectionIntentItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProtectionIntentItemType?(string value) => value == null ? null : new ProtectionIntentItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProtectionIntentItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProtectionIntentItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

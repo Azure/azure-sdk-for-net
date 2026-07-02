@@ -1,0 +1,1 @@
+CannotChangeAttribute : Attribute 'Azure.ResourceManager.Storage.WirePathAttribute' on 'Azure.ResourceManager.Storage.Models.BlobRestoreContent.TimeToRestore' changed from '[WirePathAttribute("timetoRestore")]' in the contract to '[WirePathAttribute("timeToRestore")]' in the implementation.

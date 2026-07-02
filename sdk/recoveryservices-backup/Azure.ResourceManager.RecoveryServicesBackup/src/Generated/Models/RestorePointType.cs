@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct RestorePointType : IEquatable<RestorePointType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RestorePointType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RestorePointType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string FullValue = "Full";
         private const string LogValue = "Log";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RestorePointType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static RestorePointType Invalid { get; } = new RestorePointType(InvalidValue);
-        /// <summary> Full. </summary>
+
+        /// <summary> Gets the Full. </summary>
         public static RestorePointType Full { get; } = new RestorePointType(FullValue);
-        /// <summary> Log. </summary>
+
+        /// <summary> Gets the Log. </summary>
         public static RestorePointType Log { get; } = new RestorePointType(LogValue);
-        /// <summary> Differential. </summary>
+
+        /// <summary> Gets the Differential. </summary>
         public static RestorePointType Differential { get; } = new RestorePointType(DifferentialValue);
-        /// <summary> Incremental. </summary>
+
+        /// <summary> Gets the Incremental. </summary>
         public static RestorePointType Incremental { get; } = new RestorePointType(IncrementalValue);
-        /// <summary> SnapshotFull. </summary>
+
+        /// <summary> Gets the SnapshotFull. </summary>
         public static RestorePointType SnapshotFull { get; } = new RestorePointType(SnapshotFullValue);
-        /// <summary> SnapshotCopyOnlyFull. </summary>
+
+        /// <summary> Gets the SnapshotCopyOnlyFull. </summary>
         public static RestorePointType SnapshotCopyOnlyFull { get; } = new RestorePointType(SnapshotCopyOnlyFullValue);
+
         /// <summary> Determines if two <see cref="RestorePointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RestorePointType left, RestorePointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RestorePointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RestorePointType left, RestorePointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RestorePointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RestorePointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RestorePointType(string value) => new RestorePointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RestorePointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RestorePointType?(string value) => value == null ? null : new RestorePointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RestorePointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RestorePointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

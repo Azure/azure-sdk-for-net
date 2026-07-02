@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct EntityTimelineKind : IEquatable<EntityTimelineKind>
     {
         private readonly string _value;
+        /// <summary> activity. </summary>
+        private const string ActivityValue = "Activity";
+        /// <summary> bookmarks. </summary>
+        private const string BookmarkValue = "Bookmark";
+        /// <summary> security alerts. </summary>
+        private const string SecurityAlertValue = "SecurityAlert";
+        /// <summary> anomaly. </summary>
+        private const string AnomalyValue = "Anomaly";
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityTimelineKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActivityValue = "Activity";
-        private const string BookmarkValue = "Bookmark";
-        private const string SecurityAlertValue = "SecurityAlert";
-        private const string AnomalyValue = "Anomaly";
+            _value = value;
+        }
 
         /// <summary> activity. </summary>
         public static EntityTimelineKind Activity { get; } = new EntityTimelineKind(ActivityValue);
+
         /// <summary> bookmarks. </summary>
         public static EntityTimelineKind Bookmark { get; } = new EntityTimelineKind(BookmarkValue);
+
         /// <summary> security alerts. </summary>
         public static EntityTimelineKind SecurityAlert { get; } = new EntityTimelineKind(SecurityAlertValue);
+
         /// <summary> anomaly. </summary>
         public static EntityTimelineKind Anomaly { get; } = new EntityTimelineKind(AnomalyValue);
+
         /// <summary> Determines if two <see cref="EntityTimelineKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityTimelineKind left, EntityTimelineKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityTimelineKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityTimelineKind left, EntityTimelineKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityTimelineKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityTimelineKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityTimelineKind(string value) => new EntityTimelineKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityTimelineKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityTimelineKind?(string value) => value == null ? null : new EntityTimelineKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityTimelineKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityTimelineKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

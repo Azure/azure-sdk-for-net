@@ -22,27 +22,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Capabilities properties in response. </param>
-        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, CapabilitiesResultProperties properties) : base(resourceCapabilitiesBaseType, serializedAdditionalRawData)
+        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapabilitiesResultProperties properties) : base(resourceCapabilitiesBaseType, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/> for deserialization. </summary>
-        internal CapabilitiesResult()
-        {
-        }
-
         /// <summary> Capabilities properties in response. </summary>
         internal CapabilitiesResultProperties Properties { get; set; }
-        /// <summary> Gets the capabilities result dns zones. </summary>
+
+        /// <summary> Gets the DnsZones. </summary>
         public IList<DnsZoneResult> CapabilitiesResultDnsZones
         {
             get
             {
                 if (Properties is null)
+                {
                     Properties = new CapabilitiesResultProperties();
+                }
                 return Properties.DnsZones;
             }
         }

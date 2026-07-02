@@ -8,10 +8,11 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Summary of revision metadata. </summary>
+    // Old SDK exposed Uri TermsOfServiceUri; generated code has string TermsOfServiceLink.
+    // This read-only wrapper provides the Uri version for backward compat.
+    // Not spec-fixable: @@alternateType replaces the property type entirely.
     public partial class ApiEntityBaseContract
     {
-        /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Uri TermsOfServiceUri

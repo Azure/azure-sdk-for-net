@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the DataCollectionRuleAssociation data model.
-    /// Definition of generic ARM proxy resource.
-    /// </summary>
+    /// <summary> Definition of generic ARM proxy resource. </summary>
     public partial class DataCollectionRuleAssociationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationData"/>. </summary>
         public DataCollectionRuleAssociationData()
@@ -57,39 +26,93 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Resource entity tag (ETag). </param>
-        /// <param name="description"> Description of the association. </param>
-        /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
-        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <param name="metadata"> Metadata about the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"></param>
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProxyOnlyResourceProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            Description = description;
-            DataCollectionRuleId = dataCollectionRuleId;
-            DataCollectionEndpointId = dataCollectionEndpointId;
-            ProvisioningState = provisioningState;
-            Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal DataCollectionRuleAssociationProxyOnlyResourceProperties Properties { get; set; }
 
         /// <summary> Resource entity tag (ETag). </summary>
         public ETag? ETag { get; }
+
         /// <summary> Description of the association. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionRuleAssociationProxyOnlyResourceProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
-        public ResourceIdentifier DataCollectionRuleId { get; set; }
+        public ResourceIdentifier DataCollectionRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataCollectionRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionRuleAssociationProxyOnlyResourceProperties();
+                }
+                Properties.DataCollectionRuleId = value;
+            }
+        }
+
         /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
-        public ResourceIdentifier DataCollectionEndpointId { get; set; }
+        public ResourceIdentifier DataCollectionEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataCollectionEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataCollectionRuleAssociationProxyOnlyResourceProperties();
+                }
+                Properties.DataCollectionEndpointId = value;
+            }
+        }
+
         /// <summary> The resource provisioning state. </summary>
-        public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
+        public DataCollectionRuleAssociationProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Metadata about the resource. </summary>
-        public DataCollectionRuleAssociationMetadata Metadata { get; }
+        public DataCollectionRuleAssociationMetadata Metadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metadata;
+            }
+        }
     }
 }

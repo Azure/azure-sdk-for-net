@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Evaluation type (manual or through Automatic Optimization). </summary>
     [CodeGenModel("EvaluationType")]
-    public partial struct PersonalizerEvaluationType {}
+    public partial struct PersonalizerEvaluationType { }
 }

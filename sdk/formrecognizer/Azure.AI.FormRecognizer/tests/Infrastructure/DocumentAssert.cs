@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     internal static class DocumentAssert
     {
-        public static void AreEqual(DocumentClassifierDetails expected,  DocumentClassifierDetails actual)
+        public static void AreEqual(DocumentClassifierDetails expected, DocumentClassifierDetails actual)
         {
             Assert.AreEqual(expected.ClassifierId, actual.ClassifierId);
             Assert.AreEqual(expected.Description, actual.Description);

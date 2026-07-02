@@ -6,5 +6,5 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     [CodeGenModel("DelimitedTextConfiguration")]
-    internal partial class DelimitedTextConfigurationInternal {}
+    internal partial class DelimitedTextConfigurationInternal { }
 }

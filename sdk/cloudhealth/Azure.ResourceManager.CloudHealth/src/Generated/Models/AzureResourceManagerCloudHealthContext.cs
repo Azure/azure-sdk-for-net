@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CloudHealth.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,23 +14,34 @@ namespace Azure.ResourceManager.CloudHealth
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsTopologySpecification))]
     [ModelReaderWriterBuildable(typeof(AuthenticationSettingListResult))]
-    [ModelReaderWriterBuildable(typeof(AzureMonitorWorkspaceSignalGroup))]
-    [ModelReaderWriterBuildable(typeof(AzureResourceSignalGroup))]
-    [ModelReaderWriterBuildable(typeof(DependenciesSignalGroup))]
+    [ModelReaderWriterBuildable(typeof(DependenciesSignalGroupV2))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryError))]
     [ModelReaderWriterBuildable(typeof(DiscoveryRuleListResult))]
-    [ModelReaderWriterBuildable(typeof(DynamicDetectionRule))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryRuleSpecification))]
+    [ModelReaderWriterBuildable(typeof(EntityAddDataAnnotationContent))]
     [ModelReaderWriterBuildable(typeof(EntityAlertConfiguration))]
     [ModelReaderWriterBuildable(typeof(EntityAlerts))]
     [ModelReaderWriterBuildable(typeof(EntityCoordinates))]
+    [ModelReaderWriterBuildable(typeof(EntityDataAnnotation))]
+    [ModelReaderWriterBuildable(typeof(EntityGetDataAnnotationsContent))]
+    [ModelReaderWriterBuildable(typeof(EntityGetDataAnnotationsResult))]
+    [ModelReaderWriterBuildable(typeof(EntityGetSignalRecommendationsResult))]
+    [ModelReaderWriterBuildable(typeof(EntityHealthReportContent))]
+    [ModelReaderWriterBuildable(typeof(EntityHistoryContent))]
+    [ModelReaderWriterBuildable(typeof(EntityHistoryResult))]
     [ModelReaderWriterBuildable(typeof(EntityIcon))]
     [ModelReaderWriterBuildable(typeof(EntityListResult))]
-    [ModelReaderWriterBuildable(typeof(EntitySignalAssignment))]
     [ModelReaderWriterBuildable(typeof(EntitySignalEvaluationRule))]
-    [ModelReaderWriterBuildable(typeof(EntitySignalGroup))]
-    [ModelReaderWriterBuildable(typeof(EntitySignalThresholdRule))]
+    [ModelReaderWriterBuildable(typeof(EntitySignalGroups))]
+    [ModelReaderWriterBuildable(typeof(EntitySignalHistoryContent))]
+    [ModelReaderWriterBuildable(typeof(EntitySignalHistoryResult))]
+    [ModelReaderWriterBuildable(typeof(EntitySignalThresholdRuleV2))]
+    [ModelReaderWriterBuildable(typeof(ExternalSignal))]
+    [ModelReaderWriterBuildable(typeof(ExternalSignalGroup))]
     [ModelReaderWriterBuildable(typeof(HealthModelAuthenticationSettingData))]
     [ModelReaderWriterBuildable(typeof(HealthModelAuthenticationSettingProperties))]
     [ModelReaderWriterBuildable(typeof(HealthModelAuthenticationSettingResource))]
@@ -50,20 +62,34 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(HealthModelSignalDefinitionData))]
     [ModelReaderWriterBuildable(typeof(HealthModelSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(HealthModelSignalDefinitionResource))]
-    [ModelReaderWriterBuildable(typeof(HealthModelUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(HealthReportEvaluationRule))]
+    [ModelReaderWriterBuildable(typeof(HealthStateTransition))]
     [ModelReaderWriterBuildable(typeof(LogAnalyticsQuerySignalDefinitionProperties))]
-    [ModelReaderWriterBuildable(typeof(LogAnalyticsSignalGroup))]
+    [ModelReaderWriterBuildable(typeof(LogAnalyticsSignal))]
+    [ModelReaderWriterBuildable(typeof(LogAnalyticsSignals))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityAuthenticationSettingProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ModelDiscoverySettings))]
+    [ModelReaderWriterBuildable(typeof(MonitorWorkspaceSignals))]
+    [ModelReaderWriterBuildable(typeof(PrometheusMetricsSignal))]
     [ModelReaderWriterBuildable(typeof(PrometheusMetricsSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(RelationshipListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceGraphQuerySpecification))]
+    [ModelReaderWriterBuildable(typeof(ResourceHealthSignal))]
+    [ModelReaderWriterBuildable(typeof(ResourceHealthSignalStatus))]
     [ModelReaderWriterBuildable(typeof(ResourceMetricSignalDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceSignal))]
+    [ModelReaderWriterBuildable(typeof(ResourceSignals))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SignalConfiguration))]
     [ModelReaderWriterBuildable(typeof(SignalDefinitionListResult))]
+    [ModelReaderWriterBuildable(typeof(SignalHistoryDataPoint))]
+    [ModelReaderWriterBuildable(typeof(SignalInstanceProperties))]
+    [ModelReaderWriterBuildable(typeof(SignalStatus))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownDiscoveryRuleSpecification))]
     [ModelReaderWriterBuildable(typeof(UnknownHealthModelAuthenticationSettingProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownHealthModelSignalDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownSignalInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerCloudHealthContext : ModelReaderWriterContext
     {

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class PolicySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         public PolicySettings()
@@ -63,8 +35,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="logScrubbing"> To scrub sensitive log fields. </param>
         /// <param name="jsChallengeCookieExpirationInMins"> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, int? jsChallengeCookieExpirationInMins, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="captchaExpirationInMins"> Web Application Firewall CAPTCHA Cookie Expiration time in minutes. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, int? jsChallengeCookieExpirationInMins, int? captchaExpirationInMins, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Mode = mode;
@@ -78,44 +51,60 @@ namespace Azure.ResourceManager.Network.Models
             CustomBlockResponseBody = customBlockResponseBody;
             LogScrubbing = logScrubbing;
             JsChallengeCookieExpirationInMins = jsChallengeCookieExpirationInMins;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            CaptchaExpirationInMins = captchaExpirationInMins;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The state of the policy. </summary>
         [WirePath("state")]
         public WebApplicationFirewallEnabledState? State { get; set; }
+
         /// <summary> The mode of the policy. </summary>
         [WirePath("mode")]
         public WebApplicationFirewallMode? Mode { get; set; }
+
         /// <summary> Whether to allow WAF to check request Body. </summary>
         [WirePath("requestBodyCheck")]
         public bool? RequestBodyCheck { get; set; }
+
         /// <summary> Max inspection limit in KB for request body inspection for WAF. </summary>
         [WirePath("requestBodyInspectLimitInKB")]
         public int? RequestBodyInspectLimitInKB { get; set; }
+
         /// <summary> Whether allow WAF to enforce request body limits. </summary>
         [WirePath("requestBodyEnforcement")]
         public bool? RequestBodyEnforcement { get; set; }
+
         /// <summary> Maximum request body size in Kb for WAF. </summary>
         [WirePath("maxRequestBodySizeInKb")]
         public int? MaxRequestBodySizeInKb { get; set; }
+
         /// <summary> Whether allow WAF to enforce file upload limits. </summary>
         [WirePath("fileUploadEnforcement")]
         public bool? FileUploadEnforcement { get; set; }
+
         /// <summary> Maximum file upload size in Mb for WAF. </summary>
         [WirePath("fileUploadLimitInMb")]
         public int? FileUploadLimitInMb { get; set; }
+
         /// <summary> If the action type is block, customer can override the response status code. </summary>
         [WirePath("customBlockResponseStatusCode")]
         public int? CustomBlockResponseStatusCode { get; set; }
+
         /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>
         [WirePath("customBlockResponseBody")]
         public string CustomBlockResponseBody { get; set; }
+
         /// <summary> To scrub sensitive log fields. </summary>
         [WirePath("logScrubbing")]
         public PolicySettingsLogScrubbing LogScrubbing { get; set; }
+
         /// <summary> Web Application Firewall JavaScript Challenge Cookie Expiration time in minutes. </summary>
         [WirePath("jsChallengeCookieExpirationInMins")]
         public int? JsChallengeCookieExpirationInMins { get; set; }
+
+        /// <summary> Web Application Firewall CAPTCHA Cookie Expiration time in minutes. </summary>
+        [WirePath("captchaExpirationInMins")]
+        public int? CaptchaExpirationInMins { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,84 +16,85 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack. </summary>
     public partial class WebAppStack : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppStack"/>. </summary>
         public WebAppStack()
         {
-            MajorVersions = new ChangeTrackingList<WebAppMajorVersion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppStack"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Web App stack location. </param>
-        /// <param name="displayText"> Web App stack (display only). </param>
-        /// <param name="value"> Web App stack name. </param>
-        /// <param name="majorVersions"> List of major versions available. </param>
-        /// <param name="preferredOS"> Web App stack preferred OS. </param>
+        /// <param name="properties"> WebAppStack resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<WebAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, WebAppStackProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
-            DisplayText = displayText;
-            Value = value;
-            MajorVersions = majorVersions;
-            PreferredOS = preferredOS;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Web App stack location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary> Web App stack (display only). </summary>
-        [WirePath("properties.displayText")]
-        public string DisplayText { get; }
-        /// <summary> Web App stack name. </summary>
-        [WirePath("properties.value")]
-        public string Value { get; }
-        /// <summary> List of major versions available. </summary>
-        [WirePath("properties.majorVersions")]
-        public IReadOnlyList<WebAppMajorVersion> MajorVersions { get; }
-        /// <summary> Web App stack preferred OS. </summary>
-        [WirePath("properties.preferredOs")]
-        public StackPreferredOS? PreferredOS { get; }
+
+        /// <summary> WebAppStack resource specific properties. </summary>
+        [WirePath("properties")]
+        internal WebAppStackProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Web App stack (display only). </summary>
+        [WirePath("properties.displayText")]
+        public string DisplayText
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayText;
+            }
+        }
+
+        /// <summary> Web App stack name. </summary>
+        [WirePath("properties.value")]
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+        }
+
+        /// <summary> List of major versions available. </summary>
+        [WirePath("properties.majorVersions")]
+        public IReadOnlyList<WebAppMajorVersion> MajorVersions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebAppStackProperties();
+                }
+                return Properties.MajorVersions;
+            }
+        }
+
+        /// <summary> Web App stack preferred OS. </summary>
+        [WirePath("properties.preferredOs")]
+        public StackPreferredOS? PreferredOS
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredOS;
+            }
+        }
     }
 }

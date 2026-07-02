@@ -13,129 +13,160 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WebJob data model.
-    /// Web Job Information.
-    /// </summary>
+    /// <summary> Web Job Information. </summary>
     public partial class WebJobData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebJobData"/>. </summary>
         public WebJobData()
         {
-            Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> WebJob resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebJobProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            RunCommand = runCommand;
-            Uri = uri;
-            ExtraInfoUri = extraInfoUri;
-            WebJobType = webJobType;
-            Error = error;
-            IsUsingSdk = isUsingSdk;
-            Settings = settings;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Run command. </summary>
-        [WirePath("properties.run_command")]
-        public string RunCommand { get; set; }
-        /// <summary> Job URL. </summary>
-        [WirePath("properties.url")]
-        public Uri Uri { get; set; }
-        /// <summary> Extra Info URL. </summary>
-        [WirePath("properties.extra_info_url")]
-        public Uri ExtraInfoUri { get; set; }
-        /// <summary> Job type. </summary>
-        [WirePath("properties.web_job_type")]
-        public WebJobType? WebJobType { get; set; }
-        /// <summary> Error information. </summary>
-        [WirePath("properties.error")]
-        public string Error { get; set; }
-        /// <summary> Using SDK?. </summary>
-        [WirePath("properties.using_sdk")]
-        public bool? IsUsingSdk { get; set; }
-        /// <summary>
-        /// Job settings.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.settings")]
-        public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> WebJob resource specific properties. </summary>
+        [WirePath("properties")]
+        internal WebJobProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Run command. </summary>
+        [WirePath("properties.run_command")]
+        public string RunCommand
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunCommand;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.RunCommand = value;
+            }
+        }
+
+        /// <summary> Job URL. </summary>
+        [WirePath("properties.url")]
+        public Uri Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
+
+        /// <summary> Extra Info URL. </summary>
+        [WirePath("properties.extra_info_url")]
+        public Uri ExtraInfoUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtraInfoUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.ExtraInfoUri = value;
+            }
+        }
+
+        /// <summary> Job type. </summary>
+        [WirePath("properties.web_job_type")]
+        public WebJobType? WebJobType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebJobType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.WebJobType = value;
+            }
+        }
+
+        /// <summary> Error information. </summary>
+        [WirePath("properties.error")]
+        public string Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.Error = value;
+            }
+        }
+
+        /// <summary> Using SDK?. </summary>
+        [WirePath("properties.using_sdk")]
+        public bool? IsUsingSdk
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsUsingSdk;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                Properties.IsUsingSdk = value;
+            }
+        }
+
+        /// <summary> Job settings. </summary>
+        [WirePath("properties.settings")]
+        public IDictionary<string, BinaryData> Settings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebJobProperties();
+                }
+                return Properties.Settings;
+            }
+        }
     }
 }

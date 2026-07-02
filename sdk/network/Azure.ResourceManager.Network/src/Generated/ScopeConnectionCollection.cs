@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ScopeConnectionCollection : ArmCollection, IEnumerable<ScopeConnectionResource>, IAsyncEnumerable<ScopeConnectionResource>
     {
-        private readonly ClientDiagnostics _scopeConnectionClientDiagnostics;
-        private readonly ScopeConnectionsRestOperations _scopeConnectionRestClient;
+        private readonly ClientDiagnostics _scopeConnectionsClientDiagnostics;
+        private readonly ScopeConnections _scopeConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ScopeConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ScopeConnectionCollection for mocking. </summary>
         protected ScopeConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ScopeConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScopeConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scopeConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ScopeConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ScopeConnectionResource.ResourceType, out string scopeConnectionApiVersion);
-            _scopeConnectionRestClient = new ScopeConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scopeConnectionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _scopeConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ScopeConnectionResource.ResourceType.Namespace, Diagnostics);
+            _scopeConnectionsRestClient = new ScopeConnections(_scopeConnectionsClientDiagnostics, Pipeline, Endpoint, scopeConnectionApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkManagerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkManagerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkManagerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates scope connection from Network Manager
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="data"> Scope connection to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ScopeConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeConnectionName, ScopeConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scopeConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _scopeConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<ScopeConnectionResource>(Response.FromValue(new ScopeConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, ScopeConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScopeConnectionData> response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<ScopeConnectionResource> operation = new NetworkArmOperation<ScopeConnectionResource>(Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates scope connection from Network Manager
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="data"> Scope connection to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ScopeConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string scopeConnectionName, ScopeConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scopeConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, data, cancellationToken);
-                var uri = _scopeConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<ScopeConnectionResource>(Response.FromValue(new ScopeConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, ScopeConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScopeConnectionData> response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<ScopeConnectionResource> operation = new NetworkArmOperation<ScopeConnectionResource>(Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Network
         /// Get specified scope connection created by this Network Manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ScopeConnectionResource>> GetAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Get");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _scopeConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ScopeConnectionData> response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Network
         /// Get specified scope connection created by this Network Manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ScopeConnectionResource> Get(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Get");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _scopeConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ScopeConnectionData> response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,52 +266,16 @@ namespace Azure.ResourceManager.Network
         /// List all scope connections created by this network manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopeConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScopeConnectionResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeConnectionResource(Client, ScopeConnectionData.DeserializeScopeConnectionData(e)), _scopeConnectionClientDiagnostics, Pipeline, "ScopeConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all scope connections created by this network manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,47 +283,109 @@ namespace Azure.ResourceManager.Network
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScopeConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScopeConnectionResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ScopeConnectionResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeConnectionResource(Client, ScopeConnectionData.DeserializeScopeConnectionData(e)), _scopeConnectionClientDiagnostics, Pipeline, "ScopeConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScopeConnectionData, ScopeConnectionResource>(new ScopeConnectionsGetAllAsyncCollectionResultOfT(
+                _scopeConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "ScopeConnectionCollection.GetAll"), data => new ScopeConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all scope connections created by this network manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScopeConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScopeConnectionResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScopeConnectionData, ScopeConnectionResource>(new ScopeConnectionsGetAllCollectionResultOfT(
+                _scopeConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "ScopeConnectionCollection.GetAll"), data => new ScopeConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Exists");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _scopeConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ScopeConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +399,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Exists");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _scopeConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ScopeConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +456,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ScopeConnectionResource>> GetIfExistsAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _scopeConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ScopeConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ScopeConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +517,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ScopeConnectionResource> GetIfExists(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
 
-            using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _scopeConnectionsClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _scopeConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeConnectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scopeConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scopeConnectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ScopeConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ScopeConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ScopeConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ScopeConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ScopeConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +584,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ScopeConnectionResource> IAsyncEnumerable<ScopeConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,44 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The protocol of an established TLS connection.
-    /// Serialized Name: SslProtocol
-    /// </summary>
+    /// <summary> The protocol of an established TLS connection. </summary>
     public readonly partial struct DeliveryRuleSslProtocol : IEquatable<DeliveryRuleSslProtocol>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocol"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeliveryRuleSslProtocol(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string Tls1_0Value = "TLSv1";
         private const string Tls1_1Value = "TLSv1.1";
         private const string Tls1_2Value = "TLSv1.2";
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeliveryRuleSslProtocol(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Tls1_0. </summary>
+        public static DeliveryRuleSslProtocol Tls1_0 { get; } = new DeliveryRuleSslProtocol(Tls1_0Value);
+
+        /// <summary> Gets the Tls1_1. </summary>
+        public static DeliveryRuleSslProtocol Tls1_1 { get; } = new DeliveryRuleSslProtocol(Tls1_1Value);
+
+        /// <summary> Gets the Tls1_2. </summary>
+        public static DeliveryRuleSslProtocol Tls1_2 { get; } = new DeliveryRuleSslProtocol(Tls1_2Value);
+
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeliveryRuleSslProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeliveryRuleSslProtocol left, DeliveryRuleSslProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeliveryRuleSslProtocol(string value) => new DeliveryRuleSslProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeliveryRuleSslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeliveryRuleSslProtocol?(string value) => value == null ? null : new DeliveryRuleSslProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeliveryRuleSslProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeliveryRuleSslProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

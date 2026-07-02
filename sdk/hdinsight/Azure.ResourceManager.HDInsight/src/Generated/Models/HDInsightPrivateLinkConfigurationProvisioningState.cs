@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightPrivateLinkConfigurationProvisioningState : IEquatable<HDInsightPrivateLinkConfigurationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightPrivateLinkConfigurationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState InProgress { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(InProgressValue);
+
         /// <summary> Failed. </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Failed { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Succeeded { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Canceled { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(CanceledValue);
+
         /// <summary> Deleting. </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Deleting { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightPrivateLinkConfigurationProvisioningState left, HDInsightPrivateLinkConfigurationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightPrivateLinkConfigurationProvisioningState left, HDInsightPrivateLinkConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightPrivateLinkConfigurationProvisioningState(string value) => new HDInsightPrivateLinkConfigurationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightPrivateLinkConfigurationProvisioningState?(string value) => value == null ? null : new HDInsightPrivateLinkConfigurationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightPrivateLinkConfigurationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightPrivateLinkConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Ignore("The SDK doesn't support create a IotSecurityAggregatedAlertResource")]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task Get()
         {
             string aggregatedAlertName = "";
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Ignore("The SDK doesn't support create a IotSecurityAggregatedAlertResource")]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task Dismiss()
         {
             string aggregatedAlertName = "";
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task GetAll()
         {
             var list = await _iotSecurityAggregatedAlertCollection.GetAllAsync().ToEnumerableAsync();

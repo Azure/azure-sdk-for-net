@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Tests.Scenario
 {
-    public class WorkloadNetworkVmGroupCollectionTest: AvsManagementTestBase
+    public class WorkloadNetworkVmGroupCollectionTest : AvsManagementTestBase
     {
         public WorkloadNetworkVmGroupCollectionTest(bool isAsync) : base(isAsync)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         public async Task GetResource()
         {
             WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
-            WorkloadNetworkVmGroupResource result =  await collection.GetAsync(WORKLOAD_NETWORK_NAME);
+            WorkloadNetworkVmGroupResource result = await collection.GetAsync(WORKLOAD_NETWORK_NAME);
             Assert.AreEqual(WORKLOAD_NETWORK_NAME, result.Data.Name);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             bool result = await collection.ExistsAsync(WORKLOAD_NETWORK_NAME);
             Assert.True(result);
-            result =  await collection.ExistsAsync("wn1");
+            result = await collection.ExistsAsync("wn1");
             Assert.False(result);
         }
         [TestCase, Order(5)]

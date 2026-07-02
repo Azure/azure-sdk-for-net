@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,27 +18,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/>. </summary>
         /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryNetworkId"/> is null. </exception>
-        public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId)
+        public A2ACreateNetworkMappingContent(ResourceIdentifier primaryNetworkId) : base("AzureToAzure")
         {
             Argument.AssertNotNull(primaryNetworkId, nameof(primaryNetworkId));
 
             PrimaryNetworkId = primaryNetworkId;
-            InstanceType = "AzureToAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/>. </summary>
         /// <param name="instanceType"> The instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryNetworkId"> The primary azure vnet Id. </param>
-        internal A2ACreateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier primaryNetworkId) : base(instanceType, serializedAdditionalRawData)
+        internal A2ACreateNetworkMappingContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier primaryNetworkId) : base(instanceType, additionalBinaryDataProperties)
         {
             PrimaryNetworkId = primaryNetworkId;
-            InstanceType = instanceType ?? "AzureToAzure";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="A2ACreateNetworkMappingContent"/> for deserialization. </summary>
-        internal A2ACreateNetworkMappingContent()
-        {
         }
 
         /// <summary> The primary azure vnet Id. </summary>

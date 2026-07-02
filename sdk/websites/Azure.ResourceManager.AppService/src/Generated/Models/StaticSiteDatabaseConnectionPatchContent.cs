@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Database Connection Request Properties resource when patching. </summary>
     public partial class StaticSiteDatabaseConnectionPatchContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionPatchContent"/>. </summary>
         public StaticSiteDatabaseConnectionPatchContent()
@@ -52,31 +24,88 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionPatchContent"/>. </summary>
-        /// <param name="resourceId"> The resource id of the database. </param>
-        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
-        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
-        /// <param name="region"> The region of the database resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteDatabaseConnectionPatchContent(ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> DatabaseConnectionPatchRequest resource specific properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteDatabaseConnectionPatchContent(DatabaseConnectionPatchRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            ConnectionIdentity = connectionIdentity;
-            ConnectionString = connectionString;
-            Region = region;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> DatabaseConnectionPatchRequest resource specific properties. </summary>
+        [WirePath("properties")]
+        internal DatabaseConnectionPatchRequestProperties Properties { get; set; }
 
         /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionPatchRequestProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("properties.connectionIdentity")]
-        public string ConnectionIdentity { get; set; }
+        public string ConnectionIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionPatchRequestProperties();
+                }
+                Properties.ConnectionIdentity = value;
+            }
+        }
+
         /// <summary> The connection string to use to connect to the database. </summary>
         [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionPatchRequestProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
         /// <summary> The region of the database resource. </summary>
         [WirePath("properties.region")]
-        public string Region { get; set; }
+        public string Region
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Region;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseConnectionPatchRequestProperties();
+                }
+                Properties.Region = value;
+            }
+        }
     }
 }

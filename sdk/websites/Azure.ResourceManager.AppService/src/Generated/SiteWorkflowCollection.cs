@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteWorkflowCollection : ArmCollection, IEnumerable<SiteWorkflowResource>, IAsyncEnumerable<SiteWorkflowResource>
     {
-        private readonly ClientDiagnostics _siteWorkflowWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteWorkflowWebAppsRestClient;
+        private readonly ClientDiagnostics _workflowEnvelopeOperationGroupClientDiagnostics;
+        private readonly WorkflowEnvelopeOperationGroup _workflowEnvelopeOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteWorkflowCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteWorkflowCollection for mocking. </summary>
         protected SiteWorkflowCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteWorkflowCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteWorkflowCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteWorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteWorkflowWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteWorkflowResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteWorkflowResource.ResourceType, out string siteWorkflowWebAppsApiVersion);
-            _siteWorkflowWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteWorkflowWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SiteWorkflowResource.ResourceType, out string siteWorkflowApiVersion);
+            _workflowEnvelopeOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteWorkflowResource.ResourceType.Namespace, Diagnostics);
+            _workflowEnvelopeOperationGroupRestClient = new WorkflowEnvelopeOperationGroup(_workflowEnvelopeOperationGroupClientDiagnostics, Pipeline, Endpoint, siteWorkflowApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get workflow information by its ID for web site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SiteWorkflowResource>> GetAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowCollection.Get");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteWorkflowWebAppsRestClient.GetWorkflowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.AppService
         /// Get workflow information by its ID for web site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SiteWorkflowResource> Get(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowCollection.Get");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteWorkflowWebAppsRestClient.GetWorkflow(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.AppService
         /// List the workflows for a web site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_ListWorkflows</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_ListWorkflows. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteWorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteWorkflowWebAppsRestClient.CreateListWorkflowsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteWorkflowWebAppsRestClient.CreateListWorkflowsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteWorkflowResource(Client, WorkflowEnvelopeData.DeserializeWorkflowEnvelopeData(e)), _siteWorkflowWebAppsClientDiagnostics, Pipeline, "SiteWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkflowEnvelopeData, SiteWorkflowResource>(new WorkflowEnvelopeOperationGroupGetWorkflowsAsyncCollectionResultOfT(
+                _workflowEnvelopeOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SiteWorkflowCollection.GetAll"), data => new SiteWorkflowResource(Client, data));
         }
 
         /// <summary>
         /// List the workflows for a web site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_ListWorkflows</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_ListWorkflows. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteWorkflowResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteWorkflowWebAppsRestClient.CreateListWorkflowsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteWorkflowWebAppsRestClient.CreateListWorkflowsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteWorkflowResource(Client, WorkflowEnvelopeData.DeserializeWorkflowEnvelopeData(e)), _siteWorkflowWebAppsClientDiagnostics, Pipeline, "SiteWorkflowCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkflowEnvelopeData, SiteWorkflowResource>(new WorkflowEnvelopeOperationGroupGetWorkflowsCollectionResultOfT(
+                _workflowEnvelopeOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SiteWorkflowCollection.GetAll"), data => new SiteWorkflowResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowCollection.Exists");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteWorkflowWebAppsRestClient.GetWorkflowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowEnvelopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowCollection.Exists");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteWorkflowWebAppsRestClient.GetWorkflow(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowEnvelopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SiteWorkflowResource>> GetIfExistsAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteWorkflowWebAppsRestClient.GetWorkflowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowEnvelopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteWorkflowResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> Workflow name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SiteWorkflowResource> GetIfExists(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteWorkflowWebAppsRestClient.GetWorkflow(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workflowName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowEnvelopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteWorkflowResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SiteWorkflowResource> IAsyncEnumerable<SiteWorkflowResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

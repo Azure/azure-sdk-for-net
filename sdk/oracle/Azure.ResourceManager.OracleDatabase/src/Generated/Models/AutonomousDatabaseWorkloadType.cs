@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabaseWorkloadType : IEquatable<AutonomousDatabaseWorkloadType>
     {
         private readonly string _value;
+        /// <summary> OLTP - indicates an Autonomous Transaction Processing database. </summary>
+        private const string OltpValue = "OLTP";
+        /// <summary> DW - indicates an Autonomous Data Warehouse database. </summary>
+        private const string DWValue = "DW";
+        /// <summary> AJD - indicates an Autonomous JSON Database. </summary>
+        private const string AjdValue = "AJD";
+        /// <summary> APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type. </summary>
+        private const string ApexValue = "APEX";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabaseWorkloadType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OltpValue = "OLTP";
-        private const string DWValue = "DW";
-        private const string AjdValue = "AJD";
-        private const string ApexValue = "APEX";
+            _value = value;
+        }
 
         /// <summary> OLTP - indicates an Autonomous Transaction Processing database. </summary>
         public static AutonomousDatabaseWorkloadType Oltp { get; } = new AutonomousDatabaseWorkloadType(OltpValue);
+
         /// <summary> DW - indicates an Autonomous Data Warehouse database. </summary>
         public static AutonomousDatabaseWorkloadType DW { get; } = new AutonomousDatabaseWorkloadType(DWValue);
+
         /// <summary> AJD - indicates an Autonomous JSON Database. </summary>
         public static AutonomousDatabaseWorkloadType Ajd { get; } = new AutonomousDatabaseWorkloadType(AjdValue);
+
         /// <summary> APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type. </summary>
         public static AutonomousDatabaseWorkloadType Apex { get; } = new AutonomousDatabaseWorkloadType(ApexValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseWorkloadType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabaseWorkloadType left, AutonomousDatabaseWorkloadType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseWorkloadType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabaseWorkloadType left, AutonomousDatabaseWorkloadType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabaseWorkloadType(string value) => new AutonomousDatabaseWorkloadType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabaseWorkloadType?(string value) => value == null ? null : new AutonomousDatabaseWorkloadType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabaseWorkloadType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabaseWorkloadType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

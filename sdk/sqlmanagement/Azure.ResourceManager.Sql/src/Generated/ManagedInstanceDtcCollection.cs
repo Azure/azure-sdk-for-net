@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceDtcCollection : ArmCollection, IEnumerable<ManagedInstanceDtcResource>, IAsyncEnumerable<ManagedInstanceDtcResource>
     {
-        private readonly ClientDiagnostics _managedInstanceDtcClientDiagnostics;
-        private readonly ManagedInstanceDtcsRestOperations _managedInstanceDtcRestClient;
+        private readonly ClientDiagnostics _managedInstanceDtcsClientDiagnostics;
+        private readonly ManagedInstanceDtcs _managedInstanceDtcsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDtcCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceDtcCollection for mocking. </summary>
         protected ManagedInstanceDtcCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDtcCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedInstanceDtcCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceDtcClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDtcResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedInstanceDtcResource.ResourceType, out string managedInstanceDtcApiVersion);
-            _managedInstanceDtcRestClient = new ManagedInstanceDtcsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceDtcApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _managedInstanceDtcsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceDtcResource.ResourceType.Namespace, Diagnostics);
+            _managedInstanceDtcsRestClient = new ManagedInstanceDtcs(_managedInstanceDtcsClientDiagnostics, Pipeline, Endpoint, managedInstanceDtcApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagedInstanceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Updates managed instance DTC settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,14 +81,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDtcRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), ManagedInstanceDtcData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<ManagedInstanceDtcResource> operation = new SqlArmOperation<ManagedInstanceDtcResource>(
+                    new ManagedInstanceDtcResourceOperationSource(Client),
+                    _managedInstanceDtcsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +115,16 @@ namespace Azure.ResourceManager.Sql
         /// Updates managed instance DTC settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,14 +137,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceDtcRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), ManagedInstanceDtcData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<ManagedInstanceDtcResource> operation = new SqlArmOperation<ManagedInstanceDtcResource>(
+                    new ManagedInstanceDtcResourceOperationSource(Client),
+                    _managedInstanceDtcsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,20 +171,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets managed instance DTC settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,13 +188,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedInstanceDtcResource>> GetAsync(DtcName dtcName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Get");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDtcRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedInstanceDtcData> response = Response.FromValue(ManagedInstanceDtcData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceDtcResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +216,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets managed instance DTC settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,13 +233,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceDtcResource> Get(DtcName dtcName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Get");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceDtcRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedInstanceDtcData> response = Response.FromValue(ManagedInstanceDtcData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceDtcResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,50 +261,50 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of managed instance DTC settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_ListByManagedInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_ListByManagedInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceDtcResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceDtcResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceDtcResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceDtcRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceDtcRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceDtcResource(Client, ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(e)), _managedInstanceDtcClientDiagnostics, Pipeline, "ManagedInstanceDtcCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ManagedInstanceDtcData, ManagedInstanceDtcResource>(new ManagedInstanceDtcsGetByManagedInstanceAsyncCollectionResultOfT(
+                _managedInstanceDtcsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedInstanceDtcCollection.GetAll"), data => new ManagedInstanceDtcResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of managed instance DTC settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_ListByManagedInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_ListByManagedInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,29 +312,33 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceDtcResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceDtcResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceDtcRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceDtcRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceDtcResource(Client, ManagedInstanceDtcData.DeserializeManagedInstanceDtcData(e)), _managedInstanceDtcClientDiagnostics, Pipeline, "ManagedInstanceDtcCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ManagedInstanceDtcData, ManagedInstanceDtcResource>(new ManagedInstanceDtcsGetByManagedInstanceCollectionResultOfT(
+                _managedInstanceDtcsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedInstanceDtcCollection.GetAll"), data => new ManagedInstanceDtcResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,11 +346,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(DtcName dtcName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Exists");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDtcRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedInstanceDtcData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceDtcData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceDtcData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,20 +382,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,11 +399,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(DtcName dtcName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Exists");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedInstanceDtcRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedInstanceDtcData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceDtcData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceDtcData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -370,20 +435,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,13 +452,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ManagedInstanceDtcResource>> GetIfExistsAsync(DtcName dtcName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.GetIfExists");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceDtcRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedInstanceDtcData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceDtcData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceDtcData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedInstanceDtcResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceDtcResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,20 +492,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstanceDtcs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceDtcs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceDtcResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,13 +509,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ManagedInstanceDtcResource> GetIfExists(DtcName dtcName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.GetIfExists");
+            using DiagnosticScope scope = _managedInstanceDtcsClientDiagnostics.CreateScope("ManagedInstanceDtcCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedInstanceDtcRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceDtcsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dtcName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedInstanceDtcData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceDtcData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceDtcData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedInstanceDtcResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceDtcResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -458,6 +555,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ManagedInstanceDtcResource> IAsyncEnumerable<ManagedInstanceDtcResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ElasticPoolLicenseType : IEquatable<ElasticPoolLicenseType>
     {
         private readonly string _value;
+        /// <summary> LicenseIncluded. </summary>
+        private const string LicenseIncludedValue = "LicenseIncluded";
+        /// <summary> BasePrice. </summary>
+        private const string BasePriceValue = "BasePrice";
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticPoolLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LicenseIncludedValue = "LicenseIncluded";
-        private const string BasePriceValue = "BasePrice";
+            _value = value;
+        }
 
         /// <summary> LicenseIncluded. </summary>
         public static ElasticPoolLicenseType LicenseIncluded { get; } = new ElasticPoolLicenseType(LicenseIncludedValue);
+
         /// <summary> BasePrice. </summary>
         public static ElasticPoolLicenseType BasePrice { get; } = new ElasticPoolLicenseType(BasePriceValue);
+
         /// <summary> Determines if two <see cref="ElasticPoolLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticPoolLicenseType left, ElasticPoolLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticPoolLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticPoolLicenseType left, ElasticPoolLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticPoolLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticPoolLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticPoolLicenseType(string value) => new ElasticPoolLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticPoolLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticPoolLicenseType?(string value) => value == null ? null : new ElasticPoolLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticPoolLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticPoolLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityUsageType : IEquatable<NewRelicObservabilityUsageType>
     {
         private readonly string _value;
+        /// <summary> Usage type is PAYG. </summary>
+        private const string PaygValue = "PAYG";
+        /// <summary> Usage type is COMMITTED. </summary>
+        private const string CommittedValue = "COMMITTED";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUsageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NewRelicObservabilityUsageType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PaygValue = "PAYG";
-        private const string CommittedValue = "COMMITTED";
+            _value = value;
+        }
 
         /// <summary> Usage type is PAYG. </summary>
         public static NewRelicObservabilityUsageType Payg { get; } = new NewRelicObservabilityUsageType(PaygValue);
+
         /// <summary> Usage type is COMMITTED. </summary>
         public static NewRelicObservabilityUsageType Committed { get; } = new NewRelicObservabilityUsageType(CommittedValue);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityUsageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityUsageType left, NewRelicObservabilityUsageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NewRelicObservabilityUsageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityUsageType left, NewRelicObservabilityUsageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityUsageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityUsageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NewRelicObservabilityUsageType(string value) => new NewRelicObservabilityUsageType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NewRelicObservabilityUsageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NewRelicObservabilityUsageType?(string value) => value == null ? null : new NewRelicObservabilityUsageType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityUsageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NewRelicObservabilityUsageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

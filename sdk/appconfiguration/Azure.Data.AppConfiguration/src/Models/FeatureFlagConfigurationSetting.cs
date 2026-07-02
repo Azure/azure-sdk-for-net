@@ -44,9 +44,7 @@ namespace Azure.Data.AppConfiguration
 
         private static readonly string[] s_requiredJsonPropertyNames =
         {
-            "id",
-            "enabled",
-            "conditions"
+            "id"
         };
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="featureId">The identified of the feature flag.</param>
         /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this(featureId, isEnabled, label, default)
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : this(featureId, isEnabled, label, default)
         {
         }
 
@@ -119,7 +117,11 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Gets or sets a description of the feature.
         /// </summary>
-        public string Description
+        /// <remarks>
+        /// This description is stored inside the feature flag's JSON value and is distinct from
+        /// <see cref="ConfigurationSetting.Description"/>, which is a separate service-managed metadata field on the configuration setting.
+        /// </remarks>
+        public new string Description
         {
             get
             {

@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a WorkflowTrigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkflowTriggerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetWorkflowTriggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWorkflowTrigger method.
+    /// A class representing a WorkflowTrigger along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkflowTriggerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWorkflowTriggers method.
     /// </summary>
     public partial class WorkflowTriggerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WorkflowTriggerResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="workflowName"> The workflowName. </param>
-        /// <param name="triggerName"> The triggerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string triggerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _workflowTriggerClientDiagnostics;
-        private readonly WorkflowTriggersRestOperations _workflowTriggerRestClient;
+        private readonly ClientDiagnostics _workflowTriggersClientDiagnostics;
+        private readonly WorkflowTriggers _workflowTriggersRestClient;
         private readonly WorkflowTriggerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/hostruntime/webhooks/api/workflows/triggers";
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowTriggerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkflowTriggerResource for mocking. </summary>
         protected WorkflowTriggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkflowTriggerResource(ArmClient client, WorkflowTriggerData data) : this(client, data.Id)
@@ -56,140 +44,94 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WorkflowTriggerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workflowTriggerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string workflowTriggerApiVersion);
-            _workflowTriggerRestClient = new WorkflowTriggersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workflowTriggerApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _workflowTriggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _workflowTriggersRestClient = new WorkflowTriggers(_workflowTriggersClientDiagnostics, Pipeline, Endpoint, workflowTriggerApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual WorkflowTriggerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string triggerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of WorkflowTriggerHistoryResources in the WorkflowTrigger. </summary>
-        /// <returns> An object representing collection of WorkflowTriggerHistoryResources and their operations over a WorkflowTriggerHistoryResource. </returns>
-        public virtual WorkflowTriggerHistoryCollection GetWorkflowTriggerHistories()
-        {
-            return GetCachedClient(client => new WorkflowTriggerHistoryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a workflow trigger history.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkflowTriggerHistoryResource>> GetWorkflowTriggerHistoryAsync(string historyName, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkflowTriggerHistories().GetAsync(historyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a workflow trigger history.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkflowTriggerHistoryResource> GetWorkflowTriggerHistory(string historyName, CancellationToken cancellationToken = default)
-        {
-            return GetWorkflowTriggerHistories().Get(historyName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a workflow trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WorkflowTriggerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.Get");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.Get");
             scope.Start();
             try
             {
-                var response = await _workflowTriggerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowTriggerData> response = Response.FromValue(WorkflowTriggerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,33 +145,41 @@ namespace Azure.ResourceManager.AppService
         /// Gets a workflow trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkflowTriggerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.Get");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.Get");
             scope.Start();
             try
             {
-                var response = _workflowTriggerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowTriggerData> response = Response.FromValue(WorkflowTriggerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,34 +190,92 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get the callback URL for a workflow trigger.
+        /// Get the trigger schema as JSON.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/listCallbackUrl</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/schemas/json. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_ListCallbackUrl</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_GetSchemaJson. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkflowTriggerCallbackUri>> GetCallbackUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppJsonSchema>> GetSchemaJsonAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUrl");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
             scope.Start();
             try
             {
-                var response = await _workflowTriggerRestClient.ListCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateGetSchemaJsonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WebAppJsonSchema> response = Response.FromValue(WebAppJsonSchema.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the trigger schema as JSON.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/schemas/json. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_GetSchemaJson. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WebAppJsonSchema> GetSchemaJson(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateGetSchemaJsonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WebAppJsonSchema> response = Response.FromValue(WebAppJsonSchema.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -281,31 +289,89 @@ namespace Azure.ResourceManager.AppService
         /// Get the callback URL for a workflow trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/listCallbackUrl</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/listCallbackUrl. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_ListCallbackUrl</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_ListCallbackUrl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkflowTriggerCallbackUri>> GetCallbackUrlAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUrl");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateGetCallbackUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowTriggerCallbackUri> response = Response.FromValue(WorkflowTriggerCallbackUri.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the callback URL for a workflow trigger.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/listCallbackUrl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_ListCallbackUrl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WorkflowTriggerCallbackUri> GetCallbackUrl(CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUrl");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetCallbackUrl");
             scope.Start();
             try
             {
-                var response = _workflowTriggerRestClient.ListCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateGetCallbackUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowTriggerCallbackUri> response = Response.FromValue(WorkflowTriggerCallbackUri.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -319,20 +385,20 @@ namespace Azure.ResourceManager.AppService
         /// Runs a workflow trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/run</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/run. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_Run</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_Run. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,14 +406,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RunAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.Run");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.Run");
             scope.Start();
             try
             {
-                var response = await _workflowTriggerRestClient.RunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_workflowTriggerClientDiagnostics, Pipeline, _workflowTriggerRestClient.CreateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation operation = new AppServiceArmOperation(_workflowTriggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -361,20 +434,20 @@ namespace Azure.ResourceManager.AppService
         /// Runs a workflow trigger.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/run</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/run. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_Run</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggers_Run. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WorkflowTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,14 +455,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Run(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.Run");
+            using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.Run");
             scope.Start();
             try
             {
-                var response = _workflowTriggerRestClient.Run(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(_workflowTriggerClientDiagnostics, Pipeline, _workflowTriggerRestClient.CreateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggersRestClient.CreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation operation = new AppServiceArmOperation(_workflowTriggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -399,80 +479,37 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Get the trigger schema as JSON.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/schemas/json</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_GetSchemaJson</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebAppJsonSchema>> GetSchemaJsonAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of WorkflowTriggerHistories in the <see cref="WorkflowTriggerResource"/>. </summary>
+        /// <returns> An object representing collection of WorkflowTriggerHistories and their operations over a WorkflowTriggerHistoryResource. </returns>
+        public virtual WorkflowTriggerHistoryCollection GetWorkflowTriggerHistories()
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
-            scope.Start();
-            try
-            {
-                var response = await _workflowTriggerRestClient.GetSchemaJsonAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new WorkflowTriggerHistoryCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get the trigger schema as JSON.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/schemas/json</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggers_GetSchemaJson</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a workflow trigger history. </summary>
+        /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebAppJsonSchema> GetSchemaJson(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkflowTriggerHistoryResource>> GetWorkflowTriggerHistoryAsync(string historyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _workflowTriggerClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
-            scope.Start();
-            try
-            {
-                var response = _workflowTriggerRestClient.GetSchemaJson(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
+
+            return await GetWorkflowTriggerHistories().GetAsync(historyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a workflow trigger history. </summary>
+        /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkflowTriggerHistoryResource> GetWorkflowTriggerHistory(string historyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
+
+            return GetWorkflowTriggerHistories().Get(historyName, cancellationToken);
         }
     }
 }

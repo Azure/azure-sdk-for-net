@@ -327,7 +327,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
             },
             TimeGranularity.PerMinute);
 
-        public static UnivariateChangePointDetectionResult ExpectedChangePointResult = AIAnomalyDetectorModelFactory.UnivariateChangePointDetectionResult(
+        public static UnivariateChangePointDetectionResult ExpectedChangePointResult = AnomalyDetectorModelFactory.UnivariateChangePointDetectionResult(
             0,
             new List<bool>
             {

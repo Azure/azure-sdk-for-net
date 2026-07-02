@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Azure.Test;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -57,8 +57,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp);
-            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
+            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp, System.Threading.CancellationToken.None);
+            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
@@ -78,8 +79,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
             // Delete PublicIPAddress
-            var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
-            await deleteOperation.WaitForCompletionResponseAsync();;
+            var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
+            await deleteOperation.WaitForCompletionResponseAsync();
+            ;
 
             // Get PublicIPAddress
             getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
@@ -112,8 +114,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp);
-            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
+            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, publicIp, System.Threading.CancellationToken.None);
+            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
@@ -123,8 +126,9 @@ namespace Azure.ResourceManager.Network.Tests
             reverseFqdn = getPublicIpAddressResponse.Value.Data.DnsSettings.Fqdn;
             getPublicIpAddressResponse.Value.Data.DnsSettings.ReverseFqdn = reverseFqdn;
 
-            putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, getPublicIpAddressResponse.Value.Data);
-            putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
+            putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, publicIpName, getPublicIpAddressResponse.Value.Data, System.Threading.CancellationToken.None);
+            putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
@@ -144,8 +148,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
             // Delete PublicIPAddress
-            var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
-            await deleteOperation.WaitForCompletionResponseAsync();;
+            var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
+            await deleteOperation.WaitForCompletionResponseAsync();
+            ;
 
             // Get PublicIPAddress
             getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
@@ -180,8 +185,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put PublicIPAddress
             var publicIPAddressCollection = resourceGroup.GetPublicIPAddresses();
-            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv6PublicIpName, ipv6PublicIp);
-            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();;
+            var putPublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv6PublicIpName, ipv6PublicIp, System.Threading.CancellationToken.None);
+            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
@@ -204,8 +210,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsNotEmpty(getPublicIpAddressListSubscriptionResponse);
 
             // Delete PublicIPAddress
-            var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
-            await deleteOperation.WaitForCompletionResponseAsync();;
+            var deleteOperation = await getPublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
+            await deleteOperation.WaitForCompletionResponseAsync();
+            ;
 
             // Get PublicIPAddress
             getPublicIpAddressListResponseAP = publicIPAddressCollection.GetAllAsync();
@@ -229,8 +236,9 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put PublicIPAddress
-            var putIpv4PublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv4PublicIpName, ipv4PublicIp);
-            Response<PublicIPAddressResource> putIpv4PublicIpAddressResponse = await putIpv4PublicIpAddressResponseOperation.WaitForCompletionAsync();;
+            var putIpv4PublicIpAddressResponseOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv4PublicIpName, ipv4PublicIp, System.Threading.CancellationToken.None);
+            Response<PublicIPAddressResource> putIpv4PublicIpAddressResponse = await putIpv4PublicIpAddressResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putIpv4PublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
 
             // Get PublicIPAddress
@@ -242,7 +250,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(getIpv4PublicIpAddressResponse.Value.Data.ResourceGuid);
 
             // Delete PublicIPAddress
-            await getIpv4PublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed);
+            await getIpv4PublicIpAddressResponse.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
         }
 
         private static void ArePublicIpAddressesEqual(PublicIPAddressData publicIpAddress1, PublicIPAddressData publicIpAddress2)

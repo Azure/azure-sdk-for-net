@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
+    /// <summary> Indicates whether the Defender plan is enabled on the selected scope. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
     public readonly partial struct SecurityCenterPricingTier : IEquatable<SecurityCenterPricingTier>
     {
         private readonly string _value;
+        /// <summary> Get free Microsoft Defender for Cloud experience with basic security features. </summary>
+        private const string FreeValue = "Free";
+        /// <summary> Get the standard Microsoft Defender for Cloud experience with advanced security features. </summary>
+        private const string StandardValue = "Standard";
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterPricingTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityCenterPricingTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FreeValue = "Free";
-        private const string StandardValue = "Standard";
+            _value = value;
+        }
 
         /// <summary> Get free Microsoft Defender for Cloud experience with basic security features. </summary>
         public static SecurityCenterPricingTier Free { get; } = new SecurityCenterPricingTier(FreeValue);
+
         /// <summary> Get the standard Microsoft Defender for Cloud experience with advanced security features. </summary>
         public static SecurityCenterPricingTier Standard { get; } = new SecurityCenterPricingTier(StandardValue);
+
         /// <summary> Determines if two <see cref="SecurityCenterPricingTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityCenterPricingTier left, SecurityCenterPricingTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityCenterPricingTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityCenterPricingTier left, SecurityCenterPricingTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityCenterPricingTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityCenterPricingTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityCenterPricingTier(string value) => new SecurityCenterPricingTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityCenterPricingTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityCenterPricingTier?(string value) => value == null ? null : new SecurityCenterPricingTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityCenterPricingTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityCenterPricingTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

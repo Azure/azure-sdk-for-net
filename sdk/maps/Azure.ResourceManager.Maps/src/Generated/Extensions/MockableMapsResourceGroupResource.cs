@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMapsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMapsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMapsResourceGroupResource for mocking. </summary>
         protected MockableMapsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMapsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMapsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMapsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of MapsAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
+        /// <summary> Gets a collection of MapsAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MapsAccounts and their operations over a MapsAccountResource. </returns>
         public virtual MapsAccountCollection GetMapsAccounts()
         {
             return GetCachedClient(client => new MapsAccountCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// Get a Maps Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MapsAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Maps.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<MapsAccountResource>> GetMapsAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return await GetMapsAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// Get a Maps Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MapsAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Maps.Mocking
         [ForwardsClientCalls]
         public virtual Response<MapsAccountResource> GetMapsAccount(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return GetMapsAccounts().Get(accountName, cancellationToken);
         }
     }

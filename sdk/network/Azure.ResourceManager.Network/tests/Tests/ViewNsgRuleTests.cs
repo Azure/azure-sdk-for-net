@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.Network.Tests
             // Add a security rule
             var securityRule = new SecurityRuleData()
             {
-                Name = securityRule1,
                 Access = SecurityRuleAccess.Deny,
                 Description = "Test outbound security rule",
                 DestinationAddressPrefix = "*",
@@ -73,12 +72,14 @@ namespace Azure.ResourceManager.Network.Tests
             var networkSecurityGroupCollection = GetNetworkSecurityGroupCollection(resourceGroupName);
             Response<NetworkSecurityGroupResource> nsg = await networkSecurityGroupCollection.GetAsync(resourceGroupName, networkSecurityGroupName);
             nsg.Value.Data.SecurityRules.Add(securityRule);
-            var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, nsg.Value.Data);
-            Response<NetworkSecurityGroupResource> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();;
+            var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, nsg.Value.Data, System.Threading.CancellationToken.None);
+            Response<NetworkSecurityGroupResource> networkSecurityGroup = await createOrUpdateOperation.WaitForCompletionAsync();
+            ;
 
             //Get view security group rules
-            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVmSecurityRulesAsync(WaitUntil.Completed, new SecurityGroupViewContent(vm.Id));
-            Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();;
+            var viewNSGRulesOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.GetVmSecurityRulesAsync(WaitUntil.Completed, new SecurityGroupViewContent(vm.Id), System.Threading.CancellationToken.None);
+            Response<SecurityGroupViewResult> viewNSGRules = await viewNSGRulesOperation.WaitForCompletionAsync();
+            ;
 
             //Verify effective security rule defined earlier
             IEnumerable<EffectiveNetworkSecurityRule> getEffectiveSecurityRule = viewNSGRules.Value.NetworkInterfaces.FirstOrDefault().SecurityRuleAssociations.EffectiveSecurityRules.Where(x => x.Name == "UserRule_" + securityRule1);

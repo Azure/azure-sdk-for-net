@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.Search simplifies declarative resource provisioning in .NET.</Description>
+    <Version>1.1.0-beta.3</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <!-- Temporarily add this because this is blocking releases https://github.com/Azure/azure-sdk-for-net/issues/54387 -->
+    <ApiCompatBaselineTargetFramework>netstandard2.0</ApiCompatBaselineTargetFramework>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Generated\Models\SearchBypass.cs" />
+    <Compile Remove="Generated\Models\SearchEncryptionWithCmkEnforcement.cs" />
+  </ItemGroup>
+
+  <!-- TODO: Consider adding DataPlane dependencies here like:
+  <ItemGroup>
+    <PackageReference Include="Azure.Search.Documents" />
+  </ItemGroup>
+  -->
+</Project>

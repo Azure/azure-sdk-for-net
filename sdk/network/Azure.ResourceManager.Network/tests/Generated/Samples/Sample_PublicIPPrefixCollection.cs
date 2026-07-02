@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPPrefixAllocationMethod()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixCreateCustomizedValues.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixCreateCustomizedValues.json
             // this example is just showing the usage of "PublicIPPrefixes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,14 +45,13 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Sku = new PublicIPPrefixSku
                 {
-                    Name = PublicIPPrefixSkuName.Standard,
                     Tier = PublicIPPrefixSkuTier.Regional,
                 },
                 PublicIPAddressVersion = NetworkIPVersion.IPv4,
                 PrefixLength = 30,
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<PublicIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPPrefixName, data);
+            ArmOperation<PublicIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPPrefixName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPPrefixResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPPrefixDefaults()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixCreateDefaults.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixCreateDefaults.json
             // this example is just showing the usage of "PublicIPPrefixes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,12 +89,11 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Sku = new PublicIPPrefixSku
                 {
-                    Name = PublicIPPrefixSkuName.Standard,
                 },
                 PrefixLength = 30,
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<PublicIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPPrefixName, data);
+            ArmOperation<PublicIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPPrefixName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPPrefixResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPPrefixDefaultsWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixCreateDefaultsStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixCreateDefaultsStandardV2Sku.json
             // this example is just showing the usage of "PublicIPPrefixes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,12 +131,11 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Sku = new PublicIPPrefixSku
                 {
-                    Name = PublicIPPrefixSkuName.StandardV2,
                 },
                 PrefixLength = 30,
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<PublicIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPPrefixName, data);
+            ArmOperation<PublicIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPPrefixName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPPrefixResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPublicIPPrefix()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixGet.json
             // this example is just showing the usage of "PublicIPPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +182,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPublicIPPrefixWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixGetStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixGetStandardV2Sku.json
             // this example is just showing the usage of "PublicIPPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -218,7 +215,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListResourceGroupPublicIPPrefixes()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixList.json
             // this example is just showing the usage of "PublicIPPrefixes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -253,7 +250,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPublicIPPrefix()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixGet.json
             // this example is just showing the usage of "PublicIPPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -282,7 +279,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPublicIPPrefixWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixGetStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixGetStandardV2Sku.json
             // this example is just showing the usage of "PublicIPPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -311,7 +308,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPublicIPPrefix()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixGet.json
             // this example is just showing the usage of "PublicIPPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -352,7 +349,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPublicIPPrefixWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpPrefixGetStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpPrefixGetStandardV2Sku.json
             // this example is just showing the usage of "PublicIPPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

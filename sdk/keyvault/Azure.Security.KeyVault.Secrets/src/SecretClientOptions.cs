@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -87,25 +89,23 @@ namespace Azure.Security.KeyVault.Secrets
             this.ConfigureLogging();
         }
 
+        [Experimental("SCME0002")]
+        internal SecretClientOptions(IConfigurationSection section)
+            : base(section, null)
+        {
+            Version = LatestVersion;
+
+            if (bool.TryParse(section["DisableChallengeResourceVerification"], out bool disableChallengeResourceVerification))
+            {
+                DisableChallengeResourceVerification = disableChallengeResourceVerification;
+            }
+
+            this.ConfigureLogging();
+        }
+
         /// <summary>
         /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault domain.
         /// </summary>
         public bool DisableChallengeResourceVerification { get; set; }
-
-        internal string GetVersionString()
-        {
-            return Version switch
-            {
-                ServiceVersion.V7_0 => "7.0",
-                ServiceVersion.V7_1 => "7.1",
-                ServiceVersion.V7_2 => "7.2",
-                ServiceVersion.V7_3 => "7.3",
-                ServiceVersion.V7_4 => "7.4",
-                ServiceVersion.V7_5 => "7.5",
-                ServiceVersion.V7_6 => "7.6",
-                ServiceVersion.V2025_07_01 => "2025-07-01",
-                _ => throw new ArgumentException(Version.ToString()),
-            };
-        }
     }
 }

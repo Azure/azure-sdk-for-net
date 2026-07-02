@@ -161,7 +161,11 @@ namespace Azure.Security.Attestation
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
                 foreach (var certificate in Header.X509CertificateChain)
                 {
+#if NET9_0_OR_GREATER
+                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(certificate)));
+#else
                     certificates.Add(new X509Certificate2(certificate));
+#endif
                 }
                 return certificates.ToArray();
             }
@@ -428,7 +432,11 @@ namespace Azure.Security.Attestation
             int i = 0;
             foreach (var base64Cert in base64certificates)
             {
+#if NET9_0_OR_GREATER
+                jwkCertificates[i] = X509CertificateLoader.LoadCertificate(Convert.FromBase64String(base64Cert));
+#else
                 jwkCertificates[i] = new X509Certificate2(Convert.FromBase64String(base64Cert));
+#endif
                 i += 1;
             }
             return jwkCertificates;

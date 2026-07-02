@@ -7,51 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
     /// <summary> Model representing the result of the export dependencies asynchronous operation. </summary>
     public partial class ExportDependenciesOperationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportDependenciesOperationResult"/>. </summary>
         /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal ExportDependenciesOperationResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
         }
 
@@ -63,8 +32,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="properties"> Properties for export dependencies. These should only be set if the status is Succeeded. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesOperationResult(string id, string name, string status, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, ExportDependenciesResultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDependenciesOperationResult(string id, string name, string status, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, ExportDependenciesResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -73,26 +42,27 @@ namespace Azure.ResourceManager.DependencyMap.Models
             StartOn = startOn;
             EndOn = endOn;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesOperationResult"/> for deserialization. </summary>
-        internal ExportDependenciesOperationResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status URL of export dependencies operation. </summary>
         public string Id { get; }
+
         /// <summary> The resource name of the operation status. It must match the last segment of 'id' field. </summary>
         public string Name { get; }
+
         /// <summary> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </summary>
         public string Status { get; }
+
         /// <summary> Contains error details if status is Failed/Canceled. </summary>
         public ResponseError Error { get; }
+
         /// <summary> The start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The end time of the operation. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> Properties for export dependencies. These should only be set if the status is Succeeded. </summary>
         public ExportDependenciesResultProperties Properties { get; }
     }

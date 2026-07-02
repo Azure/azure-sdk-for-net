@@ -48,6 +48,10 @@ extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
+      - task: UseNode@1
+        displayName: 'Install Node.js 22.x'
+        inputs:
+          version: '22.x'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
     EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
@@ -73,7 +77,11 @@ extends:
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
-      RegenerationJobCount: 5
+      # Workaround: keep regen groups small enough to avoid the public release
+      # pipeline's 1-hour timeout. Some packages take much longer than most
+      # packages and should be optimized eventually; the shared matrix generator
+      # only supports count-based batching, not per-package isolation.
+      RegenerationJobCount: 18
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
     TestMatrix:

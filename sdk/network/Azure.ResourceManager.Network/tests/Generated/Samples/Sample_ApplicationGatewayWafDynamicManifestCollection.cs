@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsWAFDefaultManifest()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/GetApplicationGatewayWafDynamicManifestsDefault.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/GetApplicationGatewayWafDynamicManifestsDefault.json
             // this example is just showing the usage of "ApplicationGatewayWafDynamicManifestsDefault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            ApplicationGatewayWafDynamicManifestResource result = await collection.GetAsync();
+            ApplicationGatewayWafDynamicManifestResource result = await collection.GetAsync("default");
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsWAFManifests()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/GetApplicationGatewayWafDynamicManifests.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/GetApplicationGatewayWafDynamicManifests.json
             // this example is just showing the usage of "ApplicationGatewayWafDynamicManifests_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsWAFDefaultManifest()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/GetApplicationGatewayWafDynamicManifestsDefault.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/GetApplicationGatewayWafDynamicManifestsDefault.json
             // this example is just showing the usage of "ApplicationGatewayWafDynamicManifestsDefault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            bool result = await collection.ExistsAsync();
+            bool result = await collection.ExistsAsync("default");
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsWAFDefaultManifest()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/GetApplicationGatewayWafDynamicManifestsDefault.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/GetApplicationGatewayWafDynamicManifestsDefault.json
             // this example is just showing the usage of "ApplicationGatewayWafDynamicManifestsDefault_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayWafDynamicManifestCollection collection = subscriptionResource.GetApplicationGatewayWafDynamicManifests(location);
 
             // invoke the operation
-            NullableResponse<ApplicationGatewayWafDynamicManifestResource> response = await collection.GetIfExistsAsync();
+            NullableResponse<ApplicationGatewayWafDynamicManifestResource> response = await collection.GetIfExistsAsync("default");
             ApplicationGatewayWafDynamicManifestResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

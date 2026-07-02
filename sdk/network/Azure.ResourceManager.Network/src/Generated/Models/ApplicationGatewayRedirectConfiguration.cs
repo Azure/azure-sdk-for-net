@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,76 +19,99 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRedirectConfiguration"/>. </summary>
         public ApplicationGatewayRedirectConfiguration()
         {
-            RequestRoutingRules = new ChangeTrackingList<WritableSubResource>();
-            UrlPathMaps = new ChangeTrackingList<WritableSubResource>();
-            PathRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRedirectConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="redirectType"> HTTP redirection type. </param>
-        /// <param name="targetListener"> Reference to a listener to redirect the request to. </param>
-        /// <param name="targetUri"> Url to redirect the request to. </param>
-        /// <param name="includePath"> Include path in the redirected url. </param>
-        /// <param name="includeQueryString"> Include query string in the redirected url. </param>
-        /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
-        /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
-        /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway redirect configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayRedirectConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RedirectType = redirectType;
-            TargetListener = targetListener;
-            TargetUri = targetUri;
-            IncludePath = includePath;
-            IncludeQueryString = includeQueryString;
-            RequestRoutingRules = requestRoutingRules;
-            UrlPathMaps = urlPathMaps;
-            PathRules = pathRules;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway redirect configuration. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayRedirectConfigurationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> HTTP redirection type. </summary>
         [WirePath("properties.redirectType")]
-        public ApplicationGatewayRedirectType? RedirectType { get; set; }
-        /// <summary> Reference to a listener to redirect the request to. </summary>
-        internal WritableSubResource TargetListener { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.targetListener.id")]
-        public ResourceIdentifier TargetListenerId
+        public ApplicationGatewayRedirectType? RedirectType
         {
-            get => TargetListener is null ? default : TargetListener.Id;
+            get
+            {
+                return Properties is null ? default : Properties.RedirectType;
+            }
             set
             {
-                if (TargetListener is null)
-                    TargetListener = new WritableSubResource();
-                TargetListener.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                Properties.RedirectType = value;
             }
         }
 
-        /// <summary> Url to redirect the request to. </summary>
-        [WirePath("properties.targetUrl")]
-        public Uri TargetUri { get; set; }
         /// <summary> Include path in the redirected url. </summary>
         [WirePath("properties.includePath")]
-        public bool? IncludePath { get; set; }
+        public bool? IncludePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                Properties.IncludePath = value;
+            }
+        }
+
         /// <summary> Include query string in the redirected url. </summary>
         [WirePath("properties.includeQueryString")]
-        public bool? IncludeQueryString { get; set; }
-        /// <summary> Request routing specifying redirect configuration. </summary>
-        [WirePath("properties.requestRoutingRules")]
-        public IList<WritableSubResource> RequestRoutingRules { get; }
-        /// <summary> Url path maps specifying default redirect configuration. </summary>
-        [WirePath("properties.urlPathMaps")]
-        public IList<WritableSubResource> UrlPathMaps { get; }
-        /// <summary> Path rules specifying redirect configuration. </summary>
-        [WirePath("properties.pathRules")]
-        public IList<WritableSubResource> PathRules { get; }
+        public bool? IncludeQueryString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludeQueryString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                Properties.IncludeQueryString = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.targetListener.id")]
+        public ResourceIdentifier TargetListenerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetListenerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRedirectConfigurationPropertiesFormat();
+                }
+                Properties.TargetListenerId = value;
+            }
+        }
     }
 }

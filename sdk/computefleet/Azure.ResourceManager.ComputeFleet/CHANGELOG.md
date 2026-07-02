@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2026-06-18)
+
+### Features Added
+- Upgraded api-version to 2026-04-01-preview.
+- Added `VmNamePrefix` property to `ComputeFleetProperties` for specifying a virtual machine name prefix; only valid when `Mode` is `Launch`.
+- Added `ComputeFleetVmOperationStatus.Launching` enum value.
+
+### Breaking Changes
+- Renamed `ComputeFleetMode.Instance` to `ComputeFleetMode.Launch` to align with the updated service terminology.
+- Removed `ComputeFleetVmOperationStatus.Canceled` and `ComputeFleetVmOperationStatus.CancelFailedStatusUnknown` enum values.
+- Removed `Cancel` and `CancelAsync` operations from `ComputeFleetResource`.
+
+## 1.1.0-beta.1 (2026-04-21)
+
+### Features Added
+
+- Upgraded api-version to 2025-07-01-preview.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.0.0 (2024-10-22)
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRuleCollectionGroupDraft()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyRuleCollectionGroupDraftGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyRuleCollectionGroupDraftGet.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroupDrafts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteFirewallRuleCollectionGroupDraft()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyRuleCollectionGroupDraftDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyRuleCollectionGroupDraftDelete.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroupDrafts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             FirewallPolicyRuleCollectionGroupDraftResource firewallPolicyRuleCollectionGroupDraft = client.GetFirewallPolicyRuleCollectionGroupDraftResource(firewallPolicyRuleCollectionGroupDraftResourceId);
 
             // invoke the operation
-            await firewallPolicyRuleCollectionGroupDraft.DeleteAsync(WaitUntil.Completed);
+            await firewallPolicyRuleCollectionGroupDraft.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateRuleCollectionGroupDraft()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyRuleCollectionGroupDraftPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyRuleCollectionGroupDraftPut.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroupDrafts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,13 +108,11 @@ IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp},
 SourceAddresses = {"10.1.25.0/24"},
 DestinationAddresses = {"*"},
 DestinationPorts = {"*"},
-Name = "network-rule1",
 }},
-Name = "Example-Filter-Rule-Collection",
 Priority = 100,
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupDraftResource> lro = await firewallPolicyRuleCollectionGroupDraft.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupDraftResource> lro = await firewallPolicyRuleCollectionGroupDraft.CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupDraftResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

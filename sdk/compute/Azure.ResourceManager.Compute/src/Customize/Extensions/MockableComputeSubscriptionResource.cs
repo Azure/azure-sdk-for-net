@@ -4,17 +4,16 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableComputeSubscriptionResource : ArmResource
     {
         /// <summary>
@@ -93,12 +92,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImagesAsync(options, cancellationToken);
+            return GetVirtualMachineImagesAsync(location.Name, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -131,82 +125,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImages(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a virtual machine image in an edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="version"> A valid image SKU version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
-
-            return await GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a virtual machine image in an edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="version"> A valid image SKU version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
-
-            return GetVirtualMachineImagesEdgeZone(options, cancellationToken);
+            return GetVirtualMachineImages(location.Name, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -241,12 +160,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImagesEdgeZonesAsync(options, cancellationToken);
+            return GetVirtualMachineImagesEdgeZonesAsync(location.Name, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -281,12 +195,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return GetVirtualMachineImagesEdgeZones(options, cancellationToken);
+            return GetVirtualMachineImagesEdgeZones(location.Name, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -347,6 +256,222 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(CapacityReservationGroupGetExpand? expand, CancellationToken cancellationToken)
         {
             return GetCapacityReservationGroups(expand, null, cancellationToken); // we just redirect the call to its latest version without the extra parameter
+        }
+
+        // these methods were added back here because they are previously generated as a resource, but now they are no longer resources
+        /// <summary> Gets a collection of CommunityGalleryResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual CommunityGalleryCollection GetCommunityGalleries()
+        {
+            return GetCachedClient(client => new CommunityGalleryCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            return await GetCommunityGalleries().GetAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a community gallery by gallery public name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="publicGalleryName"> The public name of the community gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CommunityGalleryResource> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        {
+            return GetCommunityGalleries().Get(location, publicGalleryName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual SharedGalleryCollection GetSharedGalleries(AzureLocation location)
+        {
+            return new SharedGalleryCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            return await GetSharedGalleries(location).GetAsync(galleryUniqueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a shared gallery by subscription id or tenant id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedGalleryResource> GetSharedGallery(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        {
+            return GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
+        }
+
+        // Backward-compat overloads that accept the legacy "*Options" bag types.
+        // The new TypeSpec generator no longer emits option-bag overloads (it produces
+        // a single multi-parameter method instead), but the previous public surface
+        // exposed bag-accepting versions of these methods. These overloads forward to
+        // the multi-parameter generated implementation to preserve source compatibility.
+
+        /// <summary> Gets a list of virtual machine images. </summary>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImages(options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images. </summary>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImagesAsync(options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby, cancellationToken);
+        }
+
+        /// <summary> Gets a virtual machine image in an edge zone. </summary>
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImagesEdgeZone(options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Version, cancellationToken);
+        }
+
+        /// <summary> Gets a virtual machine image in an edge zone. </summary>
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return await GetVirtualMachineImagesEdgeZoneAsync(options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a list of virtual machine images in an edge zone. </summary>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImagesEdgeZones(options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images in an edge zone. </summary>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImagesEdgeZonesAsync(options.Location, options.EdgeZone, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images with their detailed properties. </summary>
+        public virtual Pageable<VirtualMachineImage> GetVirtualMachineImagesWithProperties(SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImagesWithProperties(options.Location, options.PublisherName, options.Offer, options.Skus, options.GetExpandValue(), options.Top, options.Orderby, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images with their detailed properties. </summary>
+        public virtual AsyncPageable<VirtualMachineImage> GetVirtualMachineImagesWithPropertiesAsync(SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            return GetVirtualMachineImagesWithPropertiesAsync(options.Location, options.PublisherName, options.Offer, options.Skus, options.GetExpandValue(), options.Top, options.Orderby, cancellationToken);
         }
     }
 }

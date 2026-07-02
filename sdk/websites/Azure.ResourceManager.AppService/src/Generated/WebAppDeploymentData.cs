@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WebAppDeployment data model.
-    /// User credentials used for publishing activity.
-    /// </summary>
+    /// <summary> User credentials used for publishing activity. </summary>
     public partial class WebAppDeploymentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppDeploymentData"/>. </summary>
         public WebAppDeploymentData()
@@ -56,65 +25,188 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppDeploymentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> Deployment status. </param>
-        /// <param name="message"> Details about deployment status. </param>
-        /// <param name="author"> Who authored the deployment. </param>
-        /// <param name="deployer"> Who performed the deployment. </param>
-        /// <param name="authorEmail"> Author email. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
-        /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
-        /// <param name="details"> Details on deployment. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Deployment resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeploymentProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Status = status;
-            Message = message;
-            Author = author;
-            Deployer = deployer;
-            AuthorEmail = authorEmail;
-            StartOn = startOn;
-            EndOn = endOn;
-            IsActive = isActive;
-            Details = details;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Deployment status. </summary>
-        [WirePath("properties.status")]
-        public int? Status { get; set; }
-        /// <summary> Details about deployment status. </summary>
-        [WirePath("properties.message")]
-        public string Message { get; set; }
-        /// <summary> Who authored the deployment. </summary>
-        [WirePath("properties.author")]
-        public string Author { get; set; }
-        /// <summary> Who performed the deployment. </summary>
-        [WirePath("properties.deployer")]
-        public string Deployer { get; set; }
-        /// <summary> Author email. </summary>
-        [WirePath("properties.author_email")]
-        public string AuthorEmail { get; set; }
-        /// <summary> Start time. </summary>
-        [WirePath("properties.start_time")]
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time. </summary>
-        [WirePath("properties.end_time")]
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
-        [WirePath("properties.active")]
-        public bool? IsActive { get; set; }
-        /// <summary> Details on deployment. </summary>
-        [WirePath("properties.details")]
-        public string Details { get; set; }
+        /// <summary> Deployment resource specific properties. </summary>
+        [WirePath("properties")]
+        internal DeploymentProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Deployment status. </summary>
+        [WirePath("properties.status")]
+        public int? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
+        /// <summary> Details about deployment status. </summary>
+        [WirePath("properties.message")]
+        public string Message
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Message;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.Message = value;
+            }
+        }
+
+        /// <summary> Who authored the deployment. </summary>
+        [WirePath("properties.author")]
+        public string Author
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Author;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.Author = value;
+            }
+        }
+
+        /// <summary> Who performed the deployment. </summary>
+        [WirePath("properties.deployer")]
+        public string Deployer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Deployer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.Deployer = value;
+            }
+        }
+
+        /// <summary> Author email. </summary>
+        [WirePath("properties.author_email")]
+        public string AuthorEmail
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorEmail;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.AuthorEmail = value;
+            }
+        }
+
+        /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.StartOn = value;
+            }
+        }
+
+        /// <summary> End time. </summary>
+        [WirePath("properties.end_time")]
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.EndOn = value;
+            }
+        }
+
+        /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
+        [WirePath("properties.active")]
+        public bool? IsActive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsActive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.IsActive = value;
+            }
+        }
+
+        /// <summary> Details on deployment. </summary>
+        [WirePath("properties.details")]
+        public string Details
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Details;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeploymentProperties();
+                }
+                Properties.Details = value;
+            }
+        }
     }
 }

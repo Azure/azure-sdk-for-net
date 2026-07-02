@@ -153,7 +153,7 @@ namespace Azure.Core.Amqp
                 AmqpMessageSection.ApplicationProperties => (_applicationProperties != null),
                 AmqpMessageSection.Body => (Body != null),
                 AmqpMessageSection.Footer => (_footer != null),
-                _ => throw new ArgumentException($"Unknown AMQP message section: { section }.", nameof(section))
+                _ => throw new ArgumentException($"Unknown AMQP message section: {section}.", nameof(section))
             };
 
         /// <summary>

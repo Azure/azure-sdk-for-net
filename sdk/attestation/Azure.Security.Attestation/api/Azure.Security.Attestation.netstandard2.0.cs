@@ -55,6 +55,7 @@ namespace Azure.Security.Attestation
         public static Azure.Security.Attestation.AttestationResult AttestationResult(string jti = null, string issuer = null, System.DateTimeOffset issuedAt = default(System.DateTimeOffset), System.DateTimeOffset expiration = default(System.DateTimeOffset), System.DateTimeOffset notBefore = default(System.DateTimeOffset), object cnf = null, string nonce = null, string version = null, object runtimeClaims = null, object inittimeClaims = null, object policyClaims = null, string verifierType = null, Azure.Security.Attestation.AttestationSigner policySigner = null, System.BinaryData policyHash = null, bool? isDebuggable = default(bool?), float? productId = default(float?), string mrEnclave = null, string mrSigner = null, float? svn = default(float?), System.BinaryData enclaveHeldData = null, object sgxCollateral = null, string deprecatedVersion = null, bool? deprecatedIsDebuggable = default(bool?), object deprecatedSgxCollateral = null, System.BinaryData deprecatedEnclaveHeldData = null, System.BinaryData deprecatedEnclaveHeldData2 = null, float? deprecatedProductId = default(float?), string deprecatedMrEnclave = null, string deprecatedMrSigner = null, float? deprecatedSvn = default(float?), string deprecatedTee = null, Azure.Security.Attestation.AttestationSigner deprecatedPolicySigner = null, System.BinaryData deprecatedPolicyHash = null, string deprecatedRpData = null) { throw null; }
         public static Azure.Security.Attestation.PolicyCertificatesModificationResult PolicyCertificatesModificationResult(Azure.Security.Attestation.PolicyCertificateResolution certificateResolution, string certificateThumbprint) { throw null; }
         public static Azure.Security.Attestation.PolicyModificationResult PolicyModificationResult(Azure.Security.Attestation.PolicyModification policyModification, string policyHash, Azure.Security.Attestation.AttestationSigner signer) { throw null; }
+        public static Azure.Security.Attestation.TpmAttestationResponse TpmAttestationResponse(System.BinaryData data) { throw null; }
     }
     public partial class AttestationRequest
     {
@@ -75,43 +76,30 @@ namespace Azure.Security.Attestation
     {
         internal AttestationResult() { }
         public object Confirmation { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedEnclaveHeldData is deprecated, use EnclaveHeldData instead")]
         public System.BinaryData DeprecatedEnclaveHeldData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedEnclaveHeldData2 is deprecated, use EnclaveHeldData instead")]
         public System.BinaryData DeprecatedEnclaveHeldData2 { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedIsDebuggable is deprecated, use IsDebuggable instead")]
         public bool? DeprecatedIsDebuggable { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedMrEnclave is deprecated, use MrEnclave instead")]
         public string DeprecatedMrEnclave { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedMrSigner is deprecated, use MrSigner instead")]
         public string DeprecatedMrSigner { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedPolicyHash is deprecated, use PolicyHash instead")]
         public System.BinaryData DeprecatedPolicyHash { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedPolicySigner is deprecated, use PolicySigner instead")]
         public Azure.Security.Attestation.AttestationSigner DeprecatedPolicySigner { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedProductId is deprecated, use ProductId instead")]
         public float? DeprecatedProductId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedRpData is deprecated, use Nonce instead")]
         public string DeprecatedRpData { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedSgxCollateral is deprecated, use SgxCollateral instead")]
         public object DeprecatedSgxCollateral { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedSvn is deprecated, use Svn instead")]
         public float? DeprecatedSvn { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedTee is deprecated, use Tee instead")]
         public string DeprecatedTee { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("DeprecatedVersion is deprecated, use Version instead")]
         public string DeprecatedVersion { get { throw null; } }
         public System.BinaryData EnclaveHeldData { get { throw null; } }
@@ -214,9 +202,7 @@ namespace Azure.Security.Attestation
         public static Azure.Security.Attestation.AttestationType SgxEnclave { get { throw null; } }
         public static Azure.Security.Attestation.AttestationType Tpm { get { throw null; } }
         public bool Equals(Azure.Security.Attestation.AttestationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
         public static implicit operator Azure.Security.Attestation.AttestationType (string value) { throw null; }
@@ -232,9 +218,7 @@ namespace Azure.Security.Attestation
         public static Azure.Security.Attestation.PolicyCertificateResolution IsAbsent { get { throw null; } }
         public static Azure.Security.Attestation.PolicyCertificateResolution IsPresent { get { throw null; } }
         public bool Equals(Azure.Security.Attestation.PolicyCertificateResolution other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.Attestation.PolicyCertificateResolution left, Azure.Security.Attestation.PolicyCertificateResolution right) { throw null; }
         public static implicit operator Azure.Security.Attestation.PolicyCertificateResolution (string value) { throw null; }
@@ -256,9 +240,7 @@ namespace Azure.Security.Attestation
         public static Azure.Security.Attestation.PolicyModification Removed { get { throw null; } }
         public static Azure.Security.Attestation.PolicyModification Updated { get { throw null; } }
         public bool Equals(Azure.Security.Attestation.PolicyModification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Security.Attestation.PolicyModification left, Azure.Security.Attestation.PolicyModification right) { throw null; }
         public static implicit operator Azure.Security.Attestation.PolicyModification (string value) { throw null; }

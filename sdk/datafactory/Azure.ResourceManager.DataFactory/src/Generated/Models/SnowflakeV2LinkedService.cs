@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,16 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> The name of the Snowflake database. </param>
         /// <param name="warehouse"> The name of the Snowflake warehouse. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountIdentifier"/>, <paramref name="database"/> or <paramref name="warehouse"/> is null. </exception>
-        public SnowflakeV2LinkedService(DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> database, DataFactoryElement<string> warehouse)
+        public SnowflakeV2LinkedService(DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> database, DataFactoryElement<string> warehouse) : base("SnowflakeV2")
         {
             Argument.AssertNotNull(accountIdentifier, nameof(accountIdentifier));
             Argument.AssertNotNull(database, nameof(database));
             Argument.AssertNotNull(warehouse, nameof(warehouse));
 
-            AccountIdentifier = accountIdentifier;
-            Database = database;
-            Warehouse = warehouse;
-            LinkedServiceType = "SnowflakeV2";
+            TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties(accountIdentifier, database, warehouse);
         }
 
         /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/>. </summary>
@@ -38,80 +36,237 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="accountIdentifier"> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </param>
-        /// <param name="user"> The name of the Snowflake user. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
-        /// <param name="database"> The name of the Snowflake database. </param>
-        /// <param name="warehouse"> The name of the Snowflake warehouse. </param>
-        /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
-        /// <param name="clientId"> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
-        /// <param name="clientSecret"> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </param>
-        /// <param name="tenantId"> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
-        /// <param name="scope"> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
-        /// <param name="privateKey"> The Azure key vault secret reference of privateKey for KeyPair auth. </param>
-        /// <param name="privateKeyPassphrase"> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </param>
-        /// <param name="role"> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </param>
-        /// <param name="host"> The host name of the Snowflake account. Type: string (or Expression with resultType string). </param>
-        /// <param name="schema"> Schema name for connection. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SnowflakeV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecret privateKey, DataFactorySecret privateKeyPassphrase, DataFactoryElement<string> role, DataFactoryElement<string> host, DataFactoryElement<string> schema, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Snowflake linked service properties. </param>
+        /// <param name="password"></param>
+        internal SnowflakeV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SnowflakeLinkedV2ServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            AccountIdentifier = accountIdentifier;
-            User = user;
+            TypeProperties = typeProperties;
             Password = password;
-            Database = database;
-            Warehouse = warehouse;
-            AuthenticationType = authenticationType;
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            TenantId = tenantId;
-            Scope = scope;
-            PrivateKey = privateKey;
-            PrivateKeyPassphrase = privateKeyPassphrase;
-            Role = role;
-            Host = host;
-            Schema = schema;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "SnowflakeV2";
         }
 
-        /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/> for deserialization. </summary>
-        internal SnowflakeV2LinkedService()
-        {
-        }
+        /// <summary> Snowflake linked service properties. </summary>
+        internal SnowflakeLinkedV2ServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </summary>
-        public DataFactoryElement<string> AccountIdentifier { get; set; }
+        public DataFactoryElement<string> AccountIdentifier
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccountIdentifier;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.AccountIdentifier = value;
+            }
+        }
+
         /// <summary> The name of the Snowflake user. </summary>
-        public DataFactoryElement<string> User { get; set; }
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> User
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.User;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.User = value;
+            }
+        }
+
         /// <summary> The name of the Snowflake database. </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> The name of the Snowflake warehouse. </summary>
-        public DataFactoryElement<string> Warehouse { get; set; }
+        public DataFactoryElement<string> Warehouse
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Warehouse;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.Warehouse = value;
+            }
+        }
+
         /// <summary> The type used for authentication. Type: string. </summary>
-        public SnowflakeAuthenticationType? AuthenticationType { get; set; }
+        public SnowflakeAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
-        public DataFactoryElement<string> ClientId { get; set; }
-        /// <summary> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </summary>
-        public DataFactorySecret ClientSecret { get; set; }
+        public DataFactoryElement<string> ClientId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.ClientId = value;
+            }
+        }
+
         /// <summary> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
-        public DataFactoryElement<string> TenantId { get; set; }
+        public DataFactoryElement<string> TenantId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TenantId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.TenantId = value;
+            }
+        }
+
         /// <summary> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
-        public DataFactoryElement<string> Scope { get; set; }
-        /// <summary> The Azure key vault secret reference of privateKey for KeyPair auth. </summary>
-        public DataFactorySecret PrivateKey { get; set; }
-        /// <summary> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </summary>
-        public DataFactorySecret PrivateKeyPassphrase { get; set; }
+        public DataFactoryElement<string> Scope
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Scope;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.Scope = value;
+            }
+        }
+
         /// <summary> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Role { get; set; }
+        public DataFactoryElement<string> Role
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Role;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.Role = value;
+            }
+        }
+
         /// <summary> The host name of the Snowflake account. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Schema { get; set; }
+        public DataFactoryElement<string> Schema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Schema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.Schema = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
+        /// <summary> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </summary>
+        public DataFactoryElement<bool> UseUtcTimestamps
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UseUtcTimestamps;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SnowflakeLinkedV2ServiceTypeProperties();
+                }
+                TypeProperties.UseUtcTimestamps = value;
+            }
+        }
     }
 }

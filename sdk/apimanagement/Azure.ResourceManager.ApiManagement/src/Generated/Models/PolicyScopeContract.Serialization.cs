@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class PolicyScopeContractExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PolicyScopeContract value) => value switch
         {
             PolicyScopeContract.Tenant => "Tenant",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PolicyScopeContract value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PolicyScopeContract ToPolicyScopeContract(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tenant")) return PolicyScopeContract.Tenant;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Product")) return PolicyScopeContract.Product;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Api")) return PolicyScopeContract.Api;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Operation")) return PolicyScopeContract.Operation;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return PolicyScopeContract.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tenant"))
+            {
+                return PolicyScopeContract.Tenant;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Product"))
+            {
+                return PolicyScopeContract.Product;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Api"))
+            {
+                return PolicyScopeContract.Api;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Operation"))
+            {
+                return PolicyScopeContract.Operation;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All"))
+            {
+                return PolicyScopeContract.All;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PolicyScopeContract value.");
         }
     }

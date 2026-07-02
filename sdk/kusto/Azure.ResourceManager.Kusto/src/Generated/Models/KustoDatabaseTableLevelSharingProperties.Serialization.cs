@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoDatabaseTableLevelSharingProperties : IUtf8JsonSerializable, IJsonModel<KustoDatabaseTableLevelSharingProperties>
+    /// <summary> Tables that will be included and excluded in the follower database. </summary>
+    public partial class KustoDatabaseTableLevelSharingProperties : IJsonModel<KustoDatabaseTableLevelSharingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoDatabaseTableLevelSharingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoDatabaseTableLevelSharingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoDatabaseTableLevelSharingProperties IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoDatabaseTableLevelSharingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoDatabaseTableLevelSharingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,18 +69,22 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(TablesToInclude))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in TablesToInclude)
+                foreach (string item in TablesToInclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -50,8 +93,13 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in TablesToExclude)
+                foreach (string item in TablesToExclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -60,8 +108,13 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExternalTablesToInclude)
+                foreach (string item in ExternalTablesToInclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -70,8 +123,13 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExternalTablesToExclude)
+                foreach (string item in ExternalTablesToExclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -80,8 +138,13 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in MaterializedViewsToInclude)
+                foreach (string item in MaterializedViewsToInclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -90,8 +153,13 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in MaterializedViewsToExclude)
+                foreach (string item in MaterializedViewsToExclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -100,8 +168,13 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("functionsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in FunctionsToInclude)
+                foreach (string item in FunctionsToInclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -110,21 +183,26 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 writer.WritePropertyName("functionsToExclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in FunctionsToExclude)
+                foreach (string item in FunctionsToExclude)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -133,22 +211,27 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        KustoDatabaseTableLevelSharingProperties IJsonModel<KustoDatabaseTableLevelSharingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoDatabaseTableLevelSharingProperties IJsonModel<KustoDatabaseTableLevelSharingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoDatabaseTableLevelSharingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoDatabaseTableLevelSharingProperties(document.RootElement, options);
         }
 
-        internal static KustoDatabaseTableLevelSharingProperties DeserializeKustoDatabaseTableLevelSharingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoDatabaseTableLevelSharingProperties DeserializeKustoDatabaseTableLevelSharingProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,128 +244,182 @@ namespace Azure.ResourceManager.Kusto.Models
             IList<string> materializedViewsToExclude = default;
             IList<string> functionsToInclude = default;
             IList<string> functionsToExclude = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tablesToInclude"u8))
+                if (prop.NameEquals("tablesToInclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     tablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("tablesToExclude"u8))
+                if (prop.NameEquals("tablesToExclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     tablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToInclude"u8))
+                if (prop.NameEquals("externalTablesToInclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     externalTablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToExclude"u8))
+                if (prop.NameEquals("externalTablesToExclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     externalTablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToInclude"u8))
+                if (prop.NameEquals("materializedViewsToInclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     materializedViewsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToExclude"u8))
+                if (prop.NameEquals("materializedViewsToExclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     materializedViewsToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("functionsToInclude"u8))
+                if (prop.NameEquals("functionsToInclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     functionsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("functionsToExclude"u8))
+                if (prop.NameEquals("functionsToExclude"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     functionsToExclude = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoDatabaseTableLevelSharingProperties(
                 tablesToInclude ?? new ChangeTrackingList<string>(),
                 tablesToExclude ?? new ChangeTrackingList<string>(),
@@ -292,343 +429,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 materializedViewsToExclude ?? new ChangeTrackingList<string>(),
                 functionsToInclude ?? new ChangeTrackingList<string>(),
                 functionsToExclude ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TablesToInclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tablesToInclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TablesToInclude))
-                {
-                    if (TablesToInclude.Any())
-                    {
-                        builder.Append("  tablesToInclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TablesToInclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TablesToExclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tablesToExclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TablesToExclude))
-                {
-                    if (TablesToExclude.Any())
-                    {
-                        builder.Append("  tablesToExclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TablesToExclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalTablesToInclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  externalTablesToInclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExternalTablesToInclude))
-                {
-                    if (ExternalTablesToInclude.Any())
-                    {
-                        builder.Append("  externalTablesToInclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExternalTablesToInclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalTablesToExclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  externalTablesToExclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExternalTablesToExclude))
-                {
-                    if (ExternalTablesToExclude.Any())
-                    {
-                        builder.Append("  externalTablesToExclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExternalTablesToExclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaterializedViewsToInclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  materializedViewsToInclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
-                {
-                    if (MaterializedViewsToInclude.Any())
-                    {
-                        builder.Append("  materializedViewsToInclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in MaterializedViewsToInclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaterializedViewsToExclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  materializedViewsToExclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
-                {
-                    if (MaterializedViewsToExclude.Any())
-                    {
-                        builder.Append("  materializedViewsToExclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in MaterializedViewsToExclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionsToInclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  functionsToInclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(FunctionsToInclude))
-                {
-                    if (FunctionsToInclude.Any())
-                    {
-                        builder.Append("  functionsToInclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in FunctionsToInclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionsToExclude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  functionsToExclude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(FunctionsToExclude))
-                {
-                    if (FunctionsToExclude.Any())
-                    {
-                        builder.Append("  functionsToExclude: ");
-                        builder.AppendLine("[");
-                        foreach (var item in FunctionsToExclude)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoDatabaseTableLevelSharingProperties IPersistableModel<KustoDatabaseTableLevelSharingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoDatabaseTableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoDatabaseTableLevelSharingProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoDatabaseTableLevelSharingProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoDatabaseTableLevelSharingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

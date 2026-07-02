@@ -42,7 +42,7 @@ public partial class Sample_PersistentAgents_Fabric : SamplesBase<AIAgentsTestEn
            model: modelDeploymentName,
            name: "my-agent",
            instructions: "You are a helpful agent.",
-           tools: [ fabricTool ]);
+           tools: [fabricTool]);
         #endregion
         // Create thread for communication
         #region Snippet:AgentsFabricAsync_CreateThreadMessage

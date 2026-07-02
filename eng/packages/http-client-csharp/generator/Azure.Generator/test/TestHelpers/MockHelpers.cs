@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -33,11 +35,13 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
             Func<InputClient, ClientProvider?>? createClientCore = null,
+            Func<IReadOnlyList<ScmLibraryVisitor>>? visitors = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
             string? configurationJson = null,
-            string? inputNamespace = null)
+            string? inputNamespace = null,
+            IEnumerable<string>? lastContractSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -89,22 +93,60 @@ namespace Azure.Generator.Tests.TestHelpers
                 mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
             }
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, BuildLastContractCompilation(lastContractSources))) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
-            var configureMethod = typeof(CodeModelGenerator).GetMethod(
-                "Configure",
-                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
-            );
-            configureMethod!.Invoke(mockPluginInstance.Object, null);
+
+            if (visitors != null)
+            {
+                var visitorsList = visitors.Invoke();
+                foreach (var visitor in visitorsList)
+                {
+                    mockPluginInstance.Object.AddVisitor(visitor);
+                }
+            }
+            else
+            {
+                var configureMethod = typeof(CodeModelGenerator).GetMethod(
+                    "Configure",
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
+                );
+                configureMethod!.Invoke(mockPluginInstance.Object, null);
+            }
+
             return mockPluginInstance;
         }
 
-        public static void SetCustomCodeView(ModelProvider modelProvider, TypeProvider customCodeTypeProvider)
+        public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
-            modelProvider.GetType().BaseType!.GetField(
+            typeProvider.GetType().BaseType!.GetField(
                     "_customCodeView",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
-                .SetValue(modelProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    BindingFlags.NonPublic | BindingFlags.Instance)?
+                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+        }
+
+        private static Compilation? BuildLastContractCompilation(IEnumerable<string>? sources)
+        {
+            if (sources is null)
+            {
+                return null;
+            }
+
+            var syntaxTrees = new List<SyntaxTree>();
+            foreach (var src in sources)
+            {
+                syntaxTrees.Add(CSharpSyntaxTree.ParseText(src));
+            }
+
+            var references = new[]
+            {
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
+            };
+
+            return CSharpCompilation.Create(
+                "LastContract",
+                syntaxTrees,
+                references,
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         }
     }
 }

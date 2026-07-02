@@ -7,48 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a CosmosDBSqlContainerThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlContainerThroughputSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBSqlContainerThroughputSettingResource method.
+    /// A class representing a CosmosDBSqlContainerThroughputSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlContainerResource"/> using the GetCosmosDBSqlContainerThroughputSetting method.
     /// </summary>
     public partial class CosmosDBSqlContainerThroughputSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="databaseName"> The databaseName. </param>
-        /// <param name="containerName"> The containerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics;
-        private readonly SqlResourcesRestOperations _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient;
+        private readonly ClientDiagnostics _sqlResourcesClientDiagnostics;
+        private readonly SqlResources _sqlResourcesRestClient;
         private readonly ThroughputSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/throughputSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerThroughputSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBSqlContainerThroughputSettingResource for mocking. </summary>
         protected CosmosDBSqlContainerThroughputSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBSqlContainerThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
@@ -57,117 +46,52 @@ namespace Azure.ResourceManager.CosmosDB
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBSqlContainerThroughputSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cosmosDBSqlContainerThroughputSettingSqlResourcesApiVersion);
-            _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBSqlContainerThroughputSettingSqlResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string cosmosDBSqlContainerThroughputSettingApiVersion);
+            _sqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _sqlResourcesRestClient = new SqlResources(_sqlResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBSqlContainerThroughputSettingApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ThroughputSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="containerName"> The containerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CosmosDBSqlContainerThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CosmosDBSqlContainerThroughputSettingResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -175,20 +99,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB SQL container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_UpdateSqlContainerThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_UpdateSqlContainerThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,14 +124,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.UpdateSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(new CosmosDBSqlContainerThroughputSettingOperationSource(Client), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(
+                    new CosmosDBSqlContainerThroughputSettingResourceOperationSource(Client),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -221,20 +158,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB SQL container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_UpdateSqlContainerThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_UpdateSqlContainerThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,15 +183,124 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.UpdateSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(new CosmosDBSqlContainerThroughputSettingOperationSource(Client), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateUpdateSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(
+                    new CosmosDBSqlContainerThroughputSettingResourceOperationSource(Client),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_GetSqlContainerThroughput. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CosmosDBSqlContainerThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the RUs per second of the SQL container under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_GetSqlContainerThroughput. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CosmosDBSqlContainerThroughputSettingResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -267,20 +313,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToAutoscale</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_MigrateSqlContainerToAutoscale</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_MigrateSqlContainerToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,14 +334,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<CosmosDBSqlContainerThroughputSettingResource>> MigrateSqlContainerToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToAutoscale");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToAutoscale");
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(new CosmosDBSqlContainerThroughputSettingOperationSource(Client), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(
+                    new CosmosDBSqlContainerThroughputSettingResourceOperationSource(Client),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -309,20 +368,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB SQL container from manual throughput to autoscale
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToAutoscale</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_MigrateSqlContainerToAutoscale</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_MigrateSqlContainerToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,14 +389,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<CosmosDBSqlContainerThroughputSettingResource> MigrateSqlContainerToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToAutoscale");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToAutoscale");
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(new CosmosDBSqlContainerThroughputSettingOperationSource(Client), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlContainerToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(
+                    new CosmosDBSqlContainerThroughputSettingResourceOperationSource(Client),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -351,20 +423,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToManualThroughput</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_MigrateSqlContainerToManualThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_MigrateSqlContainerToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,14 +444,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<CosmosDBSqlContainerThroughputSettingResource>> MigrateSqlContainerToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToManualThroughput");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToManualThroughput");
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(new CosmosDBSqlContainerThroughputSettingOperationSource(Client), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(
+                    new CosmosDBSqlContainerThroughputSettingResourceOperationSource(Client),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -393,20 +478,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB SQL container from autoscale to manual throughput
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToManualThroughput</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/migrateToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_MigrateSqlContainerToManualThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_MigrateSqlContainerToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,106 +499,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<CosmosDBSqlContainerThroughputSettingResource> MigrateSqlContainerToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToManualThroughput");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.MigrateSqlContainerToManualThroughput");
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.MigrateSqlContainerToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(new CosmosDBSqlContainerThroughputSettingOperationSource(Client), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateMigrateSqlContainerToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerThroughputSettingResource>(
+                    new CosmosDBSqlContainerThroughputSettingResourceOperationSource(Client),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve throughput distribution for an Azure Cosmos DB SQL container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/retrieveThroughputDistribution</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_SqlContainerRetrieveThroughputDistribution</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="retrieveThroughputParameters"> The parameters to provide for retrieving throughput distribution for the current SQL container. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="retrieveThroughputParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> SqlContainerRetrieveThroughputDistributionAsync(WaitUntil waitUntil, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(retrieveThroughputParameters, nameof(retrieveThroughputParameters));
-
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRetrieveThroughputDistribution");
-            scope.Start();
-            try
-            {
-                var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.SqlContainerRetrieveThroughputDistributionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateSqlContainerRetrieveThroughputDistributionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve throughput distribution for an Azure Cosmos DB SQL container
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/retrieveThroughputDistribution</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_SqlContainerRetrieveThroughputDistribution</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="retrieveThroughputParameters"> The parameters to provide for retrieving throughput distribution for the current SQL container. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="retrieveThroughputParameters"/> is null. </exception>
-        public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> SqlContainerRetrieveThroughputDistribution(WaitUntil waitUntil, RetrieveThroughputParameters retrieveThroughputParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(retrieveThroughputParameters, nameof(retrieveThroughputParameters));
-
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRetrieveThroughputDistribution");
-            scope.Start();
-            try
-            {
-                var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.SqlContainerRetrieveThroughputDistribution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateSqlContainerRetrieveThroughputDistributionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, retrieveThroughputParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -527,39 +533,52 @@ namespace Azure.ResourceManager.CosmosDB
         /// Redistribute throughput for an Azure Cosmos DB SQL container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/redistributeThroughput</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/redistributeThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_SqlContainerRedistributeThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_SqlContainerRedistributeThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redistributeThroughputParameters"> The parameters to provide for redistributing throughput for the current SQL container. </param>
+        /// <param name="content"> The parameters to provide for redistributing throughput for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redistributeThroughputParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<PhysicalPartitionThroughputInfoResult>> SqlContainerRedistributeThroughputAsync(WaitUntil waitUntil, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CosmosDBPhysicalPartitionThroughputResult>> SqlContainerRedistributeThroughputAsync(WaitUntil waitUntil, RedistributeThroughputContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redistributeThroughputParameters, nameof(redistributeThroughputParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRedistributeThroughput");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRedistributeThroughput");
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.SqlContainerRedistributeThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateSqlContainerRedistributeThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlContainerRedistributeThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, RedistributeThroughputContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -573,39 +592,52 @@ namespace Azure.ResourceManager.CosmosDB
         /// Redistribute throughput for an Azure Cosmos DB SQL container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/redistributeThroughput</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/redistributeThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_SqlContainerRedistributeThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_SqlContainerRedistributeThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="redistributeThroughputParameters"> The parameters to provide for redistributing throughput for the current SQL container. </param>
+        /// <param name="content"> The parameters to provide for redistributing throughput for the current SQL container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="redistributeThroughputParameters"/> is null. </exception>
-        public virtual ArmOperation<PhysicalPartitionThroughputInfoResult> SqlContainerRedistributeThroughput(WaitUntil waitUntil, RedistributeThroughputParameters redistributeThroughputParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CosmosDBPhysicalPartitionThroughputResult> SqlContainerRedistributeThroughput(WaitUntil waitUntil, RedistributeThroughputContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(redistributeThroughputParameters, nameof(redistributeThroughputParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRedistributeThroughput");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRedistributeThroughput");
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.SqlContainerRedistributeThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionThroughputInfoResult>(new PhysicalPartitionThroughputInfoResultOperationSource(), _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.CreateSqlContainerRedistributeThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, redistributeThroughputParameters).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlContainerRedistributeThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, RedistributeThroughputContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -616,26 +648,124 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Retrieve throughput distribution for an Azure Cosmos DB SQL container
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/retrieveThroughputDistribution. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_SqlContainerRetrieveThroughputDistribution. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameters to provide for retrieving throughput distribution for the current SQL container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CosmosDBPhysicalPartitionThroughputResult>> SqlContainerRetrieveThroughputDistributionAsync(WaitUntil waitUntil, RetrieveThroughputContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRetrieveThroughputDistribution");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlContainerRetrieveThroughputDistributionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, RetrieveThroughputContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve throughput distribution for an Azure Cosmos DB SQL container
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default/retrieveThroughputDistribution. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SqlResourcesThroughputSettingsGetResultsOperationGroup_SqlContainerRetrieveThroughputDistribution. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBSqlContainerThroughputSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The parameters to provide for retrieving throughput distribution for the current SQL container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CosmosDBPhysicalPartitionThroughputResult> SqlContainerRetrieveThroughputDistribution(WaitUntil waitUntil, RetrieveThroughputContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SqlContainerRetrieveThroughputDistribution");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sqlResourcesRestClient.CreateSqlContainerRetrieveThroughputDistributionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, RetrieveThroughputContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionThroughputResult>(
+                    new CosmosDBPhysicalPartitionThroughputResultOperationSource(),
+                    _sqlResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -645,28 +775,29 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<CosmosDBSqlContainerThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -677,27 +808,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -707,28 +818,29 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<CosmosDBSqlContainerThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -739,53 +851,38 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlContainerThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    patch.Tags.ReplaceWith(tags);
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<CosmosDBSqlContainerThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -796,53 +893,38 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CosmosDBSqlContainerThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    patch.Tags.ReplaceWith(tags);
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<CosmosDBSqlContainerThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -853,27 +935,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -881,28 +943,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<CosmosDBSqlContainerThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -913,27 +976,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlResources_GetSqlContainerThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBSqlContainerThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -941,28 +984,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
+            using DiagnosticScope scope = _sqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cosmosDBSqlContainerThroughputSettingSqlResourcesRestClient.GetSqlContainerThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new CosmosDBSqlContainerThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<CosmosDBSqlContainerThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

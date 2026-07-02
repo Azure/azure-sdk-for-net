@@ -13,155 +13,164 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WorkflowRun data model.
-    /// The workflow run.
-    /// </summary>
+    /// <summary> The workflow run. </summary>
     public partial class WorkflowRunData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunData"/>. </summary>
-        internal WorkflowRunData()
+        public WorkflowRunData()
         {
-            Outputs = new ChangeTrackingDictionary<string, WorkflowOutputContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="waitEndOn"> Gets the wait end time. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
-        /// <param name="status"> Gets the status. </param>
-        /// <param name="code"> Gets the code. </param>
-        /// <param name="error"> Gets the error. </param>
-        /// <param name="correlationId"> Gets the correlation id. </param>
-        /// <param name="correlation"> The run correlation. </param>
-        /// <param name="workflow"> Gets the reference to workflow version. </param>
-        /// <param name="trigger"> Gets the fired trigger. </param>
-        /// <param name="outputs"> Gets the outputs. </param>
-        /// <param name="response"> Gets the response of the flow run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The workflow run properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowRunProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            WaitEndOn = waitEndOn;
-            StartOn = startOn;
-            EndOn = endOn;
-            Status = status;
-            Code = code;
-            Error = error;
-            CorrelationId = correlationId;
-            Correlation = correlation;
-            Workflow = workflow;
-            Trigger = trigger;
-            Outputs = outputs;
-            Response = response;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The workflow run properties. </summary>
+        [WirePath("properties")]
+        internal WorkflowRunProperties Properties { get; set; }
 
         /// <summary> Gets the wait end time. </summary>
         [WirePath("properties.waitEndTime")]
-        public DateTimeOffset? WaitEndOn { get; }
+        public DateTimeOffset? WaitEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WaitEndOn;
+            }
+        }
+
         /// <summary> Gets the start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> Gets the end time. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
         /// <summary> Gets the status. </summary>
         [WirePath("properties.status")]
-        public WorkflowStatus? Status { get; }
+        public WorkflowStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Gets the code. </summary>
         [WirePath("properties.code")]
-        public string Code { get; }
-        /// <summary>
-        /// Gets the error.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public string Code
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Code;
+            }
+        }
+
+        /// <summary> Gets the error. </summary>
         [WirePath("properties.error")]
-        public BinaryData Error { get; }
+        public BinaryData Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
         /// <summary> Gets the correlation id. </summary>
         [WirePath("properties.correlationId")]
-        public string CorrelationId { get; }
-        /// <summary> The run correlation. </summary>
-        internal Correlation Correlation { get; }
-        /// <summary> The client tracking id. </summary>
-        [WirePath("properties.correlation.clientTrackingId")]
-        public string CorrelationClientTrackingId
+        public string CorrelationId
         {
-            get => Correlation?.ClientTrackingId;
+            get
+            {
+                return Properties is null ? default : Properties.CorrelationId;
+            }
         }
 
         /// <summary> Gets the reference to workflow version. </summary>
         [WirePath("properties.workflow")]
-        public WorkflowResourceReference Workflow { get; }
+        public WorkflowResourceReference Workflow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Workflow;
+            }
+        }
+
         /// <summary> Gets the fired trigger. </summary>
         [WirePath("properties.trigger")]
-        public WorkflowRunTrigger Trigger { get; }
+        public WorkflowRunTrigger Trigger
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Trigger;
+            }
+        }
+
         /// <summary> Gets the outputs. </summary>
         [WirePath("properties.outputs")]
-        public IReadOnlyDictionary<string, WorkflowOutputContent> Outputs { get; }
+        public IReadOnlyDictionary<string, WorkflowOutputContent> Outputs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunProperties();
+                }
+                return Properties.Outputs;
+            }
+        }
+
         /// <summary> Gets the response of the flow run. </summary>
         [WirePath("properties.response")]
-        public WorkflowRunTrigger Response { get; }
+        public WorkflowRunTrigger Response
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Response;
+            }
+        }
+
+        /// <summary> The client tracking id. </summary>
+        [WirePath("properties.correlation.clientTrackingId")]
+        public string CorrelationClientTrackingId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorrelationClientTrackingId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunProperties();
+                }
+                Properties.CorrelationClientTrackingId = value;
+            }
+        }
     }
 }

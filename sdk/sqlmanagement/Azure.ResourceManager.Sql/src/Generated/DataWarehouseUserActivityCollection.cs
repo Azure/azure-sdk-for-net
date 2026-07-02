@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -25,65 +26,71 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class DataWarehouseUserActivityCollection : ArmCollection, IEnumerable<DataWarehouseUserActivityResource>, IAsyncEnumerable<DataWarehouseUserActivityResource>
     {
-        private readonly ClientDiagnostics _dataWarehouseUserActivityClientDiagnostics;
-        private readonly DataWarehouseUserActivitiesRestOperations _dataWarehouseUserActivityRestClient;
+        private readonly ClientDiagnostics _dataWarehouseUserActivitiesClientDiagnostics;
+        private readonly DataWarehouseUserActivities _dataWarehouseUserActivitiesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivityCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataWarehouseUserActivityCollection for mocking. </summary>
         protected DataWarehouseUserActivityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataWarehouseUserActivityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataWarehouseUserActivityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataWarehouseUserActivityResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataWarehouseUserActivityResource.ResourceType, out string dataWarehouseUserActivityApiVersion);
-            _dataWarehouseUserActivityRestClient = new DataWarehouseUserActivitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataWarehouseUserActivityApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _dataWarehouseUserActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataWarehouseUserActivityResource.ResourceType.Namespace, Diagnostics);
+            _dataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivities(_dataWarehouseUserActivitiesClientDiagnostics, Pipeline, Endpoint, dataWarehouseUserActivityApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the user activities of a data warehouse which includes running and suspended queries
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataWarehouseUserActivityResource>> GetAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Get");
+            using DiagnosticScope scope = _dataWarehouseUserActivitiesClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataWarehouseUserActivityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataWarehouseUserActivitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataWarehouseUserActivityData> response = Response.FromValue(DataWarehouseUserActivityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,34 +104,38 @@ namespace Azure.ResourceManager.Sql
         /// Gets the user activities of a data warehouse which includes running and suspended queries
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataWarehouseUserActivityResource> Get(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Get");
+            using DiagnosticScope scope = _dataWarehouseUserActivitiesClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataWarehouseUserActivityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataWarehouseUserActivitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataWarehouseUserActivityData> response = Response.FromValue(DataWarehouseUserActivityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,50 +149,51 @@ namespace Azure.ResourceManager.Sql
         /// List the user activities of a data warehouse which includes running and suspended queries
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataWarehouseUserActivityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataWarehouseUserActivityData, DataWarehouseUserActivityResource>(new DataWarehouseUserActivitiesGetByDatabaseAsyncCollectionResultOfT(
+                _dataWarehouseUserActivitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataWarehouseUserActivityCollection.GetAll"), data => new DataWarehouseUserActivityResource(Client, data));
         }
 
         /// <summary>
         /// List the user activities of a data warehouse which includes running and suspended queries
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,41 +201,64 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataWarehouseUserActivityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataWarehouseUserActivityData, DataWarehouseUserActivityResource>(new DataWarehouseUserActivitiesGetByDatabaseCollectionResultOfT(
+                _dataWarehouseUserActivitiesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataWarehouseUserActivityCollection.GetAll"), data => new DataWarehouseUserActivityResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Exists");
+            using DiagnosticScope scope = _dataWarehouseUserActivitiesClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataWarehouseUserActivityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataWarehouseUserActivitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataWarehouseUserActivityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataWarehouseUserActivityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataWarehouseUserActivityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,32 +272,46 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Exists");
+            using DiagnosticScope scope = _dataWarehouseUserActivitiesClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataWarehouseUserActivityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataWarehouseUserActivitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataWarehouseUserActivityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataWarehouseUserActivityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataWarehouseUserActivityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,34 +325,50 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<DataWarehouseUserActivityResource>> GetIfExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.GetIfExists");
+            using DiagnosticScope scope = _dataWarehouseUserActivitiesClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataWarehouseUserActivityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataWarehouseUserActivitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataWarehouseUserActivityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataWarehouseUserActivityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataWarehouseUserActivityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataWarehouseUserActivityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,34 +382,50 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataWarehouseUserActivities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataWarehouseUserActivitiesOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<DataWarehouseUserActivityResource> GetIfExists(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.GetIfExists");
+            using DiagnosticScope scope = _dataWarehouseUserActivitiesClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataWarehouseUserActivityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataWarehouseUserActivitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataWarehouseUserActivityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataWarehouseUserActivityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataWarehouseUserActivityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataWarehouseUserActivityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,6 +445,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataWarehouseUserActivityResource> IAsyncEnumerable<DataWarehouseUserActivityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

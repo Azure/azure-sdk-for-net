@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolNetworkProfile : IUtf8JsonSerializable, IJsonModel<AgentPoolNetworkProfile>
+    /// <summary> Network settings of an agent pool. </summary>
+    public partial class AgentPoolNetworkProfile : IJsonModel<AgentPoolNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgentPoolNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAgentPoolNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgentPoolNetworkProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgentPoolNetworkProfile IPersistableModel<AgentPoolNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AgentPoolNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentPoolNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,37 +70,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(NodePublicIPTags))
             {
                 writer.WritePropertyName("nodePublicIPTags"u8);
                 writer.WriteStartArray();
-                foreach (var item in NodePublicIPTags)
+                foreach (ContainerServiceIPTag item in NodePublicIPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHostPorts))
+            if (Optional.IsCollectionDefined(NodePublicIPPrefixIDs))
             {
-                writer.WritePropertyName("allowedHostPorts"u8);
+                writer.WritePropertyName("nodePublicIPPrefixIDs"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedHostPorts)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
-            {
-                writer.WritePropertyName("applicationSecurityGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in ApplicationSecurityGroups)
+                foreach (ResourceIdentifier item in NodePublicIPPrefixIDs)
                 {
                     if (item == null)
                     {
@@ -71,15 +100,50 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(AllowedHostPorts))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("allowedHostPorts"u8);
+                writer.WriteStartArray();
+                foreach (AgentPoolNetworkPortRange item in AllowedHostPorts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            {
+                writer.WritePropertyName("applicationSecurityGroups"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in ApplicationSecurityGroups)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SecondaryNetworkInterfaces))
+            {
+                writer.WritePropertyName("secondaryNetworkInterfaces"u8);
+                writer.WriteStartArray();
+                foreach (AgentPoolNetworkInterface item in SecondaryNetworkInterfaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,69 +152,96 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        AgentPoolNetworkProfile IJsonModel<AgentPoolNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgentPoolNetworkProfile IJsonModel<AgentPoolNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgentPoolNetworkProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAgentPoolNetworkProfile(document.RootElement, options);
         }
 
-        internal static AgentPoolNetworkProfile DeserializeAgentPoolNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AgentPoolNetworkProfile DeserializeAgentPoolNetworkProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<ContainerServiceIPTag> nodePublicIPTags = default;
+            IList<ResourceIdentifier> nodePublicIPPrefixIDs = default;
             IList<AgentPoolNetworkPortRange> allowedHostPorts = default;
             IList<ResourceIdentifier> applicationSecurityGroups = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<AgentPoolNetworkInterface> secondaryNetworkInterfaces = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nodePublicIPTags"u8))
+                if (prop.NameEquals("nodePublicIPTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ContainerServiceIPTag> array = new List<ContainerServiceIPTag>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item, options));
                     }
                     nodePublicIPTags = array;
                     continue;
                 }
-                if (property.NameEquals("allowedHostPorts"u8))
+                if (prop.NameEquals("nodePublicIPPrefixIDs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    nodePublicIPPrefixIDs = array;
+                    continue;
+                }
+                if (prop.NameEquals("allowedHostPorts"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AgentPoolNetworkPortRange> array = new List<AgentPoolNetworkPortRange>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item, options));
                     }
                     allowedHostPorts = array;
                     continue;
                 }
-                if (property.NameEquals("applicationSecurityGroups"u8))
+                if (prop.NameEquals("applicationSecurityGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -164,135 +255,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                     applicationSecurityGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("secondaryNetworkInterfaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AgentPoolNetworkInterface> array = new List<AgentPoolNetworkInterface>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AgentPoolNetworkInterface.DeserializeAgentPoolNetworkInterface(item, options));
+                    }
+                    secondaryNetworkInterfaces = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AgentPoolNetworkProfile(nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(), applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new AgentPoolNetworkProfile(
+                nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(),
+                nodePublicIPPrefixIDs ?? new ChangeTrackingList<ResourceIdentifier>(),
+                allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(),
+                secondaryNetworkInterfaces ?? new ChangeTrackingList<AgentPoolNetworkInterface>(),
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodePublicIPTags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodePublicIPTags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NodePublicIPTags))
-                {
-                    if (NodePublicIPTags.Any())
-                    {
-                        builder.Append("  nodePublicIPTags: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NodePublicIPTags)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  nodePublicIPTags: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedHostPorts), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  allowedHostPorts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AllowedHostPorts))
-                {
-                    if (AllowedHostPorts.Any())
-                    {
-                        builder.Append("  allowedHostPorts: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AllowedHostPorts)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  allowedHostPorts: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationSecurityGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  applicationSecurityGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
-                {
-                    if (ApplicationSecurityGroups.Any())
-                    {
-                        builder.Append("  applicationSecurityGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ApplicationSecurityGroups)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AgentPoolNetworkProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AgentPoolNetworkProfile IPersistableModel<AgentPoolNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAgentPoolNetworkProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AgentPoolNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

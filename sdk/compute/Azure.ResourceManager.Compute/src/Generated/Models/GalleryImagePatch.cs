@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -15,134 +16,296 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
     public partial class GalleryImagePatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryImagePatch"/>. </summary>
         public GalleryImagePatch()
         {
-            Features = new ChangeTrackingList<GalleryImageFeature>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImagePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of this gallery image definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
-        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="identifier"> This is the gallery image definition identifier. </param>
-        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
-        /// <param name="disallowed"> Describes the disallowed disk types. </param>
-        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="features"> A list of gallery image features. </param>
-        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Describes the properties of a gallery image definition. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureType? architecture, bool? allowUpdateImage, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            Eula = eula;
-            PrivacyStatementUri = privacyStatementUri;
-            ReleaseNoteUri = releaseNoteUri;
-            OSType = osType;
-            OSState = osState;
-            HyperVGeneration = hyperVGeneration;
-            EndOfLifeOn = endOfLifeOn;
-            Identifier = identifier;
-            Recommended = recommended;
-            Disallowed = disallowed;
-            PurchasePlan = purchasePlan;
-            ProvisioningState = provisioningState;
-            Features = features;
-            Architecture = architecture;
-            AllowUpdateImage = allowUpdateImage;
+            Properties = properties;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Describes the properties of a gallery image definition. </summary>
+        internal GalleryImageProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
         /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The Eula agreement for the gallery image definition. </summary>
-        public string Eula { get; set; }
+        public string Eula
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Eula;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Eula = value;
+            }
+        }
+
         /// <summary> The privacy statement uri. </summary>
-        public Uri PrivacyStatementUri { get; set; }
+        public Uri PrivacyStatementUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivacyStatementUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.PrivacyStatementUri = value;
+            }
+        }
+
         /// <summary> The release note uri. </summary>
-        public Uri ReleaseNoteUri { get; set; }
-        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </summary>
-        public SupportedOperatingSystemType? OSType { get; set; }
+        public Uri ReleaseNoteUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseNoteUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.ReleaseNoteUri = value;
+            }
+        }
+
+        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
+        public SupportedOperatingSystemType? OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryImageProperties();
+                    }
+                    Properties.OSType = value.Value;
+                }
+            }
+        }
+
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType? OSState { get; set; }
+        public OperatingSystemStateType? OSState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSState;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryImageProperties();
+                    }
+                    Properties.OSState = value.Value;
+                }
+            }
+        }
+
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
-        public HyperVGeneration? HyperVGeneration { get; set; }
+        public HyperVGeneration? HyperVGeneration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HyperVGeneration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.HyperVGeneration = value;
+            }
+        }
+
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeOn { get; set; }
+        public DateTimeOffset? EndOfLifeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOfLifeOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.EndOfLifeOn = value;
+            }
+        }
+
         /// <summary> This is the gallery image definition identifier. </summary>
-        public GalleryImageIdentifier Identifier { get; set; }
+        public GalleryImageIdentifier Identifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Identifier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Identifier = value;
+            }
+        }
+
         /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
-        public RecommendedMachineConfiguration Recommended { get; set; }
-        /// <summary> Describes the disallowed disk types. </summary>
-        internal Disallowed Disallowed { get; set; }
+        public RecommendedMachineConfiguration Recommended
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Recommended;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Recommended = value;
+            }
+        }
+
+        /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
+        public ImagePurchasePlan PurchasePlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PurchasePlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.PurchasePlan = value;
+            }
+        }
+
+        /// <summary> The provisioning state, which only appears in the response. </summary>
+        public GalleryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> A list of gallery image features. </summary>
+        public IList<GalleryImageFeature> Features
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                return Properties.Features;
+            }
+        }
+
+        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+        public ArchitectureType? Architecture
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Architecture;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.Architecture = value;
+            }
+        }
+
+        /// <summary> Optional. Must be set to true if the gallery image features are being updated. </summary>
+        public bool? AllowUpdateImage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowUpdateImage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                Properties.AllowUpdateImage = value;
+            }
+        }
+
         /// <summary> A list of disk types. </summary>
         public IList<string> DisallowedDiskTypes
         {
             get
             {
-                if (Disallowed is null)
-                    Disallowed = new Disallowed();
-                return Disallowed.DiskTypes;
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageProperties();
+                }
+                return Properties.DisallowedDiskTypes;
             }
         }
-
-        /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
-        public ImagePurchasePlan PurchasePlan { get; set; }
-        /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryProvisioningState? ProvisioningState { get; }
-        /// <summary> A list of gallery image features. </summary>
-        public IList<GalleryImageFeature> Features { get; }
-        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
-        public ArchitectureType? Architecture { get; set; }
-        /// <summary> Optional. Must be set to true if the gallery image features are being updated. </summary>
-        public bool? AllowUpdateImage { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

@@ -21,13 +21,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         public static MediaJobState ToMediaJobState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return MediaJobState.Canceled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceling")) return MediaJobState.Canceling;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return MediaJobState.Error;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Finished")) return MediaJobState.Finished;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Processing")) return MediaJobState.Processing;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Queued")) return MediaJobState.Queued;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scheduled")) return MediaJobState.Scheduled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled"))
+                return MediaJobState.Canceled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceling"))
+                return MediaJobState.Canceling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+                return MediaJobState.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Finished"))
+                return MediaJobState.Finished;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Processing"))
+                return MediaJobState.Processing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Queued"))
+                return MediaJobState.Queued;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scheduled"))
+                return MediaJobState.Scheduled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MediaJobState value.");
         }
     }

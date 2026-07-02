@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "postValidContentType",
+      "name": "PostValidContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "getValidContentType",
+      "name": "PostValidContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "putValidContentType",
+      "name": "PostValidContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "putValidContentType1",
+      "name": "PostValidContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -78,6 +82,12 @@
       "usage": "Input,Output,Json",
       "doc": "The third level model in the normal multiple levels inheritance.",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Siamese"
+        }
+      },
+      "isExactName": false,
       "baseModel": {
         "$id": "10",
         "kind": "model",
@@ -87,6 +97,12 @@
         "usage": "Input,Output,Json",
         "doc": "The second level model in the normal multiple levels inheritance.",
         "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "Cat"
+          }
+        },
+        "isExactName": false,
         "baseModel": {
           "$id": "11",
           "kind": "model",
@@ -96,6 +112,12 @@
           "usage": "Input,Output,Json",
           "doc": "This is base model for not-discriminated normal multiple levels inheritance.",
           "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Pet"
+            }
+          },
+          "isExactName": false,
           "properties": [
             {
               "$id": "12",
@@ -120,7 +142,8 @@
                   "name": "name"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -148,7 +171,8 @@
                 "name": "age"
               }
             },
-            "isHttpMetadata": false
+            "isHttpMetadata": false,
+            "isExactName": false
           }
         ]
       },
@@ -176,7 +200,8 @@
               "name": "smart"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -192,6 +217,7 @@
       "$id": "18",
       "kind": "client",
       "name": "NotDiscriminatedClient",
+      "isExactName": false,
       "namespace": "Type.Model.Inheritance.NotDiscriminated",
       "doc": "Illustrates not-discriminated inheritance model.",
       "methods": [
@@ -199,11 +225,13 @@
           "$id": "19",
           "kind": "basic",
           "name": "postValid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "20",
             "name": "postValid",
+            "isExactName": false,
             "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
@@ -222,10 +250,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType"
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "22",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "22",
+                "$id": "23",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
@@ -241,7 +291,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input"
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input",
+                "methodParameterSegments": [
+                  {
+                    "$id": "24",
+                    "kind": "method",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$ref": "9"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -250,7 +326,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -263,43 +340,15 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
-              "$id": "23",
-              "kind": "method",
-              "name": "input",
-              "serializedName": "input",
-              "type": {
-                "$ref": "9"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "24"
             },
             {
-              "$id": "24",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "22"
             }
           ],
           "response": {},
@@ -312,11 +361,13 @@
           "$id": "25",
           "kind": "basic",
           "name": "getValid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "26",
             "name": "getValid",
+            "isExactName": false,
             "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
@@ -334,7 +385,28 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept"
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "28",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -349,7 +421,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -359,25 +436,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
-              "$id": "28",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "3"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "28"
             }
           ],
           "response": {
@@ -394,11 +458,13 @@
           "$id": "29",
           "kind": "basic",
           "name": "putValid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "30",
             "name": "putValid",
+            "isExactName": false,
             "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
@@ -417,10 +483,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType"
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "32",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "32",
+                "$id": "33",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -433,10 +521,31 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept"
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "34",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "7"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "33",
+                "$id": "35",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
@@ -452,7 +561,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input"
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input",
+                "methodParameterSegments": [
+                  {
+                    "$id": "36",
+                    "kind": "method",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$ref": "9"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -467,7 +602,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "PUT",
@@ -480,60 +620,18 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.NotDiscriminated"
           },
           "parameters": [
             {
-              "$id": "34",
-              "kind": "method",
-              "name": "input",
-              "serializedName": "input",
-              "type": {
-                "$ref": "9"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "36"
             },
             {
-              "$id": "35",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "5"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "32"
             },
             {
-              "$id": "36",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "7"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "34"
             }
           ],
           "response": {
@@ -576,12 +674,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

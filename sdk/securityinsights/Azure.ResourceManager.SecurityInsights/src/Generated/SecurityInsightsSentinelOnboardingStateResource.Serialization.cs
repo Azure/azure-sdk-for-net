@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsSentinelOnboardingStateResource : IJsonModel<SecurityInsightsSentinelOnboardingStateData>
     {
-        private static SecurityInsightsSentinelOnboardingStateData s_dataDeserializationInstance;
-        private static SecurityInsightsSentinelOnboardingStateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsSentinelOnboardingStateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsSentinelOnboardingStateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsSentinelOnboardingStateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)Data).Write(writer, options);
 
-        SecurityInsightsSentinelOnboardingStateData IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsSentinelOnboardingStateData IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsSentinelOnboardingStateData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsSentinelOnboardingStateData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSentinelOnboardingStateData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSentinelOnboardingStateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

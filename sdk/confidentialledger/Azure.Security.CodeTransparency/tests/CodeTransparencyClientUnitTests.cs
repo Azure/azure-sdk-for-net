@@ -1,12 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -26,6 +29,42 @@ namespace Azure.Security.CodeTransparency.Tests
             "ledgerId": "cts-canary"
         }
         """;
+
+        private readonly string ValidSignedStatementJWKS =
+            "{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}";
+
+        private readonly string InvalidSignedStatementJWKSWithWrongKid =
+            "{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"99954f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}";
+
+        private readonly string InvalidSignedStatementJWKSWithWrongCurve =
+            "{\"keys\":" +
+                "[{\"crv\": \"P-512\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}";
+
+        private readonly string InvalidSignedStatementJWKSWithWrongParams =
+            "{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}";
 
         private byte[] readFileBytes(string name)
         {
@@ -60,52 +99,28 @@ namespace Azure.Security.CodeTransparency.Tests
         private MockResponse createValidSignedStatementPublicKeyResponse()
         {
             var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
+            content.SetContent(ValidSignedStatementJWKS);
             return content;
         }
 
         private MockResponse createInvalidSignedStatementPublicKeyResponseWithWrongKid()
         {
             var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"99954f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
+            content.SetContent(InvalidSignedStatementJWKSWithWrongKid);
             return content;
         }
 
         private MockResponse createInvalidSignedStatementPublicKeyResponseWithWrongCurve()
         {
             var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-512\"," +
-                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
+            content.SetContent(InvalidSignedStatementJWKSWithWrongCurve);
             return content;
         }
 
         private MockResponse createInvalidSignedStatementPublicKeyResponseWithWrongParams()
         {
             var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
+            content.SetContent(InvalidSignedStatementJWKSWithWrongParams);
             return content;
         }
 
@@ -116,7 +131,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             return (mockTransport, options);
         }
@@ -132,7 +147,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var _ = new CodeTransparencyClient(new Uri("https://foo.bar.com"), null, options);
             Assert.AreEqual(0, mockTransport.Requests.Count);
@@ -162,14 +177,14 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(false, response.HasCompleted);
             Assert.AreEqual("12.345", response.Id);
         }
@@ -197,14 +212,14 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(1, mockTransport.Requests.Count);
             Assert.AreEqual(false, response.HasCompleted);
             Assert.AreEqual("12.345", response.Id);
@@ -231,14 +246,14 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual("12.345", response.Id);
         }
 
@@ -290,7 +305,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             CodeTransparencyClient client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
@@ -347,7 +362,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             CodeTransparencyClient client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
@@ -367,12 +382,12 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
 
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual(expected: 200, response.GetRawResponse().Status);
         }
 
@@ -386,11 +401,11 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
         }
@@ -404,7 +419,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
@@ -412,7 +427,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.NotNull(result);
             Assert.AreEqual("test-content", result.Value.ToString());
-            Assert.AreEqual("https://foo.bar.com/.well-known/transparency-configuration?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/.well-known/transparency-configuration?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
         }
 
         [Test]
@@ -423,7 +438,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
@@ -431,7 +446,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.NotNull(result);
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/jwks?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/jwks?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
         }
 
         [Test]
@@ -445,7 +460,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
@@ -475,6 +490,105 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public void VerifyTransparentStatement_offline_success()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            // Parse the JWKS JSON from the mocked response
+            string doc = "{\"foo.bar.com\":" + ValidSignedStatementJWKS + "}";
+            using (var jsonDoc = JsonDocument.Parse(doc))
+            {
+                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+
+                var mockTransport = new MockTransport(new MockResponse(503));
+                var options = new CodeTransparencyClientOptions
+                {
+                    IdentityClientEndpoint = "https://some.identity.com",
+                    Transport = mockTransport,
+                };
+
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    OfflineKeys = offlineStore
+                };
+
+                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+                // Should not make any network calls since we're using offline keys
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+
+                Assert.AreEqual(0, mockTransport.Requests.Count);
+            }
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_offline_success_with_fallback()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            // Parse the JWKS JSON from the mocked response
+            string doc = "{}";
+            using (var jsonDoc = JsonDocument.Parse(doc))
+            {
+                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+
+                var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    OfflineKeys = offlineStore
+                };
+
+                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+                // Offline keys are empty, so network fallback is expected; should make 1 network call
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+
+                Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_offline_failure_without_network_fallback()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            // Parse the JWKS JSON from the mocked response
+            string doc = "{}";
+            using (var jsonDoc = JsonDocument.Parse(doc))
+            {
+                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
+
+                var mockTransport = new MockTransport(new MockResponse(503));
+                var options = new CodeTransparencyClientOptions
+                {
+                    IdentityClientEndpoint = "https://some.identity.com",
+                    Transport = mockTransport,
+                };
+
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    OfflineKeys = offlineStore,
+                    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+                };
+
+                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+                var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+                StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
+                Assert.AreEqual(0, mockTransport.Requests.Count);
+            }
+#endif
+        }
+
+        [Test]
         public void VerifyTransparentStatement_InvalidCurve_InvalidOperationException()
         {
 #if NET462
@@ -485,7 +599,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
@@ -509,7 +623,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                IdentityClientEndpoint = "https://some.identity.com"
             };
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
@@ -614,6 +728,61 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.DoesNotThrow(() =>
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
             Assert.AreEqual(1, mockTransport.Requests.Count);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_ThreadSafety_ParallelCallsShouldNotFail()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            int threadCount = 8;
+            int iterationsPerThread = 3;
+
+            var timeout = TimeSpan.FromMilliseconds(25_000);
+
+            var barrier = new Barrier(threadCount);
+            var exceptions = new ConcurrentBag<Exception>();
+
+            var tasks = Enumerable.Range(0, threadCount).Select(_ => Task.Run(() =>
+            {
+                barrier.SignalAndWait(); // ensure all threads start at the same time
+                for (int i = 0; i < iterationsPerThread; i++)
+                {
+                    try
+                    {
+                        var content = createValidSignedStatementPublicKeyResponse();
+                        var mockTransport = new MockTransport(content);
+                        var options = new CodeTransparencyClientOptions
+                        {
+                            Transport = mockTransport,
+                            IdentityClientEndpoint = "https://foo.bar.com"
+                        };
+                        var verificationOptions = new CodeTransparencyVerificationOptions
+                        {
+                            AuthorizedDomains = new string[] { "foo.bar.com" },
+                        };
+
+                        CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+                    }
+                    catch (Exception ex)
+                    {
+                        exceptions.Add(ex);
+                    }
+                }
+            })).ToArray();
+
+            if (!Task.WaitAll(tasks, timeout))
+            {
+                Assert.Inconclusive($"Thread-safety test could not complete within the CI timeout budget ({timeout.TotalSeconds} seconds).");
+            }
+
+            int totalCalls = threadCount * iterationsPerThread;
+            Assert.IsEmpty(exceptions,
+                $"Thread safety violation: {exceptions.Count} out of {totalCalls} parallel calls failed. " +
+                $"First error: {exceptions.FirstOrDefault()?.Message}");
 #endif
         }
     }

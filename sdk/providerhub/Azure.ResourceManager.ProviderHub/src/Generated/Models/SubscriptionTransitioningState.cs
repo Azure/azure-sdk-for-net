@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct SubscriptionTransitioningState : IEquatable<SubscriptionTransitioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SubscriptionTransitioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SubscriptionTransitioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegisteredValue = "Registered";
         private const string UnregisteredValue = "Unregistered";
         private const string WarnedValue = "Warned";
@@ -36,49 +29,85 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string SuspendedToDeletedValue = "SuspendedToDeleted";
         private const string SuspendedToUnregisteredValue = "SuspendedToUnregistered";
 
-        /// <summary> Registered. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionTransitioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SubscriptionTransitioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Registered. </summary>
         public static SubscriptionTransitioningState Registered { get; } = new SubscriptionTransitioningState(RegisteredValue);
-        /// <summary> Unregistered. </summary>
+
+        /// <summary> Gets the Unregistered. </summary>
         public static SubscriptionTransitioningState Unregistered { get; } = new SubscriptionTransitioningState(UnregisteredValue);
-        /// <summary> Warned. </summary>
+
+        /// <summary> Gets the Warned. </summary>
         public static SubscriptionTransitioningState Warned { get; } = new SubscriptionTransitioningState(WarnedValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static SubscriptionTransitioningState Suspended { get; } = new SubscriptionTransitioningState(SuspendedValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static SubscriptionTransitioningState Deleted { get; } = new SubscriptionTransitioningState(DeletedValue);
-        /// <summary> WarnedToRegistered. </summary>
+
+        /// <summary> Gets the WarnedToRegistered. </summary>
         public static SubscriptionTransitioningState WarnedToRegistered { get; } = new SubscriptionTransitioningState(WarnedToRegisteredValue);
-        /// <summary> WarnedToSuspended. </summary>
+
+        /// <summary> Gets the WarnedToSuspended. </summary>
         public static SubscriptionTransitioningState WarnedToSuspended { get; } = new SubscriptionTransitioningState(WarnedToSuspendedValue);
-        /// <summary> WarnedToDeleted. </summary>
+
+        /// <summary> Gets the WarnedToDeleted. </summary>
         public static SubscriptionTransitioningState WarnedToDeleted { get; } = new SubscriptionTransitioningState(WarnedToDeletedValue);
-        /// <summary> WarnedToUnregistered. </summary>
+
+        /// <summary> Gets the WarnedToUnregistered. </summary>
         public static SubscriptionTransitioningState WarnedToUnregistered { get; } = new SubscriptionTransitioningState(WarnedToUnregisteredValue);
-        /// <summary> SuspendedToRegistered. </summary>
+
+        /// <summary> Gets the SuspendedToRegistered. </summary>
         public static SubscriptionTransitioningState SuspendedToRegistered { get; } = new SubscriptionTransitioningState(SuspendedToRegisteredValue);
-        /// <summary> SuspendedToWarned. </summary>
+
+        /// <summary> Gets the SuspendedToWarned. </summary>
         public static SubscriptionTransitioningState SuspendedToWarned { get; } = new SubscriptionTransitioningState(SuspendedToWarnedValue);
-        /// <summary> SuspendedToDeleted. </summary>
+
+        /// <summary> Gets the SuspendedToDeleted. </summary>
         public static SubscriptionTransitioningState SuspendedToDeleted { get; } = new SubscriptionTransitioningState(SuspendedToDeletedValue);
-        /// <summary> SuspendedToUnregistered. </summary>
+
+        /// <summary> Gets the SuspendedToUnregistered. </summary>
         public static SubscriptionTransitioningState SuspendedToUnregistered { get; } = new SubscriptionTransitioningState(SuspendedToUnregisteredValue);
+
         /// <summary> Determines if two <see cref="SubscriptionTransitioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionTransitioningState left, SubscriptionTransitioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionTransitioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionTransitioningState left, SubscriptionTransitioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionTransitioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionTransitioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionTransitioningState(string value) => new SubscriptionTransitioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionTransitioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionTransitioningState?(string value) => value == null ? null : new SubscriptionTransitioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionTransitioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionTransitioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

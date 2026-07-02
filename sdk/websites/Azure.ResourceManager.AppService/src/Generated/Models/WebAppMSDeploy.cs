@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,94 +16,123 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MSDeploy ARM PUT information. </summary>
     public partial class WebAppMSDeploy : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
         public WebAppMSDeploy()
         {
-            SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="packageUri"> Package URI. </param>
-        /// <param name="connectionString"> SQL Connection String. </param>
-        /// <param name="dbType"> Database Type. </param>
-        /// <param name="setParametersXmlFileUri"> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </param>
-        /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
-        /// <param name="skipAppData">
-        /// Controls whether the MSDeploy operation skips the App_Data directory.
-        /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
-        /// will not be deleted, and any App_Data directory in the source will be ignored.
-        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// </param>
-        /// <param name="isAppOffline">
-        /// Sets the AppOffline rule while the MSDeploy operation executes.
-        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Core resource properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MSDeployProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            PackageUri = packageUri;
-            ConnectionString = connectionString;
-            DBType = dbType;
-            SetParametersXmlFileUri = setParametersXmlFileUri;
-            SetParameters = setParameters;
-            SkipAppData = skipAppData;
-            IsAppOffline = isAppOffline;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
+        internal MSDeployProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
 
         /// <summary> Package URI. </summary>
         [WirePath("properties.packageUri")]
-        public Uri PackageUri { get; set; }
+        public Uri PackageUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                Properties.PackageUri = value;
+            }
+        }
+
         /// <summary> SQL Connection String. </summary>
         [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Database Type. </summary>
         [WirePath("properties.dbType")]
-        public string DBType { get; set; }
+        public string DBType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DBType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                Properties.DBType = value;
+            }
+        }
+
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
         [WirePath("properties.setParametersXmlFileUri")]
-        public Uri SetParametersXmlFileUri { get; set; }
+        public Uri SetParametersXmlFileUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SetParametersXmlFileUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                Properties.SetParametersXmlFileUri = value;
+            }
+        }
+
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
         [WirePath("properties.setParameters")]
-        public IDictionary<string, string> SetParameters { get; }
+        public IDictionary<string, string> SetParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                return Properties.SetParameters;
+            }
+        }
+
         /// <summary>
         /// Controls whether the MSDeploy operation skips the App_Data directory.
         /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
@@ -110,15 +140,55 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
         [WirePath("properties.skipAppData")]
-        public bool? SkipAppData { get; set; }
+        public bool? SkipAppData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkipAppData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                Properties.SkipAppData = value;
+            }
+        }
+
         /// <summary>
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
         [WirePath("properties.appOffline")]
-        public bool? IsAppOffline { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        public bool? IsAppOffline
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAppOffline;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                Properties.IsAppOffline = value;
+            }
+        }
+
+        /// <summary> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </summary>
+        [WirePath("properties.addOnPackages")]
+        public IList<MSDeployCore> AddOnPackages
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MSDeployProperties();
+                }
+                return Properties.AddOnPackages;
+            }
+        }
     }
 }

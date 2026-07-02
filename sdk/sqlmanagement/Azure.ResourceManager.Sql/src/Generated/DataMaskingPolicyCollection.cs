@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -22,51 +24,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class DataMaskingPolicyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _dataMaskingPolicyClientDiagnostics;
-        private readonly DataMaskingPoliciesRestOperations _dataMaskingPolicyRestClient;
+        private readonly ClientDiagnostics _dataMaskingPoliciesClientDiagnostics;
+        private readonly DataMaskingPolicies _dataMaskingPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataMaskingPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataMaskingPolicyCollection for mocking. </summary>
         protected DataMaskingPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataMaskingPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMaskingPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataMaskingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataMaskingPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataMaskingPolicyResource.ResourceType, out string dataMaskingPolicyApiVersion);
-            _dataMaskingPolicyRestClient = new DataMaskingPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataMaskingPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _dataMaskingPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataMaskingPolicyResource.ResourceType.Namespace, Diagnostics);
+            _dataMaskingPoliciesRestClient = new DataMaskingPolicies(_dataMaskingPoliciesClientDiagnostics, Pipeline, Endpoint, dataMaskingPolicyApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a database data masking policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,16 +79,24 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataMaskingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _dataMaskingPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), DataMaskingPolicyData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMaskingPolicyData> response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<DataMaskingPolicyResource> operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -102,20 +110,16 @@ namespace Azure.ResourceManager.Sql
         /// Creates or updates a database data masking policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,16 +132,24 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataMaskingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, data, cancellationToken);
-                var uri = _dataMaskingPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), DataMaskingPolicyData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMaskingPolicyData> response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<DataMaskingPolicyResource> operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -151,20 +163,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets the database data masking policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,13 +180,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataMaskingPolicyResource>> GetAsync(DataMaskingPolicyName dataMaskingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Get");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataMaskingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMaskingPolicyData> response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMaskingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,20 +208,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets the database data masking policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,13 +225,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataMaskingPolicyResource> Get(DataMaskingPolicyName dataMaskingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Get");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataMaskingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMaskingPolicyData> response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMaskingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,20 +253,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,11 +270,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(DataMaskingPolicyName dataMaskingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Exists");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataMaskingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMaskingPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMaskingPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,20 +306,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,11 +323,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(DataMaskingPolicyName dataMaskingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Exists");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataMaskingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMaskingPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMaskingPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,20 +359,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,13 +376,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<DataMaskingPolicyResource>> GetIfExistsAsync(DataMaskingPolicyName dataMaskingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataMaskingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMaskingPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMaskingPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMaskingPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMaskingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,20 +416,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataMaskingPolicies/{dataMaskingPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataMaskingPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataMaskingPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMaskingPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,13 +433,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<DataMaskingPolicyResource> GetIfExists(DataMaskingPolicyName dataMaskingPolicyName, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataMaskingPolicyClientDiagnostics.CreateScope("DataMaskingPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _dataMaskingPoliciesClientDiagnostics.CreateScope("DataMaskingPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataMaskingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMaskingPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataMaskingPolicyName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMaskingPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMaskingPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMaskingPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMaskingPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMaskingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

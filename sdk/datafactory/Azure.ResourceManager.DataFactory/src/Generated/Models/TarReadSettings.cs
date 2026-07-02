@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class TarReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="TarReadSettings"/>. </summary>
-        public TarReadSettings()
+        public TarReadSettings() : base("TarReadSettings")
         {
-            CompressionReadSettingsType = "TarReadSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="TarReadSettings"/>. </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         internal TarReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> preserveCompressionFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveCompressionFileNameAsFolder = preserveCompressionFileNameAsFolder;
-            CompressionReadSettingsType = compressionReadSettingsType ?? "TarReadSettings";
         }
 
         /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>

@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a LoadBalancingRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadBalancingRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLoadBalancingRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource"/> using the GetLoadBalancingRule method.
+    /// A class representing a LoadBalancingRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadBalancingRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadBalancerResource"/> using the GetLoadBalancingRules method.
     /// </summary>
     public partial class LoadBalancingRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LoadBalancingRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="loadBalancerName"> The loadBalancerName. </param>
-        /// <param name="loadBalancingRuleName"> The loadBalancingRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string loadBalancingRuleName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics;
-        private readonly LoadBalancerLoadBalancingRulesRestOperations _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient;
+        private readonly ClientDiagnostics _loadBalancerLoadBalancingRulesClientDiagnostics;
+        private readonly LoadBalancerLoadBalancingRules _loadBalancerLoadBalancingRulesRestClient;
         private readonly LoadBalancingRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers/loadBalancingRules";
 
-        /// <summary> Initializes a new instance of the <see cref="LoadBalancingRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LoadBalancingRuleResource for mocking. </summary>
         protected LoadBalancingRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LoadBalancingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LoadBalancingRuleResource(ArmClient client, LoadBalancingRuleData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LoadBalancingRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LoadBalancingRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
-            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string loadBalancingRuleApiVersion);
+            _loadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _loadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRules(_loadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, Endpoint, loadBalancingRuleApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual LoadBalancingRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
+        /// <param name="loadBalancingRuleName"> The loadBalancingRuleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string loadBalancingRuleName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified load balancer load balancing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerLoadBalancingRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancingRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadBalancingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LoadBalancingRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Get");
+            using DiagnosticScope scope = _loadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerLoadBalancingRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LoadBalancingRuleData> response = Response.FromValue(LoadBalancingRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LoadBalancingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified load balancer load balancing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerLoadBalancingRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancingRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadBalancingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LoadBalancingRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Get");
+            using DiagnosticScope scope = _loadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerLoadBalancingRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LoadBalancingRuleData> response = Response.FromValue(LoadBalancingRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LoadBalancingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.Network
         /// Get health details of a load balancing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}/health</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}/health. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerLoadBalancingRules_Health</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancingRules_Health. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadBalancingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,27 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<LoadBalancerHealthPerRule>> HealthAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Health");
+            using DiagnosticScope scope = _loadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Health");
             scope.Start();
             try
             {
-                var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.HealthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<LoadBalancerHealthPerRule>(new LoadBalancerHealthPerRuleOperationSource(), _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.CreateHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerLoadBalancingRulesRestClient.CreateHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<LoadBalancerHealthPerRule> operation = new NetworkArmOperation<LoadBalancerHealthPerRule>(
+                    new LoadBalancerHealthPerRuleOperationSource(),
+                    _loadBalancerLoadBalancingRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +247,20 @@ namespace Azure.ResourceManager.Network
         /// Get health details of a load balancing rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}/health</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}/health. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerLoadBalancingRules_Health</description>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancingRules_Health. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancingRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LoadBalancingRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +268,27 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<LoadBalancerHealthPerRule> Health(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Health");
+            using DiagnosticScope scope = _loadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRuleResource.Health");
             scope.Start();
             try
             {
-                var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Health(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<LoadBalancerHealthPerRule>(new LoadBalancerHealthPerRuleOperationSource(), _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.CreateHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerLoadBalancingRulesRestClient.CreateHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<LoadBalancerHealthPerRule> operation = new NetworkArmOperation<LoadBalancerHealthPerRule>(
+                    new LoadBalancerHealthPerRuleOperationSource(),
+                    _loadBalancerLoadBalancingRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

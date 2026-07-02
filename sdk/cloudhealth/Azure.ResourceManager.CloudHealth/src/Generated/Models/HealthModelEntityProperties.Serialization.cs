@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    public partial class HealthModelEntityProperties : IUtf8JsonSerializable, IJsonModel<HealthModelEntityProperties>
+    /// <summary> Properties which are common across all kinds of entities. </summary>
+    public partial class HealthModelEntityProperties : IJsonModel<HealthModelEntityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthModelEntityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthModelEntityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthModelEntityProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthModelEntityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthModelEntityProperties IPersistableModel<HealthModelEntityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthModelEntityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelEntityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -43,11 +83,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(CanvasPosition))
             {
@@ -69,31 +104,31 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("labels"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Labels)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Signals))
+            if (Optional.IsDefined(SignalGroups))
             {
-                writer.WritePropertyName("signals"u8);
-                writer.WriteObjectValue(Signals, options);
+                writer.WritePropertyName("signalGroups"u8);
+                writer.WriteObjectValue(SignalGroups, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DiscoveredBy))
             {
                 writer.WritePropertyName("discoveredBy"u8);
                 writer.WriteStringValue(DiscoveredBy);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
@@ -105,15 +140,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -122,205 +157,166 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        HealthModelEntityProperties IJsonModel<HealthModelEntityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthModelEntityProperties IJsonModel<HealthModelEntityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthModelEntityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHealthModelEntityProperties(document.RootElement, options);
         }
 
-        internal static HealthModelEntityProperties DeserializeHealthModelEntityProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HealthModelEntityProperties DeserializeHealthModelEntityProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
-            string kind = default;
             EntityCoordinates canvasPosition = default;
             EntityIcon icon = default;
             float? healthObjective = default;
             EntityImpact? impact = default;
-            IDictionary<string, string> labels = default;
-            EntitySignalGroup signals = default;
+            IDictionary<string, string> tags = default;
+            EntitySignalGroups signalGroups = default;
             string discoveredBy = default;
-            DateTimeOffset? deletionDate = default;
             EntityHealthState? healthState = default;
             EntityAlerts alerts = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HealthModelProvisioningState(property.Value.GetString());
+                    provisioningState = new HealthModelProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("canvasPosition"u8))
                 {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("canvasPosition"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    canvasPosition = EntityCoordinates.DeserializeEntityCoordinates(property.Value, options);
+                    canvasPosition = EntityCoordinates.DeserializeEntityCoordinates(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("icon"u8))
+                if (prop.NameEquals("icon"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    icon = EntityIcon.DeserializeEntityIcon(property.Value, options);
+                    icon = EntityIcon.DeserializeEntityIcon(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("healthObjective"u8))
+                if (prop.NameEquals("healthObjective"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    healthObjective = property.Value.GetSingle();
+                    healthObjective = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("impact"u8))
+                if (prop.NameEquals("impact"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    impact = new EntityImpact(property.Value.GetString());
+                    impact = new EntityImpact(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("signals"u8))
+                if (prop.NameEquals("signalGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    signals = EntitySignalGroup.DeserializeEntitySignalGroup(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("discoveredBy"u8))
-                {
-                    discoveredBy = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("deletionDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deletionDate = property.Value.GetDateTimeOffset("O");
+                    signalGroups = EntitySignalGroups.DeserializeEntitySignalGroups(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("healthState"u8))
+                if (prop.NameEquals("discoveredBy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    discoveredBy = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("healthState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    healthState = new EntityHealthState(property.Value.GetString());
+                    healthState = new EntityHealthState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alerts"u8))
+                if (prop.NameEquals("alerts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    alerts = EntityAlerts.DeserializeEntityAlerts(property.Value, options);
+                    alerts = EntityAlerts.DeserializeEntityAlerts(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HealthModelEntityProperties(
                 provisioningState,
                 displayName,
-                kind,
                 canvasPosition,
                 icon,
                 healthObjective,
                 impact,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
-                signals,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                signalGroups,
                 discoveredBy,
-                deletionDate,
                 healthState,
                 alerts,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HealthModelEntityProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HealthModelEntityProperties IPersistableModel<HealthModelEntityProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthModelEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHealthModelEntityProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelEntityProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HealthModelEntityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

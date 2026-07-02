@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "listContentType",
+      "name": "ListAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "listByScopeContentType",
+      "name": "ListAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -45,6 +47,12 @@
       "crossLanguageDefinitionId": "Client.Overload.Resource",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Resource"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -69,7 +77,8 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -94,7 +103,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "10",
@@ -119,7 +129,8 @@
               "name": "scope"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -129,6 +140,7 @@
       "$id": "12",
       "kind": "client",
       "name": "OverloadClient",
+      "isExactName": false,
       "namespace": "Client.Overload",
       "doc": "Test for overload operation in .NET.",
       "methods": [
@@ -136,11 +148,13 @@
           "$id": "13",
           "kind": "basic",
           "name": "list",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "14",
             "name": "list",
+            "isExactName": false,
             "resourceName": "Overload",
             "accessibility": "public",
             "parameters": [
@@ -158,7 +172,28 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Client.Overload.list.accept"
+                "crossLanguageDefinitionId": "Client.Overload.list.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "16",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Client.Overload.list.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -167,7 +202,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$id": "16",
+                  "$id": "17",
                   "kind": "array",
                   "name": "ArrayResource",
                   "valueType": {
@@ -180,7 +215,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -190,30 +230,17 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Overload.list",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Overload"
           },
           "parameters": [
             {
-              "$id": "17",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "1"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Client.Overload.list.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "16"
             }
           ],
           "response": {
             "type": {
-              "$ref": "16"
+              "$ref": "17"
             }
           },
           "isOverride": false,
@@ -225,11 +252,13 @@
           "$id": "18",
           "kind": "basic",
           "name": "list",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "19",
             "name": "list",
+            "isExactName": false,
             "resourceName": "Overload",
             "accessibility": "public",
             "parameters": [
@@ -254,10 +283,35 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Client.Overload.listByScope.scope"
+                "crossLanguageDefinitionId": "Client.Overload.listByScope.scope",
+                "methodParameterSegments": [
+                  {
+                    "$id": "22",
+                    "kind": "method",
+                    "name": "scope",
+                    "serializedName": "scope",
+                    "type": {
+                      "$id": "23",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Client.Overload.listByScope.scope",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "22",
+                "$id": "24",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -270,7 +324,28 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Client.Overload.listByScope.accept"
+                "crossLanguageDefinitionId": "Client.Overload.listByScope.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "25",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Client.Overload.listByScope.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -279,13 +354,18 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "16"
+                  "$ref": "17"
                 },
                 "headers": [],
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -295,51 +375,20 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Overload.listByScope",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Overload"
           },
           "parameters": [
             {
-              "$id": "23",
-              "kind": "method",
-              "name": "scope",
-              "serializedName": "scope",
-              "type": {
-                "$id": "24",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Client.Overload.listByScope.scope",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "22"
             },
             {
-              "$id": "25",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "3"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Client.Overload.listByScope.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "25"
             }
           ],
           "response": {
             "type": {
-              "$ref": "16"
+              "$ref": "17"
             }
           },
           "isOverride": false,
@@ -377,12 +426,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Overload.endpoint"
+          "crossLanguageDefinitionId": "Client.Overload.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Overload",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

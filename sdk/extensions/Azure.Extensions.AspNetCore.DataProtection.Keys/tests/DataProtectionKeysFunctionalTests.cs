@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
-    public class DataProtectionKeysFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
+    public class DataProtectionKeysFunctionalTests : LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
         public async Task ProtectsKeysWithKeyVaultKey()
@@ -43,13 +43,13 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var unprotectedText = anotherDataProtector.Unprotect(protectedText);
 
-            Assert.AreEqual("Hello world!", unprotectedText);
+            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
 
             // double check that keys were protected with KeyVault
 
             foreach (var element in testKeyRepository.GetAllElements())
             {
-                StringAssert.Contains("This key is encrypted with Azure Key Vault", element.ToString());
+                Assert.That(element.ToString(), Does.Contain("This key is encrypted with Azure Key Vault"));
             }
         }
 
@@ -81,17 +81,17 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             // Decrypt data
             var unprotectedText = dataProtector.Unprotect(protectedText);
 
-            Assert.AreEqual("Hello world!", unprotectedText);
+            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
 
             // double check that keys were protected with KeyVault
 
             foreach (var element in testKeyRepository.GetAllElements())
             {
-                StringAssert.Contains("This key is encrypted with Azure", element.ToString());
+                Assert.That(element.ToString(), Does.Contain("This key is encrypted with Azure"));
             }
         }
 
-        private class TestKeyRepository: IXmlRepository
+        private class TestKeyRepository : IXmlRepository
         {
             private List<XElement> _elements;
 

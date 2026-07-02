@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using OpenAI.Chat;
 using System;
 using System.ClientModel;
+using Azure.Core;
+using OpenAI.Chat;
 
 namespace Azure.AI.Models
 {

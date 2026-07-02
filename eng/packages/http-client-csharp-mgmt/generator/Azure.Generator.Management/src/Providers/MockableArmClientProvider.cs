@@ -4,7 +4,9 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -16,15 +18,32 @@ namespace Azure.Generator.Management.Providers
 {
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
-        // TODO -- we also need to put operations here when we want to support scope resources/operations https://github.com/Azure/azure-sdk-for-net/issues/51821
-        public MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources)
-            : base(typeof(ArmClient), RequestPathPattern.Tenant, resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), [])
+        private MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : base(typeof(ArmClient), OperationContext.Create(RequestPathPattern.Tenant), resources, resourceMethods, nonResourceMethods)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="MockableArmClientProvider"/> if there are resources or extension methods to generate methods for.
+        /// </summary>
+        /// <param name="resources">The resources to generate methods for.</param>
+        /// <param name="resourceMethods">The resource methods to generate methods for.</param>
+        /// <param name="nonResourceMethods">The non-resource methods to generate methods for.</param>
+        /// <returns>A new instance of <see cref="MockableArmClientProvider"/> if there are resources or extension methods, otherwise null.</returns>
+        public static MockableArmClientProvider? TryCreate(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        {
+            if (resources.Count == 0 && resourceMethods.Count == 0 && nonResourceMethods.Count == 0)
+            {
+                return null;
+            }
+            return new MockableArmClientProvider(resources, resourceMethods, nonResourceMethods);
         }
 
         protected override MethodProvider[] BuildMethods()
         {
-            var methods = new List<MethodProvider>(_resources.Count);
+            var methods = new List<MethodProvider>(_resources.Count + _resourceMethods.Sum(kvp => kvp.Value.Count) * 2 + _nonResourceMethods.Count * 2);
+
+            // Build methods for extension resources
             foreach (var resource in _resources)
             {
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
@@ -39,6 +58,47 @@ namespace Azure.Generator.Management.Providers
                         methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
                     }
                 }
+            }
+
+            // Build methods for extension-scoped resource operations.
+            foreach (var (resource, resourceMethods) in _resourceMethods)
+            {
+                foreach (var resourceMethod in resourceMethods)
+                {
+                    var scopeParameter = new ParameterProvider(
+                        "scope",
+                        $"The scope that the resource will apply against.",
+                        typeof(ResourceIdentifier),
+                        wireInfo: new WireInformation(SerializationFormat.Default, string.Empty),
+                        validation: ParameterValidationType.AssertNotNull);
+                    var scopeContext = OperationContext.Create(resourceMethod.Scope.ScopeIdPattern);
+
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true, scopeContext, scopeParameter));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false, scopeContext, scopeParameter));
+                }
+            }
+
+            // Build methods for non-resource extension operations
+            foreach (var method in _nonResourceMethods)
+            {
+                // For extension-scoped non-resource methods, create a synthetic scope parameter (ResourceIdentifier).
+                // Pass an explicit WireInformation with an empty SerializedName so this synthetic parameter does not
+                // collide with a real wire parameter named "scope" (e.g. an @query("scope")) when
+                // ParameterContextRegistry.PopulateArguments matches arguments by WireInfo.SerializedName.
+                // Note: the ParameterProvider constructor defaults WireInfo to one whose SerializedName equals the
+                // parameter Name when wireInfo is null, so we must pass a non-null sentinel here. See issue #58484.
+                var scopeParameter = new ParameterProvider(
+                    "scope",
+                    $"The scope that the resource will apply against.",
+                    typeof(ResourceIdentifier),
+                    wireInfo: new WireInformation(SerializationFormat.Default, string.Empty),
+                    validation: ParameterValidationType.AssertNotNull);
+                var scopeContext = OperationContext.Create(method.Scope.ScopeIdPattern);
+
+                // Process both async and sync method variants, passing the scope parameter
+                // so that PopulateArguments uses it instead of Id
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, true, scopeParameter: scopeParameter));
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, false, scopeParameter: scopeParameter));
             }
 
             return [.. methods];
@@ -74,19 +134,21 @@ namespace Azure.Generator.Management.Providers
         {
             var result = new List<MethodProvider>();
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
+            var extraParameters = resource.FactoryMethodSignature.Parameters;
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
                 $"Gets a collection of {resource.ResourceCollection!.Type:C} objects within the specified scope.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 resource.ResourceCollection!.Type,
                 $"Returns a collection of {resource.Type:C} objects.",
-                [scopeParameter]);
+                [scopeParameter, .. extraParameters]);
             var body = new MethodBodyStatement[]
             {
                 Return(New.Instance(resource.ResourceCollection!.Type,
                     [
                         This.As<ArmResource>().Client(),
-                        scopeParameter
+                        scopeParameter,
+                        .. extraParameters
                     ]))
             };
             result.Add(new MethodProvider(signature, body, this));
@@ -139,13 +201,14 @@ namespace Azure.Generator.Management.Providers
             var result = new List<MethodProvider>();
 
             var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+            var extraParameters = resource.FactoryMethodSignature.Parameters;
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
                 $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the ArmClient",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 resource.Type,
                 $"Returns a {resource.Type:C} object.",
-                [scopeParameter]);
+                [scopeParameter, .. extraParameters]);
 
             var body = new MethodBodyStatement[]
             {

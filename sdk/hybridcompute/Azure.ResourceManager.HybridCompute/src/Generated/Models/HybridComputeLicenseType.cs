@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeLicenseType : IEquatable<HybridComputeLicenseType>
     {
         private readonly string _value;
+        /// <summary> ESU. </summary>
+        private const string EsuValue = "ESU";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EsuValue = "ESU";
+            _value = value;
+        }
 
         /// <summary> ESU. </summary>
         public static HybridComputeLicenseType Esu { get; } = new HybridComputeLicenseType(EsuValue);
+
         /// <summary> Determines if two <see cref="HybridComputeLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeLicenseType left, HybridComputeLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeLicenseType left, HybridComputeLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeLicenseType(string value) => new HybridComputeLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeLicenseType?(string value) => value == null ? null : new HybridComputeLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

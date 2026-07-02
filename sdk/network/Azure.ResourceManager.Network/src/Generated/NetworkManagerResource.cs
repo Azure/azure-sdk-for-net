@@ -7,54 +7,41 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a NetworkManager along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkManagerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkManager method.
+    /// A class representing a NetworkManager along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkManagers method.
     /// </summary>
     public partial class NetworkManagerResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkManagerResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkManagerName"> The networkManagerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkManagerClientDiagnostics;
-        private readonly NetworkManagersRestOperations _networkManagerRestClient;
-        private readonly ClientDiagnostics _expressRouteProviderPortClientDiagnostics;
-        private readonly NetworkManagementRestOperations _expressRouteProviderPortRestClient;
-        private readonly ClientDiagnostics _networkManagerCommitsClientDiagnostics;
-        private readonly NetworkManagerCommitsRestOperations _networkManagerCommitsRestClient;
+        private readonly ClientDiagnostics _networkManagersClientDiagnostics;
+        private readonly NetworkManagers _networkManagersRestClient;
         private readonly ClientDiagnostics _networkManagerDeploymentStatusClientDiagnostics;
-        private readonly NetworkManagerDeploymentStatusRestOperations _networkManagerDeploymentStatusRestClient;
+        private readonly NetworkManagerDeploymentStatus _networkManagerDeploymentStatusRestClient;
+        private readonly ClientDiagnostics _networkManagerCommitsClientDiagnostics;
+        private readonly NetworkManagerCommits _networkManagerCommitsRestClient;
         private readonly NetworkManagerData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkManagerResource for mocking. </summary>
         protected NetworkManagerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkManagerResource(ArmClient client, NetworkManagerData data) : this(client, data.Id)
@@ -63,630 +50,96 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkManagerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkManagerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkManagerApiVersion);
-            _networkManagerRestClient = new NetworkManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerApiVersion);
-            _expressRouteProviderPortClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ExpressRouteProviderPortResource.ResourceType, out string expressRouteProviderPortApiVersion);
-            _expressRouteProviderPortRestClient = new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteProviderPortApiVersion);
-            _networkManagerCommitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _networkManagerCommitsRestClient = new NetworkManagerCommitsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _networkManagerDeploymentStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _networkManagerDeploymentStatusRestClient = new NetworkManagerDeploymentStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _networkManagersRestClient = new NetworkManagers(_networkManagersClientDiagnostics, Pipeline, Endpoint, networkManagerApiVersion ?? "2025-07-01");
+            _networkManagerDeploymentStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _networkManagerDeploymentStatusRestClient = new NetworkManagerDeploymentStatus(_networkManagerDeploymentStatusClientDiagnostics, Pipeline, Endpoint, networkManagerApiVersion ?? "2025-07-01");
+            _networkManagerCommitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _networkManagerCommitsRestClient = new NetworkManagerCommits(_networkManagerCommitsClientDiagnostics, Pipeline, Endpoint, networkManagerApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkManagerData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of IpamPoolResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of IpamPoolResources and their operations over a IpamPoolResource. </returns>
-        public virtual IpamPoolCollection GetIpamPools()
-        {
-            return GetCachedClient(client => new IpamPoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specific Pool resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/ipamPools/{poolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpamPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IpamPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolName"> Pool resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IpamPoolResource>> GetIpamPoolAsync(string poolName, CancellationToken cancellationToken = default)
-        {
-            return await GetIpamPools().GetAsync(poolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specific Pool resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/ipamPools/{poolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpamPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IpamPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolName"> Pool resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<IpamPoolResource> GetIpamPool(string poolName, CancellationToken cancellationToken = default)
-        {
-            return GetIpamPools().Get(poolName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ConnectivityConfigurationResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of ConnectivityConfigurationResources and their operations over a ConnectivityConfigurationResource. </returns>
-        public virtual ConnectivityConfigurationCollection GetConnectivityConfigurations()
-        {
-            return GetCachedClient(client => new ConnectivityConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Network Connectivity Configuration, specified by the resource group, network manager name, and connectivity Configuration name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/connectivityConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectivityConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectivityConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectivityConfigurationResource>> GetConnectivityConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetConnectivityConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Network Connectivity Configuration, specified by the resource group, network manager name, and connectivity Configuration name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/connectivityConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectivityConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectivityConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConnectivityConfigurationResource> GetConnectivityConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetConnectivityConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkGroupResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of NetworkGroupResources and their operations over a NetworkGroupResource. </returns>
-        public virtual NetworkGroupCollection GetNetworkGroups()
-        {
-            return GetCachedClient(client => new NetworkGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified network group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkGroupName"> The name of the network group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkGroupResource>> GetNetworkGroupAsync(string networkGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkGroups().GetAsync(networkGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified network group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkGroupName"> The name of the network group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkGroupResource> GetNetworkGroup(string networkGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkGroups().Get(networkGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkManagerRoutingConfigurationResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of NetworkManagerRoutingConfigurationResources and their operations over a NetworkManagerRoutingConfigurationResource. </returns>
-        public virtual NetworkManagerRoutingConfigurationCollection GetNetworkManagerRoutingConfigurations()
-        {
-            return GetCachedClient(client => new NetworkManagerRoutingConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves a network manager routing configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagerRoutingConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkManagerRoutingConfigurationResource>> GetNetworkManagerRoutingConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkManagerRoutingConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves a network manager routing configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagerRoutingConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkManagerRoutingConfigurationResource> GetNetworkManagerRoutingConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkManagerRoutingConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ScopeConnectionResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of ScopeConnectionResources and their operations over a ScopeConnectionResource. </returns>
-        public virtual ScopeConnectionCollection GetScopeConnections()
-        {
-            return GetCachedClient(client => new ScopeConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get specified scope connection created by this Network Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ScopeConnectionResource>> GetScopeConnectionAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetScopeConnections().GetAsync(scopeConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get specified scope connection created by this Network Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScopeConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScopeConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ScopeConnectionResource> GetScopeConnection(string scopeConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetScopeConnections().Get(scopeConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityAdminConfigurationResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of SecurityAdminConfigurationResources and their operations over a SecurityAdminConfigurationResource. </returns>
-        public virtual SecurityAdminConfigurationCollection GetSecurityAdminConfigurations()
-        {
-            return GetCachedClient(client => new SecurityAdminConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves a network manager security admin configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityAdminConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityAdminConfigurationResource>> GetSecurityAdminConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityAdminConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves a network manager security admin configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityAdminConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityAdminConfigurationResource> GetSecurityAdminConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityAdminConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkManagerSecurityUserConfigurationResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of NetworkManagerSecurityUserConfigurationResources and their operations over a NetworkManagerSecurityUserConfigurationResource. </returns>
-        public virtual NetworkManagerSecurityUserConfigurationCollection GetNetworkManagerSecurityUserConfigurations()
-        {
-            return GetCachedClient(client => new NetworkManagerSecurityUserConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves a network manager security user configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkManagerSecurityUserConfigurationResource>> GetNetworkManagerSecurityUserConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkManagerSecurityUserConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves a network manager security user configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkManagerSecurityUserConfigurationResource> GetNetworkManagerSecurityUserConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkManagerSecurityUserConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkVerifierWorkspaceResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of NetworkVerifierWorkspaceResources and their operations over a NetworkVerifierWorkspaceResource. </returns>
-        public virtual NetworkVerifierWorkspaceCollection GetNetworkVerifierWorkspaces()
-        {
-            return GetCachedClient(client => new NetworkVerifierWorkspaceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets Verifier Workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifierWorkspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workspaceName"> Workspace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> GetNetworkVerifierWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkVerifierWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets Verifier Workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifierWorkspaces_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workspaceName"> Workspace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkVerifierWorkspaceResource> GetNetworkVerifierWorkspace(string workspaceName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkVerifierWorkspaces().Get(workspaceName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified Network Manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkManagerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.Get");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -700,120 +153,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified Network Manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkManagerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.Get");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.Get");
             scope.Start();
             try
             {
-                var response = _networkManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a network manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _networkManagerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkManagerClientDiagnostics, Pipeline, _networkManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a network manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _networkManagerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new NetworkArmOperation(_networkManagerClientDiagnostics, Pipeline, _networkManagerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -826,20 +201,20 @@ namespace Azure.ResourceManager.Network
         /// Patch NetworkManager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Patch</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Patch. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -850,11 +225,21 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.Update");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkManagerRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagersRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -868,20 +253,20 @@ namespace Azure.ResourceManager.Network
         /// Patch NetworkManager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Patch</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Patch. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -892,11 +277,21 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.Update");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.Update");
             scope.Start();
             try
             {
-                var response = _networkManagerRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagersRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -907,155 +302,229 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Lists active connectivity configurations in a network manager.
+        /// Deletes a network manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveConnectivityConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListActiveConnectivityConfigurations</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Active Configuration Parameter. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurationsAsync(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_networkManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Lists active connectivity configurations in a network manager.
+        /// Deletes a network manager.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveConnectivityConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListActiveConnectivityConfigurations</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Active Configuration Parameter. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="force"> Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurations(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_networkManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Lists active security admin rules in a network manager.
+        /// Post to List of Network Manager Deployment Status.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveSecurityAdminRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listDeploymentStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListActiveSecurityAdminRules</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_NetworkManagerDeploymentStatusList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Active Configuration Parameter. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRulesAsync(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkManagerDeploymentStatusListResult>> GetAllAsync(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            using DiagnosticScope scope = _networkManagerDeploymentStatusClientDiagnostics.CreateScope("NetworkManagerResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusContent.ToRequestContent(content), top, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerDeploymentStatusListResult> response = Response.FromValue(NetworkManagerDeploymentStatusListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Lists active security admin rules in a network manager.
+        /// Post to List of Network Manager Deployment Status.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listActiveSecurityAdminRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listDeploymentStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListActiveSecurityAdminRules</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_NetworkManagerDeploymentStatusList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Active Configuration Parameter. </param>
+        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRules(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkManagerDeploymentStatusListResult> GetAll(NetworkManagerDeploymentStatusContent content, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            using DiagnosticScope scope = _networkManagerDeploymentStatusClientDiagnostics.CreateScope("NetworkManagerResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagerDeploymentStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerDeploymentStatusContent.ToRequestContent(content), top, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerDeploymentStatusListResult> response = Response.FromValue(NetworkManagerDeploymentStatusListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Post a Network Manager Commit.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/commit</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/commit. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagerCommits_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1063,18 +532,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerCommit"> Parameters supplied to specify which Managed Network commit is. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerCommit"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkManagerCommit>> PostNetworkManagerCommitAsync(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkManagerCommit>> PostAsync(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkManagerCommit, nameof(networkManagerCommit));
 
-            using var scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.PostNetworkManagerCommit");
+            using DiagnosticScope scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.Post");
             scope.Start();
             try
             {
-                var response = await _networkManagerCommitsRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkManagerCommit>(new NetworkManagerCommitOperationSource(), _networkManagerCommitsClientDiagnostics, Pipeline, _networkManagerCommitsRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagerCommitsRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerCommit.ToRequestContent(networkManagerCommit), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<NetworkManagerCommit> operation = new NetworkArmOperation<NetworkManagerCommit>(
+                    new NetworkManagerCommitOperationSource(),
+                    _networkManagerCommitsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1088,16 +570,20 @@ namespace Azure.ResourceManager.Network
         /// Post a Network Manager Commit.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/commit</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/commit. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagerCommits_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkManagerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1105,18 +591,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerCommit"> Parameters supplied to specify which Managed Network commit is. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerCommit"/> is null. </exception>
-        public virtual ArmOperation<NetworkManagerCommit> PostNetworkManagerCommit(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkManagerCommit> Post(WaitUntil waitUntil, NetworkManagerCommit networkManagerCommit, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkManagerCommit, nameof(networkManagerCommit));
 
-            using var scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.PostNetworkManagerCommit");
+            using DiagnosticScope scope = _networkManagerCommitsClientDiagnostics.CreateScope("NetworkManagerResource.Post");
             scope.Start();
             try
             {
-                var response = _networkManagerCommitsRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkManagerCommit>(new NetworkManagerCommitOperationSource(), _networkManagerCommitsClientDiagnostics, Pipeline, _networkManagerCommitsRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkManagerCommit).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkManagerCommitsRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkManagerCommit.ToRequestContent(networkManagerCommit), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<NetworkManagerCommit> operation = new NetworkArmOperation<NetworkManagerCommit>(
+                    new NetworkManagerCommitOperationSource(),
+                    _networkManagerCommitsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1126,87 +625,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Post to List of Network Manager Deployment Status.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listDeploymentStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagerDeploymentStatus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatusAsync(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(e), _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Post to List of Network Manager Deployment Status.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/listDeploymentStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagerDeploymentStatus_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatus(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(e), _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1216,29 +635,35 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.AddTag");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkManagerPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkManagerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkManagerPatch patch = new NetworkManagerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<NetworkManagerResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1248,27 +673,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1278,29 +683,35 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.AddTag");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkManagerPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkManagerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkManagerPatch patch = new NetworkManagerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<NetworkManagerResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1310,54 +721,40 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkManagerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.SetTags");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkManagerPatch();
+                    NetworkManagerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkManagerPatch patch = new NetworkManagerPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<NetworkManagerResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1367,54 +764,40 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkManagerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.SetTags");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkManagerPatch();
+                    NetworkManagerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkManagerPatch patch = new NetworkManagerPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<NetworkManagerResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1424,27 +807,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1452,29 +815,35 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.RemoveTag");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkManagerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkManagerPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkManagerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkManagerPatch patch = new NetworkManagerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<NetworkManagerResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1484,27 +853,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1512,29 +861,35 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkManagerClientDiagnostics.CreateScope("NetworkManagerResource.RemoveTag");
+            using DiagnosticScope scope = _networkManagersClientDiagnostics.CreateScope("NetworkManagerResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkManagerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkManagerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _networkManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkManagerData> response = Response.FromValue(NetworkManagerData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkManagerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkManagerPatch();
-                    foreach (var tag in current.Tags)
+                    NetworkManagerData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkManagerPatch patch = new NetworkManagerPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<NetworkManagerResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1542,6 +897,303 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of IpamPools in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of IpamPools and their operations over a IpamPoolResource. </returns>
+        public virtual IpamPoolCollection GetIpamPools()
+        {
+            return GetCachedClient(client => new IpamPoolCollection(client, Id));
+        }
+
+        /// <summary> Gets the specific Pool resource. </summary>
+        /// <param name="poolName"> Pool resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IpamPoolResource>> GetIpamPoolAsync(string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            return await GetIpamPools().GetAsync(poolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specific Pool resource. </summary>
+        /// <param name="poolName"> Pool resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IpamPoolResource> GetIpamPool(string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            return GetIpamPools().Get(poolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ConnectivityConfigurations in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of ConnectivityConfigurations and their operations over a ConnectivityConfigurationResource. </returns>
+        public virtual ConnectivityConfigurationCollection GetConnectivityConfigurations()
+        {
+            return GetCachedClient(client => new ConnectivityConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Gets a Network Connectivity Configuration, specified by the resource group, network manager name, and connectivity Configuration name. </summary>
+        /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConnectivityConfigurationResource>> GetConnectivityConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetConnectivityConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Network Connectivity Configuration, specified by the resource group, network manager name, and connectivity Configuration name. </summary>
+        /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConnectivityConfigurationResource> GetConnectivityConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetConnectivityConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkGroups in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkGroups and their operations over a NetworkGroupResource. </returns>
+        public virtual NetworkGroupCollection GetNetworkGroups()
+        {
+            return GetCachedClient(client => new NetworkGroupCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified network group. </summary>
+        /// <param name="networkGroupName"> The name of the network group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkGroupResource>> GetNetworkGroupAsync(string networkGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
+
+            return await GetNetworkGroups().GetAsync(networkGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified network group. </summary>
+        /// <param name="networkGroupName"> The name of the network group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkGroupResource> GetNetworkGroup(string networkGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
+
+            return GetNetworkGroups().Get(networkGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkManagerRoutingConfigurations in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkManagerRoutingConfigurations and their operations over a NetworkManagerRoutingConfigurationResource. </returns>
+        public virtual NetworkManagerRoutingConfigurationCollection GetNetworkManagerRoutingConfigurations()
+        {
+            return GetCachedClient(client => new NetworkManagerRoutingConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Retrieves a network manager routing configuration. </summary>
+        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkManagerRoutingConfigurationResource>> GetNetworkManagerRoutingConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetNetworkManagerRoutingConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves a network manager routing configuration. </summary>
+        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkManagerRoutingConfigurationResource> GetNetworkManagerRoutingConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetNetworkManagerRoutingConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ScopeConnections in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of ScopeConnections and their operations over a ScopeConnectionResource. </returns>
+        public virtual ScopeConnectionCollection GetScopeConnections()
+        {
+            return GetCachedClient(client => new ScopeConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get specified scope connection created by this Network Manager. </summary>
+        /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScopeConnectionResource>> GetScopeConnectionAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+
+            return await GetScopeConnections().GetAsync(scopeConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get specified scope connection created by this Network Manager. </summary>
+        /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScopeConnectionResource> GetScopeConnection(string scopeConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+
+            return GetScopeConnections().Get(scopeConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkManagerConfigurationCommits in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkManagerConfigurationCommits and their operations over a NetworkManagerConfigurationCommitResource. </returns>
+        public virtual NetworkManagerConfigurationCommitCollection GetNetworkManagerConfigurationCommits()
+        {
+            return GetCachedClient(client => new NetworkManagerConfigurationCommitCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified commit. </summary>
+        /// <param name="commitName"> The name of the commit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkManagerConfigurationCommitResource>> GetNetworkManagerConfigurationCommitAsync(string commitName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitName, nameof(commitName));
+
+            return await GetNetworkManagerConfigurationCommits().GetAsync(commitName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified commit. </summary>
+        /// <param name="commitName"> The name of the commit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkManagerConfigurationCommitResource> GetNetworkManagerConfigurationCommit(string commitName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitName, nameof(commitName));
+
+            return GetNetworkManagerConfigurationCommits().Get(commitName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityAdminConfigurations in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityAdminConfigurations and their operations over a SecurityAdminConfigurationResource. </returns>
+        public virtual SecurityAdminConfigurationCollection GetSecurityAdminConfigurations()
+        {
+            return GetCachedClient(client => new SecurityAdminConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Retrieves a network manager security admin configuration. </summary>
+        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityAdminConfigurationResource>> GetSecurityAdminConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetSecurityAdminConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves a network manager security admin configuration. </summary>
+        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityAdminConfigurationResource> GetSecurityAdminConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetSecurityAdminConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkManagerSecurityUserConfigurations in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkManagerSecurityUserConfigurations and their operations over a NetworkManagerSecurityUserConfigurationResource. </returns>
+        public virtual NetworkManagerSecurityUserConfigurationCollection GetNetworkManagerSecurityUserConfigurations()
+        {
+            return GetCachedClient(client => new NetworkManagerSecurityUserConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Retrieves a network manager security user configuration. </summary>
+        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkManagerSecurityUserConfigurationResource>> GetNetworkManagerSecurityUserConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetNetworkManagerSecurityUserConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves a network manager security user configuration. </summary>
+        /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkManagerSecurityUserConfigurationResource> GetNetworkManagerSecurityUserConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetNetworkManagerSecurityUserConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkVerifierWorkspaces in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkVerifierWorkspaces and their operations over a NetworkVerifierWorkspaceResource. </returns>
+        public virtual NetworkVerifierWorkspaceCollection GetNetworkVerifierWorkspaces()
+        {
+            return GetCachedClient(client => new NetworkVerifierWorkspaceCollection(client, Id));
+        }
+
+        /// <summary> Gets Verifier Workspace. </summary>
+        /// <param name="workspaceName"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> GetNetworkVerifierWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            return await GetNetworkVerifierWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets Verifier Workspace. </summary>
+        /// <param name="workspaceName"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkVerifierWorkspaceResource> GetNetworkVerifierWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            return GetNetworkVerifierWorkspaces().Get(workspaceName, cancellationToken);
         }
     }
 }

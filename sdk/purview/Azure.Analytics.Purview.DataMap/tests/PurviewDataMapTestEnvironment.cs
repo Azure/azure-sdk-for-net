@@ -6,7 +6,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Analytics.Purview.DataMap.Tests
 {
-    public class PurviewDataMapTestEnvironment: TestEnvironment
+    public class PurviewDataMapTestEnvironment : TestEnvironment
     {
         public PurviewDataMapTestEnvironment()
         {

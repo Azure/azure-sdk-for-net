@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -19,23 +20,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
-        private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
+        private readonly ConcurrentDictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
-        private readonly WebPubSubFunctionsOptions _options;
 
-        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubFunctionsOptions options)
+        public WebPubSubTriggerDispatcher(ILogger logger)
         {
             _logger = logger;
-            _options = options;
         }
 
         public void AddListener(string key, WebPubSubListener listener)
         {
-            if (_listeners.ContainsKey(key))
+            if (!_listeners.TryAdd(key, listener))
             {
                 throw new ArgumentException($"Duplicated binding attribute find: {string.Join(",", key.Split('.'))}");
             }
-            _listeners.Add(key, listener);
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req,
@@ -43,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             if (req.IsValidationRequest(out var requestHosts))
             {
-                return RespondToServiceAbuseCheck(requestHosts, new WebPubSubValidationOptions(_options.ConnectionString));
+                return RespondToServiceAbuseCheck(requestHosts);
             }
 
             if (!TryParseCloudEvents(req, out var context))
@@ -55,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (TryResolveListener(context, out var executor))
             {
-                if (!context.IsValidSignature(executor.ValidationOptions))
+                if (!executor.Validator.IsValidSignature(context.Origin, context.Signature, context.ConnectionId))
                 {
                     return new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 }
@@ -83,12 +81,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var request = JsonSerializer.Deserialize<MqttConnectEventRequestContent>(content);
+                                var request = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventRequest);
                                 eventRequest = new MqttConnectEventRequest(mqttContext, request.Claims, request.Query, request.ClientCertificates, request.Headers, request.Mqtt);
                             }
                             else
                             {
-                                var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
+                                var request = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.ConnectEventRequest);
                                 eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates, request.Headers);
                             }
                             var connectEventRequest = (ConnectEventRequest)eventRequest;
@@ -103,12 +101,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestContent>(content);
+                                var requestBody = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.MqttDisconnectedEventRequest);
                                 eventRequest = new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
                             }
                             else
                             {
-                                var request = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
+                                var request = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.DisconnectedEventRequest);
                                 eventRequest = new DisconnectedEventRequest(context, request.Reason);
                             }
                             reason = ((DisconnectedEventRequest)eventRequest).Reason;
@@ -261,28 +259,38 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)
+        private HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts)
         {
             var response = new HttpResponseMessage();
-            // skip validation and allow all.
-            if (options == null || !options.ContainsHost())
+            if (IsValidAbuseProtectionOrigin(requestHosts))
             {
                 response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 return response;
             }
-            else
-            {
-                foreach (var item in requestHosts)
-                {
-                    if (options.ContainsHost(item))
-                    {
-                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, item);
-                        return response;
-                    }
-                }
-            }
+
             response.StatusCode = HttpStatusCode.BadRequest;
             return response;
+        }
+
+        /// <summary>
+        /// Checks whether the abuse-protection origin matches any registered listener's
+        /// allowed hosts. Each listener's validator is built from either its trigger
+        /// attribute's <c>Connections</c>, or the extension-level default access
+        /// (<see cref="WebPubSubServiceAccessOptions.WebPubSubAccess"/>) when the trigger
+        /// has none. A validator with no restrictions accepts any origin, matching the
+        /// per-listener signature-validation semantics.
+        /// </summary>
+        private bool IsValidAbuseProtectionOrigin(IList<string> requestHosts)
+        {
+            foreach (var listener in _listeners.Values)
+            {
+                if (listener.Validator.IsValidHost(requestHosts))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

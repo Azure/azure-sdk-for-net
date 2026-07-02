@@ -1,21 +1,23 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Tests
 {
     public class RequestPathPatternTests
     {
-        [TestCase("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}", true)]
-        [TestCase("/subscriptions/{subscriptionId}", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", true)]
-        [TestCase("/subscriptions/{subscriptionId}", "/providers/Microsoft.Management/managementGroups/{managementGroupId}", false)]
-        public void IsAncestorOf_BasicCases(string ancestor, string descendant, bool expected)
+        [TestCase("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}", ExpectedResult = true)]
+        [TestCase("/subscriptions/{subscriptionId}", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", ExpectedResult = true)]
+        [TestCase("/subscriptions/{subscriptionId}", "/providers/Microsoft.Management/managementGroups/{managementGroupId}", ExpectedResult = false)]
+        public bool IsAncestorOf_BasicCases(string ancestor, string descendant)
         {
             var ancestorPattern = new RequestPathPattern(ancestor);
             var descendantPattern = new RequestPathPattern(descendant);
-            Assert.AreEqual(expected, ancestorPattern.IsAncestorOf(descendantPattern));
+            return ancestorPattern.IsAncestorOf(descendantPattern);
         }
 
         [Test]
@@ -24,12 +26,12 @@ namespace Azure.Generator.Management.Tests
             var ancestorPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var childPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             // Ancestor and child are the same length, should return false
-            Assert.IsFalse(ancestorPattern.IsAncestorOf(childPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(childPattern), Is.False);
 
             var longerAncestor = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage");
             var shorterChild = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             // Ancestor is longer than child, should return false
-            Assert.IsFalse(longerAncestor.IsAncestorOf(shorterChild));
+            Assert.That(longerAncestor.IsAncestorOf(shorterChild), Is.False);
         }
 
         [Test]
@@ -37,7 +39,7 @@ namespace Azure.Generator.Management.Tests
         {
             var ancestorPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var descendantPattern = new RequestPathPattern("/subscriptions/{otherSub}/resourceGroups/{otherGroup}/providers/Microsoft.Storage/storageAccounts/{accountName}");
-            Assert.IsTrue(ancestorPattern.IsAncestorOf(descendantPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(descendantPattern), Is.True);
         }
 
         [Test]
@@ -45,7 +47,133 @@ namespace Azure.Generator.Management.Tests
         {
             var ancestorPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
             var descendantPattern = new RequestPathPattern("/tenants/{tenantId}/resourceGroups/{resourceGroupName}");
-            Assert.IsFalse(ancestorPattern.IsAncestorOf(descendantPattern));
+            Assert.That(ancestorPattern.IsAncestorOf(descendantPattern), Is.False);
+        }
+
+        [TestCase("/subscriptions/{subscriptionId}", "/subscriptions/{subscriptionId}", ExpectedResult = 2)]
+        [TestCase("/subscriptions/{subscriptionId}", "/subscriptions/{otherSub}", ExpectedResult = 2)]
+        [TestCase("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", ExpectedResult = 4)]
+        [TestCase("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}", "/subscriptions/{subscriptionId}/providers/Microsoft.Storage", ExpectedResult = 2)]
+        [TestCase("/subscriptions/{subscriptionId}", "/tenants/{tenantId}", ExpectedResult = 0)]
+        [TestCase("/providers/Microsoft.Management/managementGroups/{managementGroupId}", "/providers/Microsoft.Management/managementGroups/{groupId}", ExpectedResult = 4)]
+        public int GetMaximumSharingSegmentsCount_BasicCases(string left, string right)
+        {
+            var leftPattern = new RequestPathPattern(left);
+            var rightPattern = new RequestPathPattern(right);
+            return RequestPathPattern.GetMaximumSharingSegmentsCount(leftPattern, rightPattern);
+        }
+
+        [Test]
+        public void GetMaximumSharingSegmentsCount_EmptyPaths()
+        {
+            var empty = RequestPathPattern.Tenant;
+            var nonEmpty = new RequestPathPattern("/subscriptions/{subscriptionId}");
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(empty, nonEmpty), Is.EqualTo(0));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(nonEmpty, empty), Is.EqualTo(0));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(empty, empty), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void GetMaximumSharingSegmentsCount_DifferentLengths()
+        {
+            var shorter = new RequestPathPattern("/subscriptions/{subscriptionId}");
+            var longer = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}");
+            // Should return the count of matching segments up to the shorter path's length
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(shorter, longer), Is.EqualTo(2));
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(longer, shorter), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void GetMaximumSharingSegmentsCount_VariableSegmentsMatch()
+        {
+            var left = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var right = new RequestPathPattern("/subscriptions/{otherSub}/resourceGroups/{otherGroup}");
+            // Variable segments with different names should still match
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right), Is.EqualTo(4));
+        }
+
+        [Test]
+        public void GetMaximumSharingSegmentsCount_ConstantVsVariableMismatch()
+        {
+            var withConstant = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup");
+            var withVariable = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            // Constant segment vs variable segment should stop the count
+            Assert.That(RequestPathPattern.GetMaximumSharingSegmentsCount(withConstant, withVariable), Is.EqualTo(3));
+        }
+
+        [Test]
+        public void GetMaximumSharingSegmentsCount_IsSymmetric()
+        {
+            var left = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var right = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/Microsoft.Storage");
+            // The result should be the same regardless of argument order
+            Assert.That(
+                RequestPathPattern.GetMaximumSharingSegmentsCount(right, left),
+                Is.EqualTo(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right)));
+        }
+
+        [Test]
+        public void GetHashCode_EqualPatternsUseEqualHashCodes()
+        {
+            var fromString = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var fromSegments = new RequestPathPattern(fromString.AsEnumerable());
+
+            Assert.That(fromSegments, Is.EqualTo(fromString));
+            Assert.That(fromSegments.GetHashCode(), Is.EqualTo(fromString.GetHashCode()));
+        }
+
+        [Test]
+        public void GetHashCode_EqualPatternsWithDifferentVariableNamesUseEqualHashCodes()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(second, Is.EqualTo(first));
+            Assert.That(second.GetHashCode(), Is.EqualTo(first.GetHashCode()));
+        }
+
+        [Test]
+        public void GetHashCode_EqualPatternsWithDifferentConstantCasingUseEqualHashCodes()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(second, Is.EqualTo(first));
+            Assert.That(second.GetHashCode(), Is.EqualTo(first.GetHashCode()));
+        }
+
+        [Test]
+        public void Equals_NonStrictTreatsVariableNamesAsEqual()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(first.Equals(second), Is.True);
+        }
+
+        [Test]
+        public void Equals_TreatsProviderSegmentCasingAsEqual()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}/Providers/Microsoft.Storage/storageAccounts/{name}");
+
+            Assert.That(first.Equals(second), Is.True);
+            Assert.That(first.GetHashCode(), Is.EqualTo(second.GetHashCode()));
+            Assert.That(new RequestPathSegment("Providers").IsProvidersSegment, Is.True);
+        }
+
+        [Test]
+        public void GetHashCode_DifferentPatternsCanCoexistInHashSet()
+        {
+            var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var subscription = new RequestPathPattern("/subscriptions/{subscriptionId}");
+
+            Assert.That(resourceGroup, Is.Not.EqualTo(subscription));
+
+            var set = new HashSet<RequestPathPattern> { resourceGroup, subscription };
+            Assert.That(set.Count, Is.EqualTo(2));
+            Assert.That(set.Contains(resourceGroup), Is.True);
+            Assert.That(set.Contains(subscription), Is.True);
         }
     }
 }

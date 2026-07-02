@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Threading;
-using System.ComponentModel;
 using NUnit.Framework.Internal;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Cross region restore is not supported for Continuous backup, need further investigation.")]
         public async Task TestCrossRegionRestore()
@@ -97,6 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(location, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                 IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
@@ -136,6 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CosmosDBAccountCreateOrUpdateContent databaseAccountCreateUpdateParameters = new CosmosDBAccountCreateOrUpdateContent(armLocation, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 CreateMode = CosmosDBAccountCreateMode.Restore,
                 RestoreParameters = restoreParameters
@@ -217,7 +218,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     }, null),
                         },
                         new List<CosmosDBVectorIndex>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        new List<FullTextIndexPath>(),
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

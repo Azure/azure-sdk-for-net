@@ -8,71 +8,190 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OnlineExperimentation;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmOnlineExperimentationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = null, ManagedServiceIdentity identity = null, OnlineExperimentationWorkspaceSku sku = null)
+        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, OnlineExperimentationWorkspaceSku sku = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new OnlineExperimentationWorkspaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
                 sku,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OnlineExperimentationWorkspaceProperties"/>. </summary>
         /// <param name="workspaceId"> The Id of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state for the resource. </param>
         /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
         /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
         /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </param>
-        /// <param name="customerManagedKeyEncryption"> The encryption configuration for the online experimentation workspace resource. </param>
+        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
         /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
+        /// <param name="publicNetworkAccess">
+        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if not set.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
+        /// </param>
+        /// <param name="privateEndpointConnections"> The private endpoint connections associated with the online experimentation workspace resource. </param>
         /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceProperties"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(Guid? workspaceId = null, OnlineExperimentationProvisioningState? provisioningState = null, ResourceIdentifier logAnalyticsWorkspaceResourceId = null, ResourceIdentifier logsExporterStorageAccountResourceId = null, ResourceIdentifier appConfigurationResourceId = null, CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Uri endpoint = null)
+        public static OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(Guid? workspaceId = default, OnlineExperimentationProvisioningState? provisioningState = default, ResourceIdentifier logAnalyticsWorkspaceResourceId = default, ResourceIdentifier logsExporterStorageAccountResourceId = default, ResourceIdentifier appConfigurationResourceId = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, Uri endpoint = default, PublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<OnlineExperimentationPrivateEndpointConnectionData> privateEndpointConnections = default)
         {
+            privateEndpointConnections ??= new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>();
+
             return new OnlineExperimentationWorkspaceProperties(
                 workspaceId,
                 provisioningState,
                 logAnalyticsWorkspaceResourceId,
                 logsExporterStorageAccountResourceId,
                 appConfigurationResourceId,
-                customerManagedKeyEncryption != null ? new ResourceEncryptionConfiguration(customerManagedKeyEncryption, serializedAdditionalRawData: null) : null,
+                customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, default),
                 endpoint,
-                serializedAdditionalRawData: null);
+                publicNetworkAccess,
+                (privateEndpointConnections ?? new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>()).ToList(),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OnlineExperimentationWorkspaceSku"/>. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
+        /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
+        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, Uri keyEncryptionKeyUri = default)
+        {
+            return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+        }
+
+        /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
+        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
+        /// <param name="federatedClientId"> application client identity to use for accessing key encryption key Url in a different tenant. Ex: f83c6b1b-4d34-47e4-bb34-9d83df58b540. </param>
+        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(KeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? federatedClientId = default)
+        {
+            return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, federatedClientId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static OnlineExperimentationPrivateEndpointConnectionData OnlineExperimentationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        {
+            return new OnlineExperimentationPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, OnlineExperimentationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, OnlineExperimentationPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, default);
+        }
+
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.OnlineExperimentationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static OnlineExperimentationPrivateLinkServiceConnectionState OnlineExperimentationPrivateLinkServiceConnectionState(OnlineExperimentationPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new OnlineExperimentationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="name"> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </param>
         /// <param name="tier"> The name of the SKU tier. </param>
         /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceSku"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspaceSku OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName name = default, OnlineExperimentationWorkspaceSkuTier? tier = null)
+        public static OnlineExperimentationWorkspaceSku OnlineExperimentationWorkspaceSku(OnlineExperimentationWorkspaceSkuName name = default, OnlineExperimentationWorkspaceSkuTier? tier = default)
         {
-            return new OnlineExperimentationWorkspaceSku(name, tier, serializedAdditionalRawData: null);
+            return new OnlineExperimentationWorkspaceSku(name, tier, default);
+        }
+
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="properties"> Updatable properties of the online experimentation workspace resource. </param>
+        /// <returns> A new <see cref="Models.OnlineExperimentationWorkspacePatch"/> instance for mocking. </returns>
+        public static OnlineExperimentationWorkspacePatch OnlineExperimentationWorkspacePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OnlineExperimentationWorkspaceSku sku = default, OnlineExperimentationWorkspacePatchProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OnlineExperimentationWorkspacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), sku, properties, default);
+        }
+
+        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
+        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
+        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
+        /// <param name="publicNetworkAccess">
+        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if set to null.
+        /// <list type="bullet"><item><description>Enabled: The resource can be accessed from the public internet.</description></item><item><description>Disabled: The resource can only be accessed from a private endpoint.</description></item></list>
+        /// </param>
+        /// <returns> A new <see cref="Models.OnlineExperimentationWorkspacePatchProperties"/> instance for mocking. </returns>
+        public static OnlineExperimentationWorkspacePatchProperties OnlineExperimentationWorkspacePatchProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId = default, ResourceIdentifier logsExporterStorageAccountResourceId = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, PublicNetworkAccessType? publicNetworkAccess = default)
+        {
+            return new OnlineExperimentationWorkspacePatchProperties(logAnalyticsWorkspaceResourceId, logsExporterStorageAccountResourceId, customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, default), publicNetworkAccess, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationPrivateLinkData"/> instance for mocking. </returns>
+        public static OnlineExperimentationPrivateLinkData OnlineExperimentationPrivateLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OnlineExperimentationPrivateLinkResourceProperties properties = default)
+        {
+            return new OnlineExperimentationPrivateLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.OnlineExperimentationPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static OnlineExperimentationPrivateLinkResourceProperties OnlineExperimentationPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new OnlineExperimentationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

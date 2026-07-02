@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VpnGatewayPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayPut.json
             // this example is just showing the usage of "VpnGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,9 +58,7 @@ EgressNatRules = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnGateways/gateway1/natRules/nat03"),
 }},
-Name = "Connection-Link1",
 }},
-Name = "vpnConnection1",
 }},
                 BgpSettings = new BgpSettings
                 {
@@ -91,7 +89,6 @@ ExternalMappings = {new VpnNatRuleMapping
 AddressSpace = "192.168.0.0/26",
 }},
 IPConfigurationId = "",
-Name = "nat03",
 }},
                 Location = new AzureLocation("westcentralus"),
                 Tags =
@@ -99,7 +96,7 @@ Name = "nat03",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<VpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ArmOperation<VpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -113,7 +110,7 @@ Name = "nat03",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +143,7 @@ Name = "nat03",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VpnGatewayListByResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayListByResourceGroup.json
             // this example is just showing the usage of "VpnGateways_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +178,7 @@ Name = "nat03",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,7 +207,7 @@ Name = "nat03",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VpnGatewayGet.json
             // this example is just showing the usage of "VpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

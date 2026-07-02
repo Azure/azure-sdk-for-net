@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -17,28 +18,21 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataBoxStorageAccountDetails"/>. </summary>
         /// <param name="storageAccountId"> Storage Account Resource Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
-        public DataBoxStorageAccountDetails(ResourceIdentifier storageAccountId)
+        public DataBoxStorageAccountDetails(ResourceIdentifier storageAccountId) : base(DataAccountType.StorageAccount)
         {
             Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
 
             StorageAccountId = storageAccountId;
-            DataAccountType = DataAccountType.StorageAccount;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxStorageAccountDetails"/>. </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountId"> Storage Account Resource Id. </param>
-        internal DataBoxStorageAccountDetails(DataAccountType dataAccountType, string sharePassword, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountId) : base(dataAccountType, sharePassword, serializedAdditionalRawData)
+        internal DataBoxStorageAccountDetails(DataAccountType dataAccountType, string sharePassword, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountId) : base(dataAccountType, sharePassword, additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
-            DataAccountType = dataAccountType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxStorageAccountDetails"/> for deserialization. </summary>
-        internal DataBoxStorageAccountDetails()
-        {
         }
 
         /// <summary> Storage Account Resource Id. </summary>

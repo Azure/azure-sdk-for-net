@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The AppServiceSkuName. </summary>
+    /// <summary></summary>
     public readonly partial struct AppServiceSkuName : IEquatable<AppServiceSkuName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceSkuName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceSkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string FreeValue = "Free";
         private const string SharedValue = "Shared";
         private const string BasicValue = "Basic";
@@ -37,51 +30,88 @@ namespace Azure.ResourceManager.AppService.Models
         private const string ElasticIsolatedValue = "ElasticIsolated";
         private const string FlexConsumptionValue = "FlexConsumption";
 
-        /// <summary> Free. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceSkuName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Free. </summary>
         public static AppServiceSkuName Free { get; } = new AppServiceSkuName(FreeValue);
-        /// <summary> Shared. </summary>
+
+        /// <summary> Gets the Shared. </summary>
         public static AppServiceSkuName Shared { get; } = new AppServiceSkuName(SharedValue);
-        /// <summary> Basic. </summary>
+
+        /// <summary> Gets the Basic. </summary>
         public static AppServiceSkuName Basic { get; } = new AppServiceSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Gets the Standard. </summary>
         public static AppServiceSkuName Standard { get; } = new AppServiceSkuName(StandardValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> Gets the Premium. </summary>
         public static AppServiceSkuName Premium { get; } = new AppServiceSkuName(PremiumValue);
-        /// <summary> Dynamic. </summary>
+
+        /// <summary> Gets the Dynamic. </summary>
         public static AppServiceSkuName Dynamic { get; } = new AppServiceSkuName(DynamicValue);
-        /// <summary> Isolated. </summary>
+
+        /// <summary> Gets the Isolated. </summary>
         public static AppServiceSkuName Isolated { get; } = new AppServiceSkuName(IsolatedValue);
-        /// <summary> IsolatedV2. </summary>
+
+        /// <summary> Gets the IsolatedV2. </summary>
         public static AppServiceSkuName IsolatedV2 { get; } = new AppServiceSkuName(IsolatedV2Value);
-        /// <summary> PremiumV2. </summary>
+
+        /// <summary> Gets the PremiumV2. </summary>
         public static AppServiceSkuName PremiumV2 { get; } = new AppServiceSkuName(PremiumV2Value);
-        /// <summary> PremiumV3. </summary>
+
+        /// <summary> Gets the PremiumV3. </summary>
         public static AppServiceSkuName PremiumV3 { get; } = new AppServiceSkuName(PremiumV3Value);
-        /// <summary> PremiumContainer. </summary>
+
+        /// <summary> Gets the PremiumContainer. </summary>
         public static AppServiceSkuName PremiumContainer { get; } = new AppServiceSkuName(PremiumContainerValue);
-        /// <summary> ElasticPremium. </summary>
+
+        /// <summary> Gets the ElasticPremium. </summary>
         public static AppServiceSkuName ElasticPremium { get; } = new AppServiceSkuName(ElasticPremiumValue);
-        /// <summary> ElasticIsolated. </summary>
+
+        /// <summary> Gets the ElasticIsolated. </summary>
         public static AppServiceSkuName ElasticIsolated { get; } = new AppServiceSkuName(ElasticIsolatedValue);
-        /// <summary> FlexConsumption. </summary>
+
+        /// <summary> Gets the FlexConsumption. </summary>
         public static AppServiceSkuName FlexConsumption { get; } = new AppServiceSkuName(FlexConsumptionValue);
+
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceSkuName left, AppServiceSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceSkuName left, AppServiceSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceSkuName(string value) => new AppServiceSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceSkuName?(string value) => value == null ? null : new AppServiceSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

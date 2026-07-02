@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkWatcher()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherGet.json
             // this example is just showing the usage of "NetworkWatchers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteNetworkWatcher()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherDelete.json
             // this example is just showing the usage of "NetworkWatchers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            await networkWatcher.DeleteAsync(WaitUntil.Completed);
+            await networkWatcher.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateNetworkWatcherTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherUpdateTags.json
             // this example is just showing the usage of "NetworkWatchers_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetTopology_GetTopology()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherTopologyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherTopologyGet.json
             // this example is just showing the usage of "NetworkWatchers_GetTopology" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task VerifyIPFlow_IpFlowVerify()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherIpFlowVerify.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherIpFlowVerify.json
             // this example is just showing the usage of "NetworkWatchers_VerifyIPFlow" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Samples
                 "80",
                 "10.2.0.4",
                 "121.10.1.1");
-            ArmOperation<VerificationIPFlowResult> lro = await networkWatcher.VerifyIPFlowAsync(WaitUntil.Completed, content);
+            ArmOperation<VerificationIPFlowResult> lro = await networkWatcher.VerifyIPFlowAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             VerificationIPFlowResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNextHop_GetNextHop()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherNextHopGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherNextHopGet.json
             // this example is just showing the usage of "NetworkWatchers_GetNextHop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 TargetNicResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/nic1"),
             };
-            ArmOperation<NextHopResult> lro = await networkWatcher.GetNextHopAsync(WaitUntil.Completed, content);
+            ArmOperation<NextHopResult> lro = await networkWatcher.GetNextHopAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             NextHopResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVmSecurityRules_GetSecurityGroupView()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherSecurityGroupViewGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherSecurityGroupViewGet.json
             // this example is just showing the usage of "NetworkWatchers_GetVmSecurityRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             SecurityGroupViewContent content = new SecurityGroupViewContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"));
-            ArmOperation<SecurityGroupViewResult> lro = await networkWatcher.GetVmSecurityRulesAsync(WaitUntil.Completed, content);
+            ArmOperation<SecurityGroupViewResult> lro = await networkWatcher.GetVmSecurityRulesAsync(WaitUntil.Completed, content, System.Threading.CancellationToken.None);
             SecurityGroupViewResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetTroubleshooting_GetTroubleshooting()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherTroubleshootGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherTroubleshootGet.json
             // this example is just showing the usage of "NetworkWatchers_GetTroubleshooting" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             TroubleshootingContent content = new TroubleshootingContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"), new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/st1"), new Uri("https://st1.blob.core.windows.net/cn1"));
-            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingAsync(WaitUntil.Completed, content);
+            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             TroubleshootingResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetTroubleshootingResult_GetTroubleshootResult()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherTroubleshootResultQuery.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherTroubleshootResultQuery.json
             // this example is just showing the usage of "NetworkWatchers_GetTroubleshootingResult" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             QueryTroubleshootingContent content = new QueryTroubleshootingContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"));
-            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingResultAsync(WaitUntil.Completed, content);
+            ArmOperation<TroubleshootingResult> lro = await networkWatcher.GetTroubleshootingResultAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             TroubleshootingResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SetFlowLogConfiguration_ConfigureFlowLog()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherFlowLogConfigure.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherFlowLogConfigure.json
             // this example is just showing the usage of "NetworkWatchers_SetFlowLogConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network.Samples
 },
                 },
             };
-            ArmOperation<FlowLogInformation> lro = await networkWatcher.SetFlowLogConfigurationAsync(WaitUntil.Completed, flowLogInformation);
+            ArmOperation<FlowLogInformation> lro = await networkWatcher.SetFlowLogConfigurationAsync(WaitUntil.Completed, flowLogInformation, cancellationToken: System.Threading.CancellationToken.None);
             FlowLogInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFlowLogStatus_GetFlowLogStatus()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherFlowLogStatusQuery.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherFlowLogStatusQuery.json
             // this example is just showing the usage of "NetworkWatchers_GetFlowLogStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             FlowLogStatusContent content = new FlowLogStatusContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1"));
-            ArmOperation<FlowLogInformation> lro = await networkWatcher.GetFlowLogStatusAsync(WaitUntil.Completed, content);
+            ArmOperation<FlowLogInformation> lro = await networkWatcher.GetFlowLogStatusAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             FlowLogInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckConnectivity_CheckConnectivity()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherConnectivityCheck.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherConnectivityCheck.json
             // this example is just showing the usage of "NetworkWatchers_CheckConnectivity" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 PreferredIPVersion = NetworkIPVersion.IPv4,
             };
-            ArmOperation<ConnectivityInformation> lro = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content);
+            ArmOperation<ConnectivityInformation> lro = await networkWatcher.CheckConnectivityAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             ConnectivityInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAzureReachabilityReport_GetAzureReachabilityReport()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherAzureReachabilityReportGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherAzureReachabilityReportGet.json
             // this example is just showing the usage of "NetworkWatchers_GetAzureReachabilityReport" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Providers = { "Frontier Communications of America, Inc. - ASN 5650" },
                 AzureLocations = { new AzureLocation("West US") },
             };
-            ArmOperation<AzureReachabilityReport> lro = await networkWatcher.GetAzureReachabilityReportAsync(WaitUntil.Completed, content);
+            ArmOperation<AzureReachabilityReport> lro = await networkWatcher.GetAzureReachabilityReportAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             AzureReachabilityReport result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableProviders_GetAvailableProvidersList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherAvailableProvidersListGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherAvailableProvidersListGet.json
             // this example is just showing the usage of "NetworkWatchers_ListAvailableProviders" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Network.Samples
                 State = "washington",
                 City = "seattle",
             };
-            ArmOperation<AvailableProvidersList> lro = await networkWatcher.GetAvailableProvidersAsync(WaitUntil.Completed, content);
+            ArmOperation<AvailableProvidersList> lro = await networkWatcher.GetAvailableProvidersAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             AvailableProvidersList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkConfigurationDiagnostic_NetworkConfigurationDiagnostic()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkWatcherNetworkConfigurationDiagnostic.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkWatcherNetworkConfigurationDiagnostic.json
             // this example is just showing the usage of "NetworkWatchers_GetNetworkConfigurationDiagnostic" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
 new NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection.Inbound, "TCP", "10.1.0.4", "12.11.12.14", "12100")
             });
-            ArmOperation<NetworkConfigurationDiagnosticResponse> lro = await networkWatcher.GetNetworkConfigurationDiagnosticAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkConfigurationDiagnosticResponse> lro = await networkWatcher.GetNetworkConfigurationDiagnosticAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             NetworkConfigurationDiagnosticResponse result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct OpenAuthenticationProviderType : IEquatable<OpenAuthenticationProviderType>
     {
         private readonly string _value;
+        private const string AADValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OpenAuthenticationProviderType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AADValue = "AAD";
-
-        /// <summary> AAD. </summary>
+        /// <summary> Gets the AAD. </summary>
         public static OpenAuthenticationProviderType AAD { get; } = new OpenAuthenticationProviderType(AADValue);
+
         /// <summary> Determines if two <see cref="OpenAuthenticationProviderType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OpenAuthenticationProviderType left, OpenAuthenticationProviderType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OpenAuthenticationProviderType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OpenAuthenticationProviderType left, OpenAuthenticationProviderType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenAuthenticationProviderType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OpenAuthenticationProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OpenAuthenticationProviderType(string value) => new OpenAuthenticationProviderType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OpenAuthenticationProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OpenAuthenticationProviderType?(string value) => value == null ? null : new OpenAuthenticationProviderType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OpenAuthenticationProviderType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OpenAuthenticationProviderType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

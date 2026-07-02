@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsInfrastructureProvisioningState : IEquatable<DevOpsInfrastructureProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Represents a succeeded operation. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Represents a failed operation. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Represents a canceled operation. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Represents a pending operation. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Represents a pending operation. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Represents an operation under deletion. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Represents an accepted operation. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsInfrastructureProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Represents a succeeded operation. </summary>
         public static DevOpsInfrastructureProvisioningState Succeeded { get; } = new DevOpsInfrastructureProvisioningState(SucceededValue);
+
         /// <summary> Represents a failed operation. </summary>
         public static DevOpsInfrastructureProvisioningState Failed { get; } = new DevOpsInfrastructureProvisioningState(FailedValue);
+
         /// <summary> Represents a canceled operation. </summary>
         public static DevOpsInfrastructureProvisioningState Canceled { get; } = new DevOpsInfrastructureProvisioningState(CanceledValue);
+
         /// <summary> Represents a pending operation. </summary>
         public static DevOpsInfrastructureProvisioningState Provisioning { get; } = new DevOpsInfrastructureProvisioningState(ProvisioningValue);
+
         /// <summary> Represents a pending operation. </summary>
         public static DevOpsInfrastructureProvisioningState Updating { get; } = new DevOpsInfrastructureProvisioningState(UpdatingValue);
+
         /// <summary> Represents an operation under deletion. </summary>
         public static DevOpsInfrastructureProvisioningState Deleting { get; } = new DevOpsInfrastructureProvisioningState(DeletingValue);
+
         /// <summary> Represents an accepted operation. </summary>
         public static DevOpsInfrastructureProvisioningState Accepted { get; } = new DevOpsInfrastructureProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="DevOpsInfrastructureProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsInfrastructureProvisioningState left, DevOpsInfrastructureProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsInfrastructureProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsInfrastructureProvisioningState left, DevOpsInfrastructureProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsInfrastructureProvisioningState(string value) => new DevOpsInfrastructureProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsInfrastructureProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsInfrastructureProvisioningState?(string value) => value == null ? null : new DevOpsInfrastructureProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsInfrastructureProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsInfrastructureProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

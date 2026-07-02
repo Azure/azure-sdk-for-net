@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public System.BinaryData Properties { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata Related { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? QueryPackId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -156,7 +162,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties Replication { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku Sku { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -216,7 +225,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TableNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -263,7 +275,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind Kind { get { throw null; } set { } }
         public System.BinaryData Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,6 +316,12 @@ namespace Azure.ResourceManager.OperationalInsights
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation FailoverWorkspace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus> Get(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>> GetAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -323,6 +344,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource GetOperationalInsightsSummaryLogsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource GetOperationalInsightsTableResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -356,7 +378,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.Core.ResourceIdentifier WriteAccessResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -410,7 +435,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public OperationalInsightsLinkedStorageAccountsData() { }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType? DataSourceType { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> StorageAccountIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -464,7 +492,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public string Query { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag> Tags { get { throw null; } }
         public long? Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -489,6 +520,68 @@ namespace Azure.ResourceManager.OperationalInsights
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class OperationalInsightsSummaryLogsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>, System.Collections.IEnumerable
+    {
+        protected OperationalInsightsSummaryLogsCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string summaryLogsName, Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string summaryLogsName, Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> Get(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>> GetAsync(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> GetIfExists(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>> GetIfExistsAsync(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class OperationalInsightsSummaryLogsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>
+    {
+        public OperationalInsightsSummaryLogsData() { }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule RuleDefinition { get { throw null; } set { } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? RuleType { get { throw null; } set { } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? StatusCode { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsSummaryLogsResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected OperationalInsightsSummaryLogsResource() { }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string summaryLogsName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RetryBin(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin operationalInsightsSummaryLogsRetryBin, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RetryBinAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin operationalInsightsSummaryLogsRetryBin, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Stop(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StopAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OperationalInsightsTableCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource>, System.Collections.IEnumerable
     {
@@ -519,16 +612,17 @@ namespace Azure.ResourceManager.OperationalInsights
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs RestoredLogs { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics ResultStatistics { get { throw null; } }
         public int? RetentionInDays { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `IsRetentionInDaysAsDefault` instead", false)]
         public Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState? RetentionInDaysAsDefault { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema Schema { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults SearchResults { get { throw null; } set { } }
         public int? TotalRetentionInDays { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release, please use `IsTotalRetentionInDaysAsDefault` instead", false)]
         public Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState? TotalRetentionInDaysAsDefault { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -595,7 +689,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public int? RetentionInDays { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping WorkspaceCapping { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -623,6 +720,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailbackAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsCollection GetAllOperationalInsightsLinkedStorageAccounts() { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsCollection GetAllOperationalInsightsSummaryLogs() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -630,6 +728,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup> GetManagementGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup> GetManagementGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportResource> GetOperationalInsightsDataExport(string dataExportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportResource>> GetOperationalInsightsDataExportAsync(string dataExportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportCollection GetOperationalInsightsDataExports() { throw null; }
@@ -644,6 +746,8 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource> GetOperationalInsightsSavedSearch(string savedSearchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource>> GetOperationalInsightsSavedSearchAsync(string savedSearchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchCollection GetOperationalInsightsSavedSearches() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource> GetOperationalInsightsSummaryLogs(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource>> GetOperationalInsightsSummaryLogsAsync(string summaryLogsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource> GetOperationalInsightsTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource>> GetOperationalInsightsTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsTableCollection GetOperationalInsightsTables() { throw null; }
@@ -660,6 +764,8 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric> GetUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult> Purge(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult>> PurgeAsync(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ReconcileNetworkSecurityPerimeterConfiguration(Azure.WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReconcileNetworkSecurityPerimeterConfigurationAsync(Azure.WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys> RegenerateSharedKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys>> RegenerateSharedKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -700,7 +806,10 @@ namespace Azure.ResourceManager.OperationalInsights
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount StorageAccount { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Tables { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.StorageInsightData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.StorageInsightData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.StorageInsightData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.StorageInsightData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.StorageInsightData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -746,6 +855,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsResource GetOperationalInsightsSummaryLogsResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource GetOperationalInsightsTableResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.OperationalInsights.StorageInsightResource GetStorageInsightResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -757,6 +867,8 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation FailoverWorkspace(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverWorkspaceAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetByResourceGroup(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetByResourceGroupAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(string queryPackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -772,6 +884,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
     public partial class MockableOperationalInsightsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableOperationalInsightsSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus> Get(Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>> GetAsync(Azure.Core.AzureLocation location, string asyncOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -788,45 +904,75 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         public static Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData LogAnalyticsQueryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? applicationId = default(System.Guid?), string displayName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string author = null, string description = null, string body = null, Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata related = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> tags = null, System.BinaryData properties = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData LogAnalyticsQueryPackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? queryPackId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch LogAnalyticsQueryPackPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata LogAnalyticsQueryRelatedMetadata(System.Collections.Generic.IEnumerable<string> categories = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null, System.Collections.Generic.IEnumerable<string> solutions = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties LogAnalyticsQuerySearchProperties(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata related = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> tags = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata LogAnalyticsQuerySearchRelatedMetadata(System.Collections.Generic.IEnumerable<string> categories = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null, System.Collections.Generic.IEnumerable<string> solutions = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier OperationalInsightsAvailableServiceTier(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName? serviceTier = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName?), bool? isEnabled = default(bool?), long? minimumRetention = default(long?), long? maximumRetention = default(long?), long? defaultRetention = default(long?), long? capacityReservationLevel = default(long?), System.DateTimeOffset? lastSkuUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties OperationalInsightsCapacityReservationProperties(System.DateTimeOffset? lastSkuUpdatedOn = default(System.DateTimeOffset?), long? minCapacity = default(long?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace OperationalInsightsClusterAssociatedWorkspace(System.Guid? workspaceId = default(System.Guid?), string workspaceName = null, Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset? associatedOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData OperationalInsightsClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku sku, System.Guid? clusterId, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType? billingType, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties keyVaultProperties, System.DateTimeOffset? lastModifiedOn, System.DateTimeOffset? createdOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties capacityReservationProperties) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData OperationalInsightsClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku sku = null, System.Guid? clusterId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus?), bool? isDoubleEncryptionEnabled = default(bool?), bool? isAvailabilityZonesEnabled = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType? billingType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties keyVaultProperties = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties capacityReservationProperties = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties replication = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterData OperationalInsightsClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? clusterId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus?), bool? isDoubleEncryptionEnabled = default(bool?), bool? isAvailabilityZonesEnabled = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType? billingType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties keyVaultProperties = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties capacityReservationProperties = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties replication = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku sku = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch OperationalInsightsClusterPatch(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties keyVaultProperties = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType? billingType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties OperationalInsightsClusterReplicationProperties(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), bool? isReplicationEnabled = default(bool?), bool? isAvailabilityZonesEnabled = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku OperationalInsightsClusterSku(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterCapacity? capacity = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterCapacity?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName? name = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn OperationalInsightsColumn(string name = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType? columnType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint? dataTypeHint = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint?), string displayName = null, string description = null, bool? isDefaultDisplay = default(bool?), bool? isHidden = default(bool?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportData OperationalInsightsDataExportData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? dataExportId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> tableNames = null, bool? isEnabled = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType? destinationType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType?), string eventHubName = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceData OperationalInsightsDataSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData properties = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind kind = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack OperationalInsightsIntelligencePack(string name = null, bool? isEnabled = default(bool?), string displayName = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties OperationalInsightsKeyVaultProperties(System.Uri keyVaultUri = null, string keyName = null, string keyVersion = null, int? keyRsaSize = default(int?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData OperationalInsightsLinkedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier writeAccessResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData OperationalInsightsLinkedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier writeAccessResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData OperationalInsightsLinkedStorageAccountsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType? dataSourceType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> storageAccountIds = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup OperationalInsightsManagementGroup(int? serverCount = default(int?), bool? isGateway = default(bool?), string name = null, string id = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? dataReceivedOn = default(System.DateTimeOffset?), string version = null, string sku = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName OperationalInsightsMetricName(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter OperationalInsightsNetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id = null, System.Guid? perimeterGuid = default(System.Guid?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule OperationalInsightsNetworkSecurityPerimeterAccessRule(string name = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? direction = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration OperationalInsightsNetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation resourceAssociation = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile profile = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue OperationalInsightsNetworkSecurityPerimeterProvisioningIssue(string name = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType? issueType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity? severity = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule> suggestedAccessRules = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation OperationalInsightsNetworkSecurityPerimeterResourceAssociation(string name = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile OperationalInsightsNetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus OperationalInsightsOperationStatus(string id = null, string name = null, string startTime = null, string endTime = null, string status = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo OperationalInsightsPrivateLinkScopedResourceInfo(Azure.Core.ResourceIdentifier resourceId = null, string scopeId = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string category = null, string displayName = null, string query = null, string functionAlias = null, string functionParameters = null, long? version = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag> tags = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string category = null, string displayName = null, string query = null, string functionAlias = null, string functionParameters = null, long? version = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag> tags = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema OperationalInsightsSchema(string name = null, string displayName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn> columns = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn> standardColumns = null, System.Collections.Generic.IEnumerable<string> categories = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator? source = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType? tableType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType? tableSubType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType?), System.Collections.Generic.IEnumerable<string> solutions = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue OperationalInsightsSearchSchemaValue(string name = null, string displayName = null, string searchSchemaValueType = null, bool indexed = false, bool stored = false, bool facet = false, System.Collections.Generic.IEnumerable<string> ownerType = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount OperationalInsightsStorageAccount(Azure.Core.ResourceIdentifier id = null, string key = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType?), string displayName = null, string description = null, bool? isActive = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule ruleDefinition = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin OperationalInsightsSummaryLogsRetryBin(System.DateTimeOffset? retryBinStartOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule OperationalInsightsSummaryRule(string query = null, int? binSize = default(int?), int? binDelay = default(int?), System.DateTimeOffset? binStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector? timeSelector = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector?), string destinationTable = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData OperationalInsightsTableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? retentionInDays = default(int?), int? totalRetentionInDays = default(int?), int? archiveRetentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults searchResults = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs restoredLogs = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics resultStatistics = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan? plan = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan?), string lastPlanModifiedDate = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema schema = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState?), Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState? retentionInDaysAsDefault = default(Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState?), Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault = default(Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData OperationalInsightsTableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? retentionInDays = default(int?), int? totalRetentionInDays = default(int?), int? archiveRetentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults searchResults = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs restoredLogs = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics resultStatistics = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan? plan = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan?), string lastPlanModifiedDate = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema schema = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState?), bool? isRetentionInDaysAsDefault = default(bool?), bool? isTotalRetentionInDaysAsDefault = default(bool?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs OperationalInsightsTableRestoredLogs(System.DateTimeOffset? startRestoreOn = default(System.DateTimeOffset?), System.DateTimeOffset? endRestoreOn = default(System.DateTimeOffset?), string sourceTable = null, System.Guid? azureAsyncOperationId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics OperationalInsightsTableResultStatistics(float? progress = default(float?), int? ingestedRecords = default(int?), float? scannedGB = default(float?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults OperationalInsightsTableSearchResults(string query = null, string description = null, int? limit = default(int?), System.DateTimeOffset? startSearchOn = default(System.DateTimeOffset?), System.DateTimeOffset? endSearchOn = default(System.DateTimeOffset?), string sourceTable = null, System.Guid? azureAsyncOperationId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag OperationalInsightsTag(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric OperationalInsightsUsageMetric(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName name = null, string unit = null, double? currentValue = default(double?), double? limit = default(double?), System.DateTimeOffset? nextResetOn = default(System.DateTimeOffset?), string quotaPeriod = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping OperationalInsightsWorkspaceCapping(double? dailyQuotaInGB = default(double?), string quotaNextResetTime = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus? dataIngestionStatus = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState, System.Guid? customerId, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku, int? retentionInDays, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping, System.DateTimeOffset? createdOn, System.DateTimeOffset? modifiedOn, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus?), System.Guid? customerId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), bool? forceCmkForQuery = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features = null, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties replication = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties failover = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus?), System.Guid? customerId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), bool? forceCmkForQuery = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features = null, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties replication = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties failover = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties OperationalInsightsWorkspaceFailoverProperties(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState? state = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default(bool?), bool? immediatePurgeDataOn30Days = default(bool?), bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default(bool?), Azure.Core.ResourceIdentifier clusterResourceId = null, bool? isLocalAuthDisabled = default(bool?), bool? isUnifiedSentinelBillingOnly = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default(bool?), bool? immediatePurgeDataOn30Days = default(bool?), bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default(bool?), Azure.Core.ResourceIdentifier clusterResourceId = null, bool? isLocalAuthDisabled = default(bool?), bool? isUnifiedSentinelBillingOnly = default(bool?), System.Collections.Generic.IEnumerable<string> associations = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus?), System.Guid? customerId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), bool? forceCmkForQuery = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features = null, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties replication = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties failover = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState, System.Guid? customerId, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku, int? retentionInDays, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping, System.DateTimeOffset? createdOn, System.DateTimeOffset? modifiedOn, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId, Azure.ETag? etag) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus?), System.Guid? customerId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), bool? forceCmkForQuery = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features = null, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties replication = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties failover = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string eTag = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus?), System.Guid? customerId = default(System.Guid?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping workspaceCapping = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType?), bool? forceCmkForQuery = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures features = null, Azure.Core.ResourceIdentifier defaultDataCollectionRuleResourceId = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties replication = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties failover = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent OperationalInsightsWorkspacePurgeContent(string table = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter> filters = null) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter OperationalInsightsWorkspacePurgeFilter(string column = null, string @operator = null, System.BinaryData value = null, string key = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(string operationStringId = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState status = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties OperationalInsightsWorkspaceReplicationProperties(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), bool? isReplicationEnabled = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys OperationalInsightsWorkspaceSharedKeys(string primarySharedKey = null, string secondarySharedKey = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku OperationalInsightsWorkspaceSku(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName name = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapacityReservationLevel?), System.DateTimeOffset? lastSkuUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.StorageInsightData StorageInsightData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> containers = null, System.Collections.Generic.IEnumerable<string> tables = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount storageAccount = null, Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus status = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.StorageInsightData StorageInsightData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> containers = null, System.Collections.Generic.IEnumerable<string> tables = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount storageAccount = null, Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus status = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus StorageInsightStatus(Azure.ResourceManager.OperationalInsights.Models.StorageInsightState state = default(Azure.ResourceManager.OperationalInsights.Models.StorageInsightState), string description = null) { throw null; }
     }
@@ -834,7 +980,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         public LogAnalyticsQueryPackPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -847,7 +996,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.Collections.Generic.IList<string> Categories { get { throw null; } }
         public System.Collections.Generic.IList<string> ResourceTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> Solutions { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryRelatedMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -859,7 +1011,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public LogAnalyticsQuerySearchProperties() { }
         public Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata Related { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -872,7 +1027,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.Collections.Generic.IList<string> Categories { get { throw null; } }
         public System.Collections.Generic.IList<string> ResourceTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> Solutions { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchRelatedMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -889,7 +1047,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public long? MaximumRetention { get { throw null; } }
         public long? MinimumRetention { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName? ServiceTier { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsAvailableServiceTier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -905,12 +1066,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType Cluster { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType Workspaces { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -919,7 +1079,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsCapacityReservationProperties() { }
         public System.DateTimeOffset? LastSkuUpdatedOn { get { throw null; } }
         public long? MinCapacity { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -933,7 +1096,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.Guid? WorkspaceId { get { throw null; } }
         public string WorkspaceName { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -961,12 +1127,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -978,7 +1143,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -994,7 +1162,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1017,12 +1188,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState RollingBack { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1031,6 +1201,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsClusterSku() { }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterCapacity? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName? Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1045,12 +1219,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsClusterSkuName(string value) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName CapacityReservation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1064,7 +1237,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public bool? IsDefaultDisplay { get { throw null; } }
         public bool? IsHidden { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1082,12 +1258,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint IP { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnDataTypeHint right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1106,12 +1281,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType Real { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumnType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1124,12 +1298,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType EventHub { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType StorageAccount { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1146,12 +1319,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus RespectQuota { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus SubscriptionSuspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1195,12 +1367,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind WindowsPerformanceCounter { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind WindowsTelemetry { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1218,7 +1389,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public string DisplayName { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1232,7 +1406,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public int? KeyRsaSize { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1250,12 +1427,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsLinkedServiceEntityStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1270,7 +1446,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public int? ServerCount { get { throw null; } }
         public string Sku { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsManagementGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1282,19 +1461,353 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         internal OperationalInsightsMetricName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsMetricName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OperationalInsightsNetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Guid? PerimeterGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterAccessRule() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties() { }
+        public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? Direction { get { throw null; } }
+        public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> Subscriptions { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterConfiguration() { }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterConfigurationProperties() { }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile Profile { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterIssueType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterIssueType(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType ConfigurationPropagationFailure { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType MissingIdentityConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType MissingPerimeterConfiguration { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterProvisioningIssue() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties() { }
+        public string Description { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterIssueType? IssueType { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity? Severity { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterProvisioningState : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityPerimeterResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>
+    {
+        internal OperationalInsightsNetworkSecurityPerimeterResourceAssociation() { }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? AccessMode { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode Audit { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode Enforced { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode Learning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterRuleType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterSeverity : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterSeverity(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity Error { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterStatusCode : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsNetworkSecurityPerimeterStatusCode(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode DataPlaneError { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode UserAction { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OperationalInsightsNetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>
+    {
+        internal OperationalInsightsNetworkSecurityProfile() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterAccessRule> AccessRules { get { throw null; } }
+        public int? AccessRulesVersion { get { throw null; } }
+        public int? DiagnosticSettingsVersion { get { throw null; } }
+        public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsOperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>
+    {
+        internal OperationalInsightsOperationStatus() { }
+        public string EndTime { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string StartTime { get { throw null; } }
+        public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsOperationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo>
     {
         internal OperationalInsightsPrivateLinkScopedResourceInfo() { }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public string ScopeId { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1309,13 +1822,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsPublicNetworkAccessType(string value) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType Disabled { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType Enabled { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1333,7 +1846,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn> StandardColumns { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType? TableSubType { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType? TableType { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1350,7 +1866,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.Collections.Generic.IReadOnlyList<string> OwnerType { get { throw null; } }
         public string SearchSchemaValueType { get { throw null; } }
         public bool Stored { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1371,12 +1890,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName Standalone { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1385,12 +1903,64 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsStorageAccount(Azure.Core.ResourceIdentifier id, string key) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsSummaryLogsRetryBin : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>
+    {
+        public OperationalInsightsSummaryLogsRetryBin() { }
+        public System.DateTimeOffset? RetryBinStartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OperationalInsightsSummaryRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>
+    {
+        public OperationalInsightsSummaryRule() { }
+        public int? BinDelay { get { throw null; } set { } }
+        public int? BinSize { get { throw null; } set { } }
+        public System.DateTimeOffset? BinStartOn { get { throw null; } set { } }
+        public string DestinationTable { get { throw null; } set { } }
+        public string Query { get { throw null; } set { } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector? TimeSelector { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsSummaryTimeSelector : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsSummaryTimeSelector(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector TimeGenerated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsTableCreator : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator>
@@ -1401,12 +1971,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator Customer { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator Microsoft { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1417,14 +1986,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         private readonly int _dummyPrimitive;
         public OperationalInsightsTablePlan(string value) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan Analytics { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan Auxiliary { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan Basic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1439,12 +2008,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1455,7 +2023,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.DateTimeOffset? EndRestoreOn { get { throw null; } set { } }
         public string SourceTable { get { throw null; } set { } }
         public System.DateTimeOffset? StartRestoreOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1468,7 +2039,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public int? IngestedRecords { get { throw null; } }
         public float? Progress { get { throw null; } }
         public float? ScannedGB { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1485,7 +2059,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public string Query { get { throw null; } set { } }
         public string SourceTable { get { throw null; } }
         public System.DateTimeOffset? StartSearchOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1502,12 +2079,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType Classic { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType DataCollectionRuleBased { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1522,12 +2098,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType RestoredLogs { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType SearchResults { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1536,7 +2111,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsTag(string name, string value) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1552,7 +2130,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.DateTimeOffset? NextResetOn { get { throw null; } }
         public string QuotaPeriod { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsUsageMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1579,7 +2160,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public double? DailyQuotaInGB { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataIngestionStatus? DataIngestionStatus { get { throw null; } }
         public string QuotaNextResetTime { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1600,12 +2184,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1614,7 +2197,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsWorkspaceFailoverProperties() { }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState? State { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1633,12 +2219,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState Failed { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFailoverState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1646,13 +2231,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         public OperationalInsightsWorkspaceFeatures() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Associations { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterResourceId { get { throw null; } set { } }
         public bool? ImmediatePurgeDataOn30Days { get { throw null; } set { } }
         public bool? IsDataExportEnabled { get { throw null; } set { } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled { get { throw null; } set { } }
         public bool? IsUnifiedSentinelBillingOnly { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceFeatures>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1680,7 +2269,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapping WorkspaceCapping { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1692,7 +2284,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsWorkspacePurgeContent(string table, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter> filters) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter> Filters { get { throw null; } }
         public string Table { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1706,7 +2301,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public string Key { get { throw null; } set { } }
         public string Operator { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1716,11 +2314,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsWorkspacePurgeResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult>
     {
         internal OperationalInsightsWorkspacePurgeResult() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Guid OperationId { get { throw null; } }
         public string OperationStringId { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1736,12 +2336,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState Completed { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState Pending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1749,7 +2348,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal OperationalInsightsWorkspacePurgeStatusResult() { }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeState Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspacePurgeStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1764,7 +2366,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1787,12 +2392,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState RollingBack { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceReplicationState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1801,7 +2405,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         internal OperationalInsightsWorkspaceSharedKeys() { }
         public string PrimarySharedKey { get { throw null; } }
         public string SecondarySharedKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSharedKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1814,7 +2421,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapacityReservationLevel? CapacityReservationLevel { get { throw null; } set { } }
         public System.DateTimeOffset? LastSkuUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1836,12 +2446,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName Standalone { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1854,9 +2463,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState False { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState left, Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState (string value) { throw null; }
@@ -1872,12 +2479,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.StorageInsightState Error { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.StorageInsightState OK { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.StorageInsightState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.StorageInsightState left, Azure.ResourceManager.OperationalInsights.Models.StorageInsightState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.StorageInsightState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.StorageInsightState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.StorageInsightState left, Azure.ResourceManager.OperationalInsights.Models.StorageInsightState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1886,7 +2492,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         internal StorageInsightStatus() { }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.StorageInsightState State { get { throw null; } }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.StorageInsightStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1902,9 +2511,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState False { get { throw null; } }
         public static Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState left, Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState right) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState (string value) { throw null; }

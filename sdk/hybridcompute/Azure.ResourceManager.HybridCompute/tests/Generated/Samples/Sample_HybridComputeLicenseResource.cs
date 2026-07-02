@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLicense()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/license/License_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/license/License_Get.json
             // this example is just showing the usage of "Licenses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteALicense()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/license/License_Delete.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/license/License_Delete.json
             // this example is just showing the usage of "Licenses_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateALicense()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/license/License_CreateOrUpdate.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/license/License_CreateOrUpdate.json
             // this example is just showing the usage of "Licenses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,19 +93,16 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeLicenseResource hybridComputeLicense = client.GetHybridComputeLicenseResource(hybridComputeLicenseResourceId);
 
             // invoke the operation
-            HybridComputeLicenseData data = new HybridComputeLicenseData(new AzureLocation("eastus2euap"))
+            HybridComputeLicensePatch patch = new HybridComputeLicensePatch()
             {
                 LicenseType = HybridComputeLicenseType.Esu,
-                LicenseDetails = new HybridComputeLicenseDetails
-                {
-                    State = HybridComputeLicenseState.Activated,
-                    Target = HybridComputeLicenseTarget.WindowsServer2012,
-                    Edition = HybridComputeLicenseEdition.DataCenter,
-                    LicenseCoreType = LicenseCoreType.PCore,
-                    Processors = 6,
-                },
+                State = HybridComputeLicenseState.Activated,
+                Target = HybridComputeLicenseTarget.WindowsServer2012,
+                Edition = HybridComputeLicenseEdition.DataCenter,
+                Type = LicenseCoreType.PCore,
+                Processors = 6,
             };
-            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, patch);
             HybridComputeLicenseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

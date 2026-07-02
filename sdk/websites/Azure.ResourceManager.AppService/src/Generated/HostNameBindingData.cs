@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the HostNameBinding data model.
-    /// A hostname binding object.
-    /// </summary>
+    /// <summary> A hostname binding object. </summary>
     public partial class HostNameBindingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
         public HostNameBindingData()
@@ -57,65 +25,180 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="siteName"> App Service app name. </param>
-        /// <param name="domainId"> Fully qualified ARM domain resource URI. </param>
-        /// <param name="azureResourceName"> Azure resource name. </param>
-        /// <param name="azureResourceType"> Azure resource type. </param>
-        /// <param name="customHostNameDnsRecordType"> Custom DNS record type. </param>
-        /// <param name="hostNameType"> Hostname type. </param>
-        /// <param name="sslState"> SSL type. </param>
-        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
-        /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> HostNameBinding resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HostNameBindingProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            SiteName = siteName;
-            DomainId = domainId;
-            AzureResourceName = azureResourceName;
-            AzureResourceType = azureResourceType;
-            CustomHostNameDnsRecordType = customHostNameDnsRecordType;
-            HostNameType = hostNameType;
-            SslState = sslState;
-            ThumbprintString = thumbprintString;
-            VirtualIP = virtualIP;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> App Service app name. </summary>
-        [WirePath("properties.siteName")]
-        public string SiteName { get; set; }
-        /// <summary> Fully qualified ARM domain resource URI. </summary>
-        [WirePath("properties.domainId")]
-        public string DomainId { get; set; }
-        /// <summary> Azure resource name. </summary>
-        [WirePath("properties.azureResourceName")]
-        public string AzureResourceName { get; set; }
-        /// <summary> Azure resource type. </summary>
-        [WirePath("properties.azureResourceType")]
-        public AppServiceResourceType? AzureResourceType { get; set; }
-        /// <summary> Custom DNS record type. </summary>
-        [WirePath("properties.customHostNameDnsRecordType")]
-        public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
-        /// <summary> Hostname type. </summary>
-        [WirePath("properties.hostNameType")]
-        public AppServiceHostNameType? HostNameType { get; set; }
-        /// <summary> SSL type. </summary>
-        [WirePath("properties.sslState")]
-        public HostNameBindingSslState? SslState { get; set; }
-        /// <summary> SSL certificate thumbprint. </summary>
-        [WirePath("properties.thumbprint")]
-        public string ThumbprintString { get; set; }
-        /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
-        [WirePath("properties.virtualIP")]
-        public string VirtualIP { get; }
+        /// <summary> HostNameBinding resource specific properties. </summary>
+        [WirePath("properties")]
+        internal HostNameBindingProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> App Service app name. </summary>
+        [WirePath("properties.siteName")]
+        public string SiteName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.SiteName = value;
+            }
+        }
+
+        /// <summary> Fully qualified ARM domain resource URI. </summary>
+        [WirePath("properties.domainId")]
+        public string DomainId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.DomainId = value;
+            }
+        }
+
+        /// <summary> Azure resource name. </summary>
+        [WirePath("properties.azureResourceName")]
+        public string AzureResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureResourceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.AzureResourceName = value;
+            }
+        }
+
+        /// <summary> Azure resource type. </summary>
+        [WirePath("properties.azureResourceType")]
+        public AppServiceResourceType? AzureResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureResourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.AzureResourceType = value;
+            }
+        }
+
+        /// <summary> Custom DNS record type. </summary>
+        [WirePath("properties.customHostNameDnsRecordType")]
+        public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHostNameDnsRecordType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.CustomHostNameDnsRecordType = value;
+            }
+        }
+
+        /// <summary> Hostname type. </summary>
+        [WirePath("properties.hostNameType")]
+        public AppServiceHostNameType? HostNameType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostNameType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.HostNameType = value;
+            }
+        }
+
+        /// <summary> SSL type. </summary>
+        [WirePath("properties.sslState")]
+        public HostNameBindingSslState? SslState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SslState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.SslState = value;
+            }
+        }
+
+        /// <summary> SSL certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
+        public string ThumbprintString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThumbprintString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostNameBindingProperties();
+                }
+                Properties.ThumbprintString = value;
+            }
+        }
+
+        /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("properties.virtualIP")]
+        public string VirtualIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualIP;
+            }
+        }
     }
 }

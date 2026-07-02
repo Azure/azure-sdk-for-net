@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.EventHubs.Models
     internal readonly partial struct ApplicationGroupPolicyType : IEquatable<ApplicationGroupPolicyType>
     {
         private readonly string _value;
+        private const string ThrottlingPolicyValue = "ThrottlingPolicy";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGroupPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGroupPolicyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ThrottlingPolicyValue = "ThrottlingPolicy";
-
-        /// <summary> ThrottlingPolicy. </summary>
+        /// <summary> Gets the ThrottlingPolicy. </summary>
         public static ApplicationGroupPolicyType ThrottlingPolicy { get; } = new ApplicationGroupPolicyType(ThrottlingPolicyValue);
+
         /// <summary> Determines if two <see cref="ApplicationGroupPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGroupPolicyType left, ApplicationGroupPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGroupPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGroupPolicyType left, ApplicationGroupPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGroupPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGroupPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGroupPolicyType(string value) => new ApplicationGroupPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGroupPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGroupPolicyType?(string value) => value == null ? null : new ApplicationGroupPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGroupPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGroupPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

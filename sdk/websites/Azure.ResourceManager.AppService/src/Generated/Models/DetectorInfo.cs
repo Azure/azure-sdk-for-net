@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Definition of Detector. </summary>
     public partial class DetectorInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectorInfo"/>. </summary>
         public DetectorInfo()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="analysisType"> Analysis Types for which this detector should apply to. </param>
         /// <param name="detectorType"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? detectorType, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -74,33 +46,41 @@ namespace Azure.ResourceManager.AppService.Models
             AnalysisType = analysisType;
             DetectorType = detectorType;
             Score = score;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of detector. </summary>
         [WirePath("id")]
         public string Id { get; }
+
         /// <summary> Name of detector. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Short description of the detector and its purpose. </summary>
         [WirePath("description")]
         public string Description { get; }
+
         /// <summary> Author of the detector. </summary>
         [WirePath("author")]
         public string Author { get; }
+
         /// <summary> Problem category. This serves for organizing group for detectors. </summary>
         [WirePath("category")]
         public string Category { get; }
+
         /// <summary> List of Support Topics for which this detector is enabled. </summary>
         [WirePath("supportTopicList")]
         public IReadOnlyList<DetectorSupportTopic> SupportTopicList { get; }
+
         /// <summary> Analysis Types for which this detector should apply to. </summary>
         [WirePath("analysisType")]
         public IReadOnlyList<string> AnalysisType { get; }
+
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>
         [WirePath("type")]
         public DetectorType? DetectorType { get; }
+
         /// <summary> Defines score of a detector to power ML based matching. </summary>
         [WirePath("score")]
         public float? Score { get; }

@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
 using System;
-using Azure.Storage.Blobs;
 using System.ClientModel.Primitives;
-using Azure.Core;
 using Azure.AI.OpenAI;
+using Azure.Core;
+using Azure.Identity;
+using Azure.Storage.Blobs;
 using OpenAI.Chat;
 
 namespace Azure.Projects;
@@ -22,7 +22,7 @@ public static class BlobExtensions
     /// <param name="provider"></param>
     /// <param name="containerName"></param>
     /// <returns></returns>
-    public static  BlobContainerClient GetBlobContainerClient(this ClientConnectionProvider provider, string containerName = "default")
+    public static BlobContainerClient GetBlobContainerClient(this ClientConnectionProvider provider, string containerName = "default")
     {
         BlobContainerClientKey blobContainerClientKey = new(containerName);
         BlobContainerClient client = provider.Subclients.GetClient(blobContainerClientKey, () =>

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Subscription.Tests
         {
             var data = new SubscriptionAliasCreateOrUpdateContent()
             {
-                 Workload = "Production",
+                Workload = "Production",
                 SubscriptionId = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID")
             };
             data.AdditionalProperties = new SubscriptionAliasAdditionalProperties();

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WorkflowTriggerHistoryCollection : ArmCollection, IEnumerable<WorkflowTriggerHistoryResource>, IAsyncEnumerable<WorkflowTriggerHistoryResource>
     {
-        private readonly ClientDiagnostics _workflowTriggerHistoryClientDiagnostics;
-        private readonly WorkflowTriggerHistoriesRestOperations _workflowTriggerHistoryRestClient;
+        private readonly ClientDiagnostics _workflowTriggerHistoriesClientDiagnostics;
+        private readonly WorkflowTriggerHistories _workflowTriggerHistoriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowTriggerHistoryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkflowTriggerHistoryCollection for mocking. </summary>
         protected WorkflowTriggerHistoryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkflowTriggerHistoryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WorkflowTriggerHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workflowTriggerHistoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowTriggerHistoryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkflowTriggerHistoryResource.ResourceType, out string workflowTriggerHistoryApiVersion);
-            _workflowTriggerHistoryRestClient = new WorkflowTriggerHistoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workflowTriggerHistoryApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _workflowTriggerHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowTriggerHistoryResource.ResourceType.Namespace, Diagnostics);
+            _workflowTriggerHistoriesRestClient = new WorkflowTriggerHistories(_workflowTriggerHistoriesClientDiagnostics, Pipeline, Endpoint, workflowTriggerHistoryApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WorkflowTriggerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkflowTriggerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkflowTriggerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a workflow trigger history.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WorkflowTriggerHistoryResource>> GetAsync(string historyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
-            using var scope = _workflowTriggerHistoryClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Get");
+            using DiagnosticScope scope = _workflowTriggerHistoriesClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workflowTriggerHistoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggerHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowTriggerHistoryData> response = Response.FromValue(WorkflowTriggerHistoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowTriggerHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.AppService
         /// Gets a workflow trigger history.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WorkflowTriggerHistoryResource> Get(string historyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
-            using var scope = _workflowTriggerHistoryClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Get");
+            using DiagnosticScope scope = _workflowTriggerHistoriesClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Get");
             scope.Start();
             try
             {
-                var response = _workflowTriggerHistoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggerHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowTriggerHistoryData> response = Response.FromValue(WorkflowTriggerHistoryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowTriggerHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,52 +156,16 @@ namespace Azure.ResourceManager.AppService
         /// Gets a list of workflow trigger histories.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of items to be included in the result. </param>
-        /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowTriggerHistoryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowTriggerHistoryResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowTriggerHistoryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowTriggerHistoryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowTriggerHistoryResource(Client, WorkflowTriggerHistoryData.DeserializeWorkflowTriggerHistoryData(e)), _workflowTriggerHistoryClientDiagnostics, Pipeline, "WorkflowTriggerHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of workflow trigger histories.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,47 +173,113 @@ namespace Azure.ResourceManager.AppService
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkflowTriggerHistoryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowTriggerHistoryResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkflowTriggerHistoryResource> GetAllAsync(int? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workflowTriggerHistoryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workflowTriggerHistoryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowTriggerHistoryResource(Client, WorkflowTriggerHistoryData.DeserializeWorkflowTriggerHistoryData(e)), _workflowTriggerHistoryClientDiagnostics, Pipeline, "WorkflowTriggerHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoriesGetAllAsyncCollectionResultOfT(
+                _workflowTriggerHistoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                top,
+                filter,
+                context,
+                "WorkflowTriggerHistoryCollection.GetAll"), data => new WorkflowTriggerHistoryResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of workflow trigger histories.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to be included in the result. </param>
+        /// <param name="filter"> The filter to apply on the operation. Options for filters include: Status, StartTime, and ClientTrackingId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkflowTriggerHistoryResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkflowTriggerHistoryResource> GetAll(int? top = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkflowTriggerHistoryData, WorkflowTriggerHistoryResource>(new WorkflowTriggerHistoriesGetAllCollectionResultOfT(
+                _workflowTriggerHistoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                top,
+                filter,
+                context,
+                "WorkflowTriggerHistoryCollection.GetAll"), data => new WorkflowTriggerHistoryResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string historyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
-            using var scope = _workflowTriggerHistoryClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Exists");
+            using DiagnosticScope scope = _workflowTriggerHistoriesClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workflowTriggerHistoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggerHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowTriggerHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowTriggerHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowTriggerHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,36 +293,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string historyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
-            using var scope = _workflowTriggerHistoryClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Exists");
+            using DiagnosticScope scope = _workflowTriggerHistoriesClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workflowTriggerHistoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggerHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowTriggerHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowTriggerHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowTriggerHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,38 +350,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WorkflowTriggerHistoryResource>> GetIfExistsAsync(string historyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
-            using var scope = _workflowTriggerHistoryClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowTriggerHistoriesClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workflowTriggerHistoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggerHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkflowTriggerHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowTriggerHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowTriggerHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowTriggerHistoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowTriggerHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,38 +411,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostruntime/runtime/webhooks/workflow/api/management/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTriggerHistories_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowTriggerHistories_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTriggerHistoryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WorkflowTriggerHistoryResource> GetIfExists(string historyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
-            using var scope = _workflowTriggerHistoryClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.GetIfExists");
+            using DiagnosticScope scope = _workflowTriggerHistoriesClientDiagnostics.CreateScope("WorkflowTriggerHistoryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workflowTriggerHistoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowTriggerHistoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, historyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkflowTriggerHistoryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkflowTriggerHistoryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkflowTriggerHistoryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkflowTriggerHistoryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkflowTriggerHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +478,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkflowTriggerHistoryResource> IAsyncEnumerable<WorkflowTriggerHistoryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

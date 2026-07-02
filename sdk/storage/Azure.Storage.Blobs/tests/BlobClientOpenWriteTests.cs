@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Tests
                     break;
                 }
 
-                string blockId = Shared.StorageExtensions.GenerateBlockId(position);
+                string blockId = BlobHelpers.GenerateBlockId();
                 await blockClient.StageBlockAsync(blockId, new MemoryStream(buffer, 0, lastReadSize));
                 blockIds.Add(blockId);
             }
@@ -109,14 +109,14 @@ namespace Azure.Storage.Blobs.Tests
             HttpHeaderParameters httpHeaders = default,
             IProgress<long> progressHandler = default)
             => await client.OpenWriteAsync(overwrite, new BlobOpenWriteOptions
-               {
-                   BufferSize = bufferSize,
-                   OpenConditions = conditions,
-                   Metadata = metadata,
-                   Tags = tags,
-                   HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
-                   ProgressHandler = progressHandler
-               });
+            {
+                BufferSize = bufferSize,
+                OpenConditions = conditions,
+                Metadata = metadata,
+                Tags = tags,
+                HttpHeaders = httpHeaders.ToBlobHttpHeaders(),
+                ProgressHandler = progressHandler
+            });
         #endregion
 
         #region Tests

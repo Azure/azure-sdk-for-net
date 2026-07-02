@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridNetwork.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.IO;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridNetwork.Tests
 {
@@ -273,13 +273,13 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 }
             };
 
-            nsdvData.Properties.NfvisFromSite.Add("nfvi1", new NfviDetails()
+            nsdvData.Properties.NfvisFromSite.Add("nfvi1", new NfviSiteDetails()
             {
                 Name = NfviName,
                 NfviDetailsType = "AzureCore"
             });
 
-            nsdvData.Properties.ConfigurationGroupSchemaReferences.Add("vnet_ConfigGroupSchema", new Resources.Models.WritableSubResource() { Id = cgs.Id });
+            nsdvData.Properties.ReferencedConfigurationGroupSchemas.Add("vnet_ConfigGroupSchema", new ReferencedResourceById() { Id = cgs.Id });
 
             var vnetResourceElementTemplate = new NetworkFunctionDefinitionResourceElementTemplateDetails()
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 DependsOnProfile = new DependsOnProfile(),
                 Configuration = new ArmResourceDefinitionResourceElementTemplate()
                 {
-                    ArtifactProfile = new NSDArtifactProfile()
+                    ArtifactProfile = new NsdArtifactProfile()
                     {
                         ArtifactName = NfArmTemplateArtifactName,
                         ArtifactVersion = "1.0.0",
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 Sku = new HybridNetworkSku(HybridNetworkSkuName.Standard)
             };
 
-            snsData.Properties.DesiredStateConfigurationGroupValueReferences.Add("vnet_ConfigGroupSchema", new Resources.Models.WritableSubResource() { Id = cgv.Id });
+            snsData.Properties.DesiredStateConfigurationGroupValueReferencedResources.Add("vnet_ConfigGroupSchema", new ReferencedResourceById() { Id = cgv.Id });
 
             var lro = await resourceGroup
                 .GetSiteNetworkServices()

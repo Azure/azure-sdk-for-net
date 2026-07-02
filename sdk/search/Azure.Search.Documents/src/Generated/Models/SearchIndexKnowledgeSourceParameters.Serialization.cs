@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexKnowledgeSourceParameters : IUtf8JsonSerializable, IJsonModel<SearchIndexKnowledgeSourceParameters>
+    /// <summary> Parameters for search index knowledge source. </summary>
+    public partial class SearchIndexKnowledgeSourceParameters : IJsonModel<SearchIndexKnowledgeSourceParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexKnowledgeSourceParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceParameters"/> for deserialization. </summary>
+        internal SearchIndexKnowledgeSourceParameters()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchIndexKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSearchIndexKnowledgeSourceParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchIndexKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchIndexKnowledgeSourceParameters IPersistableModel<SearchIndexKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SearchIndexKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,28 +74,52 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("searchIndexName"u8);
             writer.WriteStringValue(SearchIndexName);
-            if (Optional.IsDefined(SourceDataSelect))
+            if (Optional.IsCollectionDefined(SourceDataFields))
             {
-                writer.WritePropertyName("sourceDataSelect"u8);
-                writer.WriteStringValue(SourceDataSelect);
+                writer.WritePropertyName("sourceDataFields"u8);
+                writer.WriteStartArray();
+                foreach (SearchIndexFieldReference item in SourceDataFields)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsCollectionDefined(SearchFields))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("searchFields"u8);
+                writer.WriteStartArray();
+                foreach (SearchIndexFieldReference item in SearchFields)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SemanticConfigurationName))
+            {
+                writer.WritePropertyName("semanticConfigurationName"u8);
+                writer.WriteStringValue(SemanticConfigurationName);
+            }
+            if (Optional.IsDefined(BaseFilter))
+            {
+                writer.WritePropertyName("baseFilter"u8);
+                writer.WriteStringValue(BaseFilter);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,96 +128,94 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        SearchIndexKnowledgeSourceParameters IJsonModel<SearchIndexKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchIndexKnowledgeSourceParameters IJsonModel<SearchIndexKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchIndexKnowledgeSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParameters)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchIndexKnowledgeSourceParameters(document.RootElement, options);
         }
 
-        internal static SearchIndexKnowledgeSourceParameters DeserializeSearchIndexKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchIndexKnowledgeSourceParameters DeserializeSearchIndexKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string searchIndexName = default;
-            string sourceDataSelect = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<SearchIndexFieldReference> sourceDataFields = default;
+            IList<SearchIndexFieldReference> searchFields = default;
+            string semanticConfigurationName = default;
+            string baseFilter = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("searchIndexName"u8))
+                if (prop.NameEquals("searchIndexName"u8))
                 {
-                    searchIndexName = property.Value.GetString();
+                    searchIndexName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceDataSelect"u8))
+                if (prop.NameEquals("sourceDataFields"u8))
                 {
-                    sourceDataSelect = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SearchIndexFieldReference> array = new List<SearchIndexFieldReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SearchIndexFieldReference.DeserializeSearchIndexFieldReference(item, options));
+                    }
+                    sourceDataFields = array;
+                    continue;
+                }
+                if (prop.NameEquals("searchFields"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SearchIndexFieldReference> array = new List<SearchIndexFieldReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SearchIndexFieldReference.DeserializeSearchIndexFieldReference(item, options));
+                    }
+                    searchFields = array;
+                    continue;
+                }
+                if (prop.NameEquals("semanticConfigurationName"u8))
+                {
+                    semanticConfigurationName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("baseFilter"u8))
+                {
+                    baseFilter = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SearchIndexKnowledgeSourceParameters(searchIndexName, sourceDataSelect, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<SearchIndexKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SearchIndexKnowledgeSourceParameters IPersistableModel<SearchIndexKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSearchIndexKnowledgeSourceParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SearchIndexKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchIndexKnowledgeSourceParameters FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexKnowledgeSourceParameters(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            return new SearchIndexKnowledgeSourceParameters(
+                searchIndexName,
+                sourceDataFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
+                searchFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
+                semanticConfigurationName,
+                baseFilter,
+                additionalBinaryDataProperties);
         }
     }
 }

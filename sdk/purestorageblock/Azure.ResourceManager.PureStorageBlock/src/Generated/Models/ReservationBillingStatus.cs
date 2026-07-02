@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> Latest billing status for this reservation. </summary>
     public partial class ReservationBillingStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationBillingStatus"/>. </summary>
         /// <param name="timestamp"> Timestamp for the latest update of this billing status, in RFC 3339 format. </param>
@@ -60,11 +31,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="totalPerformanceReported"> The sum of all performance settings across the pools under this reservation. In MB per second. </param>
         /// <param name="totalPerformanceIncludedPlan"> Total performance amount included in plan. In bytes per second. </param>
         /// <param name="totalPerformanceOverage"> Total performance amount reported at on-demand price. In MB per second. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="timestamp"/> is null. </exception>
         internal ReservationBillingStatus(string timestamp, long totalUsedCapacityReported, int lowDrrPoolCount, double drrWeightedAverage, long totalNonReducibleReported, long extraUsedCapacityNonReducible, long extraUsedCapacityLowUsageRounding, long extraUsedCapacityNonReduciblePlanDiscount, long totalUsedCapacityBilled, long totalUsedCapacityIncludedPlan, long totalUsedCapacityOverage, long totalPerformanceReported, long totalPerformanceIncludedPlan, long totalPerformanceOverage)
         {
-            Argument.AssertNotNull(timestamp, nameof(timestamp));
-
             Timestamp = timestamp;
             TotalUsedCapacityReported = totalUsedCapacityReported;
             LowDrrPoolCount = lowDrrPoolCount;
@@ -96,8 +64,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="totalPerformanceReported"> The sum of all performance settings across the pools under this reservation. In MB per second. </param>
         /// <param name="totalPerformanceIncludedPlan"> Total performance amount included in plan. In bytes per second. </param>
         /// <param name="totalPerformanceOverage"> Total performance amount reported at on-demand price. In MB per second. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationBillingStatus(string timestamp, long totalUsedCapacityReported, int lowDrrPoolCount, double drrWeightedAverage, long totalNonReducibleReported, long extraUsedCapacityNonReducible, long extraUsedCapacityLowUsageRounding, long extraUsedCapacityNonReduciblePlanDiscount, long totalUsedCapacityBilled, long totalUsedCapacityIncludedPlan, long totalUsedCapacityOverage, long totalPerformanceReported, long totalPerformanceIncludedPlan, long totalPerformanceOverage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationBillingStatus(string timestamp, long totalUsedCapacityReported, int lowDrrPoolCount, double drrWeightedAverage, long totalNonReducibleReported, long extraUsedCapacityNonReducible, long extraUsedCapacityLowUsageRounding, long extraUsedCapacityNonReduciblePlanDiscount, long totalUsedCapacityBilled, long totalUsedCapacityIncludedPlan, long totalUsedCapacityOverage, long totalPerformanceReported, long totalPerformanceIncludedPlan, long totalPerformanceOverage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             TotalUsedCapacityReported = totalUsedCapacityReported;
@@ -113,40 +81,48 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             TotalPerformanceReported = totalPerformanceReported;
             TotalPerformanceIncludedPlan = totalPerformanceIncludedPlan;
             TotalPerformanceOverage = totalPerformanceOverage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ReservationBillingStatus"/> for deserialization. </summary>
-        internal ReservationBillingStatus()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Timestamp for the latest update of this billing status, in RFC 3339 format. </summary>
         public string Timestamp { get; }
+
         /// <summary> Total used capacity as reported by associated storage pools. In bytes. </summary>
         public long TotalUsedCapacityReported { get; }
+
         /// <summary> How many associated storage pools reported low data reduction ratio (DRR). </summary>
         public int LowDrrPoolCount { get; }
+
         /// <summary> Weighted average of the data-reduction ratio for all associated pools. </summary>
         public double DrrWeightedAverage { get; }
+
         /// <summary> The sum of total used capacity for all pools with low DRR, if the DRR penalty applies. In bytes. </summary>
         public long TotalNonReducibleReported { get; }
+
         /// <summary> Extra capacity added because of low DRR storage pools; In bytes. </summary>
         public long ExtraUsedCapacityNonReducible { get; }
+
         /// <summary> Extra capacity added when rounding up low-usage pools to 30TiB. In bytes. </summary>
         public long ExtraUsedCapacityLowUsageRounding { get; }
+
         /// <summary> Extra capacity discounted due to plan forgiving some low-DRR usage. In bytes. </summary>
         public long ExtraUsedCapacityNonReduciblePlanDiscount { get; }
+
         /// <summary> Total used capacity actually billed. In bytes. </summary>
         public long TotalUsedCapacityBilled { get; }
+
         /// <summary> Total used capacity included in plan. In bytes. </summary>
         public long TotalUsedCapacityIncludedPlan { get; }
+
         /// <summary> Total used capacity reported at on-demand price. In bytes. </summary>
         public long TotalUsedCapacityOverage { get; }
+
         /// <summary> The sum of all performance settings across the pools under this reservation. In MB per second. </summary>
         public long TotalPerformanceReported { get; }
+
         /// <summary> Total performance amount included in plan. In bytes per second. </summary>
         public long TotalPerformanceIncludedPlan { get; }
+
         /// <summary> Total performance amount reported at on-demand price. In MB per second. </summary>
         public long TotalPerformanceOverage { get; }
     }

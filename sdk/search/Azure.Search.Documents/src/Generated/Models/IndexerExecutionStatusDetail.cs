@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct IndexerExecutionStatusDetail : IEquatable<IndexerExecutionStatusDetail>
     {
         private readonly string _value;
+        /// <summary> Indicates that the reset that occurred was for a call to ResetDocs. </summary>
+        private const string ResetDocsValue = "resetDocs";
+        /// <summary> Indicates to selectively resync based on option(s) from data source. </summary>
+        private const string ResyncValue = "resync";
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerExecutionStatusDetail(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ResetDocsValue = "resetDocs";
-        private const string ResyncValue = "resync";
+            _value = value;
+        }
 
         /// <summary> Indicates that the reset that occurred was for a call to ResetDocs. </summary>
         public static IndexerExecutionStatusDetail ResetDocs { get; } = new IndexerExecutionStatusDetail(ResetDocsValue);
+
         /// <summary> Indicates to selectively resync based on option(s) from data source. </summary>
         public static IndexerExecutionStatusDetail Resync { get; } = new IndexerExecutionStatusDetail(ResyncValue);
+
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IndexerExecutionStatusDetail"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerExecutionStatusDetail left, IndexerExecutionStatusDetail right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IndexerExecutionStatusDetail(string value) => new IndexerExecutionStatusDetail(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IndexerExecutionStatusDetail"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerExecutionStatusDetail?(string value) => value == null ? null : new IndexerExecutionStatusDetail(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IndexerExecutionStatusDetail other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IndexerExecutionStatusDetail other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

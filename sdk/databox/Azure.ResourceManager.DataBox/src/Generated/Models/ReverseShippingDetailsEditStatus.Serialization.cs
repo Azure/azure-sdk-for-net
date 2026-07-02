@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class ReverseShippingDetailsEditStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ReverseShippingDetailsEditStatus value) => value switch
         {
             ReverseShippingDetailsEditStatus.Enabled => "Enabled",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ReverseShippingDetailsEditStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ReverseShippingDetailsEditStatus ToReverseShippingDetailsEditStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return ReverseShippingDetailsEditStatus.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return ReverseShippingDetailsEditStatus.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported")) return ReverseShippingDetailsEditStatus.NotSupported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return ReverseShippingDetailsEditStatus.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return ReverseShippingDetailsEditStatus.Disabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported"))
+            {
+                return ReverseShippingDetailsEditStatus.NotSupported;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ReverseShippingDetailsEditStatus value.");
         }
     }

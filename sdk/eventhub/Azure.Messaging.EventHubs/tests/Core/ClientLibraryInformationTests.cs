@@ -97,13 +97,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
-                Assert.That(expectedNames.ContainsKey(property.Key), Is.True, $"The property, { property.Key }, was not expected.");
+                Assert.That(expectedNames.ContainsKey(property.Key), Is.True, $"The property, {property.Key}, was not expected.");
 
                 PropertyInfo matchingProperty = typeof(ClientLibraryInformation)
                     .GetProperty(expectedNames[property.Key], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
-                Assert.That(matchingProperty, Is.Not.Null, $"The property, { property.Key }, was not found.");
-                Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for { property.Key } should match.");
+                Assert.That(matchingProperty, Is.Not.Null, $"The property, {property.Key}, was not found.");
+                Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for {property.Key} should match.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
-                Assert.That(expectedNames.Contains(property.Key), Is.True, $"The property, { property.Key }, was not found.");
+                Assert.That(expectedNames.Contains(property.Key), Is.True, $"The property, {property.Key}, was not found.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
-                Assert.That(property.Value, Is.Not.Null.And.Not.Empty, $"The property, { property.Key }, was not populated.");
+                Assert.That(property.Value, Is.Not.Null.And.Not.Empty, $"The property, {property.Key}, was not populated.");
             }
         }
     }

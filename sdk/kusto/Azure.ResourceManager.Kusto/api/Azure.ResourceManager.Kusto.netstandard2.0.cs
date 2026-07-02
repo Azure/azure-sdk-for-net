@@ -35,7 +35,10 @@ namespace Azure.ResourceManager.Kusto
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -64,8 +67,10 @@ namespace Azure.ResourceManager.Kusto
     public partial class KustoClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.KustoClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoClusterResource>, System.Collections.IEnumerable
     {
         protected KustoClusterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.Kusto.KustoClusterData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.Kusto.KustoClusterData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.Kusto.KustoClusterData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.Kusto.KustoClusterData data, string ifMatch, string ifNoneMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.Kusto.KustoClusterData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.Kusto.KustoClusterData data, string ifMatch, string ifNoneMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource> Get(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -98,6 +103,7 @@ namespace Azure.ResourceManager.Kusto
         public Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> LanguageExtensionsValue { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.MigrationClusterProperties MigrationCluster { get { throw null; } }
+        public string NextLink { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.OptimizedAutoscale OptimizedAutoscale { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
@@ -108,11 +114,15 @@ namespace Azure.ResourceManager.Kusto
         public Azure.ResourceManager.Kusto.Models.KustoClusterState? State { get { throw null; } }
         public string StateReason { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> TrustedExternalTenants { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> Value { get { throw null; } }
         public string VirtualClusterGraduationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? ZoneStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -141,7 +151,6 @@ namespace Azure.ResourceManager.Kusto
         public KustoClusterPrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
         public string ClusterPrincipalId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ClusterPrincipalId instead.", false)]
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } }
@@ -150,7 +159,10 @@ namespace Azure.ResourceManager.Kusto
         public Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole? Role { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public string TenantName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -259,8 +271,10 @@ namespace Azure.ResourceManager.Kusto
         Azure.ResourceManager.Kusto.KustoClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoClusterPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoClusterPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoClusterPatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoClusterPatch patch, string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoClusterPatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoClusterPatch patch, string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KustoDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.KustoDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoDatabaseResource>, System.Collections.IEnumerable
     {
@@ -272,10 +286,10 @@ namespace Azure.ResourceManager.Kusto
         public virtual Azure.Response<bool> Exists(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoDatabaseResource> Get(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAll(int? top, string skiptoken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAllAsync(int? top, string skiptoken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAll(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAllAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.KustoDatabaseResource>> GetAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Kusto.KustoDatabaseResource> GetIfExists(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Kusto.KustoDatabaseResource>> GetIfExistsAsync(string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -286,8 +300,12 @@ namespace Azure.ResourceManager.Kusto
     public partial class KustoDatabaseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDatabaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoDatabaseData>
     {
         public KustoDatabaseData() { }
+        public KustoDatabaseData(Azure.ResourceManager.Kusto.Models.KustoKind kind) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -316,7 +334,6 @@ namespace Azure.ResourceManager.Kusto
         public KustoDatabasePrincipalAssignmentData() { }
         public System.Guid? AadObjectId { get { throw null; } }
         public string DatabasePrincipalId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use DatabasePrincipalId instead.", false)]
         public System.Guid? PrincipalId { get { throw null; } set { } }
         public string PrincipalName { get { throw null; } }
@@ -325,7 +342,10 @@ namespace Azure.ResourceManager.Kusto
         public Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole? Role { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public string TenantName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -417,8 +437,12 @@ namespace Azure.ResourceManager.Kusto
     public partial class KustoDataConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDataConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoDataConnectionData>
     {
         public KustoDataConnectionData() { }
+        public KustoDataConnectionData(Azure.ResourceManager.Kusto.Models.DataConnectionKind kind) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoDataConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDataConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoDataConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoDataConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoDataConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -494,7 +518,10 @@ namespace Azure.ResourceManager.Kusto
         public string PrivateLinkResourceRegion { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoManagedPrivateEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoManagedPrivateEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoManagedPrivateEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoManagedPrivateEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoManagedPrivateEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -544,7 +571,10 @@ namespace Azure.ResourceManager.Kusto
         public string GroupId { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -606,7 +636,10 @@ namespace Azure.ResourceManager.Kusto
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -634,6 +667,7 @@ namespace Azure.ResourceManager.Kusto
     {
         public KustoScriptData() { }
         public string ForceUpdateTag { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction? PrincipalPermissionsAction { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public string ScriptContent { get { throw null; } set { } }
@@ -641,7 +675,10 @@ namespace Azure.ResourceManager.Kusto
         public System.Uri ScriptUri { get { throw null; } set { } }
         public string ScriptUriSasToken { get { throw null; } set { } }
         public bool? ShouldContinueOnErrors { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.KustoScriptData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoScriptData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.KustoScriptData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.KustoScriptData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.KustoScriptData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -692,7 +729,10 @@ namespace Azure.ResourceManager.Kusto
         public string LanguageVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public string RequirementsFileContent { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.SandboxCustomImageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.SandboxCustomImageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.SandboxCustomImageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.SandboxCustomImageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.SandboxCustomImageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -762,7 +802,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         public AcceptedAudience() { }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.AcceptedAudience JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.AcceptedAudience PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.AcceptedAudience System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.AcceptedAudience>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.AcceptedAudience>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.AcceptedAudience System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.AcceptedAudience>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -771,32 +814,46 @@ namespace Azure.ResourceManager.Kusto.Models
     }
     public static partial class ArmKustoModelFactory
     {
+        public static Azure.ResourceManager.Kusto.Models.AcceptedAudience AcceptedAudience(string value = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.CalloutPoliciesList CalloutPoliciesList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> value = null, string nextLink = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove CalloutPolicyToRemove(string calloutId = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.ClusterMigrateContent ClusterMigrateContent(string clusterResourceId = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent DatabaseInviteFollowerContent(string inviteeEmail = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult DatabaseInviteFollowerResult(string generatedInvitation = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.DatabasePrincipalList DatabasePrincipalList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal> value = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent DataConnectionValidationContent(string dataConnectionName = null, Azure.ResourceManager.Kusto.KustoDataConnectionData properties = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult DataConnectionValidationResult(string errorMessage = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults DataConnectionValidationResults(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult> value = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult DiagnoseVirtualNetworkResult(System.Collections.Generic.IEnumerable<string> findings = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.EndpointDependency EndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.EndpointDetail> endpointDetails = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.EndpointDetail EndpointDetail(int? port = default(int?), string ipAddress = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity EventGridDataConnectionWithManagedIdentity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier storageAccountResourceIdForManagedIdentity = null, Azure.Core.ResourceIdentifier eventHubResourceIdForManagedIdentity = null, Azure.Core.ResourceIdentifier eventGridResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat? dataFormat = default(Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat?), bool? shouldIgnoreFirstRecord = default(bool?), Azure.ResourceManager.Kusto.Models.BlobStorageEventType? blobStorageEventType = default(Azure.ResourceManager.Kusto.Models.BlobStorageEventType?), Azure.Core.ResourceIdentifier managedIdentityResourceId = null, System.Guid? managedIdentityObjectId = default(System.Guid?), Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? databaseRouting = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity EventHubDataConnectionWithManagedIdentity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier eventHubResourceIdForManagedIdentity = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat? dataFormat = default(Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat?), System.Collections.Generic.IEnumerable<string> eventSystemProperties = null, Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType? compression = default(Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), Azure.Core.ResourceIdentifier managedIdentityResourceId = null, System.Guid? managedIdentityObjectId = default(System.Guid?), Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? databaseRouting = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting?), System.DateTimeOffset? retrievalStartOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData KustoAttachedDatabaseConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), string databaseName = null, Azure.Core.ResourceIdentifier clusterResourceId = null, System.Collections.Generic.IEnumerable<string> attachedDatabaseNames = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind?), Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string databaseNameOverride = null, string databaseNamePrefix = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationData KustoAttachedDatabaseConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), string databaseName = null, Azure.Core.ResourceIdentifier clusterResourceId = null, System.Collections.Generic.IEnumerable<string> attachedDatabaseNames = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind?), Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string databaseNameOverride = null, string databaseNamePrefix = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.AttachedDatabaseType resourceType = default(Azure.ResourceManager.Kusto.Models.AttachedDatabaseType)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails KustoAvailableSkuDetails(string resourceType = null, Azure.ResourceManager.Kusto.Models.KustoSku sku = null, Azure.ResourceManager.Kusto.Models.KustoCapacity capacity = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy KustoCalloutPolicy(string calloutUriRegex = null, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType? calloutType = default(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType?), Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess? outboundAccess = default(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess?), string calloutId = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoCapacity KustoCapacity(Azure.ResourceManager.Kusto.Models.KustoScaleType scaleType = default(Azure.ResourceManager.Kusto.Models.KustoScaleType), int minimum = 0, int maximum = 0, int @default = 0) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoClusterData KustoClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri clusterUri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> calloutPolicies = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null, Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? zoneStatus = default(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.KustoClusterData KustoClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoSku sku, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag, Azure.ResourceManager.Kusto.Models.KustoClusterState? state, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState, System.Uri clusterUri, System.Uri dataIngestionUri, string stateReason, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedIPRangeList, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster) { throw null; }
+        public static Azure.ResourceManager.Kusto.KustoClusterData KustoClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri clusterUri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> calloutPolicies = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null, Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? zoneStatus = default(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> value = null, string nextLink = null, Azure.ResourceManager.Kusto.Models.KustoSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent KustoClusterNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoClusterType resourceType = default(Azure.ResourceManager.Kusto.Models.KustoClusterType)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Kusto.Models.KustoClusterState? state, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState, System.Uri uri, System.Uri dataIngestionUri, string stateReason, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedIPRangeList, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri uri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> calloutPolicies = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null, Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? zoneStatus = default(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoSku sku, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Kusto.Models.KustoClusterState? state, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState, System.Uri uri, System.Uri dataIngestionUri, string stateReason, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedIPRangeList, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri clusterUri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> calloutPolicies = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null, Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? zoneStatus = default(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData KustoClusterPrincipalAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterPrincipalId = null, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole? role = default(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? principalType = default(Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType?), string tenantName = null, string principalName = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Guid? aadObjectId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent KustoClusterPrincipalAssignmentNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType resourceType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant KustoClusterTrustedExternalTenant(string value = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration KustoClusterVirtualNetworkConfiguration(string subnetId = null, string enginePublicIPId = null, string dataManagementPublicIPId = null, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection KustoCosmosDBDataConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string tableName = null, string mappingRuleName = null, Azure.Core.ResourceIdentifier managedIdentityResourceId = null, System.Guid? managedIdentityObjectId = default(System.Guid?), Azure.Core.ResourceIdentifier cosmosDBAccountResourceId = null, string cosmosDBDatabase = null, string cosmosDBContainer = null, System.DateTimeOffset? retrievalStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoDatabaseData KustoDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent KustoDatabaseNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseResourceType resourceType = Azure.ResourceManager.Kusto.Models.KustoDatabaseResourceType.MicrosoftKustoClustersDatabases) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal KustoDatabasePrincipal(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole role = default(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole), string name = null, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType principalType = default(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType), string fqn = null, string email = null, string appId = null, string tenantName = null) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentData KustoDatabasePrincipalAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string databasePrincipalId = null, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole? role = default(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? principalType = default(Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType?), string tenantName = null, string principalName = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Guid? aadObjectId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType resourceType = default(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties KustoDatabaseTableLevelSharingProperties(System.Collections.Generic.IEnumerable<string> tablesToInclude = null, System.Collections.Generic.IEnumerable<string> tablesToExclude = null, System.Collections.Generic.IEnumerable<string> externalTablesToInclude = null, System.Collections.Generic.IEnumerable<string> externalTablesToExclude = null, System.Collections.Generic.IEnumerable<string> materializedViewsToInclude = null, System.Collections.Generic.IEnumerable<string> materializedViewsToExclude = null, System.Collections.Generic.IEnumerable<string> functionsToInclude = null, System.Collections.Generic.IEnumerable<string> functionsToExclude = null) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoDataConnectionData KustoDataConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent KustoDataConnectionNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoDataConnectionType resourceType = default(Azure.ResourceManager.Kusto.Models.KustoDataConnectionType)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataConnection KustoEventGridDataConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier storageAccountResourceId = null, Azure.Core.ResourceIdentifier eventGridResourceId = null, Azure.Core.ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat? dataFormat = default(Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat?), bool? isFirstRecordIgnored = default(bool?), Azure.ResourceManager.Kusto.Models.BlobStorageEventType? blobStorageEventType = default(Azure.ResourceManager.Kusto.Models.BlobStorageEventType?), Azure.Core.ResourceIdentifier managedIdentityResourceId = null, System.Guid? managedIdentityObjectId = default(System.Guid?), Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? databaseRouting = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
@@ -804,25 +861,33 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase KustoFollowerDatabase(Azure.Core.ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? databaseShareOrigin = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition KustoFollowerDatabaseDefinition(Azure.Core.ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? databaseShareOrigin = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataConnection KustoIotHubDataConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier iotHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat? dataFormat = default(Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat?), System.Collections.Generic.IEnumerable<string> eventSystemProperties = null, string sharedAccessPolicyName = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? databaseRouting = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting?), System.DateTimeOffset? retrievalStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties KustoKeyVaultProperties(string keyName = null, string keyVersion = null, System.Uri keyVaultUri = null, string userIdentity = null, string federatedIdentityClientId = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtension KustoLanguageExtension(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName? languageExtensionName = default(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName?), Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName? languageExtensionImageName = default(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName?), string languageExtensionCustomImageName = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList KustoLanguageExtensionList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoManagedPrivateEndpointData KustoManagedPrivateEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateLinkResourceId = null, string privateLinkResourceRegion = null, string groupId = null, string requestMessage = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent KustoManagedPrivateEndpointNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType resourceType = default(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult KustoNameAvailabilityResult(bool? nameAvailable = default(bool?), string name = null, string message = null, Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason? reason = default(Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason?)) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData KustoPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData KustoPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null, Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoPrivateLinkResourceData KustoPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty KustoPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), float? statisticsSize = default(float?), string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind? principalsModificationKind = default(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind?), Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string originalDatabaseName = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? databaseShareOrigin = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin?), System.DateTimeOffset? suspensionStartOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind? principalsModificationKind = default(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind?), Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string originalDatabaseName = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? databaseShareOrigin = default(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin?), float? statisticsSize = default(float?), System.DateTimeOffset? suspensionStartOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase KustoReadWriteDatabase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), bool? isFollowed = default(bool?), Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, float? statisticsSize = default(float?), System.DateTimeOffset? suspensionStartOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase KustoReadWriteDatabase(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), float? statisticsSize = default(float?), bool? isFollowed = default(bool?), Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, System.DateTimeOffset? suspensionStartOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities KustoResourceSkuCapabilities(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails KustoResourceSkuZoneDetails(System.Collections.Generic.IEnumerable<string> name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities> capabilities = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.KustoScriptData KustoScriptData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoScriptData KustoScriptData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri scriptUri = null, string scriptUriSasToken = null, string scriptContent = null, string forceUpdateTag = null, bool? shouldContinueOnErrors = default(bool?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), Azure.ResourceManager.Kusto.Models.KustoScriptLevel? scriptLevel = default(Azure.ResourceManager.Kusto.Models.KustoScriptLevel?), Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction? principalPermissionsAction = default(Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.KustoScriptData KustoScriptData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri scriptUri = null, string scriptUriSasToken = null, string scriptContent = null, string forceUpdateTag = null, bool? shouldContinueOnErrors = default(bool?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), Azure.ResourceManager.Kusto.Models.KustoScriptLevel? scriptLevel = default(Azure.ResourceManager.Kusto.Models.KustoScriptLevel?), Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction? principalPermissionsAction = default(Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction?), Azure.Core.ResourceIdentifier managedIdentityResourceId = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent KustoScriptNameAvailabilityContent(string name = null, Azure.ResourceManager.Kusto.Models.KustoScriptType resourceType = default(Azure.ResourceManager.Kusto.Models.KustoScriptType)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoSku KustoSku(Azure.ResourceManager.Kusto.Models.KustoSkuName name = default(Azure.ResourceManager.Kusto.Models.KustoSkuName), int? capacity = default(int?), Azure.ResourceManager.Kusto.Models.KustoSkuTier tier = default(Azure.ResourceManager.Kusto.Models.KustoSkuTier)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuDescription KustoSkuDescription(string resourceType = null, string name = null, string tier = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem> locationInfo = null, System.Collections.Generic.IEnumerable<System.BinaryData> restrictions = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem KustoSkuLocationInfoItem(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails> zoneDetails = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.MigrationClusterProperties MigrationClusterProperties(string id = null, System.Uri uri = null, System.Uri dataIngestionUri = null, Azure.ResourceManager.Kusto.Models.MigrationClusterRole? role = default(Azure.ResourceManager.Kusto.Models.MigrationClusterRole?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.OptimizedAutoscale OptimizedAutoscale(int version = 0, bool isEnabled = false, int minimum = 0, int maximum = 0) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.EndpointDependency> endpoints = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.EndpointDependency> endpoints = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Kusto.SandboxCustomImageData SandboxCustomImageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? language, string languageVersion, string requirementsFileContent, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Kusto.SandboxCustomImageData SandboxCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? language = default(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage?), string languageVersion = null, string baseImageName = null, string requirementsFileContent = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent SandboxCustomImagesCheckNameContent(string name = null, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType imageType = default(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType)) { throw null; }
@@ -835,12 +900,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public AttachedDatabaseType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.AttachedDatabaseType MicrosoftKustoClustersAttachedDatabaseConfigurations { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.AttachedDatabaseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.AttachedDatabaseType left, Azure.ResourceManager.Kusto.Models.AttachedDatabaseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.AttachedDatabaseType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.AttachedDatabaseType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.AttachedDatabaseType left, Azure.ResourceManager.Kusto.Models.AttachedDatabaseType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -853,21 +917,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.BlobStorageEventType MicrosoftStorageBlobCreated { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.BlobStorageEventType MicrosoftStorageBlobRenamed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.BlobStorageEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.BlobStorageEventType left, Azure.ResourceManager.Kusto.Models.BlobStorageEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.BlobStorageEventType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.BlobStorageEventType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.BlobStorageEventType left, Azure.ResourceManager.Kusto.Models.BlobStorageEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CalloutPoliciesList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPoliciesList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.CalloutPoliciesList>
     {
         public CalloutPoliciesList() { }
+        public CalloutPoliciesList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> value) { }
         public string NextLink { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.CalloutPoliciesList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.CalloutPoliciesList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.CalloutPoliciesList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPoliciesList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPoliciesList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.CalloutPoliciesList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.CalloutPoliciesList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -878,7 +945,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         public CalloutPolicyToRemove() { }
         public string CalloutId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.CalloutPolicyToRemove>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -889,7 +959,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         public ClusterMigrateContent(string clusterResourceId) { }
         public string ClusterResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.ClusterMigrateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.ClusterMigrateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.ClusterMigrateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.ClusterMigrateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.ClusterMigrateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.ClusterMigrateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.ClusterMigrateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -901,7 +974,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public DatabaseInviteFollowerContent(string inviteeEmail) { }
         public string InviteeEmail { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -912,7 +988,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal DatabaseInviteFollowerResult() { }
         public string GeneratedInvitation { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -923,19 +1002,46 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         public DatabasePrincipalList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DatabasePrincipalList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DatabasePrincipalList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DatabasePrincipalList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DatabasePrincipalList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DatabasePrincipalList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DatabasePrincipalList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DatabasePrincipalList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DatabasePrincipalList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DatabasePrincipalList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataConnectionKind : System.IEquatable<Azure.ResourceManager.Kusto.Models.DataConnectionKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataConnectionKind(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind CosmosDb { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventGrid { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventGridWithManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventHub { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind EventHubWithManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.DataConnectionKind IotHub { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.DataConnectionKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.DataConnectionKind left, Azure.ResourceManager.Kusto.Models.DataConnectionKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.DataConnectionKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.DataConnectionKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.DataConnectionKind left, Azure.ResourceManager.Kusto.Models.DataConnectionKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DataConnectionValidationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent>
     {
         public DataConnectionValidationContent() { }
         public string DataConnectionName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.KustoDataConnectionData Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -946,7 +1052,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal DataConnectionValidationResult() { }
         public string ErrorMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -957,7 +1066,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal DataConnectionValidationResults() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DataConnectionValidationResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -968,7 +1080,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal DiagnoseVirtualNetworkResult() { }
         public System.Collections.Generic.IReadOnlyList<string> Findings { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.DiagnoseVirtualNetworkResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -980,7 +1095,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public EndpointDependency() { }
         public string DomainName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.EndpointDetail> EndpointDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.EndpointDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.EndpointDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.EndpointDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EndpointDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EndpointDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.EndpointDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EndpointDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -992,12 +1110,66 @@ namespace Azure.ResourceManager.Kusto.Models
         public EndpointDetail() { }
         public string IPAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.EndpointDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.EndpointDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.EndpointDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EndpointDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EndpointDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.EndpointDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EndpointDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EndpointDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EndpointDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EventGridDataConnectionWithManagedIdentity : Azure.ResourceManager.Kusto.KustoDataConnectionData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>
+    {
+        public EventGridDataConnectionWithManagedIdentity() { }
+        public Azure.ResourceManager.Kusto.Models.BlobStorageEventType? BlobStorageEventType { get { throw null; } set { } }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? DatabaseRouting { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat? DataFormat { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EventGridResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EventHubResourceIdForManagedIdentity { get { throw null; } set { } }
+        public System.Guid? ManagedIdentityObjectId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
+        public string MappingRuleName { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+        public bool? ShouldIgnoreFirstRecord { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceIdForManagedIdentity { get { throw null; } set { } }
+        public string TableName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventGridDataConnectionWithManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EventHubDataConnectionWithManagedIdentity : Azure.ResourceManager.Kusto.KustoDataConnectionData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>
+    {
+        public EventHubDataConnectionWithManagedIdentity() { }
+        public Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType? Compression { get { throw null; } set { } }
+        public string ConsumerGroup { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? DatabaseRouting { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat? DataFormat { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EventHubResourceIdForManagedIdentity { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> EventSystemProperties { get { throw null; } }
+        public System.Guid? ManagedIdentityObjectId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
+        public string MappingRuleName { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? RetrievalStartOn { get { throw null; } set { } }
+        public string TableName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.EventHubDataConnectionWithManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubMessagesCompressionType : System.IEquatable<Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType>
@@ -1008,21 +1180,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType GZip { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType left, Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType left, Azure.ResourceManager.Kusto.Models.EventHubMessagesCompressionType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KustoAttachedDatabaseConfigurationNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent>
     {
         public KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name) { }
+        public KustoAttachedDatabaseConfigurationNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.AttachedDatabaseType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.AttachedDatabaseType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoAttachedDatabaseConfigurationNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1035,7 +1210,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoCapacity Capacity { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoSku Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1049,7 +1227,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType? CalloutType { get { throw null; } set { } }
         public string CalloutUriRegex { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess? OutboundAccess { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1074,12 +1255,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType Sql { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType Webapi { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType left, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType left, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyCalloutType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1092,12 +1272,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess Allow { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess left, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess left, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1108,7 +1287,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public int Maximum { get { throw null; } }
         public int Minimum { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoScaleType ScaleType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1124,21 +1306,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterEngineType V2 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterEngineType V3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType left, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterEngineType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType left, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KustoClusterNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent>
     {
         public KustoClusterNameAvailabilityContent(string name) { }
+        public KustoClusterNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoClusterType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1154,12 +1339,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag Disabled { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag left, Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag left, Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1170,6 +1354,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Collections.Generic.IList<string> AllowedFqdnList { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedIPRangeList { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicy> CalloutPolicies { get { throw null; } }
+        public System.Uri ClusterUri { get { throw null; } }
         public System.Uri DataIngestionUri { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? EngineType { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -1181,6 +1366,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> LanguageExtensionsValue { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.MigrationClusterProperties MigrationCluster { get { throw null; } }
+        public string NextLink { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.OptimizedAutoscale OptimizedAutoscale { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
@@ -1192,11 +1378,15 @@ namespace Azure.ResourceManager.Kusto.Models
         public string StateReason { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> TrustedExternalTenants { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> Value { get { throw null; } }
         public string VirtualClusterGraduationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? ZoneStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1206,9 +1396,13 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoClusterPrincipalAssignmentNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent>
     {
         public KustoClusterPrincipalAssignmentNameAvailabilityContent(string name) { }
+        public KustoClusterPrincipalAssignmentNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1223,12 +1417,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterPrincipalAssignmentType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType MicrosoftKustoClustersPrincipalAssignments { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType left, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType left, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1242,12 +1435,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole AllDatabasesMonitor { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole AllDatabasesViewer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole left, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole left, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1260,12 +1452,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType DualStack { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType IPv4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType left, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType left, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1277,13 +1468,13 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterPublicNetworkAccess(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess left, Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess left, Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1304,12 +1495,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterState Unavailable { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterState left, Azure.ResourceManager.Kusto.Models.KustoClusterState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterState left, Azure.ResourceManager.Kusto.Models.KustoClusterState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1317,7 +1507,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         public KustoClusterTrustedExternalTenant() { }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1332,12 +1525,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterType MicrosoftKustoClusters { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterType left, Azure.ResourceManager.Kusto.Models.KustoClusterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterType left, Azure.ResourceManager.Kusto.Models.KustoClusterType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1348,7 +1540,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string EnginePublicIPId { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterVnetState? State { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1364,12 +1559,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterVnetState Disabled { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterVnetState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState left, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterVnetState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterVnetState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState left, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1383,12 +1577,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus Zonal { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus ZonalInconsistency { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus left, Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus left, Azure.ResourceManager.Kusto.Models.KustoClusterZoneStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1404,7 +1597,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RetrievalStartOn { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1420,12 +1616,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole Admin { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole left, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole left, Azure.ResourceManager.Kusto.Models.KustoDatabaseCallerRole right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1439,12 +1634,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind Replace { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind Union { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabaseDefaultPrincipalsModificationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1453,7 +1647,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoDatabaseNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoDatabaseResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseResourceType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1470,7 +1667,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType PrincipalType { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole Role { get { throw null; } set { } }
         public string TenantName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1480,9 +1680,13 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoDatabasePrincipalAssignmentNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent>
     {
         public KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name) { }
+        public KustoDatabasePrincipalAssignmentNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1497,12 +1701,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoDatabasePrincipalAssignmentType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType MicrosoftKustoClustersDatabasesPrincipalAssignments { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1519,12 +1722,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole User { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole Viewer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalRole right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1538,12 +1740,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind Replace { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind Union { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalsModificationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1557,12 +1758,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType Group { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType left, Azure.ResourceManager.Kusto.Models.KustoDatabasePrincipalType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1580,12 +1780,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting Multi { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting left, Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting left, Azure.ResourceManager.Kusto.Models.KustoDatabaseRouting right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1599,12 +1798,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin Direct { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin Other { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin left, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin left, Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1619,7 +1817,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Collections.Generic.IList<string> MaterializedViewsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToInclude { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1629,9 +1830,13 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoDataConnectionNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent>
     {
         public KustoDataConnectionNameAvailabilityContent(string name) { }
+        public KustoDataConnectionNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoDataConnectionType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDataConnectionType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoDataConnectionNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1646,12 +1851,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoDataConnectionType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoDataConnectionType MicrosoftKustoClustersDatabasesDataConnections { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoDataConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoDataConnectionType left, Azure.ResourceManager.Kusto.Models.KustoDataConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDataConnectionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoDataConnectionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoDataConnectionType left, Azure.ResourceManager.Kusto.Models.KustoDataConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1671,7 +1875,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoEventGridDataConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoEventGridDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoEventGridDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoEventGridDataConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoEventGridDataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1686,6 +1893,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoEventGridDataFormat(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat ApacheAvro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat Avro { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat AZMONSTREAM { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat Csv { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat Json { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat MultiJson { get { throw null; } }
@@ -1701,12 +1909,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat Txt { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat W3CLogFile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat left, Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat left, Azure.ResourceManager.Kusto.Models.KustoEventGridDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1725,7 +1932,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RetrievalStartOn { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoEventHubDataConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoEventHubDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoEventHubDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoEventHubDataConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoEventHubDataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1740,6 +1950,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoEventHubDataFormat(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat ApacheAvro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat Avro { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat AZMONSTREAM { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat Csv { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat Json { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat MultiJson { get { throw null; } }
@@ -1755,12 +1966,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat Txt { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat W3CLogFile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat left, Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat left, Azure.ResourceManager.Kusto.Models.KustoEventHubDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1772,7 +1982,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string DatabaseName { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? DatabaseShareOrigin { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoFollowerDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1787,7 +2000,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string DatabaseName { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseShareOrigin? DatabaseShareOrigin { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoFollowerDatabaseDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1807,7 +2023,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.DateTimeOffset? RetrievalStartOn { get { throw null; } set { } }
         public string SharedAccessPolicyName { get { throw null; } set { } }
         public string TableName { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoIotHubDataConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoIotHubDataConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoIotHubDataConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoIotHubDataConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoIotHubDataConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1822,6 +2041,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoIotHubDataFormat(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat ApacheAvro { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat Avro { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat AZMONSTREAM { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat Csv { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat Json { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat MultiJson { get { throw null; } }
@@ -1837,28 +2057,48 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat Txt { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat W3CLogFile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat left, Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat left, Azure.ResourceManager.Kusto.Models.KustoIotHubDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KustoKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>
     {
         public KustoKeyVaultProperties() { }
+        public string FederatedIdentityClientId { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public string UserIdentity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoKind : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoKind(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoKind ReadOnlyFollowing { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoKind ReadWrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoKind left, Azure.ResourceManager.Kusto.Models.KustoKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoKind left, Azure.ResourceManager.Kusto.Models.KustoKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KustoLanguageExtension : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension>
     {
@@ -1866,7 +2106,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string LanguageExtensionCustomImageName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName? LanguageExtensionImageName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName? LanguageExtensionName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoLanguageExtension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoLanguageExtension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoLanguageExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoLanguageExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1884,27 +2127,28 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3117DL { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_10_8 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_6_5 { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_9_12 { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_9_12IncludeDeepLearning { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName PythonCustomImage { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName R { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName left, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName left, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KustoLanguageExtensionList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList>
     {
         public KustoLanguageExtensionList() { }
+        public string NextLink { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1920,21 +2164,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName Python { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName R { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName left, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName left, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KustoManagedPrivateEndpointNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent>
     {
         public KustoManagedPrivateEndpointNameAvailabilityContent(string name) { }
+        public KustoManagedPrivateEndpointNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1949,12 +2196,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoManagedPrivateEndpointsType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType MicrosoftKustoClustersManagedPrivateEndpoints { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType left, Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType left, Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointsType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1965,7 +2211,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string Name { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1981,12 +2230,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason left, Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason left, Azure.ResourceManager.Kusto.Models.KustoNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2000,12 +2248,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType Group { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType left, Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType left, Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2015,7 +2262,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoPrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2036,12 +2286,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoProvisioningState left, Azure.ResourceManager.Kusto.Models.KustoProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoProvisioningState left, Azure.ResourceManager.Kusto.Models.KustoProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2059,7 +2308,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public float? StatisticsSize { get { throw null; } }
         public System.DateTimeOffset? SuspensionStartOn { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoReadOnlyFollowingDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2076,7 +2328,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.TimeSpan? SoftDeletePeriod { get { throw null; } set { } }
         public float? StatisticsSize { get { throw null; } }
         public System.DateTimeOffset? SuspensionStartOn { get { throw null; } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoReadWriteDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2088,7 +2343,10 @@ namespace Azure.ResourceManager.Kusto.Models
         internal KustoResourceSkuCapabilities() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2100,7 +2358,10 @@ namespace Azure.ResourceManager.Kusto.Models
         internal KustoResourceSkuZoneDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.Models.KustoResourceSkuCapabilities> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2117,12 +2378,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoScaleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoScaleType left, Azure.ResourceManager.Kusto.Models.KustoScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoScaleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoScaleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoScaleType left, Azure.ResourceManager.Kusto.Models.KustoScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2135,21 +2395,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoScriptLevel Cluster { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoScriptLevel Database { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoScriptLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoScriptLevel left, Azure.ResourceManager.Kusto.Models.KustoScriptLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoScriptLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoScriptLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoScriptLevel left, Azure.ResourceManager.Kusto.Models.KustoScriptLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class KustoScriptNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent>
     {
         public KustoScriptNameAvailabilityContent(string name) { }
+        public KustoScriptNameAvailabilityContent(string name, Azure.ResourceManager.Kusto.Models.KustoScriptType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoScriptType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoScriptNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2164,12 +2427,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoScriptType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoScriptType MicrosoftKustoClustersDatabasesScripts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoScriptType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoScriptType left, Azure.ResourceManager.Kusto.Models.KustoScriptType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoScriptType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoScriptType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoScriptType left, Azure.ResourceManager.Kusto.Models.KustoScriptType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2179,7 +2441,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoSkuTier Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2195,7 +2460,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.BinaryData> Restrictions { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoSkuDescription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoSkuDescription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoSkuDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoSkuDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoSkuDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoSkuDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoSkuDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2208,7 +2476,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2286,12 +2557,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8sV2 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8sV3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoSkuName left, Azure.ResourceManager.Kusto.Models.KustoSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoSkuName left, Azure.ResourceManager.Kusto.Models.KustoSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2304,12 +2574,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuTier Basic { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoSkuTier left, Azure.ResourceManager.Kusto.Models.KustoSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.KustoSkuTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoSkuTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoSkuTier left, Azure.ResourceManager.Kusto.Models.KustoSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2320,7 +2589,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.MigrationClusterRole? Role { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.MigrationClusterProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.MigrationClusterProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.MigrationClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.MigrationClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.MigrationClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.MigrationClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.MigrationClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2336,12 +2608,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.MigrationClusterRole Destination { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.MigrationClusterRole Source { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.MigrationClusterRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.MigrationClusterRole left, Azure.ResourceManager.Kusto.Models.MigrationClusterRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.MigrationClusterRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.MigrationClusterRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.MigrationClusterRole left, Azure.ResourceManager.Kusto.Models.MigrationClusterRole right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2352,7 +2623,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public int Maximum { get { throw null; } set { } }
         public int Minimum { get { throw null; } set { } }
         public int Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Kusto.Models.OptimizedAutoscale JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.OptimizedAutoscale PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.OptimizedAutoscale System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.OptimizedAutoscale>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.OptimizedAutoscale>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.OptimizedAutoscale System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.OptimizedAutoscale>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2366,7 +2640,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.EndpointDependency> Endpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2382,12 +2659,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction RemovePermissionOnScriptCompletion { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction RetainPermissionOnScriptCompletion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction left, Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction left, Azure.ResourceManager.Kusto.Models.PrincipalPermissionsAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2399,21 +2675,24 @@ namespace Azure.ResourceManager.Kusto.Models
         public SandboxCustomImageLanguage(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage Python { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SandboxCustomImagesCheckNameContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent>
     {
         public SandboxCustomImagesCheckNameContent(string name) { }
+        public SandboxCustomImagesCheckNameContent(string name, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType imageType) { }
         public Azure.ResourceManager.Kusto.Models.SandboxCustomImageType ImageType { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2428,12 +2707,11 @@ namespace Azure.ResourceManager.Kusto.Models
         public SandboxCustomImageType(string value) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.SandboxCustomImageType MicrosoftKustoClustersSandboxCustomImages { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType right) { throw null; }
         public override string ToString() { throw null; }
     }

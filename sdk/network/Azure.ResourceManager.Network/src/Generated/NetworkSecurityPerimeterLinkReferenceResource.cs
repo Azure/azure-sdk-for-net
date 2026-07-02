@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a NetworkSecurityPerimeterLinkReference along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkSecurityPerimeterLinkReferenceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityPerimeterResource"/> using the GetNetworkSecurityPerimeterLinkReference method.
+    /// A class representing a NetworkSecurityPerimeterLinkReference along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityPerimeterResource"/> using the GetNetworkSecurityPerimeterLinkReferences method.
     /// </summary>
     public partial class NetworkSecurityPerimeterLinkReferenceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkSecurityPerimeterName"> The networkSecurityPerimeterName. </param>
-        /// <param name="linkReferenceName"> The linkReferenceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkSecurityPerimeterLinkReferenceClientDiagnostics;
-        private readonly NetworkSecurityPerimeterLinkReferencesRestOperations _networkSecurityPerimeterLinkReferenceRestClient;
+        private readonly ClientDiagnostics _networkSecurityPerimeterLinkReferencesClientDiagnostics;
+        private readonly NetworkSecurityPerimeterLinkReferences _networkSecurityPerimeterLinkReferencesRestClient;
         private readonly NetworkSecurityPerimeterLinkReferenceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityPerimeters/linkReferences";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkSecurityPerimeterLinkReferenceResource for mocking. </summary>
         protected NetworkSecurityPerimeterLinkReferenceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkSecurityPerimeterLinkReferenceResource(ArmClient client, NetworkSecurityPerimeterLinkReferenceData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkSecurityPerimeterLinkReferenceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkSecurityPerimeterLinkReferenceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkSecurityPerimeterLinkReferenceApiVersion);
-            _networkSecurityPerimeterLinkReferenceRestClient = new NetworkSecurityPerimeterLinkReferencesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterLinkReferenceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkSecurityPerimeterLinkReferencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _networkSecurityPerimeterLinkReferencesRestClient = new NetworkSecurityPerimeterLinkReferences(_networkSecurityPerimeterLinkReferencesClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterLinkReferenceApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkSecurityPerimeterLinkReferenceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkSecurityPerimeterName"> The networkSecurityPerimeterName. </param>
+        /// <param name="linkReferenceName"> The linkReferenceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string linkReferenceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified NSP linkReference resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinkReferences_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLinkReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterLinkReferenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkSecurityPerimeterLinkReferenceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterLinkReferenceClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterLinkReferencesClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterLinkReferenceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterLinkReferenceData> response = Response.FromValue(NetworkSecurityPerimeterLinkReferenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterLinkReferenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified NSP linkReference resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinkReferences_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLinkReferences_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterLinkReferenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkSecurityPerimeterLinkReferenceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterLinkReferenceClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterLinkReferencesClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Get");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterLinkReferenceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterLinkReferenceData> response = Response.FromValue(NetworkSecurityPerimeterLinkReferenceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterLinkReferenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes an NSP LinkReference resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinkReferences_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLinkReferences_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterLinkReferenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterLinkReferenceClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Delete");
+            using DiagnosticScope scope = _networkSecurityPerimeterLinkReferencesClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterLinkReferenceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkSecurityPerimeterLinkReferenceClientDiagnostics, Pipeline, _networkSecurityPerimeterLinkReferenceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_networkSecurityPerimeterLinkReferencesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes an NSP LinkReference resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinkReferences_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLinkReferences_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterLinkReferenceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterLinkReferenceClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Delete");
+            using DiagnosticScope scope = _networkSecurityPerimeterLinkReferencesClientDiagnostics.CreateScope("NetworkSecurityPerimeterLinkReferenceResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterLinkReferenceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_networkSecurityPerimeterLinkReferenceClientDiagnostics, Pipeline, _networkSecurityPerimeterLinkReferenceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_networkSecurityPerimeterLinkReferencesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiManagementDeletedService data model.
-    /// Deleted API Management Service information.
-    /// </summary>
+    /// <summary> Deleted API Management Service information. </summary>
     public partial class ApiManagementDeletedServiceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementDeletedServiceData"/>. </summary>
         public ApiManagementDeletedServiceData()
@@ -56,35 +25,80 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementDeletedServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Deleted API Management Service details. </param>
         /// <param name="location"> API Management Service Master Location. </param>
-        /// <param name="serviceId"> Fully-qualified API Management Service Resource ID. </param>
-        /// <param name="scheduledPurgeOn"> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="deletedOn"> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementDeletedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier serviceId, DateTimeOffset? scheduledPurgeOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementDeletedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedServiceContractProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Location = location;
-            ServiceId = serviceId;
-            ScheduledPurgeOn = scheduledPurgeOn;
-            DeletedOn = deletedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Deleted API Management Service details. </summary>
+        [WirePath("properties")]
+        internal DeletedServiceContractProperties Properties { get; set; }
 
         /// <summary> API Management Service Master Location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Fully-qualified API Management Service Resource ID. </summary>
         [WirePath("properties.serviceId")]
-        public ResourceIdentifier ServiceId { get; set; }
+        public ResourceIdentifier ServiceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeletedServiceContractProperties();
+                }
+                Properties.ServiceId = value;
+            }
+        }
+
         /// <summary> UTC Date and Time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.scheduledPurgeDate")]
-        public DateTimeOffset? ScheduledPurgeOn { get; set; }
+        public DateTimeOffset? ScheduledPurgeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledPurgeOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeletedServiceContractProperties();
+                }
+                Properties.ScheduledPurgeOn = value;
+            }
+        }
+
         /// <summary> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </summary>
         [WirePath("properties.deletionDate")]
-        public DateTimeOffset? DeletedOn { get; set; }
+        public DateTimeOffset? DeletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeletedServiceContractProperties();
+                }
+                Properties.DeletedOn = value;
+            }
+        }
     }
 }

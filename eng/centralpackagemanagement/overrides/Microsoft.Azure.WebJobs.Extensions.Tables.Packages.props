@@ -1,0 +1,6 @@
+<Project>
+  <!-- Tables.Tests needs legacy WebJobs.Extensions.Storage for T1 testing -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.5" />
+  </ItemGroup>
+</Project>

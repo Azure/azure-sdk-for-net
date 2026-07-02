@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct IPsecIntegrity : IEquatable<IPsecIntegrity>
     {
         private readonly string _value;
+        /// <summary> MD5. </summary>
+        private const string MD5Value = "MD5";
+        /// <summary> SHA1. </summary>
+        private const string Sha1Value = "SHA1";
+        /// <summary> SHA256. </summary>
+        private const string Sha256Value = "SHA256";
+        /// <summary> GCMAES128. </summary>
+        private const string GcmAes128Value = "GCMAES128";
+        /// <summary> GCMAES192. </summary>
+        private const string GCMAES192Value = "GCMAES192";
+        /// <summary> GCMAES256. </summary>
+        private const string GcmAes256Value = "GCMAES256";
 
         /// <summary> Initializes a new instance of <see cref="IPsecIntegrity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IPsecIntegrity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MD5Value = "MD5";
-        private const string Sha1Value = "SHA1";
-        private const string Sha256Value = "SHA256";
-        private const string Sha384Value = "SHA384";
-        private const string GcmAes256Value = "GCMAES256";
-        private const string GcmAes128Value = "GCMAES128";
+            _value = value;
+        }
 
         /// <summary> MD5. </summary>
         public static IPsecIntegrity MD5 { get; } = new IPsecIntegrity(MD5Value);
+
         /// <summary> SHA1. </summary>
         public static IPsecIntegrity Sha1 { get; } = new IPsecIntegrity(Sha1Value);
+
         /// <summary> SHA256. </summary>
         public static IPsecIntegrity Sha256 { get; } = new IPsecIntegrity(Sha256Value);
-        /// <summary> SHA384. </summary>
-        public static IPsecIntegrity Sha384 { get; } = new IPsecIntegrity(Sha384Value);
-        /// <summary> GCMAES256. </summary>
-        public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
+
         /// <summary> GCMAES128. </summary>
         public static IPsecIntegrity GcmAes128 { get; } = new IPsecIntegrity(GcmAes128Value);
+
+        /// <summary> GCMAES192. </summary>
+        public static IPsecIntegrity GCMAES192 { get; } = new IPsecIntegrity(GCMAES192Value);
+
+        /// <summary> GCMAES256. </summary>
+        public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
+
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IPsecIntegrity left, IPsecIntegrity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IPsecIntegrity left, IPsecIntegrity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPsecIntegrity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IPsecIntegrity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IPsecIntegrity(string value) => new IPsecIntegrity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IPsecIntegrity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IPsecIntegrity?(string value) => value == null ? null : new IPsecIntegrity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IPsecIntegrity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IPsecIntegrity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

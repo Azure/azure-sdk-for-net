@@ -10,6 +10,19 @@
 
 ### Other Changes
 
+## 1.3.2 (2026-06-30)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.3.1 (2025-12-16)
+
+### Features Added
+
+- Make `Azure.ResourceManager.StorageSync` AOT compatible
+
 ## 1.3.0 (2025-05-01)
 
 ### Features Added

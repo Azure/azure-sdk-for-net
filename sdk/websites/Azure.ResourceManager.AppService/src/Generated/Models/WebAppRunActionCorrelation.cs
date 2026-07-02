@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WebAppRunActionCorrelation"/>. </summary>
         /// <param name="clientTrackingId"> The client tracking identifier. </param>
         /// <param name="clientKeywords"> The client keywords. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionTrackingId"> The action tracking identifier. </param>
-        internal WebAppRunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, IDictionary<string, BinaryData> serializedAdditionalRawData, string actionTrackingId) : base(clientTrackingId, clientKeywords, serializedAdditionalRawData)
+        internal WebAppRunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, IDictionary<string, BinaryData> additionalBinaryDataProperties, string actionTrackingId) : base(clientTrackingId, clientKeywords, additionalBinaryDataProperties)
         {
             ActionTrackingId = actionTrackingId;
         }
