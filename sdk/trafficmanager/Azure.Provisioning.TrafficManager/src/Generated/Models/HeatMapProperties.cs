@@ -92,6 +92,10 @@ namespace Azure.Provisioning.TrafficManager
             _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" });
             _endpoints = DefineListProperty<TrafficManagerHeatMapEndpoint>(nameof(Endpoints), new string[] { "endpoints" });
             _trafficFlows = DefineListProperty<TrafficManagerHeatMapTrafficFlow>(nameof(TrafficFlows), new string[] { "trafficFlows" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for HeatMapProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

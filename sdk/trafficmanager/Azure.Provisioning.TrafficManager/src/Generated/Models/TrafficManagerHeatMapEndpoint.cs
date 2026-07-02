@@ -58,6 +58,10 @@ namespace Azure.Provisioning.TrafficManager
             base.DefineProvisionableProperties();
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _endpointId = DefineProperty<int>(nameof(EndpointId), new string[] { "endpointId" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerHeatMapEndpoint that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

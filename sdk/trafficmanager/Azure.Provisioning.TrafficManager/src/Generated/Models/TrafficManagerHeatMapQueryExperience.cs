@@ -74,6 +74,10 @@ namespace Azure.Provisioning.TrafficManager
             _endpointId = DefineProperty<int>(nameof(EndpointId), new string[] { "endpointId" }, isRequired: true);
             _queryCount = DefineProperty<int>(nameof(QueryCount), new string[] { "queryCount" }, isRequired: true);
             _latency = DefineProperty<double>(nameof(Latency), new string[] { "latency" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerHeatMapQueryExperience that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.TrafficManager
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerEndpointCustomHeaderInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

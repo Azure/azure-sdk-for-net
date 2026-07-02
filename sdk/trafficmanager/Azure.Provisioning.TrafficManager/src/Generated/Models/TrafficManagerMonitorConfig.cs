@@ -176,6 +176,10 @@ namespace Azure.Provisioning.TrafficManager
             _toleratedNumberOfFailures = DefineProperty<long>(nameof(ToleratedNumberOfFailures), new string[] { "toleratedNumberOfFailures" });
             _customHeaders = DefineListProperty<TrafficManagerMonitorConfigCustomHeaderInfo>(nameof(CustomHeaders), new string[] { "customHeaders" });
             _expectedStatusCodeRanges = DefineListProperty<ExpectedStatusCodeRangeInfo>(nameof(ExpectedStatusCodeRanges), new string[] { "expectedStatusCodeRanges" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerMonitorConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -159,6 +159,10 @@ namespace Azure.Provisioning.TrafficManager
             _trafficViewEnrollmentStatus = DefineProperty<TrafficViewEnrollmentStatus>(nameof(TrafficViewEnrollmentStatus), new string[] { "trafficViewEnrollmentStatus" });
             _allowedEndpointRecordTypes = DefineListProperty<AllowedEndpointRecordType>(nameof(AllowedEndpointRecordTypes), new string[] { "allowedEndpointRecordTypes" });
             _maxReturn = DefineProperty<long>(nameof(MaxReturn), new string[] { "maxReturn" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

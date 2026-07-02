@@ -39,6 +39,10 @@ namespace Azure.Provisioning.TrafficManager
         {
             base.DefineProvisionableProperties();
             _geographicHierarchy = DefineModelProperty<TrafficManagerRegion>(nameof(GeographicHierarchy), new string[] { "geographicHierarchy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GeographicHierarchyProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

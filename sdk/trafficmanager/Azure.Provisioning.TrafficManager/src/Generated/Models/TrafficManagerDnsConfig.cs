@@ -69,6 +69,10 @@ namespace Azure.Provisioning.TrafficManager
             _relativeName = DefineProperty<string>(nameof(RelativeName), new string[] { "relativeName" });
             _fqdn = DefineProperty<string>(nameof(Fqdn), new string[] { "fqdn" }, isOutput: true);
             _ttl = DefineProperty<long>(nameof(Ttl), new string[] { "ttl" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerDnsConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

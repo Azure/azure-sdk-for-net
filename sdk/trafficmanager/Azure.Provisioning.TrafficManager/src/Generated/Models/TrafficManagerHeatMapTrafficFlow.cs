@@ -92,6 +92,10 @@ namespace Azure.Provisioning.TrafficManager
             _latitude = DefineProperty<double>(nameof(Latitude), new string[] { "latitude" });
             _longitude = DefineProperty<double>(nameof(Longitude), new string[] { "longitude" });
             _queryExperiences = DefineListProperty<TrafficManagerHeatMapQueryExperience>(nameof(QueryExperiences), new string[] { "queryExperiences" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerHeatMapTrafficFlow that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

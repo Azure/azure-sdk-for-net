@@ -75,6 +75,10 @@ namespace Azure.Provisioning.TrafficManager
             _first = DefineProperty<IPAddress>(nameof(First), new string[] { "first" });
             _last = DefineProperty<IPAddress>(nameof(Last), new string[] { "last" });
             _scope = DefineProperty<int>(nameof(Scope), new string[] { "scope" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerEndpointSubnetInfo that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

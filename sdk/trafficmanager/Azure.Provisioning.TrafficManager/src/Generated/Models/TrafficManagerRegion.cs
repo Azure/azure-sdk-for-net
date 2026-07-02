@@ -74,6 +74,10 @@ namespace Azure.Provisioning.TrafficManager
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _regions = DefineListProperty<TrafficManagerRegion>(nameof(Regions), new string[] { "regions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for TrafficManagerRegion that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -262,6 +262,10 @@ namespace Azure.Provisioning.TrafficManager
             _subnets = DefineListProperty<TrafficManagerEndpointSubnetInfo>(nameof(Subnets), new string[] { "subnets" });
             _customHeaders = DefineListProperty<TrafficManagerEndpointCustomHeaderInfo>(nameof(CustomHeaders), new string[] { "customHeaders" });
             _alwaysServe = DefineProperty<TrafficManagerEndpointAlwaysServeStatus>(nameof(AlwaysServe), new string[] { "alwaysServe" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EndpointProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

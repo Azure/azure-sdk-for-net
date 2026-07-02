@@ -40,6 +40,10 @@ namespace Azure.Provisioning.TrafficManager
         {
             base.DefineProvisionableProperties();
             _key = DefineProperty<string>(nameof(Key), new string[] { "key" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UserMetricsProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }
