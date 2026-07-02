@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Labels are used to group key-values. </summary>
+    /// <summary> Labels are used to group key values or feature flags. </summary>
     public partial class SettingLabel : IJsonModel<SettingLabel>
     {
         /// <param name="data"> The data to parse. </param>

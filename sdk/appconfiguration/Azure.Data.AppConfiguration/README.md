@@ -113,6 +113,11 @@ The following sections provide several code snippets covering some of the most c
 * [Archive a Snapshot](#archive-a-snapshot)
 * [Recover a snapshot](#recover-a-snapshot)
 * [Retrieve all Snapshots](#retrieve-all-snapshots)
+* [Set a Feature Flag](#set-a-feature-flag)
+* [Retrieve a Feature Flag](#retrieve-a-feature-flag)
+* [Retrieve all Feature Flags](#retrieve-all-feature-flags)
+* [Delete a Feature Flag](#delete-a-feature-flag)
+* [Retrieve labels by resource type](#retrieve-labels-by-resource-type)
 
 ### Create a Configuration Setting
 
@@ -216,6 +221,67 @@ foreach (var item in client.GetSnapshots(new SnapshotSelector()))
 Console.WriteLine($"Total number of snapshots retrieved: {count}");
 ```
 
+### Set a Feature Flag
+
+Create or overwrite a feature flag by calling `SetFeatureFlag`. The simplest overload only requires the feature flag name and whether it is enabled.
+
+```C# Snippet:SetFeatureFlag
+string endpoint = "<endpoint>";
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
+FeatureFlag flag = client.SetFeatureFlag("some_feature", enabled: true);
+Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
+```
+
+### Retrieve a Feature Flag
+
+Retrieve a previously stored feature flag by calling `GetFeatureFlag`. This snippet assumes the feature flag "some_feature" exists in the configuration store.
+
+```C# Snippet:GetFeatureFlag
+string endpoint = "<endpoint>";
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
+FeatureFlag flag = client.GetFeatureFlag("some_feature");
+Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
+```
+
+### Retrieve all Feature Flags
+
+Retrieve all feature flags that match a filter by calling `GetFeatureFlags` with a `FeatureFlagSelector`.
+
+```C# Snippet:GetFeatureFlags
+string endpoint = "<endpoint>";
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
+var selector = new FeatureFlagSelector { NameFilter = "some_*" };
+foreach (FeatureFlag flag in client.GetFeatureFlags(selector))
+{
+    Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
+}
+```
+
+### Delete a Feature Flag
+
+Delete an existing feature flag by calling `DeleteFeatureFlag`. This snippet assumes the feature flag "some_feature" exists in the configuration store.
+
+```C# Snippet:DeleteFeatureFlag
+string endpoint = "<endpoint>";
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
+client.DeleteFeatureFlag("some_feature");
+```
+
+### Retrieve labels by resource type
+
+Retrieve labels associated with a specific resource type by setting `SettingLabelSelector.ResourceType`. Use `SettingLabelResourceType.FeatureFlag` to retrieve only labels used by feature flags, or `SettingLabelResourceType.KeyValue` for labels used by key-value settings.
+
+```C# Snippet:GetLabelsByResourceType
+string endpoint = "<endpoint>";
+var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+// Only retrieve labels that are associated with feature flags.
+var selector = new SettingLabelSelector { ResourceType = SettingLabelResourceType.FeatureFlag };
+foreach (SettingLabel label in client.GetLabels(selector))
+{
+    Console.WriteLine($"Label: {label.Name}");
+}
+```
+
 ## Troubleshooting
 
 See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/appconfiguration/Azure.Data.AppConfiguration/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
@@ -233,6 +299,7 @@ Several App Configuration client library samples are available to you in this Gi
 * [Get a setting if changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
 * [Update a setting if it hasn't changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
 * [Configuration settings snapshot](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample11_SettingsSnapshot.md): Create, retrieve and update status of a configuration settings snapshot.
+* [Feature flags](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample9_FeatureFlags.md): Create, retrieve and delete feature flags.
 * [Create a mock client](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking): Mock a client for testing.
 
  For more details see the [samples README][samples_readme].

@@ -94,6 +94,8 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetFeatureFlagClient")]
+    [CodeGenSuppress("_cachedFeatureFlagClient")]
 
     public partial class ConfigurationClient
     {
@@ -210,10 +212,13 @@ namespace Azure.Data.AppConfiguration
         }
 
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
+            => CreatePipeline(options, options.Audience != null, authenticationPolicy, syncTokenPolicy);
+
+        internal static HttpPipeline CreatePipeline(ClientOptions options, bool hasAudience, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
                 new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new QueryParamPolicy() },
-                new HttpPipelinePolicy[] { new AudienceErrorHandlingPolicy(options.Audience != null), authenticationPolicy, syncTokenPolicy },
+                new HttpPipelinePolicy[] { new AudienceErrorHandlingPolicy(hasAudience), authenticationPolicy, syncTokenPolicy },
                 new ResponseClassifier());
         }
 
@@ -720,7 +725,7 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new AsyncConditionalPageable(pageableImplementation);
+            return new AsyncConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
         /// <summary>
@@ -734,10 +739,10 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new ConditionalPageable(pageableImplementation);
+            return new ConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
-        private ConditionalPageableImplementation GetConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        private ConditionalPageableImplementation<ConfigurationSetting> GetConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
         {
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
@@ -760,7 +765,7 @@ namespace Azure.Data.AppConfiguration
                 return CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+            return new ConditionalPageableImplementation<ConfigurationSetting>(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -775,7 +780,7 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new AsyncConditionalPageable(pageableImplementation);
+            return new AsyncConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
         /// <summary>
@@ -790,10 +795,10 @@ namespace Azure.Data.AppConfiguration
 
             var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            return new ConditionalPageable(pageableImplementation);
+            return new ConditionalPageable<ConfigurationSetting>(pageableImplementation);
         }
 
-        private ConditionalPageableImplementation CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        private ConditionalPageableImplementation<ConfigurationSetting> CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
         {
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
@@ -817,7 +822,7 @@ namespace Azure.Data.AppConfiguration
                 return message;
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
+            return new ConditionalPageableImplementation<ConfigurationSetting>(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1470,9 +1475,10 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            string resourceType = GetResourceTypeValue(selector.ResourceType);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, resourceType, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
@@ -1489,11 +1495,20 @@ namespace Azure.Data.AppConfiguration
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            string resourceType = GetResourceTypeValue(selector.ResourceType);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, resourceType, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, _syncToken, null, dateTime, fields, resourceType, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
+
+        private static string GetResourceTypeValue(SettingLabelResourceType? resourceType) => resourceType switch
+        {
+            null => null,
+            SettingLabelResourceType.KeyValue => "kv",
+            SettingLabelResourceType.FeatureFlag => "ff",
+            _ => throw new ArgumentOutOfRangeException(nameof(resourceType), resourceType, "Unknown resource type."),
+        };
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {

@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added a `Description` property on `ConfigurationSetting` and `ConfigurationSnapshot` to associate descriptive text with settings and snapshots.
+- Added `SettingFields.Description` so `Description` can be requested when retrieving configuration settings.
+- Added support for `2024-09-01`, `2026-04-01`, and `2026-05-01-preview` (default) service API versions.
+- Added support for the new feature flag endpoint via a dedicated `FeatureFlagClient`, which exposes `GetFeatureFlag`, `GetFeatureFlags`, `AddFeatureFlag`, `SetFeatureFlag`, and `DeleteFeatureFlag` operations (and their async counterparts), along with the `FeatureFlag` model and related types (`FeatureFlagConditions`, `FeatureFlagAllocation`, `FeatureFlagTelemetryConfiguration`, `FeatureFlagVariantDefinition`, etc.). A `FeatureFlagClient` can be constructed directly, just like a `ConfigurationClient`, or obtained from an existing `ConfigurationClient` via `GetFeatureFlagClient()`. Requires the `2026-05-01-preview` service API version.
+
 ### Breaking Changes
 
 ### Bugs Fixed

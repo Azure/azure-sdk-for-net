@@ -34,7 +34,7 @@ namespace Azure.Data.AppConfiguration
             return new NoBodyResponse<ConfigurationSetting>(response);
         }
 
-        private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
+        internal static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
         {
             Debug.Assert(connectionString != null); // callers check this
 

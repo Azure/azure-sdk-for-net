@@ -1,0 +1,50 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.Data.AppConfiguration
+{
+    /// <summary>
+    /// A Feature filter represents a filter definition that should be evaluated by the consumer to determine if the feature is enabled.
+    /// </summary>
+    [CodeGenType("FeatureFlagFilter")]
+    public partial class FeatureFilter
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FeatureFilter"/>.
+        /// </summary>
+        /// <param name="name">The name of the feature filter. For example: PercentageFilter, TimeWindowFilter, TargetingFilter.</param>
+        public FeatureFilter(string name) : this(name, new Dictionary<string, string>())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FeatureFilter"/>.
+        /// </summary>
+        /// <param name="name">The name of the feature filter. For example: PercentageFilter, TimeWindowFilter, TargetingFilter.</param>
+        /// <param name="parameters">
+        /// Parameters of the feature filter. Values that represent types other than a string
+        /// (for example, the <c>Audience</c> parameter of the <c>TargetingFilter</c>) should be
+        /// provided as their JSON-serialized representation.
+        /// </param>
+        public FeatureFilter(string name, IDictionary<string, string> parameters)
+        {
+            Name = name;
+            Parameters = parameters;
+        }
+
+        /// <summary>
+        /// Gets the name of the feature filter.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets the parameters of the feature filter. Values that represent types other than a string
+        /// (for example, the <c>Audience</c> parameter of the <c>TargetingFilter</c>) should be
+        /// provided as their JSON-serialized representation.
+        /// </summary>
+        public IDictionary<string, string> Parameters { get; }
+    }
+}

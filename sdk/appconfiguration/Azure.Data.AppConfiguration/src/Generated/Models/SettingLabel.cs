@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Labels are used to group key-values. </summary>
+    /// <summary> Labels are used to group key values or feature flags. </summary>
     public partial class SettingLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

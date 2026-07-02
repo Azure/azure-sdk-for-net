@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -450,6 +451,256 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of labels.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetLabels(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            return new ConfigurationClientGetLabelsCollectionResult(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                context,
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a list of labels.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetLabelsAsync(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            return new ConfigurationClientGetLabelsAsyncCollectionResult(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                context,
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<SettingLabel> GetLabels(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetLabelsCollectionResultOfT(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return new ConfigurationClientGetLabelsAsyncCollectionResultOfT(
+                this,
+                name,
+                syncToken,
+                after,
+                acceptDatetime,
+                @select,
+                resourceType,
+                cancellationToken.ToRequestContext(),
+                "ConfigurationClient.GetLabels");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CheckLabels(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckLabelsRequest(name, syncToken, after, acceptDatetime, @select, resourceType, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests the headers and status of the given resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CheckLabelsAsync(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, string resourceType, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCheckLabelsRequest(name, syncToken, after, acceptDatetime, @select, resourceType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response CheckLabels(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return CheckLabels(name, syncToken, after, acceptDatetime, @select, resourceType, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Requests the headers and status of the given resource. </summary>
+        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="after">
+        /// Instructs the server to return elements that appear after the element referred
+        /// to by the specified token.
+        /// </param>
+        /// <param name="acceptDatetime">
+        /// Requests the server to respond with the state of the resource at the specified
+        /// time.
+        /// </param>
+        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="resourceType"> A filter used to indicate the resource type of the labels. Accepted values: 'kv' for key-value labels, 'ff' for feature flag labels. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> CheckLabelsAsync(string name = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<SettingLabelFields> @select = default, string resourceType = default, CancellationToken cancellationToken = default)
+        {
+            return await CheckLabelsAsync(name, syncToken, after, acceptDatetime, @select, resourceType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
