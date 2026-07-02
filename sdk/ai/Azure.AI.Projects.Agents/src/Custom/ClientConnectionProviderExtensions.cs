@@ -27,7 +27,7 @@ public static partial class ClientConnectionProviderExtensions
             options ??= new();
             // If the option without endpoint were provided, make sure, we still set it.
             endpoint ??= new(pipelineConnection.Locator);
-            return new AgentAdministrationClient(smuggledPipeline, endpoint, options.Version);
+            return new AgentAdministrationClient(new ClientDiagnostics(options, true), smuggledPipeline, endpoint, options.Version);
         }
     }
 }

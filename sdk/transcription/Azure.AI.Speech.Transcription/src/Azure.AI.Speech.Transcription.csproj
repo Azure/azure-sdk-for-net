@@ -8,6 +8,7 @@
     <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
   </PropertyGroup>
 
   <ItemGroup>

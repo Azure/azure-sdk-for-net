@@ -61,6 +61,7 @@ namespace Azure.AI.Projects.Agents
                 Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
@@ -74,34 +75,37 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         public virtual AgentAdministrationClient GetAgentAdministrationClient()
         {
-            return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
+            return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
         }
 
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
         public virtual AgentToolboxes GetAgentToolboxesClient()
         {
-            return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
+            return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
         }
 
         /// <summary> Initializes a new instance of ProjectAgentSkills. </summary>
         public virtual ProjectAgentSkills GetProjectAgentSkillsClient()
         {
-            return Volatile.Read(ref _cachedProjectAgentSkills) ?? Interlocked.CompareExchange(ref _cachedProjectAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectAgentSkills;
+            return Volatile.Read(ref _cachedProjectAgentSkills) ?? Interlocked.CompareExchange(ref _cachedProjectAgentSkills, new ProjectAgentSkills(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectAgentSkills;
         }
 
         /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
         public virtual AgentSessionFiles GetAgentSessionFilesClient()
         {
-            return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+            return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
         }
 
         /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
         public virtual AgentOptimizationJobs GetAgentOptimizationJobsClient()
         {
-            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
         }
     }
 }

@@ -22,11 +22,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentOptimizationJobs(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentOptimizationJobs(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -34,6 +36,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry.
@@ -51,8 +56,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Create(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -71,8 +86,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
@@ -114,8 +139,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Get(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -133,8 +168,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get an optimization job by id. </summary>
@@ -174,8 +219,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Cancel(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -193,8 +248,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Request cancellation of a running or queued job. Returns an error if the job is already in a terminal state. </summary>
@@ -234,8 +299,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Delete(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -253,8 +328,18 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
