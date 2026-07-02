@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class Omnichannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="Omnichannel"/>. </summary>
-        public Omnichannel() : base("Omnichannel")
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Omnichannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
