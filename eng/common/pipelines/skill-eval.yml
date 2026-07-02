@@ -10,7 +10,6 @@ trigger:
       # Retrigger when the mock MCP's tool catalog changes (it can move results).
       - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
       - eng/common/pipelines/skill-eval.yml
-      - eng/pipelines/eval/mcp-mock.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
@@ -28,8 +27,9 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    # Build the hermetic mock MCP.
-    mcpSetupTemplate: /eng/pipelines/eval/mcp-mock.yml
+    # Shared mock/live builder; select the mock tier.
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    mcpServer: mock
     vallyRoot: .github/skills
     # Single-level glob excludes azure-typespec-author/evaluate/ (its own benchmark pipeline).
     evalGlobs:

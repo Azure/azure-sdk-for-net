@@ -13,7 +13,6 @@ trigger:
       - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
       - .github/skills/**
       - eng/common/pipelines/workflow-eval.yml
-      - eng/pipelines/eval/mcp-mock.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
@@ -31,7 +30,6 @@ pr:
       - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
       - .github/skills/**
       - eng/common/pipelines/workflow-eval.yml
-      - eng/pipelines/eval/mcp-mock.yml
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
@@ -47,8 +45,9 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    # Mock MCP (repo-local build).
-    mcpSetupTemplate: /eng/pipelines/eval/mcp-mock.yml
+    # Shared mock/live builder; select the mock tier.
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    mcpServer: mock
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20

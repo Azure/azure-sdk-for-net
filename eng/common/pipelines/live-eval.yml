@@ -22,8 +22,9 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
-    # Build the real Cli MCP.
-    mcpSetupTemplate: /eng/pipelines/eval/mcp-live.yml
+    # Shared mock/live builder; select the live tier (real Cli MCP).
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    mcpServer: live
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     evalGlobs:
       - 'evals/workflow-scenarios/live/*.eval.yaml'
