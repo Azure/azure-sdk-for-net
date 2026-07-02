@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.TrafficManager
       safeName: AzureResourceManagerTrafficManager
+    - name: Azure.Provisioning.TrafficManager
+      safeName: AzureProvisioningTrafficManager

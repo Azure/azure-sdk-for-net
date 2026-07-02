@@ -1,0 +1,4 @@
+directory: specification/trafficmanager/resource-manager/Microsoft.Network/TrafficManager
+commit: 83a5ec2c5bb8eb764d5b43e76bcebecddd414342
+repo: ArcturusZhang/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
