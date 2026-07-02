@@ -11,7 +11,7 @@ using Azure.AI.Extensions.OpenAI.Internal;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Grammar format. </summary>
-    public partial class CustomGrammarFormatParam : ResponsesCustomToolParamFormat, IJsonModel<CustomGrammarFormatParam>
+    public partial class CustomGrammarFormatParam : CustomToolParamFormat, IJsonModel<CustomGrammarFormatParam>
     {
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/> for deserialization. </summary>
         internal CustomGrammarFormatParam()
@@ -20,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesCustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesCustomToolParamFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CustomToolParamFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CustomGrammarFormatParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

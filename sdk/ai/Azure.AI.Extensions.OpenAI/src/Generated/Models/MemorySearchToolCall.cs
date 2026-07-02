@@ -14,8 +14,16 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
+        /// <param name="status"> The status of the tool call. </param>
+        public MemorySearchToolCall(ToolCallStatus status) : base("memory_search_call")
+        {
+            Status = status;
+            Memories = new ChangeTrackingList<MemoryOutputItem>();
+        }
+
         /// <summary> The status of the tool call. </summary>
-        public ToolCallStatus Status { get; set; }
+        public ToolCallStatus Status { get; }
 
         /// <summary> The results returned from the memory search. </summary>
         public IList<MemoryOutputItem> Memories { get; set; }

@@ -3,84 +3,84 @@
 
 namespace Azure.AI.Extensions.OpenAI;
 
-[CodeGenType("A2APreviewTool")] public partial class ResponsesA2APreviewTool { }
-[CodeGenType("AISearchIndexResource")] public partial class ResponsesAISearchIndexResource { }
-[CodeGenType("AutoCodeInterpreterToolParam")] public partial class ResponsesAutoCodeInterpreterToolParam { }
-[CodeGenType("AzureAISearchToolResource")] public partial class ResponsesAzureAISearchToolResource { }
-[CodeGenType("AzureFunctionBinding")] public partial class ResponsesAzureFunctionBinding { }
-[CodeGenType("AzureFunctionDefinition")] public partial class ResponsesAzureFunctionDefinition { }
-[CodeGenType("AzureFunctionDefinitionFunction")] public partial class ResponsesAzureFunctionDefinitionFunction { }
-[CodeGenType("AzureFunctionStorageQueue")] public partial class ResponsesAzureFunctionStorageQueue { }
-[CodeGenType("AzureFunctionTool")] public partial class ResponsesAzureFunctionTool { }
-[CodeGenType("AzureAISearchTool")] public partial class ResponsesAzureAISearchTool { }
-[CodeGenType("AzureAISearchQueryType")] public readonly partial struct ResponsesAzureAISearchQueryKind { }
-[CodeGenType("BingCustomSearchConfiguration")] public partial class ResponsesBingCustomSearchConfiguration { }
-[CodeGenType("BingCustomSearchPreviewTool")] public partial class ResponsesBingCustomSearchPreviewTool { }
-[CodeGenType("BingCustomSearchToolParameters")] public partial class ResponsesBingCustomSearchToolParameters { }
-[CodeGenType("BingGroundingSearchConfiguration")] public partial class ResponsesBingGroundingSearchConfiguration { }
-[CodeGenType("BingGroundingSearchToolParameters")] public partial class ResponsesBingGroundingSearchToolParameters { }
-[CodeGenType("BingGroundingTool")] public partial class ResponsesBingGroundingTool { }
-[CodeGenType("BrowserAutomationPreviewTool")] public partial class ResponsesBrowserAutomationPreviewTool { }
-[CodeGenType("BrowserAutomationToolConnectionParameters")] public partial class ResponsesBrowserAutomationToolConnectionParameters { }
-[CodeGenType("BrowserAutomationToolParameters")] public partial class ResponsesBrowserAutomationToolParameters { }
-[CodeGenType("CaptureStructuredOutputsTool")] public partial class ResponsesCaptureStructuredOutputsTool { }
-[CodeGenType("ContainerAutoParam")] public partial class ResponsesContainerAutoParam { }
-[CodeGenType("ContainerMemoryLimit")] public readonly partial struct ResponsesContainerMemoryLimit { }
-[CodeGenType("ContainerNetworkPolicyAllowlistParam")] public partial class ResponsesContainerNetworkPolicyAllowlistParam { }
-[CodeGenType("ContainerNetworkPolicyDisabledParam")] public partial class ResponsesContainerNetworkPolicyDisabledParam { }
-[CodeGenType("ContainerNetworkPolicyDomainSecretParam")] public partial class ResponsesContainerNetworkPolicyDomainSecretParam { }
-[CodeGenType("ContainerNetworkPolicyParam")] public partial class ResponsesContainerNetworkPolicyParam { }
-[CodeGenType("CustomTextFormatParam")] public partial class ResponsesCustomTextFormatParam { }
-[CodeGenType("CustomToolParam")] public partial class ResponsesCustomToolParam { }
-[CodeGenType("CustomToolParamFormat")] public abstract partial class ResponsesCustomToolParamFormat { }
-[CodeGenType("EmptyModelParam")] public partial class ResponsesEmptyModelParam { }
-[CodeGenType("FabricDataAgentToolOptions")] public partial class ResponsesFabricDataAgentToolOptions { }
-[CodeGenType("FabricIQPreviewTool")] public partial class ResponsesFabricIQPreviewTool { }
+[CodeGenType("A2APreviewTool")] public partial class A2APreviewTool { }
+[CodeGenType("AISearchIndexResource")] public partial class AISearchIndexResource { }
+[CodeGenType("AutoCodeInterpreterToolParam")] public partial class AutoCodeInterpreterToolParam { }
+[CodeGenType("AzureAISearchToolResource")] public partial class AzureAISearchToolResource { }
+[CodeGenType("AzureFunctionBinding")] public partial class AzureFunctionBinding { }
+[CodeGenType("AzureFunctionDefinition")] public partial class AzureFunctionDefinition { }
+[CodeGenType("AzureFunctionDefinitionFunction")] public partial class AzureFunctionDefinitionFunction { }
+[CodeGenType("AzureFunctionStorageQueue")] public partial class AzureFunctionStorageQueue { }
+[CodeGenType("AzureFunctionTool")] public partial class AzureFunctionTool { }
+[CodeGenType("AzureAISearchTool")] public partial class AzureAISearchTool { }
+[CodeGenType("AzureAISearchQueryType")] public readonly partial struct AzureAISearchQueryKind { }
+[CodeGenType("BingCustomSearchConfiguration")] public partial class BingCustomSearchConfiguration { }
+[CodeGenType("BingCustomSearchPreviewTool")] public partial class BingCustomSearchPreviewTool { }
+[CodeGenType("BingCustomSearchToolParameters")] public partial class BingCustomSearchToolParameters { }
+[CodeGenType("BingGroundingSearchConfiguration")] public partial class BingGroundingSearchConfiguration { }
+[CodeGenType("BingGroundingSearchToolParameters")] public partial class BingGroundingSearchToolParameters { }
+[CodeGenType("BingGroundingTool")] public partial class BingGroundingTool { }
+[CodeGenType("BrowserAutomationPreviewTool")] public partial class BrowserAutomationPreviewTool { }
+[CodeGenType("BrowserAutomationToolConnectionParameters")] public partial class BrowserAutomationToolConnectionParameters { }
+[CodeGenType("BrowserAutomationToolParameters")] public partial class BrowserAutomationToolParameters { }
+[CodeGenType("CaptureStructuredOutputsTool")] public partial class CaptureStructuredOutputsTool { }
+[CodeGenType("ContainerAutoParam")] public partial class ContainerAutoParam { }
+[CodeGenType("ContainerMemoryLimit")] public readonly partial struct ContainerMemoryLimit { }
+[CodeGenType("ContainerNetworkPolicyAllowlistParam")] public partial class ContainerNetworkPolicyAllowlistParam { }
+[CodeGenType("ContainerNetworkPolicyDisabledParam")] public partial class ContainerNetworkPolicyDisabledParam { }
+[CodeGenType("ContainerNetworkPolicyDomainSecretParam")] public partial class ContainerNetworkPolicyDomainSecretParam { }
+[CodeGenType("ContainerNetworkPolicyParam")] public partial class ContainerNetworkPolicyParam { }
+[CodeGenType("CustomTextFormatParam")] public partial class CustomTextFormatParam { }
+[CodeGenType("CustomToolParam")] public partial class CustomToolParam { }
+[CodeGenType("CustomToolParamFormat")] public abstract partial class CustomToolParamFormat { }
+[CodeGenType("EmptyModelParam")] public partial class EmptyModelParam { }
+[CodeGenType("FabricDataAgentToolOptions")] public partial class FabricDataAgentToolOptions { }
+[CodeGenType("FabricIQPreviewTool")] public partial class FabricIQPreviewTool { }
 /// <summary>
 ///
 /// </summary>
-[CodeGenType("FunctionCallOutputStatusEnum")] public readonly partial struct ResponsesFunctionCallOutputStatus { }
+[CodeGenType("FunctionCallOutputStatusEnum")] public readonly partial struct FunctionCallOutputStatus { }
 /// <summary>
 ///
 /// </summary>
-[CodeGenType("FunctionCallStatus")] public readonly partial struct ResponsesFunctionCallStatus { }
-[CodeGenType("FunctionShellToolParam")] public partial class ResponsesFunctionShellToolParam { }
-[CodeGenType("FunctionShellToolParamEnvironment")] public abstract partial class ResponsesFunctionShellToolParamEnvironment { }
-[CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam { }
-[CodeGenType("FunctionShellToolParamEnvironmentLocalEnvironmentParam")] public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam { }
-[CodeGenType("FunctionToolParam")] public partial class ResponsesFunctionToolParam { }
-//[CodeGenType("GrammarSyntax1")] public readonly partial struct ResponsesGrammarSyntax { }
-[CodeGenType("InlineSkillParam")] public partial class ResponsesInlineSkillParam { }
-[CodeGenType("InlineSkillSourceParam")] public partial class ResponsesInlineSkillSourceParam { }
-[CodeGenType("LocalShellToolParam")] public partial class ResponsesLocalShellToolParam { }
-[CodeGenType("MCPToolFilter")] public partial class ResponsesMCPToolFilter { }
-[CodeGenType("MCPToolRequireApproval")] public partial class ResponsesMCPToolRequireApproval { }
-[CodeGenType("MemorySearchOptions")] public partial class ResponsesMemorySearchOptions { }
-[CodeGenType("MemorySearchPreviewTool")] public partial class ResponsesMemorySearchPreviewTool { }
-[CodeGenType("MicrosoftFabricPreviewTool")] public partial class ResponsesMicrosoftFabricPreviewTool { }
-[CodeGenType("NamespaceToolParam")] public partial class ResponsesNamespaceToolParam { }
-[CodeGenType("OpenApiAnonymousAuthDetails")] public partial class ResponsesOpenApiAnonymousAuthDetails { }
-[CodeGenType("OpenApiAuthDetails")] public abstract partial class ResponsesOpenApiAuthDetails { }
-[CodeGenType("OpenApiFunctionDefinition")] public partial class ResponsesOpenApiFunctionDefinition { }
-[CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class ResponsesOpenApiFunctionDefinitionFunction { }
-[CodeGenType("OpenApiManagedAuthDetails")] public partial class ResponsesOpenApiManagedAuthDetails { }
-[CodeGenType("OpenApiManagedSecurityScheme")] public partial class ResponsesOpenApiManagedSecurityScheme { }
-[CodeGenType("OpenApiProjectConnectionAuthDetails")] public partial class ResponsesOpenApiProjectConnectionAuthDetails { }
-[CodeGenType("OpenApiProjectConnectionSecurityScheme")] public partial class ResponsesOpenApiProjectConnectionSecurityScheme { }
-[CodeGenType("OpenApiTool")] public partial class ResponsesOpenApiTool { }
-[CodeGenType("ReminderPreviewTool")] public partial class ResponsesReminderPreviewTool { }
-[CodeGenType("SharepointGroundingToolParameters")] public partial class ResponsesSharepointGroundingToolParameters { }
-[CodeGenType("SharepointPreviewTool")] public partial class ResponsesSharepointPreviewTool { }
-[CodeGenType("SkillReferenceParam")] public partial class ResponsesSkillReferenceParam { }
-[CodeGenType("StructuredOutputDefinition")] public partial class ResponsesStructuredOutputDefinition { }
-[CodeGenType("ToolProjectConnection")] public partial class ResponsesToolProjectConnection { }
-[CodeGenType("ToolSearchExecutionType")] public readonly partial struct ResponsesToolSearchExecutionType { }
-[CodeGenType("ToolSearchToolParam")] public partial class ResponsesToolSearchToolParam { }
-[CodeGenType("WebSearchApproximateLocation")] public partial class ResponsesWebSearchApproximateLocation { }
-[CodeGenType("WebSearchConfiguration")] public partial class ResponsesWebSearchConfiguration { }
+[CodeGenType("FunctionCallStatus")] public readonly partial struct FunctionCallStatus { }
+[CodeGenType("FunctionShellToolParam")] public partial class FunctionShellToolParam { }
+[CodeGenType("FunctionShellToolParamEnvironment")] public abstract partial class FunctionShellToolParamEnvironment { }
+[CodeGenType("FunctionShellToolParamEnvironmentContainerReferenceParam")] public partial class FunctionShellToolParamEnvironmentContainerReferenceParam { }
+[CodeGenType("FunctionShellToolParamEnvironmentLocalEnvironmentParam")] public partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam { }
+[CodeGenType("FunctionToolParam")] public partial class FunctionToolParam { }
+//[CodeGenType("GrammarSyntax1")] public readonly partial struct GrammarSyntax { }
+[CodeGenType("InlineSkillParam")] public partial class InlineSkillParam { }
+[CodeGenType("InlineSkillSourceParam")] public partial class InlineSkillSourceParam { }
+[CodeGenType("LocalShellToolParam")] public partial class LocalShellToolParam { }
+[CodeGenType("MCPToolFilter")] public partial class MCPToolFilter { }
+[CodeGenType("MCPToolRequireApproval")] public partial class MCPToolRequireApproval { }
+[CodeGenType("MemorySearchOptions")] public partial class MemorySearchOptions { }
+[CodeGenType("MemorySearchPreviewTool")] public partial class MemorySearchPreviewTool { }
+[CodeGenType("MicrosoftFabricPreviewTool")] public partial class MicrosoftFabricPreviewTool { }
+[CodeGenType("NamespaceToolParam")] public partial class NamespaceToolParam { }
+[CodeGenType("OpenApiAnonymousAuthDetails")] public partial class OpenApiAnonymousAuthDetails { }
+[CodeGenType("OpenApiAuthDetails")] public abstract partial class OpenApiAuthDetails { }
+[CodeGenType("OpenApiFunctionDefinition")] public partial class OpenApiFunctionDefinition { }
+[CodeGenType("OpenApiFunctionDefinitionFunction")] public partial class OpenApiFunctionDefinitionFunction { }
+[CodeGenType("OpenApiManagedAuthDetails")] public partial class OpenApiManagedAuthDetails { }
+[CodeGenType("OpenApiManagedSecurityScheme")] public partial class OpenApiManagedSecurityScheme { }
+[CodeGenType("OpenApiProjectConnectionAuthDetails")] public partial class OpenApiProjectConnectionAuthDetails { }
+[CodeGenType("OpenApiProjectConnectionSecurityScheme")] public partial class OpenApiProjectConnectionSecurityScheme { }
+[CodeGenType("OpenApiTool")] public partial class OpenApiTool { }
+[CodeGenType("ReminderPreviewTool")] public partial class ReminderPreviewTool { }
+[CodeGenType("SharepointGroundingToolParameters")] public partial class SharepointGroundingToolParameters { }
+[CodeGenType("SharepointPreviewTool")] public partial class SharepointPreviewTool { }
+[CodeGenType("SkillReferenceParam")] public partial class SkillReferenceParam { }
+[CodeGenType("StructuredOutputDefinition")] public partial class StructuredOutputDefinition { }
+[CodeGenType("ToolProjectConnection")] public partial class ToolProjectConnection { }
+[CodeGenType("ToolSearchExecutionType")] public readonly partial struct ToolSearchExecutionType { }
+[CodeGenType("ToolSearchToolParam")] public partial class ToolSearchToolParam { }
+[CodeGenType("WebSearchApproximateLocation")] public partial class WebSearchApproximateLocation { }
+[CodeGenType("WebSearchConfiguration")] public partial class WebSearchConfiguration { }
 
-//[CodeGenType("WebSearchToolSearchContextSize")] public readonly partial struct ResponsesWebSearchToolSearchContextSize { }
-[CodeGenType("WorkIQPreviewTool")] public partial class ResponsesWorkIQPreviewTool { }
+//[CodeGenType("WebSearchToolSearchContextSize")] public readonly partial struct WebSearchToolSearchContextSize { }
+[CodeGenType("WorkIQPreviewTool")] public partial class WorkIQPreviewTool { }
 
 /// <summary>
 ///

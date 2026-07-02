@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesSkillReferenceParam"/> and <see cref="ResponsesInlineSkillParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerSkill))]
     public abstract partial class ContainerSkill : IJsonModel<ContainerSkill>
@@ -127,9 +127,9 @@ namespace Azure.AI.Extensions.OpenAI
                 switch (discriminator.GetString())
                 {
                     case "skill_reference":
-                        return ResponsesSkillReferenceParam.DeserializeResponsesSkillReferenceParam(element, options);
+                        return SkillReferenceParam.DeserializeSkillReferenceParam(element, options);
                     case "inline":
-                        return ResponsesInlineSkillParam.DeserializeResponsesInlineSkillParam(element, options);
+                        return InlineSkillParam.DeserializeInlineSkillParam(element, options);
                 }
             }
             return UnknownContainerSkill.DeserializeUnknownContainerSkill(element, options);

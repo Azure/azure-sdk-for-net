@@ -10,7 +10,7 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class UnknownContainerNetworkPolicyParam : ResponsesContainerNetworkPolicyParam, IJsonModel<ResponsesContainerNetworkPolicyParam>
+    internal partial class UnknownContainerNetworkPolicyParam : ContainerNetworkPolicyParam, IJsonModel<ContainerNetworkPolicyParam>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContainerNetworkPolicyParam"/> for deserialization. </summary>
         internal UnknownContainerNetworkPolicyParam()
@@ -19,47 +19,47 @@ namespace Azure.AI.Extensions.OpenAI.Internal
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesContainerNetworkPolicyParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ContainerNetworkPolicyParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesContainerNetworkPolicyParam(document.RootElement, options);
+                        return DeserializeContainerNetworkPolicyParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerNetworkPolicyParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerNetworkPolicyParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesContainerNetworkPolicyParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerNetworkPolicyParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesContainerNetworkPolicyParam IPersistableModel<ResponsesContainerNetworkPolicyParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerNetworkPolicyParam IPersistableModel<ContainerNetworkPolicyParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesContainerNetworkPolicyParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerNetworkPolicyParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesContainerNetworkPolicyParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerNetworkPolicyParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,29 +70,29 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerNetworkPolicyParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesContainerNetworkPolicyParam IJsonModel<ResponsesContainerNetworkPolicyParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerNetworkPolicyParam IJsonModel<ContainerNetworkPolicyParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesContainerNetworkPolicyParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ContainerNetworkPolicyParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerNetworkPolicyParam)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesContainerNetworkPolicyParam(document.RootElement, options);
+            return DeserializeContainerNetworkPolicyParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>

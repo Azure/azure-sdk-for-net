@@ -10,7 +10,7 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class UnknownFunctionShellToolParamEnvironment : ResponsesFunctionShellToolParamEnvironment, IJsonModel<ResponsesFunctionShellToolParamEnvironment>
+    internal partial class UnknownFunctionShellToolParamEnvironment : FunctionShellToolParamEnvironment, IJsonModel<FunctionShellToolParamEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionShellToolParamEnvironment"/> for deserialization. </summary>
         internal UnknownFunctionShellToolParamEnvironment()
@@ -19,47 +19,47 @@ namespace Azure.AI.Extensions.OpenAI.Internal
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesFunctionShellToolParamEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override FunctionShellToolParamEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesFunctionShellToolParamEnvironment(document.RootElement, options);
+                        return DeserializeFunctionShellToolParamEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionShellToolParamEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionShellToolParamEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesFunctionShellToolParamEnvironment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FunctionShellToolParamEnvironment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesFunctionShellToolParamEnvironment IPersistableModel<ResponsesFunctionShellToolParamEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FunctionShellToolParamEnvironment IPersistableModel<FunctionShellToolParamEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesFunctionShellToolParamEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FunctionShellToolParamEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesFunctionShellToolParamEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FunctionShellToolParamEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,29 +70,29 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionShellToolParamEnvironment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesFunctionShellToolParamEnvironment IJsonModel<ResponsesFunctionShellToolParamEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FunctionShellToolParamEnvironment IJsonModel<FunctionShellToolParamEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesFunctionShellToolParamEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override FunctionShellToolParamEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionShellToolParamEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionShellToolParamEnvironment)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesFunctionShellToolParamEnvironment(document.RootElement, options);
+            return DeserializeFunctionShellToolParamEnvironment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>

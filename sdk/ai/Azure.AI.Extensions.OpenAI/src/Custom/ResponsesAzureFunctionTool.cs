@@ -8,14 +8,14 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    public partial class ResponsesAzureFunctionTool : ResponseTool, IJsonModel<ResponsesAzureFunctionTool>
+    public partial class AzureFunctionTool : ResponseTool, IJsonModel<AzureFunctionTool>
     {
         // The generated parameterless deserialization constructor did not chain to the required
         // base ResponseTool(ResponseToolKind) constructor (ResponseTool has no parameterless
         // constructor). We add the chain here and supply the "azure_function" discriminator so
         // the tool kind is set correctly during deserialization.
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/> for deserialization. </summary>
-        internal ResponsesAzureFunctionTool(): base(ResponseToolKind.AzureFunction)
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/> for deserialization. </summary>
+        internal AzureFunctionTool(): base(ResponseToolKind.AzureFunction)
         {
         }
     }

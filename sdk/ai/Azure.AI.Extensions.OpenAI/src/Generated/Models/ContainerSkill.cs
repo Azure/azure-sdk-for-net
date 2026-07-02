@@ -9,7 +9,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesSkillReferenceParam"/> and <see cref="ResponsesInlineSkillParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
     /// </summary>
     public abstract partial class ContainerSkill
     {

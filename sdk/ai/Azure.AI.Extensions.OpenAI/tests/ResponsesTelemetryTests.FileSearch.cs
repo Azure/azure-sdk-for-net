@@ -17,7 +17,7 @@ using OpenAI.VectorStores;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class ResponsesTelemetryTests
+public partial class TelemetryTests
 {
     private const string FileSearchAgentName = "filesearch-telemetry-agent";
     private const string FileSearchPrompt = "Can you give me the documented codes for 'banana' and 'orange'?";

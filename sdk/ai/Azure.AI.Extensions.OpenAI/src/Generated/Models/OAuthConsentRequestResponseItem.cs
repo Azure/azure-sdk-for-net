@@ -15,6 +15,6 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> The server label for the OAuth consent request. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
     }
 }

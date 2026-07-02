@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UnknownOpenApiAuthDetails : ResponsesOpenApiAuthDetails
+    internal partial class UnknownOpenApiAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOpenApiAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>

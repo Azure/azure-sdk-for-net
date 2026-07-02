@@ -15,7 +15,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class ResponsesTelemetryTests
+public partial class TelemetryTests
 {
     private static readonly FunctionTool s_getUserFavoriteCityTool = ResponseTool.CreateFunctionTool(
         functionName: "getUserFavoriteCity",

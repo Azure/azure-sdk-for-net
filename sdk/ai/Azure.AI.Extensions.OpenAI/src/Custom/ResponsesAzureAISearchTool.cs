@@ -8,14 +8,14 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    public partial class ResponsesAzureAISearchTool : ResponseTool, IJsonModel<ResponsesAzureAISearchTool>
+    public partial class AzureAISearchTool : ResponseTool, IJsonModel<AzureAISearchTool>
     {
         // The generated parameterless deserialization constructor did not chain to the required
         // base ResponseTool(ResponseToolKind) constructor (ResponseTool has no parameterless
         // constructor). We add the chain here and supply the "azure_ai_search" discriminator so
         // the tool kind is set correctly during deserialization.
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/> for deserialization. </summary>
-        internal ResponsesAzureAISearchTool(): base(ResponseToolKind.AzureAISearch)
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/> for deserialization. </summary>
+        internal AzureAISearchTool(): base(ResponseToolKind.AzureAISearch)
         {
         }
     }

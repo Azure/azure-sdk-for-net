@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenSuppress("CompactResponseConversation", typeof(ModelIdsCompaction?), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CompactResponseConversationAsync", typeof(ModelIdsCompaction?), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 internal partial class Responses { }
-//public partial class Responses
+//public partial class
 //{
 //    /// <summary> Creates a model response. </summary>
 //    /// <param name="metadata">

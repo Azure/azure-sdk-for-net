@@ -8,7 +8,7 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class UnknownContainerNetworkPolicyParam : ResponsesContainerNetworkPolicyParam
+    internal partial class UnknownContainerNetworkPolicyParam : ContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContainerNetworkPolicyParam"/>. </summary>
         /// <param name="type"></param>

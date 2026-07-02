@@ -9,7 +9,7 @@ using Azure.AI.Extensions.OpenAI.Internal;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Grammar format. </summary>
-    public partial class CustomGrammarFormatParam : ResponsesCustomToolParamFormat
+    public partial class CustomGrammarFormatParam : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>

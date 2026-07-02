@@ -15,15 +15,15 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </summary>
-        public string CSDLActionKind { get; set; }
+        public string CSDLActionKind { get; }
 
         /// <summary> Unique identifier for the action. </summary>
-        public string ActionId { get; set; }
+        public string ActionId { get; }
 
         /// <summary> ID of the parent action if this is a nested action. </summary>
-        public string ParentActionId { get; set; }
+        public string ParentActionId { get; }
 
         /// <summary> ID of the previous action if this action follows another. </summary>
-        public string PreviousActionId { get; set; }
+        public string PreviousActionId { get; }
     }
 }

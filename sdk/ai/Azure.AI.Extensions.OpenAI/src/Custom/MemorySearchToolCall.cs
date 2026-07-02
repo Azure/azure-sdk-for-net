@@ -12,14 +12,6 @@ namespace Azure.AI.Extensions.OpenAI;
 public partial class MemorySearchToolCall
 {
     /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
-    /// <param name="status"> The status of the tool call. </param>
-    internal MemorySearchToolCall(ToolCallStatus status) : base(ResponseItemKind.MemorySearchCall)
-    {
-        Status = status;
-        Memories = new ChangeTrackingList<MemoryOutputItem>();
-    }
-
-    /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
     /// <param name="id"></param>
     /// <param name="agentReference"> The agent that created the item. </param>
     /// <param name="responseId"> The response on which the item is created. </param>

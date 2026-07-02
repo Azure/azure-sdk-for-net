@@ -8,7 +8,7 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class UnknownFunctionShellToolParamEnvironment : ResponsesFunctionShellToolParamEnvironment
+    internal partial class UnknownFunctionShellToolParamEnvironment : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionShellToolParamEnvironment"/>. </summary>
         /// <param name="type"></param>

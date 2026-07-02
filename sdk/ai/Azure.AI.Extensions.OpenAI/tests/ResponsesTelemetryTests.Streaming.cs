@@ -15,7 +15,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class ResponsesTelemetryTests
+public partial class TelemetryTests
 {
     [RecordedTest]
     public async Task TestResponseStreamingWithTelemetry()

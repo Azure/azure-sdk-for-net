@@ -19,7 +19,7 @@ using OpenTelemetry.Trace;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
-public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
+public partial class TelemetryTests : ProjectsOpenAITestBase
 {
     private const string TraceContentsEnvironmentVariable = "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT";
     private const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING";

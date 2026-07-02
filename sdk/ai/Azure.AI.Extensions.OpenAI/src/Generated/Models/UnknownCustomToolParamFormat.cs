@@ -8,7 +8,7 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Internal
 {
-    internal partial class UnknownCustomToolParamFormat : ResponsesCustomToolParamFormat
+    internal partial class UnknownCustomToolParamFormat : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomToolParamFormat"/>. </summary>
         /// <param name="type"></param>
