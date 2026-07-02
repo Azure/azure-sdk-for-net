@@ -7,23 +7,25 @@ Compared files:
 
 ## Summary
 
-4 legacy-only and 2 resolve-only resource ID patterns; 8 hierarchy differences; 1 CRUD operation difference; 11 list/action operation differences.
+4 legacy-only and 2 resolve-only normalized resource ID patterns; 8 hierarchy differences; 1 CRUD operation difference; 11 list/action operation differences.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 63 matching patterns; 4 legacy-only; 2 resolve-only. |
+| Resource ID patterns | 63 matching normalized patterns; 4 legacy-only; 2 resolve-only. |
 | Hierarchy for matching patterns | 8 differences. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
 | CRUD operations for matching patterns | 1 difference. |
 | List/action operations for matching patterns | 11 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 4 legacy-only pattern(s), 2 resolve-only pattern(s).
+**Differences:** 4 legacy-only normalized pattern(s), 2 resolve-only normalized pattern(s).
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 63 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 63 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 4 | `/providers/Microsoft.Security/sensitivitySettings/current`<br>`/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/default`<br>`/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current` |
 | `resolveArmResources` only | 2 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments/{serverVulnerabilityAssessment}`<br>`/{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}` |
 
@@ -31,22 +33,22 @@ Compared files:
 
 **Differences:** 8 hierarchy differences.
 
-| Resource ID pattern | Legacy hierarchy | `resolveArmResources` hierarchy |
+| Normalized resource ID pattern | Legacy hierarchy | `resolveArmResources` hierarchy |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}`, `scopeResourceType: Microsoft.Resources/subscriptions` | Extension, `scopeIdPattern: /subscriptions/{subscriptionId}`, `scopeResourceType: Microsoft.Resources/subscriptions` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/providers/microsoft.security/pricings/{}/securityoperators/{}` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}`, `scopeResourceType: Microsoft.Resources/subscriptions` | Extension, `scopeIdPattern: /subscriptions/{subscriptionId}`, `scopeResourceType: Microsoft.Resources/subscriptions` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/alerts/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/allowedconnections/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/discoveredsecuritysolutions/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/jitnetworkaccesspolicies/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/securitysolutions/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/tasks/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/topologies/{}` | ResourceGroup, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` | Subscription, `scopeIdPattern: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`, `scopeResourceType: Microsoft.Resources/resourceGroups` |
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -54,7 +56,7 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 1 CRUD operation difference.
 
-#### CRUD operation differences: `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default`
+#### CRUD operations differences: `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -64,67 +66,67 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 11 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `AlertsAPI.Alerts.listSubscriptionLevelByRegion` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `TasksAPI.SecurityTasks.listByHomeRegion` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings/default`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `MdeOnboardingAPI.MdeOnboardings.list` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/providers/Microsoft.Security/apiCollections/{apiId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/providers/Microsoft.Security/apiCollections/{apiId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `ApiCollectionsAPI.ApiCollections.listBySubscription` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/apiCollections` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `IoTSecurityAPI.IoTSecuritySolutionAnalyticsModels.list` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels` | Present. | Missing. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `IoTSecurityAPI.IoTSecuritySolutionAnalyticsModels.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `SecuritySolutionsAPI.AllowedConnectionsResources.listByHomeRegion` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `SecuritySolutionsAPI.DiscoveredSecuritySolutions.listByHomeRegion` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `SecuritySolutionsAPI.JitNetworkAccessPolicies.listByRegion` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `SecuritySolutionsAPI.TopologyResources.listByHomeRegion` | `List` | `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/topologies` | Different. | Different. |
 
-#### List/action operation differences: `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default`
+#### List and action operations differences: `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -134,49 +136,49 @@ No resource model differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 36 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 36 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 12 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}` | `SecurityAlertsSuppressionRule` | `AlertsSuppressionRule` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}` | `SubscriptionSecurityAlert` | `LocationsAlerts` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}` | `SubscriptionSecurityTask` | `LocationsTasks` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}` | `SecurityOperator` | `PricingsSecurityOperators` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}` | `SecureScore` | `SecureScoreItem` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}` | `SecuritySetting` | `Setting` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.Security/workspaceSettings/{workspaceSettingName}` | `SecurityWorkspaceSetting` | `WorkspaceSetting` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/providers/Microsoft.Security/apiCollections/{apiId}` | `ApiCollection` | `ExternalResourceApiCollection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}` | `SecurityCenterAssignment` | `Assignment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}` | `SecurityAutomation` | `Automation` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}` | `IotSecuritySolution` | `IoTSecuritySolutionModel` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default` | `IotSecuritySolutionAnalyticsModel` | `IoTSecuritySolutionAnalyticsModel` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedAlerts/{aggregatedAlertName}` | `IotSecurityAggregatedAlert` | `IoTSecurityAggregatedAlert` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}` | `IotSecurityAggregatedRecommendation` | `IoTSecurityAggregatedRecommendation` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}` | `ResourceGroupSecurityAlert` | `LocationsAlerts` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}` | `SecurityCenterAllowedConnection` | `AllowedConnectionsResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}` | `ResourceGroupSecurityTask` | `LocationsTasks` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}` | `SecurityTopology` | `TopologyResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/privateLinks/{privateLinkName}/privateEndpointConnections/{privateEndpointConnectionName}` | `PrivateEndpointConnection` | `PrivateLinkResourcePrivateEndpointConnection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/privateLinks/{privateLinkName}/privateLinkResources/{groupId}` | `PrivateLinkGroup` | `PrivateLinkGroupResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default` | `DevOpsConfiguration` | `SecurityConnectorsDevops` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/azureDevOpsOrgs/{orgName}` | `AzureDevOpsOrg` | `DevopsAzureDevOpsOrgs` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/azureDevOpsOrgs/{orgName}/projects/{projectName}` | `AzureDevOpsProject` | `AzureDevOpsOrgsProjects` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/azureDevOpsOrgs/{orgName}/projects/{projectName}/repos/{repoName}` | `AzureDevOpsRepository` | `ProjectsRepos` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitHubOwners/{ownerName}` | `GitHubOwner` | `DevopsGitHubOwners` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitHubOwners/{ownerName}/repos/{repoName}` | `GitHubRepository` | `GitHubOwnersRepos` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitLabGroups/{groupFQName}` | `GitLabGroup` | `DevopsGitLabGroups` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/devops/default/gitLabGroups/{groupFQName}/projects/{projectName}` | `GitLabProject` | `GitLabGroupsProjects` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}` | `SecurityCenterStandard` | `Standard` |
-| `/{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}` | `SecurityAssessment` | `SecurityAssessmentResponsesScopeParameterSecurityAssessmentResponse` |
-| `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/baselineRules/{ruleId}` | `SqlVulnerabilityAssessmentBaselineRule` | `RuleResults` |
-| `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}` | `SqlVulnerabilityAssessmentScan` | `ScanV2` |
-| `/{resourceId}/providers/Microsoft.Security/sqlVulnerabilityAssessments/default/scans/{scanId}/scanResults/{scanResultId}` | `SqlVulnerabilityAssessmentScanResult` | `ScanResult` |
-| `/{resourceId}/providers/Microsoft.Security/standardAssignments/{standardAssignmentName}` | `StandardAssignment` | `ResourceIdScopeParameterStandardAssignment` |
-| `/{scopeId}/providers/Microsoft.Security/pricings/{pricingName}` | `SecurityCenterPricing` | `Pricing` |
-| `/{scope}/providers/Microsoft.Security/compliances/{complianceName}` | `SecurityCompliance` | `Compliance` |
+| `/subscriptions/{}/providers/microsoft.security/alertssuppressionrules/{}` | `SecurityAlertsSuppressionRule` | `AlertsSuppressionRule` |
+| `/subscriptions/{}/providers/microsoft.security/locations/{}/alerts/{}` | `SubscriptionSecurityAlert` | `LocationsAlerts` |
+| `/subscriptions/{}/providers/microsoft.security/locations/{}/tasks/{}` | `SubscriptionSecurityTask` | `LocationsTasks` |
+| `/subscriptions/{}/providers/microsoft.security/pricings/{}/securityoperators/{}` | `SecurityOperator` | `PricingsSecurityOperators` |
+| `/subscriptions/{}/providers/microsoft.security/securescores/{}` | `SecureScore` | `SecureScoreItem` |
+| `/subscriptions/{}/providers/microsoft.security/settings/{}` | `SecuritySetting` | `Setting` |
+| `/subscriptions/{}/providers/microsoft.security/workspacesettings/{}` | `SecurityWorkspaceSetting` | `WorkspaceSetting` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/providers/microsoft.security/apicollections/{}` | `ApiCollection` | `ExternalResourceApiCollection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/assignments/{}` | `SecurityCenterAssignment` | `Assignment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/automations/{}` | `SecurityAutomation` | `Automation` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/iotsecuritysolutions/{}` | `IotSecuritySolution` | `IoTSecuritySolutionModel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/iotsecuritysolutions/{}/analyticsmodels/default` | `IotSecuritySolutionAnalyticsModel` | `IoTSecuritySolutionAnalyticsModel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/iotsecuritysolutions/{}/analyticsmodels/default/aggregatedalerts/{}` | `IotSecurityAggregatedAlert` | `IoTSecurityAggregatedAlert` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/iotsecuritysolutions/{}/analyticsmodels/default/aggregatedrecommendations/{}` | `IotSecurityAggregatedRecommendation` | `IoTSecurityAggregatedRecommendation` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/alerts/{}` | `ResourceGroupSecurityAlert` | `LocationsAlerts` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/allowedconnections/{}` | `SecurityCenterAllowedConnection` | `AllowedConnectionsResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/tasks/{}` | `ResourceGroupSecurityTask` | `LocationsTasks` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/locations/{}/topologies/{}` | `SecurityTopology` | `TopologyResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/privatelinks/{}/privateendpointconnections/{}` | `PrivateEndpointConnection` | `PrivateLinkResourcePrivateEndpointConnection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/privatelinks/{}/privatelinkresources/{}` | `PrivateLinkGroup` | `PrivateLinkGroupResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default` | `DevOpsConfiguration` | `SecurityConnectorsDevops` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/azuredevopsorgs/{}` | `AzureDevOpsOrg` | `DevopsAzureDevOpsOrgs` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/azuredevopsorgs/{}/projects/{}` | `AzureDevOpsProject` | `AzureDevOpsOrgsProjects` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/azuredevopsorgs/{}/projects/{}/repos/{}` | `AzureDevOpsRepository` | `ProjectsRepos` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/githubowners/{}` | `GitHubOwner` | `DevopsGitHubOwners` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/githubowners/{}/repos/{}` | `GitHubRepository` | `GitHubOwnersRepos` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/gitlabgroups/{}` | `GitLabGroup` | `DevopsGitLabGroups` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/securityconnectors/{}/devops/default/gitlabgroups/{}/projects/{}` | `GitLabProject` | `GitLabGroupsProjects` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.security/standards/{}` | `SecurityCenterStandard` | `Standard` |
+| `/{}/providers/microsoft.security/assessments/{}` | `SecurityAssessment` | `SecurityAssessmentResponsesScopeParameterSecurityAssessmentResponse` |
+| `/{}/providers/microsoft.security/compliances/{}` | `SecurityCompliance` | `Compliance` |
+| `/{}/providers/microsoft.security/pricings/{}` | `SecurityCenterPricing` | `Pricing` |
+| `/{}/providers/microsoft.security/sqlvulnerabilityassessments/default/baselinerules/{}` | `SqlVulnerabilityAssessmentBaselineRule` | `RuleResults` |
+| `/{}/providers/microsoft.security/sqlvulnerabilityassessments/default/scans/{}` | `SqlVulnerabilityAssessmentScan` | `ScanV2` |
+| `/{}/providers/microsoft.security/sqlvulnerabilityassessments/default/scans/{}/scanresults/{}` | `SqlVulnerabilityAssessmentScanResult` | `ScanResult` |
+| `/{}/providers/microsoft.security/standardassignments/{}` | `StandardAssignment` | `ResourceIdScopeParameterStandardAssignment` |
 
 ### Non-resource method differences
 

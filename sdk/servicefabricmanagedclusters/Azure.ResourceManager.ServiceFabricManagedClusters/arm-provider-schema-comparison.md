@@ -9,49 +9,51 @@ Compared files:
 
 2 list/action operation differences.
 
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
+
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | Same 6 resource ID patterns in both schemas. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
+| Resource ID patterns | Same 6 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
 | List/action operations for matching patterns | 2 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** none. Both schemas include the same `resourceIdPattern` values.
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 6 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 6 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
 **Differences:** 2 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -60,7 +62,7 @@ No CRUD operation differences were found for matching resource ID patterns.
 | `Microsoft.ServiceFabric.ManagedClusters.startFaultSimulation` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/startFaultSimulation` | Missing. | Present. |
 | `Microsoft.ServiceFabric.ManagedClusters.stopFaultSimulation` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/stopFaultSimulation` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -73,19 +75,19 @@ No CRUD operation differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 6 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 6 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 2 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}` | `ServiceFabricManagedCluster` | `ManagedCluster` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}` | `ServiceFabricManagedApplicationType` | `ApplicationTypeResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}` | `ServiceFabricManagedApplicationTypeVersion` | `ApplicationTypeVersionResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}` | `ServiceFabricManagedApplication` | `ApplicationResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/applications/{applicationName}/services/{serviceName}` | `ServiceFabricManagedService` | `ServiceResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}` | `ServiceFabricManagedNodeType` | `NodeType` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.servicefabric/managedclusters/{}` | `ServiceFabricManagedCluster` | `ManagedCluster` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.servicefabric/managedclusters/{}/applications/{}` | `ServiceFabricManagedApplication` | `ApplicationResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.servicefabric/managedclusters/{}/applications/{}/services/{}` | `ServiceFabricManagedService` | `ServiceResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.servicefabric/managedclusters/{}/applicationtypes/{}` | `ServiceFabricManagedApplicationType` | `ApplicationTypeResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.servicefabric/managedclusters/{}/applicationtypes/{}/versions/{}` | `ServiceFabricManagedApplicationTypeVersion` | `ApplicationTypeVersionResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.servicefabric/managedclusters/{}/nodetypes/{}` | `ServiceFabricManagedNodeType` | `NodeType` |
 
 ### Non-resource method differences
 

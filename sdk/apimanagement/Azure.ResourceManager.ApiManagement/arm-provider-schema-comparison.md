@@ -7,41 +7,51 @@ Compared files:
 
 ## Summary
 
-1 legacy-only and 1 resolve-only resource ID patterns; 3 resource model differences; 5 CRUD operation differences; 17 list/action operation differences.
+3 resource model differences; 5 CRUD operation differences; 17 list/action operation differences.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 101 matching patterns; 1 legacy-only; 1 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
+| Resource ID patterns | Same 102 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
 | Resource model for matching patterns | 3 differences. |
 | CRUD operations for matching patterns | 5 differences. |
 | List/action operations for matching patterns | 17 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 1 legacy-only pattern(s), 1 resolve-only pattern(s).
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 101 | Matching resource ID patterns are compared in the following sections. |
-| Legacy only | 1 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}` |
-| `resolveArmResources` only | 1 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkResourceName}` |
+| In both schemas | 102 | Matching normalized resource ID patterns are compared in the following sections. |
+| Legacy only | 0 | None. |
+| `resolveArmResources` only | 0 | None. |
+
+### Raw resource ID variable-name differences
+
+Raw resource ID pattern mismatches reduced after normalizing path variable names. This means at least some raw differences are only parameter-name differences such as `{name}` vs `{labName}`.
+
+| Raw legacy-only | Raw `resolveArmResources`-only | Normalized legacy-only | Normalized `resolveArmResources`-only |
+| ---: | ---: | ---: | ---: |
+| 1 | 1 | 0 | 0 |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
 **Differences:** 3 resource model differences.
 
-| Resource ID pattern | Legacy resource model | `resolveArmResources` resource model | Legacy resource type | `resolveArmResources` resource type |
+| Normalized resource ID pattern | Legacy resource model | `resolveArmResources` resource model | Legacy resource type | `resolveArmResources` resource type |
 | --- | --- | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation` | `Microsoft.ApiManagement.PortalDelegationSettings` | `Microsoft.ApiManagement.PortalDelegationSettings` | `Microsoft.ApiManagement/service/portalsettings` | `Microsoft.ApiManagement/service` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin` | `Microsoft.ApiManagement.PortalSigninSettings` | `Microsoft.ApiManagement.PortalSigninSettings` | `Microsoft.ApiManagement/service/portalsettings` | `Microsoft.ApiManagement/service` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup` | `Microsoft.ApiManagement.PortalSignupSettings` | `Microsoft.ApiManagement.PortalSignupSettings` | `Microsoft.ApiManagement/service/portalsettings` | `Microsoft.ApiManagement/service` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalsettings/delegation` | `Microsoft.ApiManagement.PortalDelegationSettings` | `Microsoft.ApiManagement.PortalDelegationSettings` | `Microsoft.ApiManagement/service/portalsettings` | `Microsoft.ApiManagement/service` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalsettings/signin` | `Microsoft.ApiManagement.PortalSigninSettings` | `Microsoft.ApiManagement.PortalSigninSettings` | `Microsoft.ApiManagement/service/portalsettings` | `Microsoft.ApiManagement/service` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalsettings/signup` | `Microsoft.ApiManagement.PortalSignupSettings` | `Microsoft.ApiManagement.PortalSignupSettings` | `Microsoft.ApiManagement/service/portalsettings` | `Microsoft.ApiManagement/service` |
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -49,32 +59,32 @@ No hierarchy differences were found for matching resource ID patterns.
 
 **Differences:** 5 CRUD operation differences.
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.PrivateEndpointConnections.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}` | Missing. | Present. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.TagDescriptionContracts.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.WorkspaceNotification.workspaceNotificationRecipientEmailCreateOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientEmails/{email}` | Missing. | Present. |
 | `Microsoft.ApiManagement.WorkspaceNotification.workspaceNotificationRecipientUserCreateOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}` | Missing. | Present. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.PrivateEndpointConnections.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -84,7 +94,7 @@ No hierarchy differences were found for matching resource ID patterns.
 
 **Differences:** 17 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -125,7 +135,7 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.UserContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}` | Missing. | Present. |
 | `Microsoft.ApiManagement.WorkspaceContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -143,33 +153,33 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.ToolContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tools/{toolId}` | Missing. | Present. |
 | `Microsoft.ApiManagement.WikiContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/wikis/default` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.IssueAttachmentContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}` | Missing. | Present. |
 | `Microsoft.ApiManagement.IssueCommentContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.PolicyContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}` | Missing. | Present. |
 | `Microsoft.ApiManagement.TagContracts.getEntityStateByOperation` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.GraphQLApiResolverPolicy.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/resolvers/{resolverId}/policies/{policyId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.ContentItemContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -177,7 +187,7 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.GatewayContracts.gatewayApiListByService` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis` | Different. | Different. |
 | `Microsoft.ApiManagement.GatewayHostnameConfigurationContracts.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -185,7 +195,7 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.WorkspaceGroup.checkEntityExists` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}/users/{userId}` | Missing. | Present. |
 | `Microsoft.ApiManagement.WorkspaceGroup.workspaceGroupUserDelete` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}/users/{userId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -196,7 +206,7 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.ProductWiki.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/wikis/default` | Missing. | Present. |
 | `Microsoft.ApiManagement.TagContractOperation.getEntityStateByProduct` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -205,13 +215,13 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.AccessInformationContracts.save` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/save` | Present. | Missing. |
 | `Microsoft.ApiManagement.AccessInformationContracts.validate` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/validate` | Present. | Missing. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.UserContracts.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/groups` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -230,7 +240,7 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.WorkspaceSubscription.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/subscriptions/{sid}` | Missing. | Present. |
 | `Microsoft.ApiManagement.WorkspaceTag.getEntityState` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -240,13 +250,13 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.WorkspaceApiRelease.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/releases/{releaseId}` | Missing. | Present. |
 | `Microsoft.ApiManagement.WorkspaceApiSchema.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/schemas/{schemaId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.WorkspaceApiOperationPolicy.getEntityTag` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -254,14 +264,14 @@ No hierarchy differences were found for matching resource ID patterns.
 | `Microsoft.ApiManagement.WorkspaceGroup.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}/users` | Different. | Different. |
 | `Microsoft.ApiManagement.WorkspaceGroup.workspaceGroupUserDelete` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/groups/{groupId}/users/{userId}` | Present. | Missing. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ApiManagement.WorkspaceNotification.workspaceNotificationRecipientEmailCreateOrUpdate` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientEmails/{email}` | Present. | Missing. |
 | `Microsoft.ApiManagement.WorkspaceNotification.workspaceNotificationRecipientUserCreateOrUpdate` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/notifications/{notificationName}/recipientUsers/{userId}` | Present. | Missing. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/products/{productId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -271,46 +281,47 @@ No hierarchy differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 36 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 37 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}` | `ApiManagementDeletedService` | `DeletedServiceContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}` | `ApiGateway` | `ApiManagementGatewayResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}` | `ApiGatewayConfigConnection` | `ApiManagementGatewayConfigConnectionResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/hostnameBindings/{hostnameBindingName}` | `GatewayHostnameBinding` | `GatewayHostnameBindingResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}` | `ApiManagementService` | `ApiManagementServiceResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}` | `ApiVersionSet` | `ServiceApiVersionSets` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}` | `Api` | `ServiceApis` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}` | `ApiDiagnostic` | `ApisDiagnostics` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}` | `ApiIssue` | `ApisIssues` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}` | `ApiIssueAttachment` | `IssueAttachmentContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/comments/{commentId}` | `ApiIssueComment` | `IssueCommentContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}` | `ApiOperation` | `ApisOperations` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}` | `ApiOperationPolicy` | `OperationsPolicies` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/policies/{policyId}` | `ApiPolicy` | `ApisPolicies` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}` | `ApiRelease` | `ApisReleases` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/schemas/{schemaId}` | `ApiSchema` | `ApisSchemas` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions/{tagDescriptionId}` | `ApiTagDescription` | `TagDescriptionContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}` | `ApiManagementAuthorizationServer` | `AuthorizationServerContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches/{cacheId}` | `ApiManagementCache` | `CacheContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}` | `ApiManagementContentType` | `ContentTypeContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}` | `ApiManagementContentItem` | `ContentItemContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}` | `ApiManagementGateway` | `GatewayContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}` | `ApiManagementGatewayCertificateAuthority` | `GatewayCertificateAuthorityContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}` | `ApiManagementGatewayHostnameConfiguration` | `GatewayHostnameConfigurationContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/identityProviders/{identityProviderName}` | `ApiManagementIdentityProvider` | `IdentityProviderContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders/{opid}` | `ApiManagementOpenIdConnectProvider` | `OpenidConnectProviderContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions/{portalRevisionId}` | `ApiManagementPortalRevision` | `PortalRevisionContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation` | `ApiManagementPortalDelegationSetting` | `PortalDelegationSettings` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin` | `ApiManagementPortalSignInSetting` | `PortalSigninSettings` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup` | `ApiManagementPortalSignUpSetting` | `PortalSignupSettings` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}` | `ApiManagementPrivateEndpointConnection` | `ApiManagementServiceResourcePrivateEndpointConnection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}` | `ApiManagementTenantSetting` | `TenantSettingsContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}` | `ApiManagementEmailTemplate` | `EmailTemplateContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}` | `TenantAccessInfo` | `AccessInformationContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}` | `ApiManagementUser` | `UserContract` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}` | `ApiManagementWorkspaceLinks` | `ApiManagementWorkspaceLinksResource` |
+| `/subscriptions/{}/providers/microsoft.apimanagement/locations/{}/deletedservices/{}` | `ApiManagementDeletedService` | `DeletedServiceContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/gateways/{}` | `ApiGateway` | `ApiManagementGatewayResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/gateways/{}/configconnections/{}` | `ApiGatewayConfigConnection` | `ApiManagementGatewayConfigConnectionResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/gateways/{}/hostnamebindings/{}` | `GatewayHostnameBinding` | `GatewayHostnameBindingResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}` | `ApiManagementService` | `ApiManagementServiceResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}` | `Api` | `ServiceApis` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/diagnostics/{}` | `ApiDiagnostic` | `ApisDiagnostics` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/issues/{}` | `ApiIssue` | `ApisIssues` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/issues/{}/attachments/{}` | `ApiIssueAttachment` | `IssueAttachmentContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/issues/{}/comments/{}` | `ApiIssueComment` | `IssueCommentContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/operations/{}` | `ApiOperation` | `ApisOperations` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/operations/{}/policies/{}` | `ApiOperationPolicy` | `OperationsPolicies` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/policies/{}` | `ApiPolicy` | `ApisPolicies` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/releases/{}` | `ApiRelease` | `ApisReleases` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/schemas/{}` | `ApiSchema` | `ApisSchemas` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apis/{}/tagdescriptions/{}` | `ApiTagDescription` | `TagDescriptionContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/apiversionsets/{}` | `ApiVersionSet` | `ServiceApiVersionSets` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/authorizationservers/{}` | `ApiManagementAuthorizationServer` | `AuthorizationServerContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/caches/{}` | `ApiManagementCache` | `CacheContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/contenttypes/{}` | `ApiManagementContentType` | `ContentTypeContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/contenttypes/{}/contentitems/{}` | `ApiManagementContentItem` | `ContentItemContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/gateways/{}` | `ApiManagementGateway` | `GatewayContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/gateways/{}/certificateauthorities/{}` | `ApiManagementGatewayCertificateAuthority` | `GatewayCertificateAuthorityContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/gateways/{}/hostnameconfigurations/{}` | `ApiManagementGatewayHostnameConfiguration` | `GatewayHostnameConfigurationContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/identityproviders/{}` | `ApiManagementIdentityProvider` | `IdentityProviderContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/openidconnectproviders/{}` | `ApiManagementOpenIdConnectProvider` | `OpenidConnectProviderContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalrevisions/{}` | `ApiManagementPortalRevision` | `PortalRevisionContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalsettings/delegation` | `ApiManagementPortalDelegationSetting` | `PortalDelegationSettings` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalsettings/signin` | `ApiManagementPortalSignInSetting` | `PortalSigninSettings` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/portalsettings/signup` | `ApiManagementPortalSignUpSetting` | `PortalSignupSettings` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/privateendpointconnections/{}` | `ApiManagementPrivateEndpointConnection` | `ApiManagementServiceResourcePrivateEndpointConnection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/privatelinkresources/{}` | `ApiManagementPrivateLinkResource` | `ApiManagementServiceResourcePrivateLinkResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/settings/{}` | `ApiManagementTenantSetting` | `TenantSettingsContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/templates/{}` | `ApiManagementEmailTemplate` | `EmailTemplateContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/tenant/{}` | `TenantAccessInfo` | `AccessInformationContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/users/{}` | `ApiManagementUser` | `UserContract` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.apimanagement/service/{}/workspacelinks/{}` | `ApiManagementWorkspaceLinks` | `ApiManagementWorkspaceLinksResource` |
 

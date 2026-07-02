@@ -9,35 +9,37 @@ Compared files:
 
 3 CRUD operation differences; 1 list/action operation difference.
 
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
+
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | Same 10 resource ID patterns in both schemas. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
+| Resource ID patterns | Same 10 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
 | CRUD operations for matching patterns | 3 differences. |
 | List/action operations for matching patterns | 1 difference. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** none. Both schemas include the same `resourceIdPattern` values.
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 10 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 10 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -45,21 +47,21 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 3 CRUD operation differences.
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.HealthcareApis.DicomServiceOperationGroup.delete` | `Delete` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}` | Present. | Missing. |
 | `Microsoft.HealthcareApis.DicomServiceOperationGroup.update` | `Update` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.HealthcareApis.FhirServiceOperationGroup.delete` | `Delete` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}` | Present. | Missing. |
 | `Microsoft.HealthcareApis.FhirServiceOperationGroup.update` | `Update` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -70,7 +72,7 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 1 list/action operation difference.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -85,18 +87,18 @@ No resource model differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 8 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 8 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}` | `HealthcareApisService` | `ServicesDescription` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}` | `HealthcareApisServicePrivateEndpointConnection` | `ServicesPrivateEndpointConnections` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}` | `HealthcareApisServicePrivateLinkResource` | `ServicesPrivateLinkResources` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}` | `HealthcareApisWorkspace` | `Workspace` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}` | `HealthcareApisIotConnector` | `IotConnector` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}` | `HealthcareApisIotFhirDestination` | `IotFhirDestination` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}` | `HealthcareApisWorkspacePrivateEndpointConnection` | `WorkspacesPrivateEndpointConnections` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}` | `HealthcareApisWorkspacePrivateLinkResource` | `WorkspacesPrivateLinkResources` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/services/{}` | `HealthcareApisService` | `ServicesDescription` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/services/{}/privateendpointconnections/{}` | `HealthcareApisServicePrivateEndpointConnection` | `ServicesPrivateEndpointConnections` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/services/{}/privatelinkresources/{}` | `HealthcareApisServicePrivateLinkResource` | `ServicesPrivateLinkResources` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/workspaces/{}` | `HealthcareApisWorkspace` | `Workspace` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/workspaces/{}/iotconnectors/{}` | `HealthcareApisIotConnector` | `IotConnector` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/workspaces/{}/iotconnectors/{}/fhirdestinations/{}` | `HealthcareApisIotFhirDestination` | `IotFhirDestination` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/workspaces/{}/privateendpointconnections/{}` | `HealthcareApisWorkspacePrivateEndpointConnection` | `WorkspacesPrivateEndpointConnections` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.healthcareapis/workspaces/{}/privatelinkresources/{}` | `HealthcareApisWorkspacePrivateLinkResource` | `WorkspacesPrivateLinkResources` |
 

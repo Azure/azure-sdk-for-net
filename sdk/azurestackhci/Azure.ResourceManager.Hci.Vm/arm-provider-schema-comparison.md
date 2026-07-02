@@ -7,37 +7,39 @@ Compared files:
 
 ## Summary
 
-0 legacy-only and 2 resolve-only resource ID patterns; 2 CRUD operation differences; 1 list/action operation difference.
+0 legacy-only and 2 resolve-only normalized resource ID patterns; 2 CRUD operation differences; 1 list/action operation difference.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 17 matching patterns; 0 legacy-only; 2 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
+| Resource ID patterns | 17 matching normalized patterns; 0 legacy-only; 2 resolve-only. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
 | CRUD operations for matching patterns | 2 differences. |
 | List/action operations for matching patterns | 1 difference. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 0 legacy-only pattern(s), 2 resolve-only pattern(s).
+**Differences:** 0 legacy-only normalized pattern(s), 2 resolve-only normalized pattern(s).
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 17 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 17 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 2 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/natGateways/{natGatewayName}/inboundRules/{inboundRuleName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/snapshots/{snapshotName}` |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -45,13 +47,13 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 2 CRUD operation differences.
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.AzureStackHCI.NetworkInterfaces.updateOld` | `Update` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}` | Missing. | Present. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -61,7 +63,7 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 1 list/action operation difference.
 
-#### List/action operation differences: `/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default`
+#### List and action operations differences: `/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -71,27 +73,27 @@ No resource model differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 17 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 17 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}` | `HciVmGalleryImage` | `GalleryImage` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/loadBalancers/{loadBalancerName}` | `HciVmLoadBalancer` | `LoadBalancer` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}` | `HciVmLogicalNetwork` | `LogicalNetwork` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}` | `HciVmMarketplaceGalleryImage` | `MarketplaceGalleryImage` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/natGateways/{natGatewayName}` | `HciVmNatGateway` | `NatGateway` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}` | `HciVmNetworkInterface` | `NetworkInterface` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}` | `HciVmNetworkSecurityGroup` | `NetworkSecurityGroup` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}` | `HciVmSecurityRule` | `SecurityRule` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/publicIPAddresses/{publicIPAddressName}` | `HciVmPublicIPAddress` | `PublicIPAddress` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}` | `HciVmStorageContainer` | `StorageContainer` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}` | `HciVmVirtualHardDisk` | `VirtualHardDisk` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualNetworks/{virtualNetworkName}` | `HciVmVirtualNetwork` | `VirtualNetwork` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}` | `HciVmVirtualNetworkSubnet` | `VirtualNetworkSubnet` |
-| `/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default` | `HciVmInstance` | `VirtualMachineInstance` |
-| `/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/attestationStatus/default` | `HciVmAttestationStatus` | `AttestationStatus` |
-| `/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/guestAgents/default` | `HciVmGuestAgent` | `GuestAgent` |
-| `/{resourceUri}/providers/Microsoft.AzureStackHCI/virtualMachineInstances/default/hybridIdentityMetadata/default` | `HciVmHybridIdentityMetadata` | `HybridIdentityMetadata` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/galleryimages/{}` | `HciVmGalleryImage` | `GalleryImage` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/loadbalancers/{}` | `HciVmLoadBalancer` | `LoadBalancer` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/logicalnetworks/{}` | `HciVmLogicalNetwork` | `LogicalNetwork` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/marketplacegalleryimages/{}` | `HciVmMarketplaceGalleryImage` | `MarketplaceGalleryImage` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/natgateways/{}` | `HciVmNatGateway` | `NatGateway` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/networkinterfaces/{}` | `HciVmNetworkInterface` | `NetworkInterface` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/networksecuritygroups/{}` | `HciVmNetworkSecurityGroup` | `NetworkSecurityGroup` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/networksecuritygroups/{}/securityrules/{}` | `HciVmSecurityRule` | `SecurityRule` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/publicipaddresses/{}` | `HciVmPublicIPAddress` | `PublicIPAddress` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/storagecontainers/{}` | `HciVmStorageContainer` | `StorageContainer` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/virtualharddisks/{}` | `HciVmVirtualHardDisk` | `VirtualHardDisk` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/virtualnetworks/{}` | `HciVmVirtualNetwork` | `VirtualNetwork` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azurestackhci/virtualnetworks/{}/subnets/{}` | `HciVmVirtualNetworkSubnet` | `VirtualNetworkSubnet` |
+| `/{}/providers/microsoft.azurestackhci/virtualmachineinstances/default` | `HciVmInstance` | `VirtualMachineInstance` |
+| `/{}/providers/microsoft.azurestackhci/virtualmachineinstances/default/attestationstatus/default` | `HciVmAttestationStatus` | `AttestationStatus` |
+| `/{}/providers/microsoft.azurestackhci/virtualmachineinstances/default/guestagents/default` | `HciVmGuestAgent` | `GuestAgent` |
+| `/{}/providers/microsoft.azurestackhci/virtualmachineinstances/default/hybrididentitymetadata/default` | `HciVmHybridIdentityMetadata` | `HybridIdentityMetadata` |
 

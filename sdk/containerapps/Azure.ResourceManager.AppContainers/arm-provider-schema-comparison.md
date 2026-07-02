@@ -7,37 +7,39 @@ Compared files:
 
 ## Summary
 
-3 legacy-only and 0 resolve-only resource ID patterns; 3 CRUD operation differences; 4 list/action operation differences.
+3 legacy-only and 0 resolve-only normalized resource ID patterns; 3 CRUD operation differences; 4 list/action operation differences.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 38 matching patterns; 3 legacy-only; 0 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
+| Resource ID patterns | 38 matching normalized patterns; 3 legacy-only; 0 resolve-only. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
 | CRUD operations for matching patterns | 3 differences. |
 | List/action operations for matching patterns | 4 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 3 legacy-only pattern(s), 0 resolve-only pattern(s).
+**Differences:** 3 legacy-only normalized pattern(s), 0 resolve-only normalized pattern(s).
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 38 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 38 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 3 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/revisionsApi/revisions/{revisionName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi/`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi/` |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -45,20 +47,20 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 3 CRUD operation differences.
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.App.ConnectedEnvironmentsDaprComponents.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.App.HttpRouteConfigs.delete` | `Delete` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}` | Present. | Missing. |
 | `Microsoft.App.HttpRouteConfigs.update` | `Update` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -68,13 +70,13 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 4 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.App.ConnectedEnvironmentsDaprComponents.createOrUpdate` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -82,13 +84,13 @@ No resource model differences were found for matching resource ID patterns.
 | `Microsoft.App.ContainerAppsDiagnostics.getRoot` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi/` | Missing. | Present. |
 | `Microsoft.App.ContainerAppsDiagnostics.listRevisions` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/revisionsApi/revisions/` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.App.ContainerAppsLabelHistory.listLabelHistory` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -101,39 +103,39 @@ No resource model differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 29 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 29 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}` | `Builder` | `BuilderResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/builders/{builderName}/builds/{buildName}` | `Build` | `BuildResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}` | `ContainerAppConnectedEnvironment` | `ConnectedEnvironment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/daprComponents/{componentName}` | `ContainerAppConnectedEnvironmentDaprComponent` | `ConnectedEnvironmentsDaprComponents` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}` | `ContainerAppConnectedEnvironmentStorage` | `ConnectedEnvironmentStorage` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}` | `AppResiliency` | `ContainerAppsResiliencyPolicies` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}` | `ContainerAppAuthConfig` | `AuthConfig` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/builds/{buildName}` | `ContainerAppsBuild` | `ContainerAppsBuilds` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/functions/{functionName}` | `ContainerAppsFunction` | `ContainerAppsFunctions` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}` | `LabelHistory` | `ContainerAppsLabelHistory` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/patches/{patchName}` | `ContainerAppsPatch` | `ContainerAppsPatches` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}` | `LogicAppWorkflowEnvelope` | `WorkflowEnvelope` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}` | `ContainerAppRevision` | `Revision` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/functions/{functionName}` | `ContainerAppsRevisionFunction` | `RevisionsFunctions` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}` | `ContainerAppReplica` | `Replica` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}` | `ContainerAppSourceControl` | `SourceControl` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}` | `ContainerAppJob` | `Job` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}` | `ContainerAppJobExecution` | `JobExecution` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}` | `ContainerAppManagedEnvironment` | `ManagedEnvironment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}` | `ContainerAppManagedEnvironmentDaprComponent` | `ManagedEnvironmentsDaprComponents` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}/resiliencyPolicies/{name}` | `DaprComponentResiliencyPolicy` | `DaprComponentsResiliencyPolicies` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}` | `DaprSubscription` | `ManagedEnvironmentsDaprSubscriptions` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/dotNetComponents/{name}` | `DotNetComponent` | `ManagedEnvironmentsDotNetComponents` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/httpRouteConfigs/{httpRouteName}` | `ContainerAppHttpRouteConfig` | `ManagedEnvironmentsHttpRouteConfigs` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}` | `JavaComponent` | `ManagedEnvironmentsJavaComponents` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/maintenanceConfigurations/{configName}` | `ContainerAppMaintenanceConfiguration` | `ManagedEnvironmentsMaintenanceConfigurations` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}` | `ContainerAppManagedCertificate` | `ManagedCertificate` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/privateEndpointConnections/{privateEndpointConnectionName}` | `ContainerAppPrivateEndpointConnection` | `ManagedEnvironmentsPrivateEndpointConnections` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}` | `ContainerAppManagedEnvironmentStorage` | `ManagedEnvironmentStorage` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/builders/{}` | `Builder` | `BuilderResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/builders/{}/builds/{}` | `Build` | `BuildResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/connectedenvironments/{}` | `ContainerAppConnectedEnvironment` | `ConnectedEnvironment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/connectedenvironments/{}/daprcomponents/{}` | `ContainerAppConnectedEnvironmentDaprComponent` | `ConnectedEnvironmentsDaprComponents` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/connectedenvironments/{}/storages/{}` | `ContainerAppConnectedEnvironmentStorage` | `ConnectedEnvironmentStorage` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/authconfigs/{}` | `ContainerAppAuthConfig` | `AuthConfig` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/builds/{}` | `ContainerAppsBuild` | `ContainerAppsBuilds` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/functions/{}` | `ContainerAppsFunction` | `ContainerAppsFunctions` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/labelhistory/{}` | `LabelHistory` | `ContainerAppsLabelHistory` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/patches/{}` | `ContainerAppsPatch` | `ContainerAppsPatches` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/providers/microsoft.app/logicapps/{}/workflows/{}` | `LogicAppWorkflowEnvelope` | `WorkflowEnvelope` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/resiliencypolicies/{}` | `AppResiliency` | `ContainerAppsResiliencyPolicies` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/revisions/{}` | `ContainerAppRevision` | `Revision` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/revisions/{}/functions/{}` | `ContainerAppsRevisionFunction` | `RevisionsFunctions` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/revisions/{}/replicas/{}` | `ContainerAppReplica` | `Replica` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/containerapps/{}/sourcecontrols/{}` | `ContainerAppSourceControl` | `SourceControl` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/jobs/{}` | `ContainerAppJob` | `Job` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/jobs/{}/executions/{}` | `ContainerAppJobExecution` | `JobExecution` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}` | `ContainerAppManagedEnvironment` | `ManagedEnvironment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/daprcomponents/{}` | `ContainerAppManagedEnvironmentDaprComponent` | `ManagedEnvironmentsDaprComponents` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/daprcomponents/{}/resiliencypolicies/{}` | `DaprComponentResiliencyPolicy` | `DaprComponentsResiliencyPolicies` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/daprsubscriptions/{}` | `DaprSubscription` | `ManagedEnvironmentsDaprSubscriptions` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/dotnetcomponents/{}` | `DotNetComponent` | `ManagedEnvironmentsDotNetComponents` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/httprouteconfigs/{}` | `ContainerAppHttpRouteConfig` | `ManagedEnvironmentsHttpRouteConfigs` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/javacomponents/{}` | `JavaComponent` | `ManagedEnvironmentsJavaComponents` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/maintenanceconfigurations/{}` | `ContainerAppMaintenanceConfiguration` | `ManagedEnvironmentsMaintenanceConfigurations` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/managedcertificates/{}` | `ContainerAppManagedCertificate` | `ManagedCertificate` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/privateendpointconnections/{}` | `ContainerAppPrivateEndpointConnection` | `ManagedEnvironmentsPrivateEndpointConnections` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.app/managedenvironments/{}/storages/{}` | `ContainerAppManagedEnvironmentStorage` | `ManagedEnvironmentStorage` |
 

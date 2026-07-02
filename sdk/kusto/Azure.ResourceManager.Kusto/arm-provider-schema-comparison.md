@@ -7,51 +7,53 @@ Compared files:
 
 ## Summary
 
-2 legacy-only and 0 resolve-only resource ID patterns; 3 list/action operation differences.
+2 legacy-only and 0 resolve-only normalized resource ID patterns; 3 list/action operation differences.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 9 matching patterns; 2 legacy-only; 0 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
+| Resource ID patterns | 9 matching normalized patterns; 2 legacy-only; 0 resolve-only. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
 | List/action operations for matching patterns | 3 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 2 legacy-only pattern(s), 0 resolve-only pattern(s).
+**Differences:** 2 legacy-only normalized pattern(s), 0 resolve-only normalized pattern(s).
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 9 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 9 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 2 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/dataConnections/{dataConnectionName}` |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
 **Differences:** 3 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -74,13 +76,13 @@ No CRUD operation differences were found for matching resource ID patterns.
 | `Microsoft.Kusto.Databases.scriptsCheckNameAvailability` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scriptsCheckNameAvailability` | Missing. | Present. |
 | `Microsoft.Kusto.Databases.update` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.Kusto.DatabasePrincipalAssignments.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -90,18 +92,18 @@ No CRUD operation differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 8 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 8 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}` | `KustoCluster` | `Cluster` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/attachedDatabaseConfigurations/{attachedDatabaseConfigurationName}` | `KustoAttachedDatabaseConfiguration` | `AttachedDatabaseConfiguration` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}` | `KustoDatabasePrincipalAssignment` | `DatabasePrincipalAssignment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/scripts/{scriptName}` | `KustoScript` | `Script` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/managedPrivateEndpoints/{managedPrivateEndpointName}` | `KustoManagedPrivateEndpoint` | `ManagedPrivateEndpoint` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}` | `KustoClusterPrincipalAssignment` | `ClusterPrincipalAssignment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}` | `KustoPrivateEndpointConnection` | `PrivateEndpointConnection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}` | `KustoPrivateLinkResource` | `PrivateLinkResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}` | `KustoCluster` | `Cluster` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/attacheddatabaseconfigurations/{}` | `KustoAttachedDatabaseConfiguration` | `AttachedDatabaseConfiguration` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/databases/{}/principalassignments/{}` | `KustoDatabasePrincipalAssignment` | `DatabasePrincipalAssignment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/databases/{}/scripts/{}` | `KustoScript` | `Script` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/managedprivateendpoints/{}` | `KustoManagedPrivateEndpoint` | `ManagedPrivateEndpoint` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/principalassignments/{}` | `KustoClusterPrincipalAssignment` | `ClusterPrincipalAssignment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/privateendpointconnections/{}` | `KustoPrivateEndpointConnection` | `PrivateEndpointConnection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.kusto/clusters/{}/privatelinkresources/{}` | `KustoPrivateLinkResource` | `PrivateLinkResource` |
 

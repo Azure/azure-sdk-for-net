@@ -7,51 +7,53 @@ Compared files:
 
 ## Summary
 
-0 legacy-only and 4 resolve-only resource ID patterns; 1 list/action operation difference.
+0 legacy-only and 4 resolve-only normalized resource ID patterns; 1 list/action operation difference.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 1 matching patterns; 0 legacy-only; 4 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
+| Resource ID patterns | 1 matching normalized patterns; 0 legacy-only; 4 resolve-only. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
 | List/action operations for matching patterns | 1 difference. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 0 legacy-only pattern(s), 4 resolve-only pattern(s).
+**Differences:** 0 legacy-only normalized pattern(s), 4 resolve-only normalized pattern(s).
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 1 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 1 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 4 | `/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Resources/deployments/{deploymentName}`<br>`/providers/Microsoft.Resources/deployments/{deploymentName}`<br>`/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deployments/{deploymentName}`<br>`/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deployments/{deploymentName}` |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
 **Differences:** 1 list/action operation difference.
 
-#### List/action operation differences: `/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}`
+#### List and action operations differences: `/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -61,14 +63,14 @@ No CRUD operation differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 1 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 1 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 3 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}` | `ArmDeployment` | `DeploymentExtended` |
+| `/{}/providers/microsoft.resources/deployments/{}` | `ArmDeployment` | `DeploymentExtended` |
 
 ### Non-resource method differences
 

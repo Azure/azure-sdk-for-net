@@ -286,4 +286,3 @@ These libraries had raw resource ID pattern mismatches only because variable nam
 | `Azure.ResourceManager.WeightsAndBiases` | [report](sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases/arm-provider-schema-comparison.md) | No requested-axis differences after path-variable normalization. |
 | `Azure.ResourceManager.WorkloadOrchestration` | [report](sdk/workloadorchestration/Azure.ResourceManager.WorkloadOrchestration/arm-provider-schema-comparison.md) | 2 list/action operation differences. |
 | `Azure.ResourceManager.WorkloadsSapVirtualInstance` | [report](sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance/arm-provider-schema-comparison.md) | No requested-axis differences after path-variable normalization. |
-

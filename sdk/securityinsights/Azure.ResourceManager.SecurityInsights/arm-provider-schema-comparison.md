@@ -7,39 +7,41 @@ Compared files:
 
 ## Summary
 
-1 resource model difference; 5 CRUD operation differences; 2 list/action operation differences.
+1 resource model difference; 5 CRUD operation differences; 1 list/action operation difference.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | Same 41 resource ID patterns in both schemas. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
+| Resource ID patterns | Same 41 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
 | Resource model for matching patterns | 1 difference. |
 | CRUD operations for matching patterns | 5 differences. |
-| List/action operations for matching patterns | 2 differences. |
+| List/action operations for matching patterns | 1 difference. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** none. Both schemas include the same `resourceIdPattern` values.
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 41 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 41 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
 **Differences:** 1 resource model difference.
 
-| Resource ID pattern | Legacy resource model | `resolveArmResources` resource model | Legacy resource type | `resolveArmResources` resource type |
+| Normalized resource ID pattern | Legacy resource model | `resolveArmResources` resource model | Legacy resource type | `resolveArmResources` resource type |
 | --- | --- | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}` | `Microsoft.SecurityInsights.ThreatIntelligenceInformation` | `Microsoft.SecurityInsights.ThreatIntelligenceInformation` | `Microsoft.SecurityInsights/threatIntelligence/indicators` | `Microsoft.SecurityInsights/indicators` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/threatintelligence/main/indicators/{}` | `Microsoft.SecurityInsights.ThreatIntelligenceInformation` | `Microsoft.SecurityInsights.ThreatIntelligenceInformation` | `Microsoft.SecurityInsights/threatIntelligence/indicators` | `Microsoft.SecurityInsights/indicators` |
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -47,31 +49,31 @@ No hierarchy differences were found for matching resource ID patterns.
 
 **Differences:** 5 CRUD operation differences.
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.SecurityInsights.ActionResponses.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.SecurityInsights.AutomationRules.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.SecurityInsights.EntityQueries.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.SecurityInsights.SentinelOnboardingStates.create` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -79,68 +81,62 @@ No hierarchy differences were found for matching resource ID patterns.
 
 ### 4.2 List and action operations
 
-**Differences:** 2 list/action operation differences.
+**Differences:** 1 list/action operation difference.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.SecurityInsights.ActionResponses.createOrUpdate` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}`
-
-| Operation | Kind | Request path | Legacy | `resolveArmResources` |
-| --- | --- | --- | --- | --- |
-| `Microsoft.SecurityInsights.Entities.runPlaybook` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityIdentifier}/runPlaybook` -> `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/runPlaybook` | Different. | Different. |
-
 ## Secondary observations
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 37 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 37 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 4 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}` | `SecurityInsightsAlertRuleTemplate` | `ExternalResourceAlertRuleTemplate` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}` | `SecurityInsightsAlertRule` | `ExternalResourceAlertRule` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}` | `SecurityInsightsAlertRuleAction` | `ExternalResourceActionResponse` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}` | `SecurityInsightsAutomationRule` | `ExternalResourceAutomationRule` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/billingStatistics/{billingStatisticName}` | `SecurityInsightsBillingStatistic` | `ExternalResourceBillingStatistic` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}` | `SecurityInsightsBookmark` | `ExternalResourceBookmark` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}` | `SecurityInsightsPackage` | `ExternalResourcePackageModel` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}` | `SecurityInsightsProductPackage` | `ExternalResourceProductPackageModel` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}` | `SecurityInsightsTemplate` | `ExternalResourceTemplateModel` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}` | `SecurityInsightsProductTemplate` | `WorkspacesContentproducttemplates` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}` | `SecurityInsightsDataConnectorDefinition` | `ExternalResourceDataConnectorDefinition` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}` | `SecurityInsightsDataConnector` | `ExternalResourceDataConnector` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}` | `SecurityInsightsEntity` | `ExternalResourceEntity` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}` | `SecurityInsightsEntityQuery` | `ExternalResourceEntityQuery` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}` | `SecurityInsightsEntityQueryTemplate` | `ExternalResourceEntityQueryTemplate` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}` | `SecurityInsightsFileImport` | `ExternalResourceFileImport` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}` | `SecurityInsightsHunt` | `ExternalResourceHunt` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/comments/{huntCommentId}` | `SecurityInsightsHuntComment` | `ExternalResourceHuntComment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/relations/{huntRelationId}` | `SecurityInsightsHuntRelation` | `ExternalResourceHuntRelation` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}` | `SecurityInsightsIncident` | `ExternalResourceIncident` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}` | `SecurityInsightsIncidentComment` | `ExternalResourceIncidentComment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/tasks/{incidentTaskId}` | `SecurityInsightsIncidentTask` | `ExternalResourceIncidentTask` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/metadata/{metadataName}` | `SecurityInsightsMetadata` | `ExternalResourceMetadataModel` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}` | `SecurityInsightsOfficeConsent` | `ExternalResourceOfficeConsent` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}` | `SecurityInsightsSentinelOnboardingState` | `ExternalResourceSentinelOnboardingState` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}` | `SecurityInsightsRecommendation` | `ExternalResourceRecommendation` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}` | `SecurityMLAnalyticsSetting` | `ExternalResourceSecurityMLAnalyticsSetting` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}` | `SecurityInsightsSetting` | `ExternalResourceSettings` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}` | `SecurityInsightsSourceControl` | `ExternalResourceSourceControl` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}` | `TriggeredAnalyticsRuleRun` | `ExternalResourceTriggeredAnalyticsRuleRun` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}` | `SecurityInsightsWatchlist` | `ExternalResourceWatchlist` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}` | `SecurityInsightsWatchlistItem` | `ExternalResourceWatchlistItem` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/{workspaceManagerAssignmentName}` | `WorkspaceManagerAssignment` | `ExternalResourceWorkspaceManagerAssignment` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/{workspaceManagerAssignmentName}/jobs/{jobName}` | `WorkspaceManagerAssignmentJob` | `ExternalResourceJob` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerConfigurations/{workspaceManagerConfigurationName}` | `WorkspaceManagerConfiguration` | `ExternalResourceWorkspaceManagerConfiguration` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}` | `WorkspaceManagerGroup` | `ExternalResourceWorkspaceManagerGroup` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerMembers/{workspaceManagerMemberName}` | `WorkspaceManagerMember` | `ExternalResourceWorkspaceManagerMember` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/alertrules/{}` | `SecurityInsightsAlertRule` | `ExternalResourceAlertRule` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/alertrules/{}/actions/{}` | `SecurityInsightsAlertRuleAction` | `ExternalResourceActionResponse` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/alertruletemplates/{}` | `SecurityInsightsAlertRuleTemplate` | `ExternalResourceAlertRuleTemplate` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/automationrules/{}` | `SecurityInsightsAutomationRule` | `ExternalResourceAutomationRule` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/billingstatistics/{}` | `SecurityInsightsBillingStatistic` | `ExternalResourceBillingStatistic` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/bookmarks/{}` | `SecurityInsightsBookmark` | `ExternalResourceBookmark` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/contentpackages/{}` | `SecurityInsightsPackage` | `ExternalResourcePackageModel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/contentproductpackages/{}` | `SecurityInsightsProductPackage` | `ExternalResourceProductPackageModel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/contentproducttemplates/{}` | `SecurityInsightsProductTemplate` | `WorkspacesContentproducttemplates` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/contenttemplates/{}` | `SecurityInsightsTemplate` | `ExternalResourceTemplateModel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/dataconnectordefinitions/{}` | `SecurityInsightsDataConnectorDefinition` | `ExternalResourceDataConnectorDefinition` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/dataconnectors/{}` | `SecurityInsightsDataConnector` | `ExternalResourceDataConnector` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/entities/{}` | `SecurityInsightsEntity` | `ExternalResourceEntity` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/entityqueries/{}` | `SecurityInsightsEntityQuery` | `ExternalResourceEntityQuery` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/entityquerytemplates/{}` | `SecurityInsightsEntityQueryTemplate` | `ExternalResourceEntityQueryTemplate` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/fileimports/{}` | `SecurityInsightsFileImport` | `ExternalResourceFileImport` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/hunts/{}` | `SecurityInsightsHunt` | `ExternalResourceHunt` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/hunts/{}/comments/{}` | `SecurityInsightsHuntComment` | `ExternalResourceHuntComment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/hunts/{}/relations/{}` | `SecurityInsightsHuntRelation` | `ExternalResourceHuntRelation` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/incidents/{}` | `SecurityInsightsIncident` | `ExternalResourceIncident` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/incidents/{}/comments/{}` | `SecurityInsightsIncidentComment` | `ExternalResourceIncidentComment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/incidents/{}/tasks/{}` | `SecurityInsightsIncidentTask` | `ExternalResourceIncidentTask` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/metadata/{}` | `SecurityInsightsMetadata` | `ExternalResourceMetadataModel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/officeconsents/{}` | `SecurityInsightsOfficeConsent` | `ExternalResourceOfficeConsent` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/onboardingstates/{}` | `SecurityInsightsSentinelOnboardingState` | `ExternalResourceSentinelOnboardingState` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/recommendations/{}` | `SecurityInsightsRecommendation` | `ExternalResourceRecommendation` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/securitymlanalyticssettings/{}` | `SecurityMLAnalyticsSetting` | `ExternalResourceSecurityMLAnalyticsSetting` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/settings/{}` | `SecurityInsightsSetting` | `ExternalResourceSettings` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/sourcecontrols/{}` | `SecurityInsightsSourceControl` | `ExternalResourceSourceControl` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/triggeredanalyticsruleruns/{}` | `TriggeredAnalyticsRuleRun` | `ExternalResourceTriggeredAnalyticsRuleRun` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/watchlists/{}` | `SecurityInsightsWatchlist` | `ExternalResourceWatchlist` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/watchlists/{}/watchlistitems/{}` | `SecurityInsightsWatchlistItem` | `ExternalResourceWatchlistItem` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/workspacemanagerassignments/{}` | `WorkspaceManagerAssignment` | `ExternalResourceWorkspaceManagerAssignment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/workspacemanagerassignments/{}/jobs/{}` | `WorkspaceManagerAssignmentJob` | `ExternalResourceJob` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/workspacemanagerconfigurations/{}` | `WorkspaceManagerConfiguration` | `ExternalResourceWorkspaceManagerConfiguration` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/workspacemanagergroups/{}` | `WorkspaceManagerGroup` | `ExternalResourceWorkspaceManagerGroup` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.operationalinsights/workspaces/{}/providers/microsoft.securityinsights/workspacemanagermembers/{}` | `WorkspaceManagerMember` | `ExternalResourceWorkspaceManagerMember` |
 
 ### Non-resource method differences
 

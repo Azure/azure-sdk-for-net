@@ -9,56 +9,58 @@ Compared files:
 
 2 list/action operation differences.
 
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
+
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | Same 20 resource ID patterns in both schemas. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
+| Resource ID patterns | Same 20 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
 | List/action operations for matching patterns | 2 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** none. Both schemas include the same `resourceIdPattern` values.
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 20 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 20 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
 **Differences:** 2 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.ContainerService.ManagedClusters.operationStatusResultGet` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/operations/{operationId}` | Missing. | Present. |
 | `Microsoft.ContainerService.ManagedClusters.operationStatusResultList` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/operations` | Missing. | Present. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -68,28 +70,28 @@ No CRUD operation differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 15 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 15 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 1 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/guardrailsVersions/{version}` | `ContainerServiceGuardrailsAvailableVersion` | `GuardrailsAvailableVersion` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/safeguardsVersions/{version}` | `ContainerServiceSafeguardsAvailableVersion` | `SafeguardsAvailableVersion` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/maintenanceWindows/{maintenanceWindowName}` | `MaintenanceWindow` | `MaintenanceWindowResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}` | `ContainerServiceManagedCluster` | `ManagedCluster` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}` | `ContainerServiceAgentPool` | `AgentPool` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/machines/{machineName}` | `ContainerServiceMachine` | `Machine` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/identityBindings/{identityBindingName}` | `ManagedClusterIdentityBinding` | `IdentityBinding` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/jwtAuthenticators/{jwtAuthenticatorName}` | `ManagedClusterJwtAuthenticator` | `JWTAuthenticator` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/loadBalancers/{loadBalancerName}` | `ManagedClusterLoadBalancer` | `LoadBalancer` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/maintenanceConfigurations/{configName}` | `ContainerServiceMaintenanceConfiguration` | `MaintenanceConfiguration` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/managedNamespaces/{managedNamespaceName}` | `ManagedClusterNamespace` | `ManagedNamespace` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/meshMemberships/{meshMembershipName}` | `ManagedClusterMeshMembership` | `MeshMembership` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}` | `ContainerServicePrivateEndpointConnection` | `PrivateEndpointConnection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}` | `ContainerServiceTrustedAccessRoleBinding` | `TrustedAccessRoleBinding` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}` | `AgentPoolSnapshot` | `Snapshot` |
+| `/subscriptions/{}/providers/microsoft.containerservice/locations/{}/guardrailsversions/{}` | `ContainerServiceGuardrailsAvailableVersion` | `GuardrailsAvailableVersion` |
+| `/subscriptions/{}/providers/microsoft.containerservice/locations/{}/safeguardsversions/{}` | `ContainerServiceSafeguardsAvailableVersion` | `SafeguardsAvailableVersion` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/maintenancewindows/{}` | `MaintenanceWindow` | `MaintenanceWindowResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}` | `ContainerServiceManagedCluster` | `ManagedCluster` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/agentpools/{}` | `ContainerServiceAgentPool` | `AgentPool` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/agentpools/{}/machines/{}` | `ContainerServiceMachine` | `Machine` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/identitybindings/{}` | `ManagedClusterIdentityBinding` | `IdentityBinding` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/jwtauthenticators/{}` | `ManagedClusterJwtAuthenticator` | `JWTAuthenticator` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/loadbalancers/{}` | `ManagedClusterLoadBalancer` | `LoadBalancer` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/maintenanceconfigurations/{}` | `ContainerServiceMaintenanceConfiguration` | `MaintenanceConfiguration` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/managednamespaces/{}` | `ManagedClusterNamespace` | `ManagedNamespace` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/meshmemberships/{}` | `ManagedClusterMeshMembership` | `MeshMembership` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/privateendpointconnections/{}` | `ContainerServicePrivateEndpointConnection` | `PrivateEndpointConnection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/managedclusters/{}/trustedaccessrolebindings/{}` | `ContainerServiceTrustedAccessRoleBinding` | `TrustedAccessRoleBinding` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerservice/snapshots/{}` | `AgentPoolSnapshot` | `Snapshot` |
 
 ### Non-resource method differences
 

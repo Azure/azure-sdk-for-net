@@ -7,37 +7,39 @@ Compared files:
 
 ## Summary
 
-3 legacy-only and 2 resolve-only resource ID patterns; 2 CRUD operation differences; 2 list/action operation differences.
+3 legacy-only and 2 resolve-only normalized resource ID patterns; 2 CRUD operation differences; 2 list/action operation differences.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 57 matching patterns; 3 legacy-only; 2 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
+| Resource ID patterns | 57 matching normalized patterns; 3 legacy-only; 2 resolve-only. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
 | CRUD operations for matching patterns | 2 differences. |
 | List/action operations for matching patterns | 2 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 3 legacy-only pattern(s), 2 resolve-only pattern(s).
+**Differences:** 3 legacy-only normalized pattern(s), 2 resolve-only normalized pattern(s).
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 57 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 57 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 3 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}/softDeletedSqlDatabases/{databaseName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}/softDeletedSqlDatabases/{databaseName}/softDeletedSqlContainers/{containerName}` |
 | `resolveArmResources` only | 2 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/backups/{backupId}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/commands/{commandId}` |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
@@ -45,13 +47,13 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 2 CRUD operation differences.
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.DocumentDB.DatabaseAccounts.createOrUpdate` | `Create` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}` | Present. | Missing. |
 
-#### CRUD operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}`
+#### CRUD operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -61,14 +63,14 @@ No resource model differences were found for matching resource ID patterns.
 
 **Differences:** 2 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
 | `Microsoft.DocumentDB.ClusterResources.getBackup` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/backups/{backupId}` | Present. | Missing. |
 | `Microsoft.DocumentDB.ClusterResources.getCommandAsync` | `Action` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/commands/{commandId}` | Present. | Missing. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
@@ -79,58 +81,58 @@ No resource model differences were found for matching resource ID patterns.
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 45 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 45 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 10 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}` | `CosmosDBLocation` | `LocationGetResult` |
-| `/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}` | `RestorableCosmosDBAccount` | `RestorableDatabaseAccountGetResult` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}` | `CassandraCluster` | `ClusterResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/dataCenters/{dataCenterName}` | `CassandraDataCenter` | `DataCenterResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}` | `CosmosDBAccount` | `DatabaseAccountGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}` | `CassandraKeyspace` | `CassandraKeyspaceGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}` | `CassandraTable` | `CassandraTableGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}` | `CassandraView` | `CassandraViewGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraRoleAssignments/{roleAssignmentId}` | `CassandraRoleAssignment` | `CassandraRoleAssignmentResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraRoleDefinitions/{roleDefinitionId}` | `CassandraRoleDefinition` | `CassandraRoleDefinitionResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/chaosFaults/{chaosFault}` | `ChaosFault` | `chaosFaultResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/copyJobs/{jobName}` | `CosmosDBCopyJob` | `CopyJobGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}` | `DataTransferJob` | `DataTransferJobGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}` | `CosmosDBGraph` | `GraphResourceGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}` | `GremlinDatabase` | `GremlinDatabaseGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}` | `GremlinGraph` | `GremlinGraphGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinRoleAssignments/{roleAssignmentId}` | `GremlinRoleAssignment` | `GremlinRoleAssignmentResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinRoleDefinitions/{roleDefinitionId}` | `GremlinRoleDefinition` | `GremlinRoleDefinitionResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongoMIRoleAssignments/{roleAssignmentId}` | `MongoMIRoleAssignment` | `MongoMIRoleAssignmentResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongoMIRoleDefinitions/{roleDefinitionId}` | `MongoMIRoleDefinition` | `MongoMIRoleDefinitionResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}` | `MongoDBDatabase` | `MongoDBDatabaseGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}` | `MongoDBCollection` | `MongoDBCollectionGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}` | `MongoDBRoleDefinition` | `MongoRoleDefinitionGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbUserDefinitions/{mongoUserDefinitionId}` | `MongoDBUserDefinition` | `MongoUserDefinitionGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}` | `CosmosDBPrivateEndpointConnection` | `PrivateEndpointConnection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/privateLinkResources/{groupName}` | `CosmosDBPrivateLinkResource` | `PrivateLinkResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}` | `CosmosDBService` | `ServiceResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}` | `CosmosDBSqlDatabase` | `SqlDatabaseGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/clientEncryptionKeys/{clientEncryptionKeyName}` | `CosmosDBSqlClientEncryptionKey` | `ClientEncryptionKeyGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}` | `CosmosDBSqlContainer` | `SqlContainerGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}` | `CosmosDBSqlStoredProcedure` | `SqlStoredProcedureGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}` | `CosmosDBSqlTrigger` | `SqlTriggerGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}` | `CosmosDBSqlUserDefinedFunction` | `SqlUserDefinedFunctionGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleAssignments/{roleAssignmentId}` | `CosmosDBSqlRoleAssignment` | `SqlRoleAssignmentGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleDefinitions/{roleDefinitionId}` | `CosmosDBSqlRoleDefinition` | `SqlRoleDefinitionGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}` | `CosmosDBTableRoleAssignment` | `TableRoleAssignmentResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleDefinitions/{roleDefinitionId}` | `CosmosDBTableRoleDefinition` | `TableRoleDefinitionResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}` | `CosmosDBTable` | `TableGetResults` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}` | `CosmosDBFleet` | `FleetResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetAnalytics/{fleetAnalyticsName}` | `FleetAnalytics` | `FleetAnalyticsResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}` | `CosmosDBFleetspace` | `FleetspaceResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}/fleetspaces/{fleetspaceName}/fleetspaceAccounts/{fleetspaceAccountName}` | `CosmosDBFleetspaceAccount` | `FleetspaceAccountResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}` | `GarnetCluster` | `GarnetClusterResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}` | `CosmosDBThroughputPool` | `ThroughputPoolResource` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}` | `CosmosDBThroughputPoolAccount` | `ThroughputPoolAccountResource` |
+| `/subscriptions/{}/providers/microsoft.documentdb/locations/{}` | `CosmosDBLocation` | `LocationGetResult` |
+| `/subscriptions/{}/providers/microsoft.documentdb/locations/{}/restorabledatabaseaccounts/{}` | `RestorableCosmosDBAccount` | `RestorableDatabaseAccountGetResult` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/cassandraclusters/{}` | `CassandraCluster` | `ClusterResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/cassandraclusters/{}/datacenters/{}` | `CassandraDataCenter` | `DataCenterResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}` | `CosmosDBAccount` | `DatabaseAccountGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/cassandrakeyspaces/{}` | `CassandraKeyspace` | `CassandraKeyspaceGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/cassandrakeyspaces/{}/tables/{}` | `CassandraTable` | `CassandraTableGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/cassandrakeyspaces/{}/views/{}` | `CassandraView` | `CassandraViewGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/cassandraroleassignments/{}` | `CassandraRoleAssignment` | `CassandraRoleAssignmentResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/cassandraroledefinitions/{}` | `CassandraRoleDefinition` | `CassandraRoleDefinitionResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/chaosfaults/{}` | `ChaosFault` | `chaosFaultResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/copyjobs/{}` | `CosmosDBCopyJob` | `CopyJobGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/datatransferjobs/{}` | `DataTransferJob` | `DataTransferJobGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/graphs/{}` | `CosmosDBGraph` | `GraphResourceGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/gremlindatabases/{}` | `GremlinDatabase` | `GremlinDatabaseGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/gremlindatabases/{}/graphs/{}` | `GremlinGraph` | `GremlinGraphGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/gremlinroleassignments/{}` | `GremlinRoleAssignment` | `GremlinRoleAssignmentResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/gremlinroledefinitions/{}` | `GremlinRoleDefinition` | `GremlinRoleDefinitionResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/mongodbdatabases/{}` | `MongoDBDatabase` | `MongoDBDatabaseGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/mongodbdatabases/{}/collections/{}` | `MongoDBCollection` | `MongoDBCollectionGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/mongodbroledefinitions/{}` | `MongoDBRoleDefinition` | `MongoRoleDefinitionGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/mongodbuserdefinitions/{}` | `MongoDBUserDefinition` | `MongoUserDefinitionGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/mongomiroleassignments/{}` | `MongoMIRoleAssignment` | `MongoMIRoleAssignmentResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/mongomiroledefinitions/{}` | `MongoMIRoleDefinition` | `MongoMIRoleDefinitionResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/privateendpointconnections/{}` | `CosmosDBPrivateEndpointConnection` | `PrivateEndpointConnection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/privatelinkresources/{}` | `CosmosDBPrivateLinkResource` | `PrivateLinkResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/services/{}` | `CosmosDBService` | `ServiceResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqldatabases/{}` | `CosmosDBSqlDatabase` | `SqlDatabaseGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqldatabases/{}/clientencryptionkeys/{}` | `CosmosDBSqlClientEncryptionKey` | `ClientEncryptionKeyGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqldatabases/{}/containers/{}` | `CosmosDBSqlContainer` | `SqlContainerGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqldatabases/{}/containers/{}/storedprocedures/{}` | `CosmosDBSqlStoredProcedure` | `SqlStoredProcedureGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqldatabases/{}/containers/{}/triggers/{}` | `CosmosDBSqlTrigger` | `SqlTriggerGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqldatabases/{}/containers/{}/userdefinedfunctions/{}` | `CosmosDBSqlUserDefinedFunction` | `SqlUserDefinedFunctionGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqlroleassignments/{}` | `CosmosDBSqlRoleAssignment` | `SqlRoleAssignmentGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/sqlroledefinitions/{}` | `CosmosDBSqlRoleDefinition` | `SqlRoleDefinitionGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/tableroleassignments/{}` | `CosmosDBTableRoleAssignment` | `TableRoleAssignmentResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/tableroledefinitions/{}` | `CosmosDBTableRoleDefinition` | `TableRoleDefinitionResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/databaseaccounts/{}/tables/{}` | `CosmosDBTable` | `TableGetResults` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/fleets/{}` | `CosmosDBFleet` | `FleetResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/fleets/{}/fleetanalytics/{}` | `FleetAnalytics` | `FleetAnalyticsResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/fleets/{}/fleetspaces/{}` | `CosmosDBFleetspace` | `FleetspaceResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/fleets/{}/fleetspaces/{}/fleetspaceaccounts/{}` | `CosmosDBFleetspaceAccount` | `FleetspaceAccountResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/garnetclusters/{}` | `GarnetCluster` | `GarnetClusterResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/throughputpools/{}` | `CosmosDBThroughputPool` | `ThroughputPoolResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.documentdb/throughputpools/{}/throughputpoolaccounts/{}` | `CosmosDBThroughputPoolAccount` | `ThroughputPoolAccountResource` |
 
 ### Non-resource method differences
 

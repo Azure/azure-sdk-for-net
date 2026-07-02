@@ -7,72 +7,83 @@ Compared files:
 
 ## Summary
 
-1 legacy-only and 1 resolve-only resource ID patterns.
+No requested-axis differences after path-variable normalization.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 14 matching patterns; 1 legacy-only; 1 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
-| List/action operations for matching patterns | Same list/action operation set for every matching resource ID pattern. |
+| Resource ID patterns | Same 15 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
+| List/action operations for matching patterns | Same list/action operation set for every matching normalized resource ID pattern. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 1 legacy-only pattern(s), 1 resolve-only pattern(s).
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 14 | Matching resource ID patterns are compared in the following sections. |
-| Legacy only | 1 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{groupName}` |
-| `resolveArmResources` only | 1 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateLinkResources/{privateLinkResourceName}` |
+| In both schemas | 15 | Matching normalized resource ID patterns are compared in the following sections. |
+| Legacy only | 0 | None. |
+| `resolveArmResources` only | 0 | None. |
+
+### Raw resource ID variable-name differences
+
+Raw resource ID pattern mismatches reduced after normalizing path variable names. This means at least some raw differences are only parameter-name differences such as `{name}` vs `{labName}`.
+
+| Raw legacy-only | Raw `resolveArmResources`-only | Normalized legacy-only | Normalized `resolveArmResources`-only |
+| ---: | ---: | ---: | ---: |
+| 1 | 1 | 0 | 0 |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `List` and `Action` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `List` and `Action` operation sets are identical after path-variable normalization.
 
-No list/action operation differences were found for matching resource ID patterns.
+No list/action operation differences were found for matching normalized resource ID patterns.
 
 ## Secondary observations
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 12 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 13 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}` | `ContainerRegistry` | `Registry` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/cacheRules/{cacheRuleName}` | `ContainerRegistryCacheRule` | `CacheRule` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}` | `ContainerRegistryCredentialSet` | `CredentialSet` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}` | `ContainerRegistryExportPipeline` | `ExportPipeline` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}` | `ContainerRegistryImportPipeline` | `ImportPipeline` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}` | `ContainerRegistryArchive` | `PackagesArchives` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}/versions/{archiveVersionName}` | `ContainerRegistryArchiveVersion` | `ArchivesVersions` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/pipelineRuns/{pipelineRunName}` | `ContainerRegistryPipelineRun` | `PipelineRun` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/privateEndpointConnections/{privateEndpointConnectionName}` | `ContainerRegistryPrivateEndpointConnection` | `PrivateEndpointConnection` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/replications/{replicationName}` | `ContainerRegistryReplication` | `Replication` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}` | `ContainerRegistryToken` | `Token` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/webhooks/{webhookName}` | `ContainerRegistryWebhook` | `Webhook` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}` | `ContainerRegistry` | `Registry` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/cacherules/{}` | `ContainerRegistryCacheRule` | `CacheRule` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/credentialsets/{}` | `ContainerRegistryCredentialSet` | `CredentialSet` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/exportpipelines/{}` | `ContainerRegistryExportPipeline` | `ExportPipeline` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/importpipelines/{}` | `ContainerRegistryImportPipeline` | `ImportPipeline` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/packages/{}/archives/{}` | `ContainerRegistryArchive` | `PackagesArchives` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/packages/{}/archives/{}/versions/{}` | `ContainerRegistryArchiveVersion` | `ArchivesVersions` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/pipelineruns/{}` | `ContainerRegistryPipelineRun` | `PipelineRun` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/privateendpointconnections/{}` | `ContainerRegistryPrivateEndpointConnection` | `PrivateEndpointConnection` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/privatelinkresources/{}` | `ContainerRegistryPrivateLinkResource` | `RegistryMyPrivateLinkResource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/replications/{}` | `ContainerRegistryReplication` | `Replication` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/tokens/{}` | `ContainerRegistryToken` | `Token` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.containerregistry/registries/{}/webhooks/{}` | `ContainerRegistryWebhook` | `Webhook` |
 

@@ -7,98 +7,104 @@ Compared files:
 
 ## Summary
 
-15 legacy-only and 15 resolve-only resource ID patterns; 5 list/action operation differences.
+2 list/action operation differences.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | 6 matching patterns; 15 legacy-only; 15 resolve-only. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
-| List/action operations for matching patterns | 5 differences. |
+| Resource ID patterns | Same 21 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
+| List/action operations for matching patterns | 2 differences. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** 15 legacy-only pattern(s), 15 resolve-only pattern(s).
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 6 | Matching resource ID patterns are compared in the following sections. |
-| Legacy only | 15 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/formulas/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualnetworks/{name}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}` |
-| `resolveArmResources` only | 15 | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates/{armTemplateName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{artifactName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{costName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/formulas/{formulaName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels/{notificationChannelName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{serviceRunnerName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks/{diskName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{environmentName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{secretName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}`<br>`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualnetworks/{virtualnetworkName}` |
+| In both schemas | 21 | Matching normalized resource ID patterns are compared in the following sections. |
+| Legacy only | 0 | None. |
+| `resolveArmResources` only | 0 | None. |
+
+### Raw resource ID variable-name differences
+
+Raw resource ID pattern mismatches reduced after normalizing path variable names. This means at least some raw differences are only parameter-name differences such as `{name}` vs `{labName}`.
+
+| Raw legacy-only | Raw `resolveArmResources`-only | Normalized legacy-only | Normalized `resolveArmResources`-only |
+| ---: | ---: | ---: | ---: |
+| 15 | 15 | 0 | 0 |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
-**Differences:** 5 list/action operation differences.
+**Differences:** 2 list/action operation differences.
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}`
-
-| Operation | Kind | Request path | Legacy | `resolveArmResources` |
-| --- | --- | --- | --- | --- |
-| `Microsoft.DevTestLab.CustomImages.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages` | Different. | Different. |
-
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
-| `Microsoft.DevTestLab.Policies.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies` | Different. | Different. |
+| `Microsoft.DevTestLab.GalleryImages.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages` | Different. | Different. |
 
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}`
+#### List and action operations differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}`
 
 | Operation | Kind | Request path | Legacy | `resolveArmResources` |
 | --- | --- | --- | --- | --- |
-| `Microsoft.DevTestLab.Schedules.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules` | Different. | Different. |
 | `Microsoft.DevTestLab.Schedules.listApplicable` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}/listApplicable` | Different. | Different. |
-
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}`
-
-| Operation | Kind | Request path | Legacy | `resolveArmResources` |
-| --- | --- | --- | --- | --- |
-| `Microsoft.DevTestLab.ServiceFabricSchedules.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules` | Different. | Different. |
-
-#### List/action operation differences: `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}`
-
-| Operation | Kind | Request path | Legacy | `resolveArmResources` |
-| --- | --- | --- | --- | --- |
-| `Microsoft.DevTestLab.VirtualMachineSchedules.list` | `List` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules` | Different. | Different. |
 
 ## Secondary observations
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 6 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 21 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 2 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}` | `DevTestLabCustomImage` | `LabsCustomimages` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}` | `DevTestLabPolicy` | `PolicysetsPolicies` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules/{name}` | `DevTestLabSchedule` | `LabsSchedules` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}` | `DevTestLabServiceFabricSchedule` | `ServicefabricsSchedules` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}` | `DevTestLabVmSchedule` | `VirtualmachinesSchedules` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}` | `DevTestLabGlobalSchedule` | `Schedules` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}` | `DevTestLab` | `Lab` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/artifactsources/{}` | `DevTestLabArtifactSource` | `ArtifactSource` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/artifactsources/{}/armtemplates/{}` | `DevTestLabArmTemplate` | `ArmTemplate` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/artifactsources/{}/artifacts/{}` | `DevTestLabArtifact` | `Artifact` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/costs/{}` | `DevTestLabCost` | `LabCost` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/customimages/{}` | `DevTestLabCustomImage` | `LabsCustomimages` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/formulas/{}` | `DevTestLabFormula` | `Formula` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/notificationchannels/{}` | `DevTestLabNotificationChannel` | `NotificationChannel` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/policysets/{}/policies/{}` | `DevTestLabPolicy` | `PolicysetsPolicies` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/schedules/{}` | `DevTestLabSchedule` | `LabsSchedules` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/servicerunners/{}` | `DevTestLabServiceRunner` | `ServiceRunner` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/users/{}` | `DevTestLabUser` | `User` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/users/{}/disks/{}` | `DevTestLabDisk` | `Disk` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/users/{}/environments/{}` | `DevTestLabEnvironment` | `DtlEnvironment` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/users/{}/secrets/{}` | `DevTestLabSecret` | `Secret` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/users/{}/servicefabrics/{}` | `DevTestLabServiceFabric` | `ServiceFabric` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/users/{}/servicefabrics/{}/schedules/{}` | `DevTestLabServiceFabricSchedule` | `ServicefabricsSchedules` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/virtualmachines/{}` | `DevTestLabVm` | `LabVirtualMachine` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/virtualmachines/{}/schedules/{}` | `DevTestLabVmSchedule` | `VirtualmachinesSchedules` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/labs/{}/virtualnetworks/{}` | `DevTestLabVirtualNetwork` | `VirtualNetwork` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.devtestlab/schedules/{}` | `DevTestLabGlobalSchedule` | `Schedules` |
 
 ### Non-resource method differences
 

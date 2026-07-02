@@ -7,76 +7,78 @@ Compared files:
 
 ## Summary
 
-No requested-axis differences.
+No requested-axis differences after path-variable normalization.
+
+Resource ID comparisons normalize path variable names, so `{name}` and `{labName}` are treated as the same resource identity.
 
 | Aspect | Result |
 | --- | --- |
-| Resource ID patterns | Same 29 resource ID patterns in both schemas. |
-| Hierarchy for matching patterns | Same resource-level hierarchy for every matching resource ID pattern. |
-| Resource model for matching patterns | Same resource model and resource type for every matching resource ID pattern. |
-| CRUD operations for matching patterns | Same CRUD operation set for every matching resource ID pattern. |
-| List/action operations for matching patterns | Same list/action operation set for every matching resource ID pattern. |
+| Resource ID patterns | Same 29 normalized resource ID patterns in both schemas. |
+| Hierarchy for matching patterns | Same resource-level hierarchy for every matching normalized resource ID pattern. |
+| Resource model for matching patterns | Same resource model and resource type for every matching normalized resource ID pattern. |
+| CRUD operations for matching patterns | Same CRUD operation set for every matching normalized resource ID pattern. |
+| List/action operations for matching patterns | Same list/action operation set for every matching normalized resource ID pattern. |
 
 ## 1. Resource ID pattern coverage
 
-**Differences:** none. Both schemas include the same `resourceIdPattern` values.
+**Differences:** none after path-variable normalization. Both schemas include the same normalized `resourceIdPattern` values.
 
 | Category | Count | Details |
 | --- | ---: | --- |
-| In both schemas | 29 | Matching resource ID patterns are compared in the following sections. |
+| In both schemas | 29 | Matching normalized resource ID patterns are compared in the following sections. |
 | Legacy only | 0 | None. |
 | `resolveArmResources` only | 0 | None. |
 
 ## 2. Hierarchy comparison for matching resource ID patterns
 
-**Differences:** none. For every matching `resourceIdPattern`, the resource-level `scope` object is identical in both schemas.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the resource-level `scope` object is identical after path-variable normalization.
 
-No hierarchy differences were found for matching resource ID patterns.
+No hierarchy differences were found for matching normalized resource ID patterns.
 
 ## 3. Resource model comparison for matching resource ID patterns
 
-**Differences:** none for `resourceModelId` or `resourceType`. All matching `resourceIdPattern` values map to the same resource model and resource type in both schemas.
+**Differences:** none for `resourceModelId` or `resourceType`. All matching normalized `resourceIdPattern` values map to the same resource model and resource type in both schemas.
 
-No resource model differences were found for matching resource ID patterns.
+No resource model differences were found for matching normalized resource ID patterns.
 
 ## 4. Operation comparison for matching resource ID patterns
 
 ### 4.1 CRUD operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `Create`, `Read`, `Update`, and `Delete` operation sets are identical after path-variable normalization.
 
-No CRUD operation differences were found for matching resource ID patterns.
+No CRUD operation differences were found for matching normalized resource ID patterns.
 
 ### 4.2 List and action operations
 
-**Differences:** none. For every matching `resourceIdPattern`, the `List` and `Action` operation sets are identical.
+**Differences:** none. For every matching normalized `resourceIdPattern`, the `List` and `Action` operation sets are identical after path-variable normalization.
 
-No list/action operation differences were found for matching resource ID patterns.
+No list/action operation differences were found for matching normalized resource ID patterns.
 
 ## Secondary observations
 
 These differences are outside the requested comparison axes but may still be useful when evaluating `resolveArmResources` output.
 
-- 13 matching resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
+- 13 matching normalized resource ID pattern(s) have different `resourceName` values. The requested comparison uses `resourceModelId` and `resourceType`; these still match unless noted above.
 - 1 non-resource method difference(s) were found.
 
 ### Resource name differences
 
-| Resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
+| Normalized resource ID pattern | Legacy `resourceName` | `resolveArmResources` `resourceName` |
 | --- | --- | --- |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}` | `AvsPrivateCloud` | `PrivateCloud` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}` | `AvsPrivateCloudAddon` | `Addon` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}` | `AvsCloudLink` | `CloudLink` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}` | `AvsPrivateCloudCluster` | `Cluster` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/datastores/{datastoreName}` | `AvsPrivateCloudDatastore` | `Datastore` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/hosts/{hostId}` | `AvsHost` | `Host` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}` | `AvsPrivateCloudClusterVirtualMachine` | `VirtualMachine` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/licenses/{licenseName}` | `AvsLicense` | `License` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/maintenances/{maintenanceName}` | `AvsMaintenance` | `Maintenance` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}` | `AvsProvisionedNetwork` | `ProvisionedNetwork` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}` | `AvsPureStoragePolicy` | `PureStoragePolicy` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}` | `WorkloadNetworkPortMirroringProfile` | `WorkloadNetworkPortMirroring` |
-| `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}` | `WorkloadNetworkVmGroup` | `WorkloadNetworkVMGroup` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}` | `AvsPrivateCloud` | `PrivateCloud` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/addons/{}` | `AvsPrivateCloudAddon` | `Addon` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/cloudlinks/{}` | `AvsCloudLink` | `CloudLink` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/clusters/{}` | `AvsPrivateCloudCluster` | `Cluster` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/clusters/{}/datastores/{}` | `AvsPrivateCloudDatastore` | `Datastore` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/clusters/{}/hosts/{}` | `AvsHost` | `Host` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/clusters/{}/virtualmachines/{}` | `AvsPrivateCloudClusterVirtualMachine` | `VirtualMachine` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/licenses/{}` | `AvsLicense` | `License` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/maintenances/{}` | `AvsMaintenance` | `Maintenance` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/provisionednetworks/{}` | `AvsProvisionedNetwork` | `ProvisionedNetwork` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/purestoragepolicies/{}` | `AvsPureStoragePolicy` | `PureStoragePolicy` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/workloadnetworks/default/portmirroringprofiles/{}` | `WorkloadNetworkPortMirroringProfile` | `WorkloadNetworkPortMirroring` |
+| `/subscriptions/{}/resourcegroups/{}/providers/microsoft.avs/privateclouds/{}/workloadnetworks/default/vmgroups/{}` | `WorkloadNetworkVmGroup` | `WorkloadNetworkVMGroup` |
 
 ### Non-resource method differences
 
