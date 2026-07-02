@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.AI.Discovery client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Azure.AI.Discovery for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.AI.Discovery</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0032;SA1649;SA1402;</NoWarn>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Include all generated code from _workspace -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\**\src\Generated\**\*.cs" LinkBase="Generated" />
+  </ItemGroup>
+
+  <!-- Exclude duplicate bookshelf files that are identical to workspace -->
+  <ItemGroup>
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\Internal\**\*.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\Models\ByType.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\Models\OperationState.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\Models\DiscoveryTag.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\Models\DiscoveryTag.Serialization.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\Models\AzureAIDiscoveryContext.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\DiscoveryModelFactory.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)..\_bookshelf\Azure.AI.Discovery\src\Generated\DiscoveryClientBuilderExtensions.cs" />
+  </ItemGroup>
+
+  <!-- Shared sources from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ProtocolOperationHelpers.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+</Project>

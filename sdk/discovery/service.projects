@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <!-- Remove sub-package intermediate csprojs from traversal builds.
+         These exist only so the main Azure.AI.Discovery.csproj can
+         Compile-Include their generated source files; they must not be
+         built as standalone projects. -->
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.AI.Discovery\_bookshelf\**\*.csproj" />
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.AI.Discovery\_workspace\**\*.csproj" />
+  </ItemGroup>
+</Project>

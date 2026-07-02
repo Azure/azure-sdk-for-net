@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/conversations?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "116",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectName": "Sanitized",
+        "investigationName": "/projects/test-project/investigations/test-invst"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:56:55 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "40a4bfa8-3d8f-4ee1-91d3-44e93348ba4a",
+        "displayName": null,
+        "investigationName": "projects/test-project/investigations/test-invst",
+        "projectName": "Sanitized",
+        "createdAt": "2026-05-12T00:56:55.7117442Z",
+        "createdBy": "Sanitized",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-05-12T00:56:55.7117442Z",
+        "lastModifiedBy": "Sanitized",
+        "lastModifiedByType": "User"
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/conversations/40a4bfa8-3d8f-4ee1-91d3-44e93348ba4a?api-version=2026-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Date": "Tue, 12 May 2026 00:56:58 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_INVESTIGATION_NAME": "test-invst",
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "1456547485"
+  }
+}

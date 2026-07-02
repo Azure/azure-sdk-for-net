@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Discovery.Workspace": "2026-02-01-preview"
+  }
+}

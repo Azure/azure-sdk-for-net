@@ -1,0 +1,15 @@
+<Project>
+  <!--
+    TypeSpec code-generation sub-project: must NOT be compiled as a standalone
+    project.  The main Azure.AI.Discovery.csproj pulls the generated source
+    via wildcard Compile Include.  Making all standard targets no-ops prevents
+    the CI traversal build from producing a conflicting Azure.AI.Discovery.dll
+    (the sub-csproj shares the same assembly name as the main project).
+  -->
+  <Target Name="Build" />
+  <Target Name="Rebuild" />
+  <Target Name="Clean" />
+  <Target Name="Restore" />
+  <Target Name="Pack" />
+  <Target Name="Publish" />
+</Project>
