@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class LatestLinkedSaaSResult
+    public partial class LatestLinkedSaaSResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResult"/>. </summary>
-        internal LatestLinkedSaaSResult()
+        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResponse"/>. </summary>
+        internal LatestLinkedSaaSResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResponse"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatestLinkedSaaSResult(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatestLinkedSaaSResponse(string saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
             IsHiddenSaaS = isHiddenSaaS;

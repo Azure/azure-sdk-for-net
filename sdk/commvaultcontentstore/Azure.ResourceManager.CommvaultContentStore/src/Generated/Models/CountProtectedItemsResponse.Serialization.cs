@@ -9,72 +9,69 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
-    public partial class ActivateSaaSParameterContent : IJsonModel<ActivateSaaSParameterContent>
+    /// <summary> Response for count protected items operation. </summary>
+    public partial class CountProtectedItemsResponse : IJsonModel<CountProtectedItemsResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/> for deserialization. </summary>
-        internal ActivateSaaSParameterContent()
+        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsResponse"/> for deserialization. </summary>
+        internal CountProtectedItemsResponse()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActivateSaaSParameterContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CountProtectedItemsResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActivateSaaSParameterContent(document.RootElement, options);
+                        return DeserializeCountProtectedItemsResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CountProtectedItemsResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CountProtectedItemsResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActivateSaaSParameterContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CountProtectedItemsResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActivateSaaSParameterContent IPersistableModel<ActivateSaaSParameterContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CountProtectedItemsResponse IPersistableModel<CountProtectedItemsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActivateSaaSParameterContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CountProtectedItemsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="activateSaaSParameterContent"> The <see cref="ActivateSaaSParameterContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ActivateSaaSParameterContent activateSaaSParameterContent)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CountProtectedItemsResponse"/> from. </param>
+        internal static CountProtectedItemsResponse FromResponse(Response response)
         {
-            if (activateSaaSParameterContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(activateSaaSParameterContent, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCountProtectedItemsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActivateSaaSParameterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CountProtectedItemsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +82,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CountProtectedItemsResponse)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("saaSGuid"u8);
-            writer.WriteStringValue(SaaSGuid);
+            writer.WritePropertyName("count"u8);
+            writer.WriteStringValue(Count);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +108,36 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActivateSaaSParameterContent IJsonModel<ActivateSaaSParameterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CountProtectedItemsResponse IJsonModel<CountProtectedItemsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActivateSaaSParameterContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CountProtectedItemsResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateSaaSParameterContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivateSaaSParameterContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CountProtectedItemsResponse)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActivateSaaSParameterContent(document.RootElement, options);
+            return DeserializeCountProtectedItemsResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActivateSaaSParameterContent DeserializeActivateSaaSParameterContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static CountProtectedItemsResponse DeserializeCountProtectedItemsResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string saaSGuid = default;
+            string count = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("saaSGuid"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    saaSGuid = prop.Value.GetString();
+                    count = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActivateSaaSParameterContent(saaSGuid, additionalBinaryDataProperties);
+            return new CountProtectedItemsResponse(count, additionalBinaryDataProperties);
         }
     }
 }

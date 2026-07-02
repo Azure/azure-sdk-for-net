@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Response for count protected items operation. </summary>
-    public partial class CountProtectedItemsResult
+    public partial class CountProtectedItemsResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsResponse"/>. </summary>
         /// <param name="count"> The count of protected items. </param>
-        internal CountProtectedItemsResult(string count)
+        internal CountProtectedItemsResponse(string count)
         {
             Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsResponse"/>. </summary>
         /// <param name="count"> The count of protected items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CountProtectedItemsResult(string count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CountProtectedItemsResponse(string count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> SaaS-related data properties. </summary>
-    public partial class CommvaultSaaSDetails
+    public partial class SaaSData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultSaaSDetails"/>. </summary>
-        public CommvaultSaaSDetails()
+        /// <summary> Initializes a new instance of <see cref="SaaSData"/>. </summary>
+        public SaaSData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultSaaSDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SaaSData"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultSaaSDetails(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SaaSData(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

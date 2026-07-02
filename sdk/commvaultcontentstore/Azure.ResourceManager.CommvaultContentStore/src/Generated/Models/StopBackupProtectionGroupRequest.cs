@@ -12,26 +12,26 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of StopBackupProtectionGroupRequest. </summary>
-    public partial class StopBackupProtectionGroupContent
+    public partial class StopBackupProtectionGroupRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupRequest"/>. </summary>
         /// <param name="reason"> The reason for stopping the backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reason"/> is null. </exception>
-        public StopBackupProtectionGroupContent(string reason)
+        public StopBackupProtectionGroupRequest(string reason)
         {
             Argument.AssertNotNull(reason, nameof(reason));
 
             Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopBackupProtectionGroupRequest"/>. </summary>
         /// <param name="reason"> The reason for stopping the backup. </param>
         /// <param name="comment"> Any further comments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StopBackupProtectionGroupContent(string reason, string comment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StopBackupProtectionGroupRequest(string reason, string comment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             Comment = comment;

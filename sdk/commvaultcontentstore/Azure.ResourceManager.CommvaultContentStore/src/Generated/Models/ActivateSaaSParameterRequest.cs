@@ -12,25 +12,25 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
-    public partial class ActivateSaaSParameterContent
+    public partial class ActivateSaaSParameterRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterRequest"/>. </summary>
         /// <param name="saaSGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saaSGuid"/> is null. </exception>
-        public ActivateSaaSParameterContent(string saaSGuid)
+        public ActivateSaaSParameterRequest(string saaSGuid)
         {
             Argument.AssertNotNull(saaSGuid, nameof(saaSGuid));
 
             SaaSGuid = saaSGuid;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterRequest"/>. </summary>
         /// <param name="saaSGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivateSaaSParameterContent(string saaSGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivateSaaSParameterRequest(string saaSGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSGuid = saaSGuid;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

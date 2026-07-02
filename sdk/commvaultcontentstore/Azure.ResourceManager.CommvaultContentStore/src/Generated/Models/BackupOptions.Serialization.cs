@@ -14,56 +14,56 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The backup options for the VM backup. </summary>
-    public partial class BackupConfig : IJsonModel<BackupConfig>
+    public partial class BackupOptions : IJsonModel<BackupOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupConfig"/> for deserialization. </summary>
-        internal BackupConfig()
+        /// <summary> Initializes a new instance of <see cref="BackupOptions"/> for deserialization. </summary>
+        internal BackupOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BackupOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBackupConfig(document.RootElement, options);
+                        return DeserializeBackupOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BackupConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BackupOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupConfig IPersistableModel<BackupConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BackupOptions IPersistableModel<BackupOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackupOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BackupConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackupOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupOptions)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(BackupLevel))
             {
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             writer.WritePropertyName("jobDescription"u8);
             writer.WriteStringValue(JobDescription);
             writer.WritePropertyName("backupCopyImmediately"u8);
-            writer.WriteBooleanValue(ShouldCopyImmediately);
+            writer.WriteBooleanValue(BackupCopyImmediately);
             writer.WritePropertyName("runSnapShotBackup"u8);
-            writer.WriteBooleanValue(ShouldRunSnapshotBackup);
+            writer.WriteBooleanValue(RunSnapShotBackup);
             writer.WritePropertyName("notifyUserOnJobCompletion"u8);
-            writer.WriteBooleanValue(ShouldNotifyUserOnJobCompletion);
+            writer.WriteBooleanValue(NotifyUserOnJobCompletion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupConfig IJsonModel<BackupConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BackupOptions IJsonModel<BackupOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BackupOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBackupConfig(document.RootElement, options);
+            return DeserializeBackupOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupConfig DeserializeBackupConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupOptions DeserializeBackupOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             BackupLevel? backupLevel = default;
             string jobDescription = default;
-            bool shouldCopyImmediately = default;
-            bool shouldRunSnapshotBackup = default;
-            bool shouldNotifyUserOnJobCompletion = default;
+            bool backupCopyImmediately = default;
+            bool runSnapShotBackup = default;
+            bool notifyUserOnJobCompletion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("backupCopyImmediately"u8))
                 {
-                    shouldCopyImmediately = prop.Value.GetBoolean();
+                    backupCopyImmediately = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runSnapShotBackup"u8))
                 {
-                    shouldRunSnapshotBackup = prop.Value.GetBoolean();
+                    runSnapShotBackup = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("notifyUserOnJobCompletion"u8))
                 {
-                    shouldNotifyUserOnJobCompletion = prop.Value.GetBoolean();
+                    notifyUserOnJobCompletion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupConfig(
+            return new BackupOptions(
                 backupLevel,
                 jobDescription,
-                shouldCopyImmediately,
-                shouldRunSnapshotBackup,
-                shouldNotifyUserOnJobCompletion,
+                backupCopyImmediately,
+                runSnapShotBackup,
+                notifyUserOnJobCompletion,
                 additionalBinaryDataProperties);
         }
     }

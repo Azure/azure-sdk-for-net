@@ -11,23 +11,23 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Restore resource response for a Protected Item. </summary>
-    public partial class RestoreProtectionItemResult
+    /// <summary> Backup job response for a Protection Group. </summary>
+    public partial class BackupProtectionGroupResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemResult"/>. </summary>
-        internal RestoreProtectionItemResult()
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupResponse"/>. </summary>
+        internal BackupProtectionGroupResponse()
         {
             JobIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupResponse"/>. </summary>
         /// <param name="taskId"> The Commvault response for taskId. </param>
         /// <param name="jobIds"> The jobIds returned from Commvault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreProtectionItemResult(int taskId, IReadOnlyList<string> jobIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProtectionGroupResponse(int taskId, IReadOnlyList<string> jobIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
             JobIds = jobIds;

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             RuleProperty @property = default;
-            CommvaultMatchOperator @operator = default;
+            Operator @operator = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = new CommvaultMatchOperator(prop.Value.GetString());
+                    @operator = new Operator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

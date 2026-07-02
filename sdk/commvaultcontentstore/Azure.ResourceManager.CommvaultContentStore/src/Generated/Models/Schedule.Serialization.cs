@@ -173,11 +173,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            BackupType backupType = default;
+            BackUpType backupType = default;
             Frequency? frequency = default;
             int? runsEvery = default;
             WeekOfMonth? weekOfMonth = default;
-            CommvaultDayOfWeek? dayOfWeek = default;
+            DayOfWeek? dayOfWeek = default;
             MonthOfYear? monthOfYear = default;
             int? dayOfMonth = default;
             IList<WeeklyDays> weeklyDays = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 if (prop.NameEquals("backupType"u8))
                 {
-                    backupType = new BackupType(prop.Value.GetString());
+                    backupType = new BackUpType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("frequency"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    dayOfWeek = new CommvaultDayOfWeek(prop.Value.GetString());
+                    dayOfWeek = new DayOfWeek(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("monthOfYear"u8))
