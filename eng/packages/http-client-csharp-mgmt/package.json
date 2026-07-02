@@ -52,7 +52,7 @@
     "@eslint/js": "^10.0.1",
     "@types/node": "~26.0.1",
     "@types/pluralize": "^0.0.33",
-    "@types/prettier": "^2.7.3",
+    "@types/prettier": "^3.0.0",
     "@typespec/compiler": "1.13.0",
     "@typespec/events": "0.83.0",
     "@typespec/http": "1.13.0",
