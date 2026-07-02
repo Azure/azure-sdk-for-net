@@ -4,7 +4,14 @@
 
 ### Features Added
 
+- Added support for creating, updating, and deleting deny assignments. `DenyAssignmentCollection` now exposes `CreateOrUpdate`/`CreateOrUpdateAsync` and `DenyAssignmentResource` now exposes `Update`/`UpdateAsync` and `Delete`/`DeleteAsync`, generated from the `2024-07-01-preview` deny assignment API.
+- Added the writable `DenyAssignmentEffect` (`Enforced`/`Audit`), `Condition`, and `ConditionVersion` properties, and the read-only `CreatedOn`, `UpdatedOn`, `CreatedBy`, and `UpdatedBy` properties to `DenyAssignmentData`.
+
 ### Breaking Changes
+
+- `DenyAssignmentData` is now a writable model to support create/update. Its `Principals`, `ExcludePrincipals`, and `Permissions` collection properties changed from `IReadOnlyList<T>` to `IList<T>`, and the type now has a public constructor.
+- `DenyAssignmentPermission` is now a writable model. Its `Actions`, `NotActions`, `DataActions`, and `NotDataActions` collection properties changed from `IReadOnlyList<string>` to `IList<string>`, and the type now has a public constructor. The `ArmAuthorizationModelFactory.DenyAssignmentPermission(...)` helper is retained for backward compatibility but hidden (`EditorBrowsable(Never)`); prefer constructing the model directly via its public constructor.
+- `RoleManagementPrincipal` now has a public constructor. The `ArmAuthorizationModelFactory.RoleManagementPrincipal(...)` helper is retained for backward compatibility but hidden (`EditorBrowsable(Never)`); prefer constructing the model directly via its public constructor.
 
 ### Bugs Fixed
 
@@ -110,7 +117,7 @@ Polishing since last public beta release:
 - Prepended `Authorization` / `RoleManagement` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

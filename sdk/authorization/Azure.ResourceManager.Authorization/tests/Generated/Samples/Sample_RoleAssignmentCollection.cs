@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateRoleAssignmentForResource()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_CreateForResource.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_CreateForResource.json
             // this example is just showing the usage of "RoleAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateRoleAssignmentForResourceGroup()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_CreateForResourceGroup.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_CreateForResourceGroup.json
             // this example is just showing the usage of "RoleAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateRoleAssignmentForSubscription()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_CreateForSubscription.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_CreateForSubscription.json
             // this example is just showing the usage of "RoleAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoleAssignmentByScopeAndName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_Get.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_Get.json
             // this example is just showing the usage of "RoleAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListRoleAssignmentsForScope()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_ListForScope.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_ListForScope.json
             // this example is just showing the usage of "RoleAssignments_ListForScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRoleAssignmentByScopeAndName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_Get.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_Get.json
             // this example is just showing the usage of "RoleAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRoleAssignmentByScopeAndName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/RoleAssignments_Get.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2022-04-01/examples/RoleAssignments_Get.json
             // this example is just showing the usage of "RoleAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

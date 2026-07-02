@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Authorization.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
-        internal RoleAssignmentListResult()
+        /// <param name="value"> The RoleAssignment items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RoleAssignmentListResult(IEnumerable<RoleAssignmentData> value)
         {
-            Value = new ChangeTrackingList<RoleAssignmentData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
-        /// <param name="value"> Role assignment list. </param>
-        /// <param name="nextLink"> The skipToken to use for getting the next set of results. </param>
+        /// <param name="value"> The RoleAssignment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Role assignment list. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/> for deserialization. </summary>
+        internal RoleAssignmentListResult()
+        {
+        }
+
+        /// <summary> The RoleAssignment items on this page. </summary>
         public IReadOnlyList<RoleAssignmentData> Value { get; }
-        /// <summary> The skipToken to use for getting the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

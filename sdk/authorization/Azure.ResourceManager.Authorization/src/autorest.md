@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Authorization
 namespace: Azure.ResourceManager.Authorization
-require: https://github.com/Azure/azure-rest-api-specs/blob/a436672b07fb1fe276c203b086b3f0e0d0c4aa24/specification/authorization/resource-manager/readme.md
-tag: package-2022-04-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/37aa1414390f34d49f3942acec2a75452436b764/specification/authorization/resource-manager/Microsoft.Authorization/Authorization/readme.md
+tag: package-2022-04-01-with-deny-assignment-crud
 output-folder: Generated/
 clear-output-folder: true
 sample-gen:
@@ -141,6 +141,16 @@ directive:
   - from: authorization-DenyAssignmentCalls.json
     where: $.paths['/{denyAssignmentId}']
     transform: $ = {}
+  # Keep deny assignment principals on the shared common-types Principal model
+  # (RoleManagementPrincipal) so swapping to the 2024-07-01-preview deny assignment
+  # swagger (for CreateOrUpdate/Delete) does not retype the existing stable
+  # DenyAssignment.Principals/ExcludePrincipals surface to the preview-only
+  # DenyAssignmentPrincipal model. This avoids a breaking change.
+  - from: authorization-DenyAssignmentCalls.json
+    where: $.definitions.DenyAssignmentProperties.properties
+    transform: >
+      $.principals.items = { "$ref": "../../stable/2022-04-01/common-types.json#/definitions/Principal" };
+      $.excludePrincipals.items = { "$ref": "../../stable/2022-04-01/common-types.json#/definitions/Principal" };
 
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions'].get

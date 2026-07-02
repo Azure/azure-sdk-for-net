@@ -36,6 +36,80 @@ namespace Azure.ResourceManager.Authorization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/providerOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListRequest(string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/providerOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets provider operations metadata for all resource providers. </summary>
+        /// <param name="expand"> Specifies whether to expand the values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<AuthorizationProviderOperationsMetadataListResult>> ListAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListRequest(expand);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AuthorizationProviderOperationsMetadataListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets provider operations metadata for all resource providers. </summary>
+        /// <param name="expand"> Specifies whether to expand the values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<AuthorizationProviderOperationsMetadataListResult> List(string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListRequest(expand);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AuthorizationProviderOperationsMetadataListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal RequestUriBuilder CreateGetRequestUri(string resourceProviderNamespace, string expand)
         {
             var uri = new RawRequestUriBuilder();
@@ -119,80 +193,6 @@ namespace Azure.ResourceManager.Authorization
                     }
                 case 404:
                     return Response.FromValue((AuthorizationProviderOperationsMetadataData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string expand)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Authorization/providerOperations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Authorization/providerOperations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets provider operations metadata for all resource providers. </summary>
-        /// <param name="expand"> Specifies whether to expand the values. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AuthorizationProviderOperationsMetadataListResult>> ListAsync(string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AuthorizationProviderOperationsMetadataListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets provider operations metadata for all resource providers. </summary>
-        /// <param name="expand"> Specifies whether to expand the values. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AuthorizationProviderOperationsMetadataListResult> List(string expand = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AuthorizationProviderOperationsMetadataListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AuthorizationProviderOperationsMetadataListResult.DeserializeAuthorizationProviderOperationsMetadataListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

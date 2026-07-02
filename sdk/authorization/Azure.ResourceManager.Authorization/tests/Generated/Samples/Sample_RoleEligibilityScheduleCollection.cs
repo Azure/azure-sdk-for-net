@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoleEligibilityScheduleByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleByName.json
             // this example is just showing the usage of "RoleEligibilitySchedules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetRoleEligibilitySchedulesByScope()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilitySchedulesByScope.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleEligibilitySchedulesByScope.json
             // this example is just showing the usage of "RoleEligibilitySchedules_ListForScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRoleEligibilityScheduleByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleByName.json
             // this example is just showing the usage of "RoleEligibilitySchedules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRoleEligibilityScheduleByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleEligibilityScheduleByName.json
             // this example is just showing the usage of "RoleEligibilitySchedules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

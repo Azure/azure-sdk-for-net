@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Authorization.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Authorization.Samples
@@ -17,9 +18,61 @@ namespace Azure.ResourceManager.Authorization.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateDenyAssignmentForSubscription()
+        {
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/preview/2024-07-01-preview/examples/DenyAssignments_CreateForSubscription.json
+            // this example is just showing the usage of "DenyAssignments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DenyAssignmentResource
+            string scope = "subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2";
+            DenyAssignmentCollection collection = client.GetDenyAssignments(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string denyAssignmentId = "64b75d79-7a26-4341-944e-4f1a19f0e6ca";
+            DenyAssignmentData data = new DenyAssignmentData
+            {
+                DenyAssignmentName = "Deny delete on critical resources",
+                Description = "Prevent all users from deleting critical resources in the subscription.",
+                Permissions = {new DenyAssignmentPermission
+{
+Actions = {"*/delete"},
+NotActions = {},
+DataActions = {},
+NotDataActions = {},
+}},
+                IsAppliedToChildScopes = false,
+                Principals = {new RoleManagementPrincipal
+{
+Id = "00000000-0000-0000-0000-000000000000",
+PrincipalType = new RoleManagementPrincipalType("SystemDefined"),
+}},
+                ExcludePrincipals = {new RoleManagementPrincipal
+{
+Id = "ce2ce14e-85d7-4629-bdbc-454d0519d987",
+PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
+}},
+                DenyAssignmentEffect = DenyAssignmentEffect.Enforced,
+            };
+            ArmOperation<DenyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, denyAssignmentId, data);
+            DenyAssignmentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DenyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDenyAssignmentByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/GetDenyAssignmentByNameId.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/preview/2024-07-01-preview/examples/GetDenyAssignmentByNameId.json
             // this example is just showing the usage of "DenyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,7 +81,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             ArmClient client = new ArmClient(cred);
 
             // get the collection of this DenyAssignmentResource
-            string scope = "subscriptions/subId/resourcegroups/rgname";
+            string scope = "subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2/resourceGroups/rgname";
             DenyAssignmentCollection collection = client.GetDenyAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
@@ -46,7 +99,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDenyAssignmentsForScope()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/GetDenyAssignmentByScope.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/preview/2024-07-01-preview/examples/GetDenyAssignmentByScope.json
             // this example is just showing the usage of "DenyAssignments_ListForScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +108,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             ArmClient client = new ArmClient(cred);
 
             // get the collection of this DenyAssignmentResource
-            string scope = "subscriptions/subId";
+            string scope = "subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2/resourceGroups/rgname";
             DenyAssignmentCollection collection = client.GetDenyAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
@@ -75,7 +128,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDenyAssignmentByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/GetDenyAssignmentByNameId.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/preview/2024-07-01-preview/examples/GetDenyAssignmentByNameId.json
             // this example is just showing the usage of "DenyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +137,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             ArmClient client = new ArmClient(cred);
 
             // get the collection of this DenyAssignmentResource
-            string scope = "subscriptions/subId/resourcegroups/rgname";
+            string scope = "subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2/resourceGroups/rgname";
             DenyAssignmentCollection collection = client.GetDenyAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
@@ -98,7 +151,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDenyAssignmentByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2022-04-01/examples/GetDenyAssignmentByNameId.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/preview/2024-07-01-preview/examples/GetDenyAssignmentByNameId.json
             // this example is just showing the usage of "DenyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +160,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             ArmClient client = new ArmClient(cred);
 
             // get the collection of this DenyAssignmentResource
-            string scope = "subscriptions/subId/resourcegroups/rgname";
+            string scope = "subscriptions/a925f2f7-5c63-4b7b-8799-25a5f97bc3b2/resourceGroups/rgname";
             DenyAssignmentCollection collection = client.GetDenyAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
