@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The CreateOrUpdateRoutineRequest. </summary>
     internal partial class CreateOrUpdateRoutineRequest : IJsonModel<CreateOrUpdateRoutineRequest>
     {
         /// <param name="data"> The data to parse. </param>

@@ -15,3 +15,27 @@ npx tsp compile sdk-csharp-azure-ai-extensions-openai\client.tsp --emit typespec
 # For Azure.AI.Projects
 npx tsp compile sdk-csharp-azure-ai-projects\client.tsp --emit typespec-extension-exporter
 ```
+
+The last command will update the appropriate CSV file. After the file is updated, please generate code as usual by calling next command in the project directory.
+
+```bash
+dotnet build /t:GenerateCode
+```
+
+The previous command will also attempt to update the `tsp-client`, however, if it is not needed, please run the following commands.
+
+```bash
+export REPO_ROOT="/path/to/azure-sdk-for-net"
+npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${REPO_ROOT}/sdk/ai/Azure.AI.Projects/src/../"
+npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${REPO_ROOT}/sdk/ai/Azure.AI.Extensions.OpenAI/src/../"
+npm exec --prefix "${REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${REPO_ROOT}/sdk/ai/Azure.AI.Projects.Agents/src/../"
+```
+
+The same in PowerShell:
+
+```powershell
+$env:REPO_ROOT="/path/to/azure-sdk-for-net"
+npm exec --prefix "${env:REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${env:REPO_ROOT}/sdk/ai/Azure.AI.Projects/src/../"
+npm exec --prefix "${env:REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${env:REPO_ROOT}/sdk/ai/Azure.AI.Extensions.OpenAI/src/../"
+npm exec --prefix "${env:REPO_ROOT}/eng/common/tsp-client" --no -- tsp-client update --no-prompt --output-dir "${env:REPO_ROOT}/sdk/ai/Azure.AI.Projects.Agents/src/../"
+```

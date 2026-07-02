@@ -40,13 +40,13 @@ internal class SupportedPackages
 
     private static string FixNamespace(string fullyQualifiedName)
     {
-        if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Memory"))
+        if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Memory."))
         {
-            fullyQualifiedName = fullyQualifiedName.Replace("Azure.AI.Projects.Memory", "Azure.AI.Projects");
+            return fullyQualifiedName.Replace("Azure.AI.Projects.Memory.", "Azure.AI.Projects.");
         }
-        else if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Evaluation"))
+        else if (fullyQualifiedName.StartsWith("Azure.AI.Projects.Evaluation."))
         {
-            fullyQualifiedName = fullyQualifiedName.Replace("Azure.AI.Projects.Evaluation", "Azure.AI.Projects");
+            return fullyQualifiedName.Replace("Azure.AI.Projects.Evaluation.", "Azure.AI.Projects.");
         }
         return fullyQualifiedName;
     }
