@@ -16,8 +16,16 @@ namespace Azure.Security.ConfidentialLedger
     /// </summary>
     internal class PostLedgerEntryOperation : Operation, IOperation
     {
+        /// <summary>
+        /// Maximum number of consecutive 404 (Not Found) responses to tolerate
+        /// while polling for the posted ledger entry before treating the
+        /// transaction as failed.
+        /// </summary>
+        private const int MaxNotFoundRetries = 3;
+
         private readonly ConfidentialLedgerClient _client;
         private OperationInternal _operationInternal;
+        private int _consecutiveNotFoundCount;
 
         internal string exceptionMessage =>
             $"Operation failed. OperationId '{Id}' is the transactionId related to the Ledger entry posted as part of this operation.";
@@ -60,11 +68,33 @@ namespace Azure.Security.ConfidentialLedger
                     .ConfigureAwait(false)
                 : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
+            // 406: node knows the transaction but it hasn't committed yet.
+            // This is expected during consensus — keep polling indefinitely.
+            if (statusResponse.Status == (int)HttpStatusCode.NotAcceptable)
+            {
+                _consecutiveNotFoundCount = 0;
+                return OperationState.Pending(statusResponse);
+            }
+
+            // 404: node doesn't know about the transaction yet (replication lag).
+            // Retry up to MaxNotFoundRetries times; after that, treat as a real failure.
+            if (statusResponse.Status == (int)HttpStatusCode.NotFound)
+            {
+                if (++_consecutiveNotFoundCount <= MaxNotFoundRetries)
+                {
+                    return OperationState.Pending(statusResponse);
+                }
+                // Fall through to the failure path below.
+            }
+
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
                 var ex = new RequestFailedException(statusResponse, null, new PostLedgerEntryRequestFailedDetailsParser(exceptionMessage));
                 return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
+
+            // Got a successful response — reset the 404 counter.
+            _consecutiveNotFoundCount = 0;
 
             string status = JsonDocument.Parse(statusResponse.Content)
                 .RootElement
