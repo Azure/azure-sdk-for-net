@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The AlertsManagementQuerySortOrder. </summary>
+    /// <summary></summary>
     public readonly partial struct AlertsManagementQuerySortOrder : IEquatable<AlertsManagementQuerySortOrder>
     {
         private readonly string _value;
+        /// <summary> asc. </summary>
+        private const string AscValue = "asc";
+        /// <summary> desc. </summary>
+        private const string DescValue = "desc";
 
         /// <summary> Initializes a new instance of <see cref="AlertsManagementQuerySortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AlertsManagementQuerySortOrder(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AscValue = "asc";
-        private const string DescValue = "desc";
+            _value = value;
+        }
 
         /// <summary> asc. </summary>
         public static AlertsManagementQuerySortOrder Asc { get; } = new AlertsManagementQuerySortOrder(AscValue);
+
         /// <summary> desc. </summary>
         public static AlertsManagementQuerySortOrder Desc { get; } = new AlertsManagementQuerySortOrder(DescValue);
+
         /// <summary> Determines if two <see cref="AlertsManagementQuerySortOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertsManagementQuerySortOrder left, AlertsManagementQuerySortOrder right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlertsManagementQuerySortOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertsManagementQuerySortOrder left, AlertsManagementQuerySortOrder right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertsManagementQuerySortOrder"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlertsManagementQuerySortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlertsManagementQuerySortOrder(string value) => new AlertsManagementQuerySortOrder(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AlertsManagementQuerySortOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AlertsManagementQuerySortOrder?(string value) => value == null ? null : new AlertsManagementQuerySortOrder(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertsManagementQuerySortOrder other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlertsManagementQuerySortOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

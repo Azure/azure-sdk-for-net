@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AlertsManagement.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
-    /// A Class representing a ServiceAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceAlertResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServiceAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetServiceAlert method.
+    /// A class representing a ServiceAlert along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceAlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetServiceAlerts method.
     /// </summary>
     public partial class ServiceAlertResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceAlertResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="alertId"> The alertId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid alertId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _serviceAlertAlertsClientDiagnostics;
-        private readonly AlertsRestOperations _serviceAlertAlertsRestClient;
+        private readonly ClientDiagnostics _alertsClientDiagnostics;
+        private readonly Alerts _alertsRestClient;
         private readonly ServiceAlertData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/alerts";
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceAlertResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceAlertResource for mocking. </summary>
         protected ServiceAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceAlertResource(ArmClient client, ServiceAlertData data) : this(client, data.Id)
@@ -54,71 +44,82 @@ namespace Azure.ResourceManager.AlertsManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceAlertAlertsApiVersion);
-            _serviceAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceAlertAlertsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string serviceAlertApiVersion);
+            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ResourceType.Namespace, Diagnostics);
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, serviceAlertApiVersion ?? "2025-05-25-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ServiceAlertData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
-        /// Get information related to a specific alert
+        /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceAlertResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.Get");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,36 +130,44 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get information related to a specific alert
+        /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceAlertResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.Get");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,36 +178,46 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Change the state of an alert.
+        /// Change the state of an alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to change state of this particular alert then use parent resource of scope. So in this example change state call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_ChangeState</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_ChangeState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
-        /// <param name="comment"> reason of change alert state. </param>
+        /// <param name="content"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, ServiceAlertChangeStateContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
             try
             {
-                var response = await _serviceAlertAlertsRestClient.ChangeStateAsync(Id.SubscriptionId, Guid.Parse(Id.Name), newState, comment, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -209,36 +228,46 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Change the state of an alert.
+        /// Change the state of an alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to change state of this particular alert then use parent resource of scope. So in this example change state call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/changestate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_ChangeState</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_ChangeState. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
-        /// <param name="comment"> reason of change alert state. </param>
+        /// <param name="content"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, string comment = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, ServiceAlertChangeStateContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
             try
             {
-                var response = _serviceAlertAlertsRestClient.ChangeState(Id.SubscriptionId, Guid.Parse(Id.Name), newState, comment, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,34 +278,108 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get the history of an alert, which captures any monitor condition changes (Fired/Resolved) and alert state changes (New/Acknowledged/Closed).
+        /// Get the enrichments of an alert. It returns a collection of one object named default.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/enrichments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetHistory</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetEnrichments. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AlertEnrichmentResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AlertEnrichmentResult> GetEnrichmentsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AlertsGetEnrichmentsAsyncCollectionResultOfT(_alertsRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
+        }
+
+        /// <summary>
+        /// Get the enrichments of an alert. It returns a collection of one object named default.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/enrichments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetEnrichments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AlertEnrichmentResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AlertEnrichmentResult> GetEnrichments(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AlertsGetEnrichmentsCollectionResultOfT(_alertsRestClient, Id.Parent.ToString(), Guid.Parse(Id.Name), context, "ServiceAlertResource.GetEnrichments");
+        }
+
+        /// <summary>
+        /// Get the history of an alert, which captures any monitor condition changes (Fired/Resolved), alert state changes (New/Acknowledged/Closed) and applied action rules for that particular alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get history of this particular alert then use parent resource of scope. So in this example get history call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history'.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetHistory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceAlertModification>> GetHistoryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.GetHistory");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.GetHistory");
             scope.Start();
             try
             {
-                var response = await _serviceAlertAlertsRestClient.GetHistoryAsync(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -287,34 +390,44 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get the history of an alert, which captures any monitor condition changes (Fired/Resolved) and alert state changes (New/Acknowledged/Closed).
+        /// Get the history of an alert, which captures any monitor condition changes (Fired/Resolved), alert state changes (New/Acknowledged/Closed) and applied action rules for that particular alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get history of this particular alert then use parent resource of scope. So in this example get history call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}/history. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetHistory</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetHistory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceAlertModification> GetHistory(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertResource.GetHistory");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertResource.GetHistory");
             scope.Start();
             try
             {
-                var response = _serviceAlertAlertsRestClient.GetHistory(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Id.Parent.ToString(), Guid.Parse(Id.Name), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
