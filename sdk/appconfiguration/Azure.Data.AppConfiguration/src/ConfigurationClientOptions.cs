@@ -124,10 +124,11 @@ namespace Azure.Data.AppConfiguration
             };
         }
 
-        // CUSTOM: Returns true when the host equals the domain or is a subdomain of it, matching on a
-        // DNS label boundary so unrelated hosts such as "myazconfig.io" are not treated as "azconfig.io".
+        // CUSTOM: Returns true when the host is a subdomain of the domain, matching on a DNS label
+        // boundary so unrelated hosts such as "myazconfig.io" are not treated as "azconfig.io". The
+        // argument is always the store endpoint the user connects to, which always includes a leading
+        // store label, so an exact-equals check against the bare domain is unnecessary.
         private static bool IsHostInDomain(string host, string domain) =>
-            host.Equals(domain, StringComparison.InvariantCultureIgnoreCase) ||
             host.EndsWith($".{domain}", StringComparison.InvariantCultureIgnoreCase);
 
         // CUSTOM: Derives the Microsoft Entra audience from the endpoint host when no audience
