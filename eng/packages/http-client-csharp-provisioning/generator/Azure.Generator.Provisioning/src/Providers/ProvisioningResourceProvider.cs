@@ -102,6 +102,7 @@ namespace Azure.Generator.Provisioning.Providers
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
+                propInfo.IsSettable,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
                 propInfo.DefaultValue,
@@ -488,10 +489,10 @@ namespace Azure.Generator.Provisioning.Providers
                     ? [.. basePath, serializedName]
                     : new[] { serializedName };
 
-                var isOutput = (_resourceProjection?.WritableScopes.Count == 0)
-                    || (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
                         && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName);
+                var isSettable = !isOutput && _resourceProjection?.WritableScopes.Count > 0;
                 var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
                 var propertyName = prop.Name.ToIdentifierName();
@@ -502,6 +503,7 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     defaultValue = _resourceProjection.SingletonResourceName;
                     isOutput = true;
+                    isSettable = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -513,7 +515,7 @@ namespace Azure.Generator.Provisioning.Providers
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
 
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -914,6 +916,7 @@ namespace Azure.Generator.Provisioning.Providers
                     prop.Name.ToIdentifierName(),
                     bicepPath,
                     prop.IsReadOnly,
+                    !prop.IsReadOnly,
                     prop.IsRequired));
             }
             return result;
@@ -941,6 +944,7 @@ namespace Azure.Generator.Provisioning.Providers
             string PropertyName,
             string[] BicepPath,
             bool IsOutput,
+            bool IsSettable,
             bool IsRequired,
             string? DefaultValue = null,
             CSharpType? TypeOverride = null);

@@ -179,7 +179,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void ReadOnlyResourcePropertiesAreOutputOnly()
+        public void ReadOnlyResourcePropertiesAreNotSettable()
         {
             var writableProperty = CreateProperty("WritableValue");
             var model = CreateModel("ReadOnlyWidget", [writableProperty]);
@@ -196,7 +196,8 @@ namespace Azure.Generator.Provisioning.Tests
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
 
             Assert.That(propertyInfo, Is.Not.Null);
-            Assert.That(propertyInfo!.IsOutput, Is.True);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
         }
 
         [Test]
@@ -222,6 +223,7 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
         }
 
         private static ArmResourceMetadata CreateMetadata(

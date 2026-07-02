@@ -188,7 +188,7 @@ namespace Azure.Generator.Provisioning
 
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
-                    info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
                     enclosingType);
             }
 
