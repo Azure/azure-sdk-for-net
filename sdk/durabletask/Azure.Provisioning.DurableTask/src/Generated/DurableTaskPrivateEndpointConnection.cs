@@ -18,7 +18,7 @@ namespace Azure.Provisioning.DurableTask
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private PrivateEndpointConnectionProperties _properties;
+        private DurableTaskPrivateEndpointConnectionProperties _properties;
         private ResourceReference<DurableTaskScheduler> _parent;
 
         /// <summary> Creates a new DurableTaskPrivateEndpointConnection. </summary>
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.DurableTask
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public PrivateEndpointConnectionProperties Properties
+        public DurableTaskPrivateEndpointConnectionProperties Properties
         {
             get
             {
@@ -93,19 +93,19 @@ namespace Azure.Provisioning.DurableTask
             }
         }
 
-        /// <summary> Define all the provisionable properties for PrivateEndpointConnection. </summary>
+        /// <summary> Define all the provisionable properties for DurableTaskPrivateEndpointConnection. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<DurableTaskPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<DurableTaskScheduler>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing PrivateEndpointConnection. </summary>
+        /// <summary> Creates a reference to an existing DurableTaskPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
         public static DurableTaskPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.DurableTask
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for PrivateEndpointConnection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DurableTaskPrivateEndpointConnection that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

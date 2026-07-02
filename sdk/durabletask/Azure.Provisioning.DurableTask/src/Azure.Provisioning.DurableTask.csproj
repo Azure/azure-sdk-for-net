@@ -6,9 +6,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
     <TypespecAdditionalOptions>namespace=Azure.Provisioning.DurableTask;emitter-output-dir={output-dir}/sdk/durabletask/Azure.Provisioning.DurableTask;api-version=2026-02-01</TypespecAdditionalOptions>
-
-    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

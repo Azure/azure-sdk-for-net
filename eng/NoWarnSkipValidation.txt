@@ -50,7 +50,6 @@ Azure.Provisioning.ContainerRegistry
 Azure.Provisioning.ContainerService
 Azure.Provisioning.Deployment
 Azure.Provisioning.Dns
-Azure.Provisioning.DurableTask
 Azure.Provisioning.EventGrid
 Azure.Provisioning.EventHubs
 Azure.Provisioning.FrontDoor
