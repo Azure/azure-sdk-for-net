@@ -7,12 +7,31 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management.Providers
 {
     internal static class ManagementProviderBodyDependencyHelper
     {
+        private static readonly ConditionalWeakTable<MethodProvider, BodyDependencyTypes> _bodyDependencyTypes = new();
+
+        private sealed class BodyDependencyTypes
+        {
+            required public IReadOnlyList<CSharpType> Values { get; init; }
+        }
+
+        public static void RegisterBodyDependencyTypes(MethodProvider method, IReadOnlyList<CSharpType> bodyDependencyTypes)
+        {
+            if (bodyDependencyTypes.Count == 0)
+            {
+                return;
+            }
+
+            _bodyDependencyTypes.Remove(method);
+            _bodyDependencyTypes.Add(method, new BodyDependencyTypes { Values = bodyDependencyTypes });
+        }
+
         public static IReadOnlyList<CSharpType> GetBodyDependencyTypes(IEnumerable<MethodProvider> methods)
         {
             var dependencies = new List<CSharpType>();
@@ -27,6 +46,10 @@ namespace Azure.Generator.Management.Providers
 
                 AddPageableWrapperDependency(dependencies, method.Signature.ReturnType, outputLibrary);
                 AddOperationSourceDependency(dependencies, method.Signature.ReturnType, outputLibrary);
+                if (_bodyDependencyTypes.TryGetValue(method, out var bodyDependencyTypes))
+                {
+                    dependencies.AddRange(bodyDependencyTypes.Values);
+                }
             }
 
             return dependencies.Distinct().ToArray();

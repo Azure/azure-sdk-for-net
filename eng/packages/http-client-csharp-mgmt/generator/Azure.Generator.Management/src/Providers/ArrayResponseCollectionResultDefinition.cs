@@ -109,7 +109,7 @@ namespace Azure.Generator.Management.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
 
-        protected override IReadOnlyList<string> BuildHelperDependencyNames() => [_restClient.Name];
+        protected override IReadOnlyList<CSharpType> BuildHelperDependencyTypes() => [_restClient.Type];
 
         protected override CSharpType[] BuildImplements()
         {
