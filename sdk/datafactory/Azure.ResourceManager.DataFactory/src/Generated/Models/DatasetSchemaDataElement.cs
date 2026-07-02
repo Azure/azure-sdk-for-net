@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,11 +21,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaColumnName"> Name of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaColumnType"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
-        internal DatasetSchemaDataElement(DataFactoryElement<string> schemaColumnName, DataFactoryElement<string> schemaColumnType, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal DatasetSchemaDataElement(DataFactoryElement<string> schemaColumnName, DataFactoryElement<string> schemaColumnType, IDictionary<string, BinaryData> additionalProperties)
         {
             SchemaColumnName = schemaColumnName;
             SchemaColumnType = schemaColumnType;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
+            _additionalBinaryDataProperties = additionalProperties;
         }
     }
 }
