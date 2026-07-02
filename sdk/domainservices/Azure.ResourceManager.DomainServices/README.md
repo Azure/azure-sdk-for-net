@@ -1,4 +1,4 @@
-# Azure.ResourceManager.DomainServices management client library for .NET
+# Microsoft Azure Domain Services management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
