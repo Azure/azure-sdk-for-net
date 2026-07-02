@@ -147,6 +147,15 @@
   <data name="SessionLockExpiredOnMessageSession" xml:space="preserve">
     <value>The session lock was lost. Request a new session receiver.</value>
   </data>
+  <data name="NonExclusiveSessionModeNotSupported" xml:space="preserve">
+    <value>Non-exclusive session locking is not supported by the Service Bus endpoint. Verify that the namespace has been updated to a version that supports this feature.</value>
+  </data>
+  <data name="SessionLockTokenRequiresNonExclusiveMode" xml:space="preserve">
+    <value>A session lock token can only be supplied when IsSessionExclusive is set to false.</value>
+  </data>
+  <data name="SessionLockTokenRequiresSessionId" xml:space="preserve">
+    <value>A session lock token can only be supplied when accepting a specific session. It cannot be used when accepting the next available session.</value>
+  </data>
   <data name="TimeoutMustBeNonNegative" xml:space="preserve">
     <value>Argument {0} must be a non-negative timeout value. The provided value was {1}.</value>
   </data>

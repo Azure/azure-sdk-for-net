@@ -10,6 +10,8 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
+- Added opt-in support for non-exclusive session locking on `ServiceBusSessionReceiver`, allowing a session to be cooperatively taken over by another receiver.
+
 ### Breaking Changes
 
 ### Bugs Fixed

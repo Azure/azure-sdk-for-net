@@ -421,6 +421,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Non-exclusive session locking is not supported by the Service Bus endpoint. Verify that the namespace has been updated to a version that supports this feature..
+        /// </summary>
+        internal static string NonExclusiveSessionModeNotSupported {
+            get {
+                return ResourceManager.GetString("NonExclusiveSessionModeNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is not a supported type..
         /// </summary>
         internal static string NotSupportedPropertyType {
@@ -534,6 +543,24 @@ namespace Azure.Messaging.ServiceBus {
         internal static string SessionLockExpiredOnMessageSession {
             get {
                 return ResourceManager.GetString("SessionLockExpiredOnMessageSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A session lock token can only be supplied when IsSessionExclusive is set to false..
+        /// </summary>
+        internal static string SessionLockTokenRequiresNonExclusiveMode {
+            get {
+                return ResourceManager.GetString("SessionLockTokenRequiresNonExclusiveMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A session lock token can only be supplied when accepting a specific session. It cannot be used when accepting the next available session..
+        /// </summary>
+        internal static string SessionLockTokenRequiresSessionId {
+            get {
+                return ResourceManager.GetString("SessionLockTokenRequiresSessionId", resourceCulture);
             }
         }
         
