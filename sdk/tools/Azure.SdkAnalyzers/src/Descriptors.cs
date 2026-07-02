@@ -66,7 +66,7 @@ namespace Azure.SdkAnalyzers
         public static readonly DiagnosticDescriptor AZC0006 = new(
             nameof(AZC0006),
             "DO provide constructor overloads that allow specifying additional options.",
-            "A client type should have a public constructor with equivalent parameters that takes a Azure.Core.ClientOptions-derived type as the last argument",
+            "A client type should have a public constructor with equivalent parameters that takes an Azure.Core.ClientOptions-derived type as the last argument.",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
@@ -76,7 +76,7 @@ namespace Azure.SdkAnalyzers
         public static readonly DiagnosticDescriptor AZC0007 = new(
             nameof(AZC0007),
             "DO provide a minimal constructor that takes only the parameters required to connect to the service.",
-            "A client type should have a public constructor with equivalent parameters that doesn't take a Azure.Core.ClientOptions-derived type as the last argument",
+            "A client type should have a public constructor with equivalent parameters that doesn't take an Azure.Core.ClientOptions-derived type as the last argument.",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
