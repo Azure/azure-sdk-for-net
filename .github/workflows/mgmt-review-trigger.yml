@@ -1,0 +1,59 @@
+name: Azure .NET Management SDK PR Review Trigger
+
+on:
+  check_run:
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  dispatch-mgmt-review:
+    if: >
+      github.event.check_run.name == 'net - pullrequest' &&
+      (github.event.check_run.conclusion == 'success' || github.event.check_run.conclusion == 'failure') &&
+      github.event.check_run.pull_requests[0]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch management review when in scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PR_NUMBER: ${{ github.event.check_run.pull_requests[0].number }}
+          CHECK_RUN_CONCLUSION: ${{ github.event.check_run.conclusion }}
+          CHECK_RUN_HEAD_SHA: ${{ github.event.check_run.head_sha }}
+          CHECK_RUN_URL: ${{ github.event.check_run.html_url }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$PR_NUMBER" ]; then
+            echo "No pull request associated with this check run."
+            exit 0
+          fi
+
+          if [ "$(gh pr view "$PR_NUMBER" --repo "$REPOSITORY" --json isDraft --jq '.isDraft')" = "true" ]; then
+            echo "Skipping draft PR #$PR_NUMBER."
+            exit 0
+          fi
+
+          if ! gh api --paginate "repos/$REPOSITORY/pulls/$PR_NUMBER/files" --jq '.[].filename' |
+            grep -Eq '^sdk/[^/]+/Azure\.ResourceManager\.[^/]+/'; then
+            echo "Skipping PR #$PR_NUMBER; no Azure.ResourceManager.* package files changed."
+            exit 0
+          fi
+
+          AW_CONTEXT=$(printf '{"item_type":"pull_request","item_number":%s}' "$PR_NUMBER")
+
+          gh workflow run mgmt-review.lock.yml \
+            --repo "$REPOSITORY" \
+            --ref "$DEFAULT_BRANCH" \
+            -f aw_context="$AW_CONTEXT" \
+            -f pr_number="$PR_NUMBER" \
+            -f check_run_conclusion="$CHECK_RUN_CONCLUSION" \
+            -f check_run_head_sha="$CHECK_RUN_HEAD_SHA" \
+            -f check_run_url="$CHECK_RUN_URL"
+
+          echo "Dispatched management review for PR #$PR_NUMBER."
