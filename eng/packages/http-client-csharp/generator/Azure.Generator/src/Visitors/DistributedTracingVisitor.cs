@@ -87,7 +87,7 @@ namespace Azure.Generator.Visitors
             }
 
             PropertyProvider clientDiagnosticsProperty = constructor.EnclosingType.CanonicalView.Properties
-                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                .First(IsClientDiagnosticsProperty);
             ParameterProvider? endpoint = constructor.Signature.Parameters.FirstOrDefault(p => p.Name == "endpoint");
             ParameterProvider? options = constructor.Signature.Parameters.FirstOrDefault(p => p.Name == "options");
             bool hasNoInitializer = constructor.Signature.Initializer == null;
@@ -179,7 +179,7 @@ namespace Azure.Generator.Visitors
             }
 
             PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
-                    .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                    .First(IsClientDiagnosticsProperty);
             List<MethodBodyStatement> updatedFactoryMethodStatements = [];
 
             var statementsToVisit = method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!);
@@ -216,7 +216,7 @@ namespace Azure.Generator.Visitors
             }
 
             PropertyProvider clientDiagnosticsProperty = ((ClientProvider)method.EnclosingType).CanonicalView.Properties
-                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                .First(IsClientDiagnosticsProperty);
 
             // declare scope
             var scopeDeclaration = UsingDeclare(
@@ -371,6 +371,9 @@ namespace Azure.Generator.Visitors
                         innerBinaryOperatorExpression.Right)));
             return true;
         }
+
+        private bool IsClientDiagnosticsProperty(PropertyProvider property)
+            => property.Type.Equals(ClientDiagnosticsType);
 
         private static bool ShouldSkipType(TypeProvider typeProvider)
         {
