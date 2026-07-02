@@ -76,7 +76,7 @@ namespace Azure.SdkAnalyzers
         public static readonly DiagnosticDescriptor AZC0007 = new(
             nameof(AZC0007),
             "DO provide a minimal constructor that takes only the parameters required to connect to the service.",
-            "A client type should have a public constructor with equivalent parameters that doesn't take an Azure.Core.ClientOptions-derived type as the last argument.",
+            "A client type should have a public constructor with equivalent parameters that does not take an Azure.Core.ClientOptions-derived type as the last argument.",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
