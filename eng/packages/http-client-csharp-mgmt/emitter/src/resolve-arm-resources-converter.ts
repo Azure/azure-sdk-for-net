@@ -55,7 +55,8 @@ import {
   resolveResourceApiVersions,
   extractRbacRoles,
   extractNameConstraintOverrides,
-  isResourceIdPatternPrefixMatch
+  isResourceIdPatternPrefixMatch,
+  sortResourceMethods
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
@@ -289,6 +290,23 @@ export function resolveArmResources(
     }
   }
 
+  // Reclassify any non-resource method whose HTTP verb is PUT/PATCH/DELETE/HEAD
+  // and whose operation path equals a known resource's instance path as the
+  // corresponding lifecycle operation (Create/Update/Delete/CheckExistence).
+  //
+  // This compensates for the fact that low-level building blocks such as
+  // Azure.ResourceManager.Foundations.ArmCreateOperation do not apply the
+  // @armResourceCreateOrUpdate decorator, so they are not surfaced via
+  // ResolvedResource.operations.lifecycle.createOrUpdate. Without this step
+  // the PUT op would either be dropped (assignNonResourceMethodsToResources
+  // uses proper-prefix matching and ignores equal paths) or misclassified as
+  // an Action, and the resulting Collection<T> would lack CreateOrUpdate.
+  reclassifyLifecycleNonResourceMethods(
+    filteredResources,
+    nonResourceMethods,
+    methodMap
+  );
+
   // Assign non-resource methods to resources based on operationPath prefix matching.
   // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
   // move it into that resource as an Action (longest prefix wins).
@@ -307,6 +325,104 @@ export function resolveArmResources(
     resources: filteredResources,
     nonResourceMethods
   };
+}
+
+/**
+ * Reclassify any non-resource method whose HTTP verb is PUT/PATCH/DELETE/HEAD
+ * and whose operationPath equals a known resource's resourceIdPattern as the
+ * corresponding lifecycle operation (Create/Update/Delete/CheckExistence) on
+ * that resource. Matched methods are removed from `nonResourceMethods`.
+ *
+ * This is a compensation pass for resource lifecycle operations that the
+ * @azure-tools/typespec-azure-resource-manager library did not surface via
+ * ResolvedResource.operations.lifecycle. The most common trigger is using the
+ * low-level building block Azure.ResourceManager.Foundations.ArmCreateOperation
+ * (or its PATCH/DELETE counterparts) for a resource's @put/@patch/@delete:
+ * these templates do not apply the @armResourceCreateOrUpdate (or sibling)
+ * decorator, so the library treats them as untyped operations. Without this
+ * pass the resulting Collection<T> would be missing CreateOrUpdate (and the
+ * Resource<T> would be missing Update/Delete) even though the underlying REST
+ * request is generated correctly.
+ *
+ * Verb-to-kind mapping mirrors the verb-based fallback in
+ * resource-detection.ts (legacy buildArmProviderSchema path).
+ */
+function reclassifyLifecycleNonResourceMethods(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[],
+  methodMap: Map<string, SdkMethod<SdkHttpOperation>>
+): void {
+  if (nonResourceMethods.length === 0) return;
+
+  // Index resources by their resourceIdPattern path string for O(1) lookup.
+  const resourceByInstancePath = new Map<string, ArmResourceSchema>();
+  for (const resource of resources) {
+    const pattern = resource.metadata.resourceIdPattern;
+    if (pattern) {
+      resourceByInstancePath.set(pattern.path, resource);
+    }
+  }
+  if (resourceByInstancePath.size === 0) return;
+
+  const removeIndices: number[] = [];
+  const touchedResources = new Set<ArmResourceSchema>();
+  for (let i = 0; i < nonResourceMethods.length; i++) {
+    const method = nonResourceMethods[i];
+    const matched = resourceByInstancePath.get(method.operationPath.path);
+    if (!matched) continue;
+
+    const sdkMethod = methodMap.get(method.methodId);
+    const verb = sdkMethod?.operation?.verb;
+    let kind: ResourceOperationKind | undefined;
+    switch (verb) {
+      case "put":
+        kind = ResourceOperationKind.Create;
+        break;
+      case "patch":
+        kind = ResourceOperationKind.Update;
+        break;
+      case "delete":
+        kind = ResourceOperationKind.Delete;
+        break;
+      case "head":
+        kind = ResourceOperationKind.CheckExistence;
+        break;
+      default:
+        continue;
+    }
+
+    // Avoid clobbering an existing lifecycle method of the same kind (e.g.
+    // if the resource already has a Create via @armResourceCreateOrUpdate,
+    // do not add a duplicate).
+    const alreadyHasKind = matched.metadata.methods.some(
+      (m) => m.kind === kind
+    );
+    if (alreadyHasKind) continue;
+
+    matched.metadata.methods.push({
+      methodId: method.methodId,
+      kind,
+      operationPath: method.operationPath,
+      scope: {
+        kind: method.scope.kind,
+        scopeIdPattern: matched.metadata.resourceIdPattern!,
+        scopeResourceType: method.scope.scopeResourceType
+      }
+    });
+    removeIndices.push(i);
+    touchedResources.add(matched);
+  }
+
+  // Remove matched methods from nonResourceMethods (iterate in reverse to
+  // keep indices valid) and re-sort the touched resources' methods.
+  if (removeIndices.length > 0) {
+    for (let i = removeIndices.length - 1; i >= 0; i--) {
+      nonResourceMethods.splice(removeIndices[i], 1);
+    }
+    for (const resource of touchedResources) {
+      sortResourceMethods(resource.metadata.methods);
+    }
+  }
 }
 
 /**
