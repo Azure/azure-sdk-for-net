@@ -45,7 +45,7 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
-  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
+  template: /eng/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
       - task: UseNode@1
@@ -59,6 +59,7 @@ extends:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: true
+    UploadPlaygroundBundle: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
