@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("nonCompliantAssignments"u8);
                 writer.WriteStartArray();
-                foreach (PolicyAssignmentEvaluationDetails item in NonCompliantAssignments)
+                foreach (DeploymentPolicyAssignmentEvaluationDetails item in NonCompliantAssignments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            PolicyEvaluationOutcome? evaluationOutcome = default;
+            DeploymentPolicyEvaluationOutcome? evaluationOutcome = default;
             string errorMessage = default;
-            IList<PolicyAssignmentEvaluationDetails> nonCompliantAssignments = default;
+            IList<DeploymentPolicyAssignmentEvaluationDetails> nonCompliantAssignments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    evaluationOutcome = new PolicyEvaluationOutcome(prop.Value.GetString());
+                    evaluationOutcome = new DeploymentPolicyEvaluationOutcome(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<PolicyAssignmentEvaluationDetails> array = new List<PolicyAssignmentEvaluationDetails>();
+                    List<DeploymentPolicyAssignmentEvaluationDetails> array = new List<DeploymentPolicyAssignmentEvaluationDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAssignmentEvaluationDetails.DeserializePolicyAssignmentEvaluationDetails(item, options));
+                        array.Add(DeploymentPolicyAssignmentEvaluationDetails.DeserializeDeploymentPolicyAssignmentEvaluationDetails(item, options));
                     }
                     nonCompliantAssignments = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentPolicyEvaluationResult(evaluationOutcome, errorMessage, nonCompliantAssignments ?? new ChangeTrackingList<PolicyAssignmentEvaluationDetails>(), additionalBinaryDataProperties);
+            return new DeploymentPolicyEvaluationResult(evaluationOutcome, errorMessage, nonCompliantAssignments ?? new ChangeTrackingList<DeploymentPolicyAssignmentEvaluationDetails>(), additionalBinaryDataProperties);
         }
     }
 }

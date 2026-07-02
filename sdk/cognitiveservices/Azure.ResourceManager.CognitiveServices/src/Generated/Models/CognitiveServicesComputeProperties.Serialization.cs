@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary>
     /// Base properties for all compute resource types.
     /// The computeType discriminator determines the concrete property shape.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClusterComputeProperties"/> and <see cref="ContainerInstanceComputeProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesClusterComputeProperties"/> and <see cref="ContainerInstanceComputeProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCognitiveServicesComputeProperties))]
     public abstract partial class CognitiveServicesComputeProperties : IJsonModel<CognitiveServicesComputeProperties>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 switch (discriminator.GetString())
                 {
                     case "Cluster":
-                        return ClusterComputeProperties.DeserializeClusterComputeProperties(element, options);
+                        return CognitiveServicesClusterComputeProperties.DeserializeCognitiveServicesClusterComputeProperties(element, options);
                     case "ContainerInstance":
                         return ContainerInstanceComputeProperties.DeserializeContainerInstanceComputeProperties(element, options);
                 }

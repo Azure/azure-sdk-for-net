@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedComputeUsageListResult"/>. </summary>
         internal ManagedComputeUsageListResult()
         {
-            Value = new ChangeTrackingList<ManagedComputeUsage>();
+            Value = new ChangeTrackingList<CognitiveServicesManagedComputeUsage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeUsageListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of managed compute usages. </param>
         /// <param name="value"> Per-SKU managed compute quota usage entries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeUsageListResult(string nextLink, IList<ManagedComputeUsage> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedComputeUsageListResult(string nextLink, IList<CognitiveServicesManagedComputeUsage> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Per-SKU managed compute quota usage entries. </summary>
         [WirePath("value")]
-        public IList<ManagedComputeUsage> Value { get; }
+        public IList<CognitiveServicesManagedComputeUsage> Value { get; }
     }
 }

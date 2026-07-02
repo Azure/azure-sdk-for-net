@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedComputeCapacityListResult"/>. </summary>
         internal ManagedComputeCapacityListResult()
         {
-            Value = new ChangeTrackingList<ManagedComputeCapacity>();
+            Value = new ChangeTrackingList<CognitiveServicesManagedComputeCapacity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeCapacityListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of managed compute capacities. </param>
         /// <param name="value"> Gets the list of managed compute capacities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeCapacityListResult(string nextLink, IReadOnlyList<ManagedComputeCapacity> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedComputeCapacityListResult(string nextLink, IReadOnlyList<CognitiveServicesManagedComputeCapacity> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the list of managed compute capacities. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ManagedComputeCapacity> Value { get; }
+        public IReadOnlyList<CognitiveServicesManagedComputeCapacity> Value { get; }
     }
 }

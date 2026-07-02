@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Built-in authorization policy scoped to organization/tenant. </summary>
-    public partial class OrganizationSharedBuiltInAuthorizationPolicy : ApplicationAuthorizationPolicy
+    public partial class OrganizationSharedBuiltInAuthorizationPolicy : CognitiveServicesApplicationAuthorizationPolicy
     {
         /// <summary> Initializes a new instance of <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>. </summary>
         public OrganizationSharedBuiltInAuthorizationPolicy() : base(BuiltInAuthorizationScheme.OrganizationScope)
