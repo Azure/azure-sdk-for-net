@@ -71,7 +71,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // SessionId: the session ID is preserved across the auto-forward, and a
                 // message without one is dead-lettered on the subscription because a
                 // session-enabled entity only accepts messages that have a session ID.
-                ServiceBusSender sender = client.CreateSender(topicName);
+                await using ServiceBusSender sender = client.CreateSender(topicName);
                 string[] sessionIds = { "session-1", "session-2" };
                 var messages = new List<ServiceBusMessage>();
                 for (int i = 0; i < 3; i++)
@@ -124,9 +124,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
             finally
             {
+                // Ignore "not found" during cleanup so an earlier failure (before the
+                // entities were created) is preserved rather than masked.
                 var cleanup = new ServiceBusAdministrationClient(adminFullyQualifiedNamespace, TestEnvironment.Credential);
-                await cleanup.DeleteTopicAsync(adminTopicName);
-                await cleanup.DeleteQueueAsync(adminQueueName);
+                try { await cleanup.DeleteTopicAsync(adminTopicName); }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound) { }
+                try { await cleanup.DeleteQueueAsync(adminQueueName); }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound) { }
             }
         }
     }

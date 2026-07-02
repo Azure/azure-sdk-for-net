@@ -10,7 +10,7 @@ A session-enabled entity can't be the *source* of auto-forwarding (a single enti
 - The **source** is a topic with a regular (non-session) subscription whose `ForwardTo` points at the queue. The subscription is only a conduit - nothing consumes it directly - so it doesn't need sessions enabled itself. Enable `SupportOrdering` on the topic to guarantee that messages reach the subscription in the order they were sent; it defaults to `false`.
 - Every message must carry a `SessionId`. The session ID is preserved across the forward, and a message without one is dead-lettered on the subscription (a session-enabled entity only accepts messages that have a session ID).
 
-With `SupportOrdering` enabled and non-partitioned entities, the topic delivers to the subscription in send order, autoforwarding preserves that order into the destination, and the session receiver delivers each session's messages in order - so the per-session order is preserved end to end. Ordering isn't guaranteed if either entity is partitioned.
+With `SupportOrdering` enabled and non-partitioned entities, the topic delivers to the subscription in send order, auto-forwarding preserves that order into the destination, and the session receiver delivers each session's messages in order - so the per-session order is preserved end to end. Ordering isn't guaranteed if either entity is partitioned.
 
 ```C# Snippet:ServiceBusAutoForwardIntoSessionQueue
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
@@ -51,7 +51,7 @@ await adminClient.CreateSubscriptionAsync(new CreateSubscriptionOptions(topicNam
 // SessionId: the session ID is preserved across the auto-forward, and a
 // message without one is dead-lettered on the subscription because a
 // session-enabled entity only accepts messages that have a session ID.
-ServiceBusSender sender = client.CreateSender(topicName);
+await using ServiceBusSender sender = client.CreateSender(topicName);
 string[] sessionIds = { "session-1", "session-2" };
 var messages = new List<ServiceBusMessage>();
 for (int i = 0; i < 3; i++)
