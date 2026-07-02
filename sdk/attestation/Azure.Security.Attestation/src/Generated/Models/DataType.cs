@@ -10,42 +10,65 @@ using System.ComponentModel;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> Specifies the type of the data encoded contained within the "data" field of a "RuntimeData" or "InitTimeData" object. </summary>
     internal readonly partial struct DataType : IEquatable<DataType>
     {
         private readonly string _value;
+        /// <summary> The field's content should be treated as binary and not interpreted by MAA. </summary>
+        private const string BinaryValue = "Binary";
+        /// <summary>
+        /// The field's content should be treated as UTF-8 JSON text that may be further
+        /// interpreted by MAA. Refer to RFC 8259 for a description of JSON serialization
+        /// standards for interoperability.
+        /// </summary>
+        private const string JSONValue = "JSON";
 
         /// <summary> Initializes a new instance of <see cref="DataType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The value. </param>
         public DataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            _value = value;
         }
 
-        private const string BinaryValue = "Binary";
-        private const string JsonValue = "JSON";
-
-        /// <summary> The contents of the field should be treated as binary and not interpreted by MAA. </summary>
+        /// <summary> The field's content should be treated as binary and not interpreted by MAA. </summary>
         public static DataType Binary { get; } = new DataType(BinaryValue);
-        /// <summary> The contents of the field should be treated as a JSON object and may be further interpreted by MAA. </summary>
-        public static DataType Json { get; } = new DataType(JsonValue);
+
+        /// <summary>
+        /// The field's content should be treated as UTF-8 JSON text that may be further
+        /// interpreted by MAA. Refer to RFC 8259 for a description of JSON serialization
+        /// standards for interoperability.
+        /// </summary>
+        public static DataType JSON { get; } = new DataType(JSONValue);
+
         /// <summary> Determines if two <see cref="DataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataType left, DataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataType left, DataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataType(string value) => new DataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataType?(string value) => value == null ? null : new DataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

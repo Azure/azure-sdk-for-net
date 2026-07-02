@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
-    /// <summary> The result of a call to retrieve policy certificates. </summary>
     internal partial class PolicyCertificatesResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PolicyCertificatesResult"/>. </summary>
-        /// <param name="internalPolicyCertificates"> SHA256 Hash of the binary representation certificate which was added or removed. </param>
-        internal PolicyCertificatesResult(JsonWebKeySet internalPolicyCertificates)
+        /// <param name="policyCertificates"> SHA256 Hash of the binary representation certificate which was added or removed. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyCertificatesResult(JsonWebKeySet policyCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InternalPolicyCertificates = internalPolicyCertificates;
+            PolicyCertificates = policyCertificates;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> SHA256 Hash of the binary representation certificate which was added or removed. </summary>
+        public JsonWebKeySet PolicyCertificates { get; }
     }
 }

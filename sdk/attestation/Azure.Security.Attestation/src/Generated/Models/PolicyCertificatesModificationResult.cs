@@ -5,28 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The result of a policy certificate modification. </summary>
     public partial class PolicyCertificatesModificationResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PolicyCertificatesModificationResult"/>. </summary>
-        public PolicyCertificatesModificationResult()
+        internal PolicyCertificatesModificationResult()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyCertificatesModificationResult"/>. </summary>
-        /// <param name="certificateThumbprint"> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </param>
+        /// <param name="certificateThumbprint">
+        /// Hex encoded SHA1 Hash of the binary representation certificate which was added
+        /// or removed
+        /// </param>
         /// <param name="certificateResolution"> The result of the operation. </param>
-        internal PolicyCertificatesModificationResult(string certificateThumbprint, PolicyCertificateResolution? certificateResolution)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyCertificatesModificationResult(string certificateThumbprint, PolicyCertificateResolution? certificateResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateThumbprint = certificateThumbprint;
             CertificateResolution = certificateResolution;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </summary>
-        public string CertificateThumbprint { get; set; }
+        /// <summary>
+        /// Hex encoded SHA1 Hash of the binary representation certificate which was added
+        /// or removed
+        /// </summary>
+        public string CertificateThumbprint { get; }
+
         /// <summary> The result of the operation. </summary>
-        public PolicyCertificateResolution? CertificateResolution { get; set; }
+        public PolicyCertificateResolution? CertificateResolution { get; }
     }
 }

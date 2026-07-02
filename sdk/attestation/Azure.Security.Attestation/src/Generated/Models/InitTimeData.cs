@@ -6,28 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> Defines the "initialization time data" used to provision the attestation target for use by the MAA. </summary>
     internal partial class InitTimeData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
         public InitTimeData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
-        /// <param name="data"> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </param>
+        /// <param name="data">
+        /// Initialization time data are passed into the Trusted Execution Environment
+        /// (TEE) when it is created. For an Icelake SGX quote, the SHA256 hash of the
+        /// InitTimeData must match the lower 32 bytes of the quote's "config id"
+        /// attribute. For a SEV-SNP quote, the SHA256 hash of the InitTimeData must match
+        /// the quote's "host data" attribute.
+        /// </param>
         /// <param name="dataType"> The type of data contained within the "data" field. </param>
-        internal InitTimeData(byte[] data, DataType? dataType)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InitTimeData(BinaryData data, DataType? dataType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             DataType = dataType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </summary>
-        public byte[] Data { get; set; }
+        /// <summary>
+        /// Initialization time data are passed into the Trusted Execution Environment
+        /// (TEE) when it is created. For an Icelake SGX quote, the SHA256 hash of the
+        /// InitTimeData must match the lower 32 bytes of the quote's "config id"
+        /// attribute. For a SEV-SNP quote, the SHA256 hash of the InitTimeData must match
+        /// the quote's "host data" attribute.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Data { get; set; }
+
         /// <summary> The type of data contained within the "data" field. </summary>
         public DataType? DataType { get; set; }
     }
