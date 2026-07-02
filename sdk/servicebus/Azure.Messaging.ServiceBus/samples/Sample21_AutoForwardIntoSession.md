@@ -1,10 +1,10 @@
-# Autoforwarding into a session-enabled queue
+# Auto-forwarding into a session-enabled queue
 
-This sample demonstrates how to autoforward messages from a topic subscription into a **session-enabled** queue while preserving the session and message order. This is useful when you want to fan messages out through a topic but have each consumer read an ordered, per-session stream from a queue - keeping the messages in the queue's own storage instead of the topic. For concepts, see the [autoforwarding](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding) and [message sessions](https://learn.microsoft.com/azure/service-bus-messaging/message-sessions) documentation.
+This sample demonstrates how to auto-forward messages from a topic subscription into a **session-enabled** queue while preserving the session and message order. This is useful when you want to fan messages out through a topic but have each consumer read an ordered, per-session stream from a queue - keeping the messages in the queue's own storage instead of the topic. For concepts, see the [auto-forwarding](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding) and [message sessions](https://learn.microsoft.com/azure/service-bus-messaging/message-sessions) documentation.
 
 ## How it works
 
-A session-enabled entity can't be the *source* of autoforwarding (a single entity can't have both session support and `ForwardTo` set), but a session-enabled queue *can* be an autoforwarding *destination*. The pattern is:
+A session-enabled entity can't be the *source* of auto-forwarding (a single entity can't have both session support and `ForwardTo` set), but a session-enabled queue *can* be an auto-forwarding *destination*. The pattern is:
 
 - The **destination** is a session-enabled queue. Consumers read it with a `ServiceBusSessionReceiver`, which delivers each session's messages in order even when messages for different sessions are interleaved on the topic. (The destination can also be a topic that has session-enabled subscriptions.)
 - The **source** is a topic with a regular (non-session) subscription whose `ForwardTo` points at the queue. The subscription is only a conduit - nothing consumes it directly - so it doesn't need sessions enabled itself. Enable `SupportOrdering` on the topic to guarantee that messages reach the subscription in the order they were sent; it defaults to `false`.
@@ -25,7 +25,8 @@ await using var client = new ServiceBusClient(fullyQualifiedNamespace, new Defau
 // the messages live in the queue's own storage instead of the topic.
 await adminClient.CreateQueueAsync(new CreateQueueOptions(queueName)
 {
-    RequiresSession = true
+    RequiresSession = true,
+    EnablePartitioning = false
 });
 
 // The source is a topic with a regular (non-session) subscription that
@@ -34,10 +35,12 @@ await adminClient.CreateQueueAsync(new CreateQueueOptions(queueName)
 // enabled, and a single entity cannot have both RequiresSession and
 // ForwardTo set. SupportOrdering must be enabled on the topic to
 // guarantee that messages reach the subscription in the order they were
-// sent; it defaults to false.
+// sent; it defaults to false. Both entities are left non-partitioned,
+// because ordering is only guaranteed for non-partitioned entities.
 await adminClient.CreateTopicAsync(new CreateTopicOptions(topicName)
 {
-    SupportOrdering = true
+    SupportOrdering = true,
+    EnablePartitioning = false
 });
 await adminClient.CreateSubscriptionAsync(new CreateSubscriptionOptions(topicName, subscriptionName)
 {
@@ -66,8 +69,8 @@ await sender.SendMessagesAsync(messages);
 // Receive each session on its own session receiver. The receiver holds an
 // exclusive lock on one session and delivers that session's messages in
 // order, even though the two sessions were interleaved on the topic. Each
-// ReceiveMessageAsync call waits up to maxWaitTime for the next message
-// (the forward is asynchronous); the loop ends when a call returns null.
+// ReceiveMessageAsync waits up to maxWaitTime for the next message (the
+// forward is asynchronous); a null result means it did not arrive in time.
 var received = new List<ServiceBusReceivedMessage>();
 foreach (string sessionId in sessionIds)
 {
@@ -77,7 +80,8 @@ foreach (string sessionId in sessionIds)
         ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(maxWaitTime: TimeSpan.FromSeconds(10));
         if (message == null)
         {
-            break;
+            throw new InvalidOperationException(
+                $"Timed out waiting for a message on session '{sessionId}'.");
         }
 
         Console.WriteLine($"{message.SessionId}: {message.Body}");

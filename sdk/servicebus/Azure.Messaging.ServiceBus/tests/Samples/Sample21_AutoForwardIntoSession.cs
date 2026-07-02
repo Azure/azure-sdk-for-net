@@ -45,7 +45,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // the messages live in the queue's own storage instead of the topic.
                 await adminClient.CreateQueueAsync(new CreateQueueOptions(queueName)
                 {
-                    RequiresSession = true
+                    RequiresSession = true,
+                    EnablePartitioning = false
                 });
 
                 // The source is a topic with a regular (non-session) subscription that
@@ -54,10 +55,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // enabled, and a single entity cannot have both RequiresSession and
                 // ForwardTo set. SupportOrdering must be enabled on the topic to
                 // guarantee that messages reach the subscription in the order they were
-                // sent; it defaults to false.
+                // sent; it defaults to false. Both entities are left non-partitioned,
+                // because ordering is only guaranteed for non-partitioned entities.
                 await adminClient.CreateTopicAsync(new CreateTopicOptions(topicName)
                 {
-                    SupportOrdering = true
+                    SupportOrdering = true,
+                    EnablePartitioning = false
                 });
                 await adminClient.CreateSubscriptionAsync(new CreateSubscriptionOptions(topicName, subscriptionName)
                 {
@@ -86,8 +89,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // Receive each session on its own session receiver. The receiver holds an
                 // exclusive lock on one session and delivers that session's messages in
                 // order, even though the two sessions were interleaved on the topic. Each
-                // ReceiveMessageAsync call waits up to maxWaitTime for the next message
-                // (the forward is asynchronous); the loop ends when a call returns null.
+                // ReceiveMessageAsync waits up to maxWaitTime for the next message (the
+                // forward is asynchronous); a null result means it did not arrive in time.
                 var received = new List<ServiceBusReceivedMessage>();
                 foreach (string sessionId in sessionIds)
                 {
@@ -97,7 +100,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync(maxWaitTime: TimeSpan.FromSeconds(10));
                         if (message == null)
                         {
-                            break;
+                            throw new InvalidOperationException(
+                                $"Timed out waiting for a message on session '{sessionId}'.");
                         }
 
                         Console.WriteLine($"{message.SessionId}: {message.Body}");
