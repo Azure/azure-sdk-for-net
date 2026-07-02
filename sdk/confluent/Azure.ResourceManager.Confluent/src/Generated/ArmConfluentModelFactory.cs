@@ -1013,6 +1013,99 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Network Gateway Properties. </param>
+        /// <returns> A new <see cref="Confluent.NetworkGatewayResourceData"/> instance for mocking. </returns>
+        public static NetworkGatewayResourceData NetworkGatewayResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkGatewayProperties properties = default)
+        {
+            return new NetworkGatewayResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="networkGatewayName"> Display name of the network gateway. </param>
+        /// <param name="region"> The cloud service provider region for the network gateway. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="provisioningState"> Provisioning state of the network gateway. </param>
+        /// <param name="dictionary"> Additional properties for extensibility. </param>
+        /// <returns> A new <see cref="Models.NetworkGatewayProperties"/> instance for mocking. </returns>
+        public static NetworkGatewayProperties NetworkGatewayProperties(string networkGatewayName = default, string region = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<KeyValuePair> dictionary = default)
+        {
+            dictionary ??= new ChangeTrackingList<KeyValuePair>();
+
+            return new NetworkGatewayProperties(
+                networkGatewayName,
+                region,
+                metadata,
+                provisioningState,
+                (dictionary ?? new ChangeTrackingList<KeyValuePair>()).ToList(),
+                default);
+        }
+
+        /// <param name="key"> The key. </param>
+        /// <param name="value"> The value. </param>
+        /// <returns> A new <see cref="Models.KeyValuePair"/> instance for mocking. </returns>
+        public static KeyValuePair KeyValuePair(string key = default, string value = default)
+        {
+            return new KeyValuePair(key, value, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Access Point Properties. </param>
+        /// <returns> A new <see cref="Confluent.AccessPointResourceData"/> instance for mocking. </returns>
+        public static AccessPointResourceData AccessPointResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AccessPointProperties properties = default)
+        {
+            return new AccessPointResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="accessPointName"> Display name of the access point. </param>
+        /// <param name="region"> The cloud service provider region for the access point. </param>
+        /// <param name="vnetInjection"> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </param>
+        /// <param name="egressRoutes"> IP ranges to route through your virtual network instead of Confluent's default path. Required for Kafka clients in peered VNets or on-premises networks (e.g., 10.0.0.0/8, 172.16.0.0/12). </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="provisioningState"> Provisioning state of the access point. </param>
+        /// <param name="dictionary"> Additional properties for extensibility. </param>
+        /// <returns> A new <see cref="Models.AccessPointProperties"/> instance for mocking. </returns>
+        public static AccessPointProperties AccessPointProperties(string accessPointName = default, string region = default, VnetInjectionDetails vnetInjection = default, IEnumerable<string> egressRoutes = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<KeyValuePair> dictionary = default)
+        {
+            egressRoutes ??= new ChangeTrackingList<string>();
+            dictionary ??= new ChangeTrackingList<KeyValuePair>();
+
+            return new AccessPointProperties(
+                accessPointName,
+                region,
+                vnetInjection,
+                (egressRoutes ?? new ChangeTrackingList<string>()).ToList(),
+                metadata,
+                provisioningState,
+                (dictionary ?? new ChangeTrackingList<KeyValuePair>()).ToList(),
+                default);
+        }
+
+        /// <param name="virtualNetworkResourceId"> Resource ID of the virtual network. </param>
+        /// <param name="subnetResourceId"> Resource ID of the subnet. </param>
+        /// <returns> A new <see cref="Models.VnetInjectionDetails"/> instance for mocking. </returns>
+        public static VnetInjectionDetails VnetInjectionDetails(string virtualNetworkResourceId = default, string subnetResourceId = default)
+        {
+            return new VnetInjectionDetails(virtualNetworkResourceId, subnetResourceId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="publisher"> Publisher identifier string. </param>
         /// <param name="product"> Product identifier string. </param>
         /// <param name="plan"> Plan identifier string. </param>

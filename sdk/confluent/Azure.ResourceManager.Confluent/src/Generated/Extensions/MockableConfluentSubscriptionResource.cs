@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         private ClientDiagnostics ConfluentOrganizationClientDiagnostics => _confluentOrganizationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
+        private ConfluentOrganization ConfluentOrganizationRestClient => _confluentOrganizationRestClient ??= new ConfluentOrganization(ConfluentOrganizationClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics MarketplaceAgreementsOperationGroupClientDiagnostics => _marketplaceAgreementsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
+        private MarketplaceAgreementsOperationGroup MarketplaceAgreementsOperationGroupRestClient => _marketplaceAgreementsOperationGroupRestClient ??= new MarketplaceAgreementsOperationGroup(MarketplaceAgreementsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// List all organizations under the specified subscription.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
