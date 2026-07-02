@@ -60,7 +60,7 @@ namespace Azure.SdkAnalyzers
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
-            "Client types should provide a protected parameterless constructor to support mocking.",
+            "Client types should provide a protected (or public) parameterless constructor to support mocking.",
             "https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-client-constructor-for-mocking");
 
         public static readonly DiagnosticDescriptor AZC0006 = new(
