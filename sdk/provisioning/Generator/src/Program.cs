@@ -40,7 +40,6 @@ internal static class Program
             new CommunicationSpecification(),
             new ComputeSpecification(),
             new CognitiveServicesSpecification(),
-            new ContainerRegistrySpecification(),
             new ContainerServiceSpecification(),
             new CosmosDBSpecification(),
             new DataFactorySpecification(),
