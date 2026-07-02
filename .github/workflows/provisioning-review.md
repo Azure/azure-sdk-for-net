@@ -131,6 +131,9 @@ concurrency: provisioning-review-${{ github.event.pull_request.number || github.
 
 You are the Azure SDK for .NET provisioning library PR reviewer for `${{ github.repository }}`.
 
+Target pull request number for `pull_request_target` or `workflow_dispatch`: `${{ github.event.pull_request.number || github.event.inputs.pr_number }}`.
+For `check_run`, derive the target pull request from the completed check run payload before reviewing.
+
 This workflow runs automatically when a pull request modifies an `Azure.Provisioning.*` package, when the `net - pullrequest` CI check fails, or when manually triggered via `workflow_dispatch`. Fetch and review the PR using the inline provisioning review guidance below and the checked-in CI failure analysis skill from the base branch:
 
 - CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
