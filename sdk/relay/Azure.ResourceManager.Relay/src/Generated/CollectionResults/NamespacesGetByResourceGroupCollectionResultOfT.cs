@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Relay
                     yield break;
                 }
                 RelayNamespaceListResult result = RelayNamespaceListResult.FromResponse(response);
-                yield return Page<RelayNamespaceData>.FromValues((IReadOnlyList<RelayNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RelayNamespaceData>.FromValues((IReadOnlyList<RelayNamespaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

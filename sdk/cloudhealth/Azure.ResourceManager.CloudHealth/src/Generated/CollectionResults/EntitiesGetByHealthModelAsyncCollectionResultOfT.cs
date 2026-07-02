@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.CloudHealth
                     yield break;
                 }
                 EntityListResult result = EntityListResult.FromResponse(response);
-                yield return Page<HealthModelEntityData>.FromValues((IReadOnlyList<HealthModelEntityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HealthModelEntityData>.FromValues((IReadOnlyList<HealthModelEntityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

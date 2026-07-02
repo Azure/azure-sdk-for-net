@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The subnet ID. </summary>
         public ResourceIdentifier SubnetId { get; set; }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsSourceKind : IEquatable<SecurityInsightsSourceKind>
     {
         private readonly string _value;
+        /// <summary> LocalWorkspace. </summary>
+        private const string LocalWorkspaceValue = "LocalWorkspace";
+        /// <summary> Community. </summary>
+        private const string CommunityValue = "Community";
+        /// <summary> Solution. </summary>
+        private const string SolutionValue = "Solution";
+        /// <summary> SourceRepository. </summary>
+        private const string SourceRepositoryValue = "SourceRepository";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsSourceKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LocalWorkspaceValue = "LocalWorkspace";
-        private const string CommunityValue = "Community";
-        private const string SolutionValue = "Solution";
-        private const string SourceRepositoryValue = "SourceRepository";
+            _value = value;
+        }
 
         /// <summary> LocalWorkspace. </summary>
         public static SecurityInsightsSourceKind LocalWorkspace { get; } = new SecurityInsightsSourceKind(LocalWorkspaceValue);
+
         /// <summary> Community. </summary>
         public static SecurityInsightsSourceKind Community { get; } = new SecurityInsightsSourceKind(CommunityValue);
+
         /// <summary> Solution. </summary>
         public static SecurityInsightsSourceKind Solution { get; } = new SecurityInsightsSourceKind(SolutionValue);
+
         /// <summary> SourceRepository. </summary>
         public static SecurityInsightsSourceKind SourceRepository { get; } = new SecurityInsightsSourceKind(SourceRepositoryValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsSourceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsSourceKind left, SecurityInsightsSourceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsSourceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsSourceKind left, SecurityInsightsSourceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsSourceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsSourceKind(string value) => new SecurityInsightsSourceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsSourceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsSourceKind?(string value) => value == null ? null : new SecurityInsightsSourceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsSourceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsSourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

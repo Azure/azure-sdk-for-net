@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,17 @@
 
 ### Other Changes
 
+## 1.5.0 (2026-06-30)
+
+### Features Added
+
+- Upgraded api-verion to 2026-01-01.
+
+### Other Changes
+
 - Migrated code generation from AutoRest to TypeSpec.
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.5.0-beta.1 (2026-03-27)
 

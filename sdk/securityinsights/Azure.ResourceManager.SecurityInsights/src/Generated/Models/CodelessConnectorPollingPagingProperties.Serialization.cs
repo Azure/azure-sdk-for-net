@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CodelessConnectorPollingPagingProperties : IUtf8JsonSerializable, IJsonModel<CodelessConnectorPollingPagingProperties>
+    /// <summary> Describe the properties needed to make a pagination call. </summary>
+    public partial class CodelessConnectorPollingPagingProperties : IJsonModel<CodelessConnectorPollingPagingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodelessConnectorPollingPagingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingPagingProperties"/> for deserialization. </summary>
+        internal CodelessConnectorPollingPagingProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingPagingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCodelessConnectorPollingPagingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CodelessConnectorPollingPagingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingPagingProperties IPersistableModel<CodelessConnectorPollingPagingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CodelessConnectorPollingPagingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CodelessConnectorPollingPagingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("pagingType"u8);
             writer.WriteStringValue(PagingType);
             if (Optional.IsDefined(NextPageParaName))
@@ -77,15 +121,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,22 +138,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        CodelessConnectorPollingPagingProperties IJsonModel<CodelessConnectorPollingPagingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingPagingProperties IJsonModel<CodelessConnectorPollingPagingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingPagingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCodelessConnectorPollingPagingProperties(document.RootElement, options);
         }
 
-        internal static CodelessConnectorPollingPagingProperties DeserializeCodelessConnectorPollingPagingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CodelessConnectorPollingPagingProperties DeserializeCodelessConnectorPollingPagingProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,65 +172,63 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string searchTheLatestTimeStampFromEventsList = default;
             string pageSizeParaName = default;
             int? pageSize = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("pagingType"u8))
+                if (prop.NameEquals("pagingType"u8))
                 {
-                    pagingType = property.Value.GetString();
+                    pagingType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextPageParaName"u8))
+                if (prop.NameEquals("nextPageParaName"u8))
                 {
-                    nextPageParaName = property.Value.GetString();
+                    nextPageParaName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextPageTokenJsonPath"u8))
+                if (prop.NameEquals("nextPageTokenJsonPath"u8))
                 {
-                    nextPageTokenJsonPath = property.Value.GetString();
+                    nextPageTokenJsonPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pageCountAttributePath"u8))
+                if (prop.NameEquals("pageCountAttributePath"u8))
                 {
-                    pageCountAttributePath = property.Value.GetString();
+                    pageCountAttributePath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pageTotalCountAttributePath"u8))
+                if (prop.NameEquals("pageTotalCountAttributePath"u8))
                 {
-                    pageTotalCountAttributePath = property.Value.GetString();
+                    pageTotalCountAttributePath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pageTimeStampAttributePath"u8))
+                if (prop.NameEquals("pageTimeStampAttributePath"u8))
                 {
-                    pageTimeStampAttributePath = property.Value.GetString();
+                    pageTimeStampAttributePath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("searchTheLatestTimeStampFromEventsList"u8))
+                if (prop.NameEquals("searchTheLatestTimeStampFromEventsList"u8))
                 {
-                    searchTheLatestTimeStampFromEventsList = property.Value.GetString();
+                    searchTheLatestTimeStampFromEventsList = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pageSizeParaName"u8))
+                if (prop.NameEquals("pageSizeParaName"u8))
                 {
-                    pageSizeParaName = property.Value.GetString();
+                    pageSizeParaName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pageSize"u8))
+                if (prop.NameEquals("pageSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pageSize = property.Value.GetInt32();
+                    pageSize = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CodelessConnectorPollingPagingProperties(
                 pagingType,
                 nextPageParaName,
@@ -192,254 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 searchTheLatestTimeStampFromEventsList,
                 pageSizeParaName,
                 pageSize,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PagingType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pagingType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PagingType))
-                {
-                    builder.Append("  pagingType: ");
-                    if (PagingType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PagingType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PagingType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextPageParaName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextPageParaName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextPageParaName))
-                {
-                    builder.Append("  nextPageParaName: ");
-                    if (NextPageParaName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextPageParaName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextPageParaName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextPageTokenJsonPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextPageTokenJsonPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextPageTokenJsonPath))
-                {
-                    builder.Append("  nextPageTokenJsonPath: ");
-                    if (NextPageTokenJsonPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextPageTokenJsonPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextPageTokenJsonPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageCountAttributePath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pageCountAttributePath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PageCountAttributePath))
-                {
-                    builder.Append("  pageCountAttributePath: ");
-                    if (PageCountAttributePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PageCountAttributePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PageCountAttributePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageTotalCountAttributePath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pageTotalCountAttributePath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PageTotalCountAttributePath))
-                {
-                    builder.Append("  pageTotalCountAttributePath: ");
-                    if (PageTotalCountAttributePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PageTotalCountAttributePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PageTotalCountAttributePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageTimeStampAttributePath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pageTimeStampAttributePath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PageTimeStampAttributePath))
-                {
-                    builder.Append("  pageTimeStampAttributePath: ");
-                    if (PageTimeStampAttributePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PageTimeStampAttributePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PageTimeStampAttributePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchTheLatestTimeStampFromEventsList), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  searchTheLatestTimeStampFromEventsList: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SearchTheLatestTimeStampFromEventsList))
-                {
-                    builder.Append("  searchTheLatestTimeStampFromEventsList: ");
-                    if (SearchTheLatestTimeStampFromEventsList.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SearchTheLatestTimeStampFromEventsList}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SearchTheLatestTimeStampFromEventsList}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageSizeParaName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pageSizeParaName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PageSizeParaName))
-                {
-                    builder.Append("  pageSizeParaName: ");
-                    if (PageSizeParaName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PageSizeParaName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PageSizeParaName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PageSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pageSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PageSize))
-                {
-                    builder.Append("  pageSize: ");
-                    builder.AppendLine($"{PageSize.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CodelessConnectorPollingPagingProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CodelessConnectorPollingPagingProperties IPersistableModel<CodelessConnectorPollingPagingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingPagingProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCodelessConnectorPollingPagingProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingPagingProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CodelessConnectorPollingPagingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

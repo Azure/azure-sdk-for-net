@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     yield break;
                 }
                 ImageListResult result = ImageListResult.FromResponse(response);
-                yield return Page<DisconnectedOperationsImageData>.FromValues((IReadOnlyList<DisconnectedOperationsImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DisconnectedOperationsImageData>.FromValues((IReadOnlyList<DisconnectedOperationsImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

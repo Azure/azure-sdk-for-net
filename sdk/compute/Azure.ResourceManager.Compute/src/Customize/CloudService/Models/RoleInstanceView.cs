@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The statuses. </summary>
         public IReadOnlyList<ResourceInstanceViewStatus> Statuses { get; }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

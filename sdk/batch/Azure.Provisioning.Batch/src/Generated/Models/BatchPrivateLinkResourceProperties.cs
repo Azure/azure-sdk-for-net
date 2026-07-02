@@ -59,6 +59,10 @@ namespace Azure.Provisioning.Batch
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" }, isOutput: true);
             _requiredMembers = DefineListProperty<string>(nameof(RequiredMembers), new string[] { "requiredMembers" }, isOutput: true);
             _requiredZoneNames = DefineListProperty<string>(nameof(RequiredZoneNames), new string[] { "requiredZoneNames" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchPrivateLinkResourceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

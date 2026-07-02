@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormatNetworkAcls"/>. </summary>
         public BastionHostPropertiesFormatNetworkAcls()
         {
-            IpRules = new ChangeTrackingList<BastionHostIPRule>();
+            IPRules = new ChangeTrackingList<BastionHostIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormatNetworkAcls"/>. </summary>
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BastionHostPropertiesFormatNetworkAcls(IList<BastionHostIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpRules = ipRules;
+            IPRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
         [WirePath("ipRules")]
-        public IList<BastionHostIPRule> IpRules { get; }
+        public IList<BastionHostIPRule> IPRules { get; }
     }
 }

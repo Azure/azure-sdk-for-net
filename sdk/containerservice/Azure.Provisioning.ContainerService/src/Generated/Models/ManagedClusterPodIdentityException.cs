@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _namespace = DefineProperty<string>(nameof(Namespace), new string[] { "namespace" }, isRequired: true);
             _podLabels = DefineDictionaryProperty<string>(nameof(PodLabels), new string[] { "podLabels" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityException that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

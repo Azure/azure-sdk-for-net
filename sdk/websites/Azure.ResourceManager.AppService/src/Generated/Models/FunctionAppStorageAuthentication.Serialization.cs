@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppStorageAuthentication : IUtf8JsonSerializable, IJsonModel<FunctionAppStorageAuthentication>
+    /// <summary> Authentication method to access the storage account for deployment. </summary>
+    public partial class FunctionAppStorageAuthentication : IJsonModel<FunctionAppStorageAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppStorageAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppStorageAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionAppStorageAuthentication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FunctionAppStorageAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppStorageAuthentication IPersistableModel<FunctionAppStorageAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FunctionAppStorageAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionAppStorageAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
@@ -50,15 +89,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("storageAccountConnectionStringName"u8);
                 writer.WriteStringValue(StorageAccountConnectionStringName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,168 +106,62 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        FunctionAppStorageAuthentication IJsonModel<FunctionAppStorageAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppStorageAuthentication IJsonModel<FunctionAppStorageAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppStorageAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFunctionAppStorageAuthentication(document.RootElement, options);
         }
 
-        internal static FunctionAppStorageAuthentication DeserializeFunctionAppStorageAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FunctionAppStorageAuthentication DeserializeFunctionAppStorageAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FunctionAppStorageAccountAuthenticationType? type = default;
+            FunctionAppStorageAccountAuthenticationType? authenticationType = default;
             string userAssignedIdentityResourceId = default;
             string storageAccountConnectionStringName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new FunctionAppStorageAccountAuthenticationType(property.Value.GetString());
+                    authenticationType = new FunctionAppStorageAccountAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentityResourceId"u8))
+                if (prop.NameEquals("userAssignedIdentityResourceId"u8))
                 {
-                    userAssignedIdentityResourceId = property.Value.GetString();
+                    userAssignedIdentityResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountConnectionStringName"u8))
+                if (prop.NameEquals("storageAccountConnectionStringName"u8))
                 {
-                    storageAccountConnectionStringName = property.Value.GetString();
+                    storageAccountConnectionStringName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FunctionAppStorageAuthentication(type, userAssignedIdentityResourceId, storageAccountConnectionStringName, serializedAdditionalRawData);
+            return new FunctionAppStorageAuthentication(authenticationType, userAssignedIdentityResourceId, storageAccountConnectionStringName, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthenticationType))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{AuthenticationType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentityResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userAssignedIdentityResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserAssignedIdentityResourceId))
-                {
-                    builder.Append("  userAssignedIdentityResourceId: ");
-                    if (UserAssignedIdentityResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserAssignedIdentityResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserAssignedIdentityResourceId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountConnectionStringName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storageAccountConnectionStringName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageAccountConnectionStringName))
-                {
-                    builder.Append("  storageAccountConnectionStringName: ");
-                    if (StorageAccountConnectionStringName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StorageAccountConnectionStringName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StorageAccountConnectionStringName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FunctionAppStorageAuthentication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FunctionAppStorageAuthentication IPersistableModel<FunctionAppStorageAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppStorageAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFunctionAppStorageAuthentication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppStorageAuthentication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FunctionAppStorageAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

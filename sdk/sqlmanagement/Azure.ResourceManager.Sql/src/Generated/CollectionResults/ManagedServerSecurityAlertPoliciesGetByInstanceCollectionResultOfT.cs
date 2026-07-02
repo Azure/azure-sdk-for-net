@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedServerSecurityAlertPolicyListResult result = ManagedServerSecurityAlertPolicyListResult.FromResponse(response);
-                yield return Page<ManagedServerSecurityAlertPolicyData>.FromValues((IReadOnlyList<ManagedServerSecurityAlertPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedServerSecurityAlertPolicyData>.FromValues((IReadOnlyList<ManagedServerSecurityAlertPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

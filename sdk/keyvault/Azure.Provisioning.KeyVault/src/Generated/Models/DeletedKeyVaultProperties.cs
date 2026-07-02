@@ -97,6 +97,10 @@ namespace Azure.Provisioning.KeyVault
             _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             _purgeProtectionEnabled = DefineProperty<bool>(nameof(PurgeProtectionEnabled), new string[] { "purgeProtectionEnabled" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeletedKeyVaultProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

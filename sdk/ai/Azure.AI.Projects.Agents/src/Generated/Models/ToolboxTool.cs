@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// An abstract representation of a tool stored in a toolbox.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, <see cref="FabricIQPreviewToolboxTool"/>, and <see cref="ToolboxSearchPreviewToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewToolboxTool"/>, <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, and <see cref="ToolboxSearchPreviewToolboxTool"/>.
     /// </summary>
     public abstract partial class ToolboxTool
     {

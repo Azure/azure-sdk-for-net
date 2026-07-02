@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
+        /// Post ScheduledEvents Acknowledgement
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.AcknowledgeAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="scheduledEventId"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeAsync(this ArmClient client, ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
+        /// Post ScheduledEvents Acknowledgement
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.Acknowledge(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="scheduledEventId"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Response<MaintenanceScheduledEventApproveResult> Acknowledge(this ArmClient client, ResourceIdentifier scope, string scheduledEventId, CancellationToken cancellationToken = default)
@@ -450,6 +450,44 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMaintenanceArmClient(client).Acknowledge(scope, scheduledEventId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Post List of ScheduledEvents Acknowledgement
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.AcknowledgeListAsync(ResourceIdentifier, MaintenanceScheduledEventIdList, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventsIdList"> List of ScheduledEvents Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeListAsync(this ArmClient client, ResourceIdentifier scope, MaintenanceScheduledEventIdList scheduledEventsIdList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableMaintenanceArmClient(client).AcknowledgeListAsync(scope, scheduledEventsIdList, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Post List of ScheduledEvents Acknowledgement
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.AcknowledgeList(ResourceIdentifier, MaintenanceScheduledEventIdList, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventsIdList"> List of ScheduledEvents Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<MaintenanceScheduledEventApproveResult> AcknowledgeList(this ArmClient client, ResourceIdentifier scope, MaintenanceScheduledEventIdList scheduledEventsIdList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMaintenanceArmClient(client).AcknowledgeList(scope, scheduledEventsIdList, cancellationToken);
         }
 
         /// <summary>

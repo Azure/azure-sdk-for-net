@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The IotSecuritySolutionExportOption. </summary>
+    /// <summary></summary>
     public readonly partial struct IotSecuritySolutionExportOption : IEquatable<IotSecuritySolutionExportOption>
     {
         private readonly string _value;
+        /// <summary> Agent raw events. </summary>
+        private const string RawEventsValue = "RawEvents";
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionExportOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotSecuritySolutionExportOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RawEventsValue = "RawEvents";
+            _value = value;
+        }
 
         /// <summary> Agent raw events. </summary>
         public static IotSecuritySolutionExportOption RawEvents { get; } = new IotSecuritySolutionExportOption(RawEventsValue);
+
         /// <summary> Determines if two <see cref="IotSecuritySolutionExportOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotSecuritySolutionExportOption left, IotSecuritySolutionExportOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotSecuritySolutionExportOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotSecuritySolutionExportOption left, IotSecuritySolutionExportOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotSecuritySolutionExportOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotSecuritySolutionExportOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotSecuritySolutionExportOption(string value) => new IotSecuritySolutionExportOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotSecuritySolutionExportOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotSecuritySolutionExportOption?(string value) => value == null ? null : new IotSecuritySolutionExportOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotSecuritySolutionExportOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotSecuritySolutionExportOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

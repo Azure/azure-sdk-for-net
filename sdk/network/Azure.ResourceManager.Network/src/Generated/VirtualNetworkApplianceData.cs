@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IpConfigurations
+        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IPConfigurations
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkAppliancePropertiesFormat();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

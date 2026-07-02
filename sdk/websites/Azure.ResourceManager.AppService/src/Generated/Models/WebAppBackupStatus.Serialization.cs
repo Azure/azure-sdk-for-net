@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WebAppBackupStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebAppBackupStatus value) => value switch
         {
             WebAppBackupStatus.InProgress => "InProgress",
@@ -26,18 +27,49 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppBackupStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WebAppBackupStatus ToWebAppBackupStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return WebAppBackupStatus.InProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return WebAppBackupStatus.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return WebAppBackupStatus.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimedOut")) return WebAppBackupStatus.TimedOut;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created")) return WebAppBackupStatus.Created;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return WebAppBackupStatus.Skipped;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallySucceeded")) return WebAppBackupStatus.PartiallySucceeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteInProgress")) return WebAppBackupStatus.DeleteInProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteFailed")) return WebAppBackupStatus.DeleteFailed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return WebAppBackupStatus.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return WebAppBackupStatus.InProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return WebAppBackupStatus.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return WebAppBackupStatus.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TimedOut"))
+            {
+                return WebAppBackupStatus.TimedOut;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Created"))
+            {
+                return WebAppBackupStatus.Created;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped"))
+            {
+                return WebAppBackupStatus.Skipped;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PartiallySucceeded"))
+            {
+                return WebAppBackupStatus.PartiallySucceeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteInProgress"))
+            {
+                return WebAppBackupStatus.DeleteInProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeleteFailed"))
+            {
+                return WebAppBackupStatus.DeleteFailed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted"))
+            {
+                return WebAppBackupStatus.Deleted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebAppBackupStatus value.");
         }
     }

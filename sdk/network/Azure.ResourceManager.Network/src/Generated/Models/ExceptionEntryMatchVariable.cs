@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> RequestURI. </summary>
-        private const string RequestURIValue = "RequestURI";
+        private const string RequestUriValue = "RequestURI";
         /// <summary> RemoteAddr. </summary>
         private const string RemoteAddrValue = "RemoteAddr";
         /// <summary> RequestHeader. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> RequestURI. </summary>
-        public static ExceptionEntryMatchVariable RequestURI { get; } = new ExceptionEntryMatchVariable(RequestURIValue);
+        public static ExceptionEntryMatchVariable RequestUri { get; } = new ExceptionEntryMatchVariable(RequestUriValue);
 
         /// <summary> RemoteAddr. </summary>
         public static ExceptionEntryMatchVariable RemoteAddr { get; } = new ExceptionEntryMatchVariable(RemoteAddrValue);

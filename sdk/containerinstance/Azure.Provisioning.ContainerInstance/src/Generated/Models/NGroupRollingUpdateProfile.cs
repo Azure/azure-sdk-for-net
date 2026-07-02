@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerInstance
             _maxUnhealthyPercent = DefineProperty<int>(nameof(MaxUnhealthyPercent), new string[] { "maxUnhealthyPercent" });
             _pauseTimeBetweenBatches = DefineProperty<string>(nameof(PauseTimeBetweenBatches), new string[] { "pauseTimeBetweenBatches" });
             _inPlaceUpdate = DefineProperty<bool>(nameof(InPlaceUpdate), new string[] { "inPlaceUpdate" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NGroupRollingUpdateProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

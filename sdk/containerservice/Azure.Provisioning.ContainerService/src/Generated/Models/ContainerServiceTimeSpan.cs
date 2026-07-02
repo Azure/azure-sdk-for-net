@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start" });
             _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "end" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceTimeSpan that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class HybridRunbookWorkerGroupResource : IJsonModel<HybridRunbookWorkerGroupData>
     {
-        private static HybridRunbookWorkerGroupData s_dataDeserializationInstance;
-        private static HybridRunbookWorkerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridRunbookWorkerGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridRunbookWorkerGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridRunbookWorkerGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridRunbookWorkerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridRunbookWorkerGroupData>)Data).Write(writer, options);
 
-        HybridRunbookWorkerGroupData IJsonModel<HybridRunbookWorkerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridRunbookWorkerGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridRunbookWorkerGroupData IJsonModel<HybridRunbookWorkerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridRunbookWorkerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridRunbookWorkerGroupData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridRunbookWorkerGroupData IPersistableModel<HybridRunbookWorkerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridRunbookWorkerGroupData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<HybridRunbookWorkerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridRunbookWorkerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridRunbookWorkerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

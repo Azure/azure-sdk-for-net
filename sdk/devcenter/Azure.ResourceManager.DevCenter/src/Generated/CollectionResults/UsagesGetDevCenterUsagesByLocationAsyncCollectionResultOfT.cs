@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 ListUsagesResult result = ListUsagesResult.FromResponse(response);
-                yield return Page<DevCenterUsage>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevCenterUsage>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

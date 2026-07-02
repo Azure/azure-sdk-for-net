@@ -1182,7 +1182,7 @@
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @benbp
+/eng/                                                              @danieljurek @benbp @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1190,7 +1190,7 @@
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
 
 # Add owners for package dependency changes
 /eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1236,11 +1236,10 @@
 ################
 
 # GitHub integration, CODEOWNERS, and bot rules
-/.github/                                                          @jsquire @m-redding @ArthurMa1978
-/.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
-/.github/skills/                                                   @azure/azsdk-cli @m-nash @jsquire
+/.github/                                                          @jsquire @m-nash @JoshLove-msft @ArthurMa1978
+/.github/workflows/                                                @jsquire @m-nash @JoshLove-msft
+/.github/CODEOWNERS                                                @jsquire @m-nash @JoshLove-msft
+/.github/copilot-instructions.md                                   @jsquire @m-nash @JoshLove-msft
 
 ###########################
 # Repository configuration
@@ -1269,5 +1268,5 @@
 /sdk/**/.gitattributes                                             @jsquire @m-redding
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder

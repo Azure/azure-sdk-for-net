@@ -57,18 +57,18 @@ namespace Azure.Search.Documents.Indexes
                     yield break;
                 }
                 ListIndexStatsSummary result = (ListIndexStatsSummary)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.IndexesStatistics)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

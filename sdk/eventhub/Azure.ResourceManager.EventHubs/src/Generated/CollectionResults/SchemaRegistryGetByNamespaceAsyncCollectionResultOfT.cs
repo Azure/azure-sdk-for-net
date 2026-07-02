@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 SchemaGroupListResult result = SchemaGroupListResult.FromResponse(response);
-                yield return Page<EventHubsSchemaGroupData>.FromValues((IReadOnlyList<EventHubsSchemaGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsSchemaGroupData>.FromValues((IReadOnlyList<EventHubsSchemaGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

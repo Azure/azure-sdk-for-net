@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.HybridNetwork
                     yield break;
                 }
                 ConfigurationGroupValueListResult result = ConfigurationGroupValueListResult.FromResponse(response);
-                yield return Page<ConfigurationGroupValueData>.FromValues((IReadOnlyList<ConfigurationGroupValueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConfigurationGroupValueData>.FromValues((IReadOnlyList<ConfigurationGroupValueData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

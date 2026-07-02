@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string galleryImageApiVersion);
             _galleryImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _galleryImagesRestClient = new GalleryImages(_galleryImagesClientDiagnostics, Pipeline, Endpoint, galleryImageApiVersion ?? "2025-03-03");
+            _galleryImagesRestClient = new GalleryImages(_galleryImagesClientDiagnostics, Pipeline, Endpoint, galleryImageApiVersion ?? "2025-12-03");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -442,6 +442,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<GalleryImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -490,6 +491,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<GalleryImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -533,6 +535,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     GalleryImageData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     GalleryImagePatch patch = new GalleryImagePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<GalleryImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -576,6 +579,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     GalleryImageData current = Get(cancellationToken: cancellationToken).Value.Data;
                     GalleryImagePatch patch = new GalleryImagePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<GalleryImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -622,6 +626,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<GalleryImageResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -668,6 +673,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<GalleryImageResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

@@ -87,6 +87,7 @@ steps:
             -ServiceDirectory $ServiceDirectory `
             -SDKType ${{ parameters.SDKType }} `
             -SpellCheckPublicApiSurface `
+            -ProjectListOverrideFile "$(ProjectListOverrideFile)"
 
           if ($LASTEXITCODE -ne 0) {
             $failed = $true
@@ -126,6 +127,10 @@ steps:
         Write-Host "No services were directly changed. Skipping CPM compliance checks."
       }
     displayName: Validate CPM Compliance
+
+  - pwsh: |
+      ./eng/scripts/Validate-SampleSelfContainment.ps1
+    displayName: Validate Sample Self-Containment
 
   - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
     parameters:

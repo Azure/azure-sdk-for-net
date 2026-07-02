@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.BillingBenefits
                     yield break;
                 }
                 MaccList result = MaccList.FromResponse(response);
-                yield return Page<MaccData>.FromValues((IReadOnlyList<MaccData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MaccData>.FromValues((IReadOnlyList<MaccData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

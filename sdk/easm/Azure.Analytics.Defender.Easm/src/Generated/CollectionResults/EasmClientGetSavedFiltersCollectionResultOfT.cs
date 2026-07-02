@@ -54,8 +54,8 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedSavedFilter result = (PagedSavedFilter)response;
-                yield return Page<SavedFilter>.FromValues((IReadOnlyList<SavedFilter>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SavedFilter>.FromValues((IReadOnlyList<SavedFilter>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

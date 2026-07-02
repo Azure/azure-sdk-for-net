@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 RaiPolicyPropertiesBasicResourceArmPaginatedResult result = RaiPolicyPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<RaiPolicyData>.FromValues((IReadOnlyList<RaiPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RaiPolicyData>.FromValues((IReadOnlyList<RaiPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 CommunicationServiceResourceList result = CommunicationServiceResourceList.FromResponse(response);
-                yield return Page<CommunicationServiceResourceData>.FromValues((IReadOnlyList<CommunicationServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CommunicationServiceResourceData>.FromValues((IReadOnlyList<CommunicationServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Source IP ranges. </summary>
         [WirePath("properties.sourceIpRanges")]
-        public IList<QosIPRange> SourceIpRanges
+        public IList<QosIPRange> SourceIPRanges
         {
             get
             {
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new DscpConfigurationPropertiesFormat();
                 }
-                return Properties.SourceIpRanges;
+                return Properties.SourceIPRanges;
             }
         }
 
         /// <summary> Destination IP ranges. </summary>
         [WirePath("properties.destinationIpRanges")]
-        public IList<QosIPRange> DestinationIpRanges
+        public IList<QosIPRange> DestinationIPRanges
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new DscpConfigurationPropertiesFormat();
                 }
-                return Properties.DestinationIpRanges;
+                return Properties.DestinationIPRanges;
             }
         }
 

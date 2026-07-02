@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class AppServiceHostNameTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AppServiceHostNameType value) => value switch
         {
             AppServiceHostNameType.Verified => "Verified",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceHostNameType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AppServiceHostNameType ToAppServiceHostNameType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verified")) return AppServiceHostNameType.Verified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Managed")) return AppServiceHostNameType.Managed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verified"))
+            {
+                return AppServiceHostNameType.Verified;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Managed"))
+            {
+                return AppServiceHostNameType.Managed;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AppServiceHostNameType value.");
         }
     }

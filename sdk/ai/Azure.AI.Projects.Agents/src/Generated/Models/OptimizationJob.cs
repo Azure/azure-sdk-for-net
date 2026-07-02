@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="progress"> Progress snapshot. May be present in terminal states reflecting last-known progress. </param>
         /// <param name="warnings"> Non-fatal warnings emitted at any point during optimization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJob(string id, OptimizationJobInputs inputs, OptimizationJobResult result, JobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset updatedAt, OptimizationJobProgress progress, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJob(string id, OptimizationJobInputs inputs, OptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset updatedAt, OptimizationJobProgress progress, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
@@ -54,7 +54,7 @@ namespace Azure.AI.Projects.Agents
         public OptimizationJobResult Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
-        public JobStatus Status { get; }
+        public AgentsJobStatus Status { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time. </summary>
         public DateTimeOffset CreatedAt { get; }

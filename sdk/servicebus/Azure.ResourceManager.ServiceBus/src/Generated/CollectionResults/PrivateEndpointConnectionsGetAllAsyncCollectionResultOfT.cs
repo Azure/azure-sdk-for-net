@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 ServiceBusPrivateEndpointConnectionListResult result = ServiceBusPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<ServiceBusPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ServiceBusPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceBusPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ServiceBusPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

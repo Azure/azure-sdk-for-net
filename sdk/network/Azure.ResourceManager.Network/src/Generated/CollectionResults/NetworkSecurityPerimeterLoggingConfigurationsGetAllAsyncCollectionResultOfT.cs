@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NspLoggingConfigurationListResult result = NspLoggingConfigurationListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterLoggingConfigurationData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterLoggingConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityPerimeterLoggingConfigurationData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterLoggingConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

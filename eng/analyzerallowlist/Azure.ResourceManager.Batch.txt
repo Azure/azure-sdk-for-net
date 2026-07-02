@@ -1,0 +1,6 @@
+# Azure.ResourceManager.Batch approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# BatchAccountCertificateFormat is obsolete; its generated serializer must still
+# reference it to round-trip payloads, and generated code cannot carry a pragma.
+nowarn:CS0618 T:Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormatExtensions

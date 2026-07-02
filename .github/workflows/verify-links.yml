@@ -1,0 +1,71 @@
+name: Verify Links
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release/*
+      - hotfix/*
+  check_run:
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-links:
+    name: Verify Links
+    if: >-
+      github.event_name == 'pull_request' ||
+      (
+        github.event_name == 'check_run' &&
+        github.event.check_run.check_suite.app.name == 'Azure Pipelines' &&
+        (
+          (github.repository == 'Azure/azure-sdk-for-net' && contains(github.event.check_run.name, 'Compliance')) ||
+          (github.repository == 'Azure/azure-sdk-for-python' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-java' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-js' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-c' && contains(github.event.check_run.name, 'GenerateReleaseArtifacts')) ||
+          (github.repository == 'Azure/azure-sdk-for-cpp' && contains(github.event.check_run.name, 'GenerateReleaseArtifacts')) ||
+          (github.repository == 'Azure/azure-sdk-for-go' && contains(github.event.check_run.name, 'Analyze')) ||
+          (github.repository == 'Azure/azure-sdk-for-ios' && contains(github.event.check_run.name, 'Analyze'))
+        )
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.event.check_run.head_sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Link verification check
+        shell: pwsh
+        env:
+          SYSTEM_PULLREQUEST_TARGETBRANCH: ${{ github.base_ref }}
+          SYSTEM_PULLREQUEST_SOURCECOMMITID: ${{ github.event.pull_request.head.sha }}
+        run: |
+          $urls = & ./eng/common/scripts/get-markdown-files-from-changed-files.ps1
+          if (-not $urls -or $urls.Count -eq 0) {
+            Write-Host "No changed markdown files; nothing to verify."
+            exit 0
+          }
+
+          $sourceRepoUri  = '${{ github.event.pull_request.head.repo.html_url }}'
+          $defaultBranch  = '${{ github.event.repository.default_branch }}'
+          $branchReplaceRegex = "^($sourceRepoUri(?:\.git)?/(?:blob|tree)/)$defaultBranch(/.*)$"
+
+          ./eng/common/scripts/Verify-Links.ps1 `
+            -urls $urls `
+            -rootUrl "file://$env:GITHUB_WORKSPACE/" `
+            -recursive:$false `
+            -ignoreLinksFile "$env:GITHUB_WORKSPACE/eng/ignore-links.txt" `
+            -branchReplaceRegex $branchReplaceRegex `
+            -branchReplacementName '${{ github.event.pull_request.head.sha }}' `
+            -checkLinkGuidance:$true `
+            -localBuildRepoName '${{ github.repository }}' `
+            -localBuildRepoPath $env:GITHUB_WORKSPACE `
+            -inputCacheFile "https://azuresdkartifacts.blob.core.windows.net/verify-links-cache/verify-links-cache.txt" `
+            -allowRelativeLinksFile "$env:GITHUB_WORKSPACE/eng/common/scripts/allow-relative-links.txt"

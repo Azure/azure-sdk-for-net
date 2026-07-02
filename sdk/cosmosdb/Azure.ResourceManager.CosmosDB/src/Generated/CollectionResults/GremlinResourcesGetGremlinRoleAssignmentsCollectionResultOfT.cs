@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 GremlinRoleAssignmentListResult result = GremlinRoleAssignmentListResult.FromResponse(response);
-                yield return Page<GremlinRoleAssignmentData>.FromValues((IReadOnlyList<GremlinRoleAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GremlinRoleAssignmentData>.FromValues((IReadOnlyList<GremlinRoleAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

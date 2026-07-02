@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 ConsumerGroupListResult result = ConsumerGroupListResult.FromResponse(response);
-                yield return Page<EventHubsConsumerGroupData>.FromValues((IReadOnlyList<EventHubsConsumerGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsConsumerGroupData>.FromValues((IReadOnlyList<EventHubsConsumerGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

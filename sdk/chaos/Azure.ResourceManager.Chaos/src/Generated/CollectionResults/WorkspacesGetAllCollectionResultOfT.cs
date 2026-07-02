@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 WorkspaceListResult result = WorkspaceListResult.FromResponse(response);
-                yield return Page<ChaosWorkspaceData>.FromValues((IReadOnlyList<ChaosWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ChaosWorkspaceData>.FromValues((IReadOnlyList<ChaosWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

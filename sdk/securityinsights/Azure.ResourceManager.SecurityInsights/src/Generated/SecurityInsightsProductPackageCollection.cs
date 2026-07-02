@@ -8,90 +8,96 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsProductPackageResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsProductPackageResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsProductPackageCollection"/> instance call the GetSecurityInsightsProductPackages method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsProductPackageResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityInsightsProductPackageCollection"/> instance call the GetSecurityInsightsProductPackages method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityInsightsProductPackageCollection : ArmCollection, IEnumerable<SecurityInsightsProductPackageResource>, IAsyncEnumerable<SecurityInsightsProductPackageResource>
     {
-        private readonly ClientDiagnostics _securityInsightsProductPackageProductPackageClientDiagnostics;
-        private readonly ProductPackageRestOperations _securityInsightsProductPackageProductPackageRestClient;
-        private readonly ClientDiagnostics _securityInsightsProductPackageProductPackagesClientDiagnostics;
-        private readonly ProductPackagesRestOperations _securityInsightsProductPackageProductPackagesRestClient;
+        private readonly ClientDiagnostics _productPackageClientDiagnostics;
+        private readonly ProductPackage _productPackageRestClient;
+        private readonly ClientDiagnostics _productPackagesClientDiagnostics;
+        private readonly ProductPackages _productPackagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsProductPackageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsProductPackageCollection for mocking. </summary>
         protected SecurityInsightsProductPackageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsProductPackageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsProductPackageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsProductPackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsProductPackageProductPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductPackageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsProductPackageResource.ResourceType, out string securityInsightsProductPackageProductPackageApiVersion);
-            _securityInsightsProductPackageProductPackageRestClient = new ProductPackageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductPackageProductPackageApiVersion);
-            _securityInsightsProductPackageProductPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductPackageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsProductPackageResource.ResourceType, out string securityInsightsProductPackageProductPackagesApiVersion);
-            _securityInsightsProductPackageProductPackagesRestClient = new ProductPackagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsProductPackageProductPackagesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsProductPackageResource.ResourceType, out string securityInsightsProductPackageApiVersion);
+            _productPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductPackageResource.ResourceType.Namespace, Diagnostics);
+            _productPackageRestClient = new ProductPackage(_productPackageClientDiagnostics, Pipeline, Endpoint, securityInsightsProductPackageApiVersion ?? "2025-07-01-preview");
+            _productPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsProductPackageResource.ResourceType.Namespace, Diagnostics);
+            _productPackagesRestClient = new ProductPackages(_productPackagesClientDiagnostics, Pipeline, Endpoint, securityInsightsProductPackageApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != "Microsoft.OperationalInsights/workspaces")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.OperationalInsights/workspaces"), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a package by its identifier from the catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsProductPackageResource>> GetAsync(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsProductPackageProductPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Get");
+            using DiagnosticScope scope = _productPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsProductPackageProductPackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productPackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsProductPackageData> response = Response.FromValue(SecurityInsightsProductPackageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,38 +111,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a package by its identifier from the catalog.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsProductPackageResource> Get(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsProductPackageProductPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Get");
+            using DiagnosticScope scope = _productPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsProductPackageProductPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productPackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsProductPackageData> response = Response.FromValue(SecurityInsightsProductPackageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,111 +159,143 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Gets all packages from the catalog.
         /// Expandable properties:
-        /// - properties/installed
-        /// - properties/packagedContent
+        /// <list type="bullet"><item><description>properties/installed</description></item><item><description>properties/packagedContent</description></item></list>
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
+        /// <param name="search"> Searches for a substring in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsProductPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsProductPackageResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsProductPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsProductPackageResource> GetAllAsync(string filter = default, string @orderby = default, int? top = default, string skipToken = default, string search = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsProductPackageProductPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsProductPackageProductPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsProductPackageResource(Client, SecurityInsightsProductPackageData.DeserializeSecurityInsightsProductPackageData(e)), _securityInsightsProductPackageProductPackagesClientDiagnostics, Pipeline, "SecurityInsightsProductPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsProductPackageData, SecurityInsightsProductPackageResource>(new ProductPackagesGetAllAsyncCollectionResultOfT(
+                _productPackagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                top,
+                skipToken,
+                search,
+                context,
+                "SecurityInsightsProductPackageCollection.GetAll"), data => new SecurityInsightsProductPackageResource(Client, data));
         }
 
         /// <summary>
         /// Gets all packages from the catalog.
         /// Expandable properties:
-        /// - properties/installed
-        /// - properties/packagedContent
+        /// <list type="bullet"><item><description>properties/installed</description></item><item><description>properties/packagedContent</description></item></list>
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
+        /// <param name="search"> Searches for a substring in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsProductPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsProductPackageResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsProductPackageResource> GetAll(string filter = default, string @orderby = default, int? top = default, string skipToken = default, string search = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsProductPackageProductPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsProductPackageProductPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsProductPackageResource(Client, SecurityInsightsProductPackageData.DeserializeSecurityInsightsProductPackageData(e)), _securityInsightsProductPackageProductPackagesClientDiagnostics, Pipeline, "SecurityInsightsProductPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsProductPackageData, SecurityInsightsProductPackageResource>(new ProductPackagesGetAllCollectionResultOfT(
+                _productPackagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                top,
+                skipToken,
+                search,
+                context,
+                "SecurityInsightsProductPackageCollection.GetAll"), data => new SecurityInsightsProductPackageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsProductPackageProductPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Exists");
+            using DiagnosticScope scope = _productPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsProductPackageProductPackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productPackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsProductPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,36 +309,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsProductPackageProductPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Exists");
+            using DiagnosticScope scope = _productPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsProductPackageProductPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productPackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsProductPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,38 +366,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsProductPackageResource>> GetIfExistsAsync(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsProductPackageProductPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.GetIfExists");
+            using DiagnosticScope scope = _productPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsProductPackageProductPackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productPackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsProductPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsProductPackageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,38 +427,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductPackage_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsProductPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsProductPackageResource> GetIfExists(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsProductPackageProductPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.GetIfExists");
+            using DiagnosticScope scope = _productPackageClientDiagnostics.CreateScope("SecurityInsightsProductPackageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsProductPackageProductPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productPackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsProductPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsProductPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsProductPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsProductPackageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsProductPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,6 +494,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsProductPackageResource> IAsyncEnumerable<SecurityInsightsProductPackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

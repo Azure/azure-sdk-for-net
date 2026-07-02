@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _network = DefineModelProperty<ContainerServiceMachineNetworkProperties>(nameof(Network), new string[] { "network" }, isOutput: true);
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMachineProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

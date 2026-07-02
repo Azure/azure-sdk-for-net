@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     yield break;
                 }
                 MySqlFlexibleServerFirewallRuleListResult result = MySqlFlexibleServerFirewallRuleListResult.FromResponse(response);
-                yield return Page<MySqlFlexibleServerFirewallRuleData>.FromValues((IReadOnlyList<MySqlFlexibleServerFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MySqlFlexibleServerFirewallRuleData>.FromValues((IReadOnlyList<MySqlFlexibleServerFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

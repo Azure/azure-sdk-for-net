@@ -214,6 +214,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             _linkedResources = DefineListProperty<SubResource>(nameof(LinkedResources), new string[] { "linkedResources" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConfigurationStoreProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

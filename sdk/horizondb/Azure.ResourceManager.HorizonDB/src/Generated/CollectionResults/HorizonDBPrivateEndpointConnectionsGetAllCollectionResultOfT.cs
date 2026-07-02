@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 PrivateEndpointConnectionResourceListResult result = PrivateEndpointConnectionResourceListResult.FromResponse(response);
-                yield return Page<HorizonDBPrivateEndpointConnectionData>.FromValues((IReadOnlyList<HorizonDBPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HorizonDBPrivateEndpointConnectionData>.FromValues((IReadOnlyList<HorizonDBPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

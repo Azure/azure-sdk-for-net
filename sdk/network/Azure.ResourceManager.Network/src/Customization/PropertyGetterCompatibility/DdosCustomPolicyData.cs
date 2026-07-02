@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the DdosCustomPolicyData type. </summary>
+    [CodeGenSuppress("FrontEndIPConfiguration")]
     public partial class DdosCustomPolicyData
     {
         /// <summary> Compatibility member. </summary>

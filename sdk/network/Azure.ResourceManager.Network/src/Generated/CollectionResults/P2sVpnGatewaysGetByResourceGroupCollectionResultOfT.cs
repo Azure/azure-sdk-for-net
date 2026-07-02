@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListP2SVpnGatewaysResult result = ListP2SVpnGatewaysResult.FromResponse(response);
-                yield return Page<P2SVpnGatewayData>.FromValues((IReadOnlyList<P2SVpnGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<P2SVpnGatewayData>.FromValues((IReadOnlyList<P2SVpnGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

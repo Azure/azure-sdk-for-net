@@ -152,48 +152,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<NetworkIPConfiguration> IpConfigurations
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                return Properties.IpConfigurations;
-            }
-        }
-
-        /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
-        [WirePath("properties.ipConfigurationProfiles")]
-        public IReadOnlyList<NetworkIPConfigurationProfile> IpConfigurationProfiles
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                return Properties.IpConfigurationProfiles;
-            }
-        }
-
-        /// <summary> Array of IpAllocation which reference this subnet. </summary>
-        [WirePath("properties.ipAllocations")]
-        public IList<NetworkSubResource> IpAllocations
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                return Properties.IpAllocations;
-            }
-        }
-
         /// <summary> An array of references to the external resources using subnet. </summary>
         [WirePath("properties.resourceNavigationLinks")]
         public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks

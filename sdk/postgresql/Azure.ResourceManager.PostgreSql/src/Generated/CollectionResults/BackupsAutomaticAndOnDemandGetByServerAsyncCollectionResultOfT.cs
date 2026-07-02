@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     yield break;
                 }
                 BackupAutomaticAndOnDemandList result = BackupAutomaticAndOnDemandList.FromResponse(response);
-                yield return Page<PostgreSqlFlexibleServerBackupData>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PostgreSqlFlexibleServerBackupData>.FromValues((IReadOnlyList<PostgreSqlFlexibleServerBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

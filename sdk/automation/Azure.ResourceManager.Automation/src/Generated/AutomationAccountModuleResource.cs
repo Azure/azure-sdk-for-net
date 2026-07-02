@@ -7,54 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A Class representing an AutomationAccountModule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationAccountModuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAutomationAccountModuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationAccountModule method.
+    /// A class representing a AutomationAccountModule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutomationAccountModuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationAccountModules method.
     /// </summary>
     public partial class AutomationAccountModuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AutomationAccountModuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="automationAccountName"> The automationAccountName. </param>
-        /// <param name="moduleName"> The moduleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string moduleName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _automationAccountModuleModuleClientDiagnostics;
-        private readonly ModuleRestOperations _automationAccountModuleModuleRestClient;
+        private readonly ClientDiagnostics _moduleClientDiagnostics;
+        private readonly Module _moduleRestClient;
         private readonly ClientDiagnostics _activityClientDiagnostics;
-        private readonly ActivityRestOperations _activityRestClient;
-        private readonly ClientDiagnostics _objectDataTypesClientDiagnostics;
-        private readonly ObjectDataTypesRestOperations _objectDataTypesRestClient;
+        private readonly Activity _activityRestClient;
         private readonly ClientDiagnostics _fieldsClientDiagnostics;
-        private readonly FieldsRestOperations _fieldsRestClient;
+        private readonly Fields _fieldsRestClient;
+        private readonly ClientDiagnostics _objectDataTypesClientDiagnostics;
+        private readonly ObjectDataTypes _objectDataTypesRestClient;
         private readonly AutomationModuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/modules";
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutomationAccountModuleResource for mocking. </summary>
         protected AutomationAccountModuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationAccountModuleResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)
@@ -63,77 +52,99 @@ namespace Azure.ResourceManager.Automation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomationAccountModuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automationAccountModuleModuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string automationAccountModuleModuleApiVersion);
-            _automationAccountModuleModuleRestClient = new ModuleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountModuleModuleApiVersion);
-            _activityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _activityRestClient = new ActivityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _objectDataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _objectDataTypesRestClient = new ObjectDataTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _fieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _fieldsRestClient = new FieldsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string automationAccountModuleApiVersion);
+            _moduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _moduleRestClient = new Module(_moduleClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _activityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _activityRestClient = new Activity(_activityClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _fieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _fieldsRestClient = new Fields(_fieldsClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            _objectDataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _objectDataTypesRestClient = new ObjectDataTypes(_objectDataTypesClientDiagnostics, Pipeline, Endpoint, automationAccountModuleApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AutomationModuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="moduleName"> The moduleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string moduleName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieve the module identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomationAccountModuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Get");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,122 +158,42 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the module identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomationAccountModuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Get");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Get");
             scope.Start();
             try
             {
-                var response = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the module by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _automationAccountModuleModuleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _automationAccountModuleModuleRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete the module by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _automationAccountModuleModuleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _automationAccountModuleModuleRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -275,20 +206,20 @@ namespace Azure.ResourceManager.Automation
         /// Update the module identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,11 +230,21 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Update");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _automationAccountModuleModuleRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _moduleRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountModulePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,20 +258,20 @@ namespace Azure.ResourceManager.Automation
         /// Update the module identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,11 +282,21 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Update");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Update");
             scope.Start();
             try
             {
-                var response = _automationAccountModuleModuleRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _moduleRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountModulePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,35 +307,151 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
+        /// Delete the module by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _moduleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation operation = new AutomationArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete the module by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _moduleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation operation = new AutomationArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Retrieve the activity in the module identified by module name and activity name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Activity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ActivityGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityName"> The name of activity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AutomationActivity>> GetActivityAsync(string activityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityName, nameof(activityName));
 
-            using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivity");
+            using DiagnosticScope scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivity");
             scope.Start();
             try
             {
-                var response = await _activityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityRestClient.CreateGetActivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationActivity> response = Response.FromValue(AutomationActivity.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -398,32 +465,46 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the activity in the module identified by module name and activity name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Activity_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ActivityGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityName"> The name of activity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AutomationActivity> GetActivity(string activityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityName, nameof(activityName));
 
-            using var scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivity");
+            using DiagnosticScope scope = _activityClientDiagnostics.CreateScope("AutomationAccountModuleResource.GetActivity");
             scope.Start();
             try
             {
-                var response = _activityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityRestClient.CreateGetActivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationActivity> response = Response.FromValue(AutomationActivity.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -437,42 +518,59 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve a list of activities in the module identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Activity_ListByModule</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ListByModule. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationActivity"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationActivity"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationActivity> GetActivitiesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationActivity.DeserializeAutomationActivity(e), _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ActivityGetActivitiesAsyncCollectionResultOfT(
+                _activityRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "AutomationAccountModuleResource.GetActivities");
         }
 
         /// <summary>
         /// Retrieve a list of activities in the module identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Activity_ListByModule</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ListByModule. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -480,152 +578,201 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationActivity"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationActivity> GetActivities(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationActivity.DeserializeAutomationActivity(e), _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ActivityGetActivitiesCollectionResultOfT(
+                _activityRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "AutomationAccountModuleResource.GetActivities");
         }
 
         /// <summary>
         /// Retrieve a list of fields of a given type identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ObjectDataTypes_ListFieldsByModuleAndType</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ListByType. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationModuleField> GetFieldsByModuleAndTypeAsync(string typeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of fields of a given type identified by module name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ObjectDataTypes_ListFieldsByModuleAndType</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationModuleField> GetFieldsByModuleAndType(string typeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of fields of a given type identified by module name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fields_ListByType</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FieldsGetFieldsByTypeAsyncCollectionResultOfT(
+                _fieldsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                typeName,
+                context,
+                "AutomationAccountModuleResource.GetFieldsByType");
         }
 
         /// <summary>
         /// Retrieve a list of fields of a given type identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/types/{typeName}/fields. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fields_ListByType</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ListByType. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FieldsGetFieldsByTypeCollectionResultOfT(
+                _fieldsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                typeName,
+                context,
+                "AutomationAccountModuleResource.GetFieldsByType");
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Retrieve a list of fields of a given type identified by module name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ListFieldsByModuleAndType. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="typeName"> The name of type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByModuleAndTypeAsync(string typeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ObjectDataTypesGetFieldsByModuleAndTypeAsyncCollectionResultOfT(
+                _objectDataTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                typeName,
+                context,
+                "AutomationAccountModuleResource.GetFieldsByModuleAndType");
+        }
+
+        /// <summary>
+        /// Retrieve a list of fields of a given type identified by module name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/objectDataTypes/{typeName}/fields. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Modules_ListFieldsByModuleAndType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountModuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="typeName"> The name of type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByModuleAndType(string typeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ObjectDataTypesGetFieldsByModuleAndTypeCollectionResultOfT(
+                _objectDataTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                typeName,
+                context,
+                "AutomationAccountModuleResource.GetFieldsByModuleAndType");
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -635,29 +782,35 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.AddTag");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutomationAccountModulePatch();
-                    foreach (var tag in current.Tags)
+                    AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutomationAccountModulePatch patch = new AutomationAccountModulePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<AutomationAccountModuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -667,27 +820,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -697,29 +830,35 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.AddTag");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutomationAccountModulePatch();
-                    foreach (var tag in current.Tags)
+                    AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutomationAccountModulePatch patch = new AutomationAccountModulePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<AutomationAccountModuleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -729,54 +868,40 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountModuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.SetTags");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutomationAccountModulePatch();
+                    AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutomationAccountModulePatch patch = new AutomationAccountModulePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<AutomationAccountModuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -786,54 +911,40 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AutomationAccountModuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.SetTags");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutomationAccountModulePatch();
+                    AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutomationAccountModulePatch patch = new AutomationAccountModulePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<AutomationAccountModuleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -843,27 +954,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -871,29 +962,35 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.RemoveTag");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _automationAccountModuleModuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutomationAccountModulePatch();
-                    foreach (var tag in current.Tags)
+                    AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutomationAccountModulePatch patch = new AutomationAccountModulePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<AutomationAccountModuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -903,27 +1000,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -931,29 +1008,35 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _automationAccountModuleModuleClientDiagnostics.CreateScope("AutomationAccountModuleResource.RemoveTag");
+            using DiagnosticScope scope = _moduleClientDiagnostics.CreateScope("AutomationAccountModuleResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _automationAccountModuleModuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountModuleResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutomationAccountModulePatch();
-                    foreach (var tag in current.Tags)
+                    AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutomationAccountModulePatch patch = new AutomationAccountModulePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<AutomationAccountModuleResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

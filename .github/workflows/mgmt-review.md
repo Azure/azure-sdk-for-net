@@ -1,31 +1,41 @@
 ---
 on:
-  pull_request_target:
-    types: [opened, reopened, synchronize]
-    paths:
-      - "sdk/**/Azure.ResourceManager.*/**"
-  check_run:
-    types: [completed]
   workflow_dispatch:
     inputs:
       pr_number:
         description: "Pull request number to review"
         required: true
         type: string
+      check_run_conclusion:
+        description: "Optional completed net - pullrequest conclusion for automatic CI-triggered runs"
+        required: false
+        type: string
+      check_run_head_sha:
+        description: "Optional completed net - pullrequest head SHA for automatic CI-triggered runs"
+        required: false
+        type: string
+      check_run_url:
+        description: "Optional completed net - pullrequest URL for automatic CI-triggered runs"
+        required: false
+        type: string
 if: |
-  github.event_name == 'workflow_dispatch' ||
-  (github.event_name == 'check_run' && github.event.check_run.name == 'net - pullrequest' && github.event.check_run.conclusion == 'failure' && github.event.check_run.pull_requests[0]) ||
-  (github.event.pull_request && !github.event.pull_request.draft)
+  github.event_name == 'workflow_dispatch'
 description: "Review Azure SDK for .NET management-plane PRs using the mgmt PR review skill"
 checkout:
   sparse-checkout: |
     .github
 inlined-imports: true
 permissions:
+  copilot-requests: write
   contents: read
   pull-requests: read
   actions: read
   checks: read
+engine:
+  id: copilot
+  concurrency:
+    group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.inputs.pr_number }}"
+    queue: max
 network:
   allowed:
     - defaults
@@ -35,7 +45,7 @@ safe-outputs:
   report-failure-as-issue: false
   create-pull-request-review-comment:
     max: 100
-    target: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
+    target: "${{ github.event.inputs.pr_number }}"
   submit-pull-request-review:
     max: 1
     footer: "if-body"
@@ -52,9 +62,9 @@ safe-outputs:
         pull-requests: write
       steps:
         - name: Dismiss stale change-request review
-          uses: actions/github-script@v9
+          uses: actions/github-script@v9.0.0
           env:
-            TARGET_PR_NUMBER: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
+            TARGET_PR_NUMBER: "${{ github.event.inputs.pr_number }}"
             REVIEW_WORKFLOW_NAME: "${{ github.workflow }}"
           with:
             script: |
@@ -120,7 +130,7 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
-concurrency: mgmt-review-${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}
+concurrency: mgmt-review-${{ github.event.inputs.pr_number }}
 ---
 
 # Azure .NET Management SDK PR Review
@@ -129,7 +139,7 @@ concurrency: mgmt-review-${{ github.event.pull_request.number || github.event.ch
 
 You are the Azure SDK for .NET management-plane PR reviewer for `${{ github.repository }}`.
 
-This workflow runs automatically when a pull request modifies files under an `Azure.ResourceManager.*` package path, when the `net - pullrequest` CI check completes, or can be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
+This workflow is dispatched by `.github/workflows/mgmt-review-trigger.yml` after the `net - pullrequest` CI check succeeds or fails for a non-draft management-plane pull request. It can also be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
 - CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
@@ -148,16 +158,17 @@ This workflow runs automatically when a pull request modifies files under an `Az
 
 Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
 
-If this workflow was triggered by `check_run`, compare `github.event.check_run.head_sha` against the PR's current head SHA. If they differ, the failing check belongs to a superseded commit — use `noop` and stop rather than posting stale feedback against code the author has already changed.
+If `github.event.inputs.check_run_head_sha` is set, compare it against the PR's current head SHA. If they differ, the completed check belongs to a superseded commit — use `noop` and stop rather than posting stale feedback against code the author has already changed.
 
 Then check CI status: list the check runs and commit statuses for the PR head commit.
 
-- If this workflow was triggered by `check_run` (i.e., CI just failed), skip the status check — CI failure is already confirmed. Go directly to failure analysis: apply the CI failure analysis skill (`.github/skills/analyze-ci-failures/SKILL.md`) to diagnose failures. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions in your review. Link to failed check run URLs so authors can navigate directly to the failure logs.
+- If `github.event.inputs.check_run_conclusion` is `failure`, skip the status check — CI failure is already confirmed. Go directly to failure analysis: apply the CI failure analysis skill (`.github/skills/analyze-ci-failures/SKILL.md`) to diagnose failures. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions in your review. Link to `github.event.inputs.check_run_url` when present so authors can navigate directly to the failure logs.
+- If `github.event.inputs.check_run_conclusion` is `success`, skip the status check — CI success is already confirmed. Proceed with the management SDK review normally.
 - If CI checks have failed (on other triggers), apply the same CI failure analysis skill as above.
 - If CI checks have passed, proceed with the review normally.
 - If CI checks are still in progress (`queued` or `in_progress`), proceed with the naming and API review but note in the review summary that CI results are pending and cannot be analyzed yet.
 
-If CI is not failed and this was not a `check_run` failure trigger, run the incremental low-risk preflight before doing scanner/API review work:
+If CI is not failed and `github.event.inputs.check_run_conclusion` is not `failure`, run the incremental low-risk preflight before doing scanner/API review work:
 
 1. Fetch prior reviews from this workflow. A comparable review is authored by `github-actions[bot]`, contains `### Management SDK Review Summary`, and contains an `Analyzed by <this workflow name>:` footer marker.
 2. Find the latest comparable review that was a non-blocking `COMMENT` and whose body says there were no management SDK review findings. If none exists, continue with the full review.

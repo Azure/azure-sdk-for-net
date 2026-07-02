@@ -51,18 +51,18 @@ namespace Azure.Security.KeyVault.Secrets
                     yield break;
                 }
                 DeletedSecretListResult result = (DeletedSecretListResult)response;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSecurityKeyVaultSecretsContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

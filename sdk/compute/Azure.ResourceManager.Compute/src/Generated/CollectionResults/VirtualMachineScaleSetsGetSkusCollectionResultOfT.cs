@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 VirtualMachineScaleSetListSkusResult result = VirtualMachineScaleSetListSkusResult.FromResponse(response);
-                yield return Page<VirtualMachineScaleSetSku>.FromValues((IReadOnlyList<VirtualMachineScaleSetSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualMachineScaleSetSku>.FromValues((IReadOnlyList<VirtualMachineScaleSetSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

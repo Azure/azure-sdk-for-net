@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NetworkVirtualApplianceSkuListResult result = NetworkVirtualApplianceSkuListResult.FromResponse(response);
-                yield return Page<NetworkVirtualApplianceSkuData>.FromValues((IReadOnlyList<NetworkVirtualApplianceSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkVirtualApplianceSkuData>.FromValues((IReadOnlyList<NetworkVirtualApplianceSkuData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

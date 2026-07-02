@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ApplicationGatewayPrivateEndpointConnectionListResult result = ApplicationGatewayPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<ApplicationGatewayPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ApplicationGatewayPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
