@@ -5,18 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Payload.Pageable._PageSize;
-using Payload.Pageable._ServerDrivenPagination;
 using Payload.Pageable._ServerDrivenPagination.AlternateInitialVerb;
-using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
 
 namespace Payload.Pageable
 {
     public static partial class PayloadPageableModelFactory
     {
-
         public static Pet Pet(string id = default, string name = default) => throw null;
 
         public static XmlPet XmlPet(string id = default, string name = default) => throw null;

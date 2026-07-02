@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Image generation call. </summary>
-    internal partial class ItemFieldImageGenToolCall : ItemField
+    public partial class ItemFieldImageGenToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldImageGenToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the image generation call. </param>

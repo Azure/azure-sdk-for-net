@@ -11,7 +11,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ExtensionsOpenAIModelFactory
     {
-
         /// <summary> A pending safety check for the computer call. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
         /// <param name="code"></param>
@@ -916,6 +915,61 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesToolSearchToolParam(ToolType.ToolSearch, additionalBinaryDataProperties: null, execution, description, parameters);
         }
 
+        /// <summary> Reasoning text. </summary>
+        /// <param name="text"> The reasoning text from the model. </param>
+        /// <returns> A new <see cref="OpenAI.ReasoningTextContent"/> instance for mocking. </returns>
+        public static ReasoningTextContent ReasoningTextContent(string text = default)
+        {
+            return new ReasoningTextContent("reasoning_text", text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Local shell exec action. </summary>
+        /// <param name="command"> The command to run. </param>
+        /// <param name="timeoutMs"></param>
+        /// <param name="workingDirectory"></param>
+        /// <param name="env"> Environment variables to set for the command. </param>
+        /// <param name="user"></param>
+        /// <returns> A new <see cref="OpenAI.LocalShellExecAction"/> instance for mocking. </returns>
+        public static LocalShellExecAction LocalShellExecAction(IEnumerable<string> command = default, long? timeoutMs = default, string workingDirectory = default, IDictionary<string, string> env = default, string user = default)
+        {
+            command ??= new ChangeTrackingList<string>();
+            env ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LocalShellExecAction(
+                "exec",
+                command.ToList(),
+                timeoutMs,
+                workingDirectory,
+                env,
+                user,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MCPListToolsToolInputSchema. </summary>
+        /// <returns> A new <see cref="OpenAI.MCPListToolsToolInputSchema"/> instance for mocking. </returns>
+        public static MCPListToolsToolInputSchema MCPListToolsToolInputSchema()
+        {
+            return new MCPListToolsToolInputSchema(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MCPListToolsToolAnnotations. </summary>
+        /// <returns> A new <see cref="OpenAI.MCPListToolsToolAnnotations"/> instance for mocking. </returns>
+        public static MCPListToolsToolAnnotations MCPListToolsToolAnnotations()
+        {
+            return new MCPListToolsToolAnnotations(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The RealtimeMCPError.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPProtocolError"/>, <see cref="RealtimeMCPToolExecutionError"/>, and <see cref="RealtimeMCPHTTPError"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.RealtimeMCPError"/> instance for mocking. </returns>
+        public static RealtimeMCPError RealtimeMCPError(string @type = default)
+        {
+            return new UnknownRealtimeMCPError(new RealtimeMcpErrorType(@type), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ProjectConversation. </summary>
         /// <param name="id"> The unique ID of the conversation. </param>
         /// <param name="metadata">
@@ -929,6 +983,499 @@ namespace Azure.AI.Extensions.OpenAI
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The compacted response object. </summary>
+        /// <param name="id"> The unique identifier for the compacted response. </param>
+        /// <param name="output"> The compacted list of output items. </param>
+        /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
+        /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
+        /// <returns> A new <see cref="OpenAI.CompactResource"/> instance for mocking. </returns>
+        public static CompactResource CompactResource(string id = default, IEnumerable<ItemField> output = default, DateTimeOffset createdAt = default, ResponseUsage usage = default)
+        {
+            output ??= new ChangeTrackingList<ItemField>();
+
+            return new CompactResource(
+                id,
+                "response.compaction",
+                output.ToList(),
+                createdAt,
+                usage,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An item representing a message, tool call, tool output, reasoning, or other response element.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemFieldMessage"/>, <see cref="OpenAI.ItemFieldFunctionToolCall"/>, <see cref="OpenAI.ItemFieldToolSearchCall"/>, <see cref="OpenAI.ItemFieldToolSearchOutput"/>, <see cref="OpenAI.ItemFieldFunctionToolCallOutput"/>, <see cref="OpenAI.ItemFieldFileSearchToolCall"/>, <see cref="OpenAI.ItemFieldWebSearchToolCall"/>, <see cref="OpenAI.ItemFieldImageGenToolCall"/>, <see cref="ItemFieldComputerToolCall"/>, <see cref="OpenAI.ItemFieldComputerToolCallOutput"/>, <see cref="ItemFieldReasoningItem"/>, <see cref="OpenAI.ItemFieldCompactionBody"/>, <see cref="OpenAI.ItemFieldCodeInterpreterToolCall"/>, <see cref="OpenAI.ItemFieldLocalShellToolCall"/>, <see cref="OpenAI.ItemFieldLocalShellToolCallOutput"/>, <see cref="OpenAI.ItemFieldFunctionShellCall"/>, <see cref="OpenAI.ItemFieldFunctionShellCallOutput"/>, <see cref="ItemFieldApplyPatchToolCall"/>, <see cref="OpenAI.ItemFieldApplyPatchToolCallOutput"/>, <see cref="ItemFieldMcpListTools"/>, <see cref="OpenAI.ItemFieldMcpApprovalRequest"/>, <see cref="OpenAI.ItemFieldMcpApprovalResponseResource"/>, <see cref="OpenAI.ItemFieldMcpToolCall"/>, <see cref="OpenAI.ItemFieldCustomToolCall"/>, and <see cref="OpenAI.ItemFieldCustomToolCallOutput"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.ItemField"/> instance for mocking. </returns>
+        public static ItemField ItemField(string @type = default)
+        {
+            return new UnknownItemField(new ItemFieldType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Function tool call. </summary>
+        /// <param name="id"> The unique ID of the function tool call. </param>
+        /// <param name="callId"> The unique ID of the function tool call generated by the model. </param>
+        /// <param name="namespace"> The namespace of the function to run. </param>
+        /// <param name="name"> The name of the function to run. </param>
+        /// <param name="arguments"> A JSON string of the arguments to pass to the function. </param>
+        /// <param name="status">
+        /// The status of the item. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when items are returned via API.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldFunctionToolCall"/> instance for mocking. </returns>
+        public static ItemFieldFunctionToolCall ItemFieldFunctionToolCall(string id = default, string callId = default, string @namespace = default, string name = default, string arguments = default, InputItemFunctionToolCallStatus? status = default)
+        {
+            return new ItemFieldFunctionToolCall(
+                ItemFieldType.FunctionCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                @namespace,
+                name,
+                arguments,
+                status);
+        }
+
+        /// <summary> The ItemFieldToolSearchCall. </summary>
+        /// <param name="id"> The unique ID of the tool search call item. </param>
+        /// <param name="callId"></param>
+        /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
+        /// <param name="arguments"> Arguments used for the tool search call. </param>
+        /// <param name="status"> The status of the tool search call item that was recorded. </param>
+        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldToolSearchCall"/> instance for mocking. </returns>
+        public static ItemFieldToolSearchCall ItemFieldToolSearchCall(string id = default, string callId = default, ResponsesToolSearchExecutionType execution = default, BinaryData arguments = default, ResponsesFunctionCallStatus status = default, string createdBy = default)
+        {
+            return new ItemFieldToolSearchCall(
+                ItemFieldType.ToolSearchCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                execution,
+                arguments,
+                status,
+                createdBy);
+        }
+
+        /// <summary> The ItemFieldToolSearchOutput. </summary>
+        /// <param name="id"> The unique ID of the tool search output item. </param>
+        /// <param name="callId"></param>
+        /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
+        /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
+        /// <param name="status"> The status of the tool search output item that was recorded. </param>
+        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldToolSearchOutput"/> instance for mocking. </returns>
+        public static ItemFieldToolSearchOutput ItemFieldToolSearchOutput(string id = default, string callId = default, ResponsesToolSearchExecutionType execution = default, IEnumerable<ResponsesTool> tools = default, ResponsesFunctionCallOutputStatus status = default, string createdBy = default)
+        {
+            tools ??= new ChangeTrackingList<ResponsesTool>();
+
+            return new ItemFieldToolSearchOutput(
+                ItemFieldType.ToolSearchOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                execution,
+                tools.ToList(),
+                status,
+                createdBy);
+        }
+
+        /// <summary> Function tool call output. </summary>
+        /// <param name="id">
+        /// The unique ID of the function tool call output. Populated when this item
+        ///   is returned via API.
+        /// </param>
+        /// <param name="callId"> The unique ID of the function tool call generated by the model. </param>
+        /// <param name="output">
+        /// The output from the function call generated by your code.
+        ///   Can be a string or an list of output content.
+        /// </param>
+        /// <param name="status">
+        /// The status of the item. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when items are returned via API.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldFunctionToolCallOutput"/> instance for mocking. </returns>
+        public static ItemFieldFunctionToolCallOutput ItemFieldFunctionToolCallOutput(string id = default, string callId = default, BinaryData output = default, ItemFieldFunctionToolCallOutputStatus? status = default)
+        {
+            return new ItemFieldFunctionToolCallOutput(
+                ItemFieldType.FunctionCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                output,
+                status);
+        }
+
+        /// <summary> File search tool call. </summary>
+        /// <param name="id"> The unique ID of the file search tool call. </param>
+        /// <param name="status">
+        /// The status of the file search tool call. One of `in_progress`,
+        ///   `searching`, `incomplete` or `failed`,
+        /// </param>
+        /// <param name="queries"> The queries used to search for files. </param>
+        /// <param name="results"></param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldFileSearchToolCall"/> instance for mocking. </returns>
+        public static ItemFieldFileSearchToolCall ItemFieldFileSearchToolCall(string id = default, InputItemFileSearchToolCallStatus status = default, IEnumerable<string> queries = default, IEnumerable<FileSearchToolCallResults> results = default)
+        {
+            queries ??= new ChangeTrackingList<string>();
+            results ??= new ChangeTrackingList<FileSearchToolCallResults>();
+
+            return new ItemFieldFileSearchToolCall(
+                ItemFieldType.FileSearchCall,
+                additionalBinaryDataProperties: null,
+                id,
+                status,
+                queries.ToList(),
+                results.ToList());
+        }
+
+        /// <summary> Web search tool call. </summary>
+        /// <param name="id"> The unique ID of the web search tool call. </param>
+        /// <param name="status"> The status of the web search tool call. </param>
+        /// <param name="action">
+        /// An object describing the specific action taken in this web search call.
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldWebSearchToolCall"/> instance for mocking. </returns>
+        public static ItemFieldWebSearchToolCall ItemFieldWebSearchToolCall(string id = default, InputItemWebSearchToolCallStatus status = default, BinaryData action = default)
+        {
+            return new ItemFieldWebSearchToolCall(ItemFieldType.WebSearchCall, additionalBinaryDataProperties: null, id, status, action);
+        }
+
+        /// <summary> Image generation call. </summary>
+        /// <param name="id"> The unique ID of the image generation call. </param>
+        /// <param name="status"> The status of the image generation call. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldImageGenToolCall"/> instance for mocking. </returns>
+        public static ItemFieldImageGenToolCall ItemFieldImageGenToolCall(string id = default, InputItemImageGenToolCallStatus status = default, string result = default)
+        {
+            return new ItemFieldImageGenToolCall(ItemFieldType.ImageGenerationCall, additionalBinaryDataProperties: null, id, status, result);
+        }
+
+        /// <summary> Computer tool call output. </summary>
+        /// <param name="id"> The ID of the computer tool call output. </param>
+        /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
+        /// <param name="acknowledgedSafetyChecks">
+        /// The safety checks reported by the API that have been acknowledged by the
+        ///   developer.
+        /// </param>
+        /// <param name="output"></param>
+        /// <param name="status">
+        /// The status of the message input. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when input items are returned via API.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldComputerToolCallOutput"/> instance for mocking. </returns>
+        public static ItemFieldComputerToolCallOutput ItemFieldComputerToolCallOutput(string id = default, string callId = default, IEnumerable<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = default, ComputerScreenshotImage output = default, ItemFieldComputerToolCallOutputStatus? status = default)
+        {
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<ComputerCallSafetyCheckParam>();
+
+            return new ItemFieldComputerToolCallOutput(
+                ItemFieldType.ComputerCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                acknowledgedSafetyChecks.ToList(),
+                output,
+                status);
+        }
+
+        /// <summary> Compaction item. </summary>
+        /// <param name="id"> The unique ID of the compaction item. </param>
+        /// <param name="encryptedContent"> The encrypted content that was produced by compaction. </param>
+        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldCompactionBody"/> instance for mocking. </returns>
+        public static ItemFieldCompactionBody ItemFieldCompactionBody(string id = default, string encryptedContent = default, string createdBy = default)
+        {
+            return new ItemFieldCompactionBody(ItemFieldType.Compaction, additionalBinaryDataProperties: null, id, encryptedContent, createdBy);
+        }
+
+        /// <summary> Code interpreter tool call. </summary>
+        /// <param name="id"> The unique ID of the code interpreter tool call. </param>
+        /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
+        /// <param name="containerId"> The ID of the container used to run the code. </param>
+        /// <param name="code"></param>
+        /// <param name="outputs"></param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldCodeInterpreterToolCall"/> instance for mocking. </returns>
+        public static ItemFieldCodeInterpreterToolCall ItemFieldCodeInterpreterToolCall(string id = default, InputItemCodeInterpreterToolCallStatus status = default, string containerId = default, string code = default, IEnumerable<BinaryData> outputs = default)
+        {
+            outputs ??= new ChangeTrackingList<BinaryData>();
+
+            return new ItemFieldCodeInterpreterToolCall(
+                ItemFieldType.CodeInterpreterCall,
+                additionalBinaryDataProperties: null,
+                id,
+                status,
+                containerId,
+                code,
+                outputs.ToList());
+        }
+
+        /// <summary> Local shell call. </summary>
+        /// <param name="id"> The unique ID of the local shell call. </param>
+        /// <param name="callId"> The unique ID of the local shell tool call generated by the model. </param>
+        /// <param name="action"></param>
+        /// <param name="status"> The status of the local shell call. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldLocalShellToolCall"/> instance for mocking. </returns>
+        public static ItemFieldLocalShellToolCall ItemFieldLocalShellToolCall(string id = default, string callId = default, LocalShellExecAction action = default, InputItemLocalShellToolCallStatus status = default)
+        {
+            return new ItemFieldLocalShellToolCall(
+                ItemFieldType.LocalShellCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                action,
+                status);
+        }
+
+        /// <summary> Local shell call output. </summary>
+        /// <param name="id"> The unique ID of the local shell tool call generated by the model. </param>
+        /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldLocalShellToolCallOutput"/> instance for mocking. </returns>
+        public static ItemFieldLocalShellToolCallOutput ItemFieldLocalShellToolCallOutput(string id = default, string output = default, ItemLocalShellToolCallOutputStatus? status = default)
+        {
+            return new ItemFieldLocalShellToolCallOutput(ItemFieldType.LocalShellCallOutput, additionalBinaryDataProperties: null, id, output, status);
+        }
+
+        /// <summary> Shell tool call. </summary>
+        /// <param name="id"> The unique ID of the shell tool call. Populated when this item is returned via API. </param>
+        /// <param name="callId"> The unique ID of the shell tool call generated by the model. </param>
+        /// <param name="action"> The shell commands and limits that describe how to run the tool call. </param>
+        /// <param name="status"> The status of the shell call. One of `in_progress`, `completed`, or `incomplete`. </param>
+        /// <param name="environment"></param>
+        /// <param name="createdBy"> The ID of the entity that created this tool call. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldFunctionShellCall"/> instance for mocking. </returns>
+        public static ItemFieldFunctionShellCall ItemFieldFunctionShellCall(string id = default, string callId = default, FunctionShellAction action = default, LocalShellCallStatus status = default, FunctionShellCallEnvironment environment = default, string createdBy = default)
+        {
+            return new ItemFieldFunctionShellCall(
+                ItemFieldType.ShellCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                action,
+                status,
+                environment,
+                createdBy);
+        }
+
+        /// <summary> Shell exec action. </summary>
+        /// <param name="commands"></param>
+        /// <param name="timeoutMs"></param>
+        /// <param name="maxOutputLength"></param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellAction"/> instance for mocking. </returns>
+        public static FunctionShellAction FunctionShellAction(IEnumerable<string> commands = default, long? timeoutMs = default, long? maxOutputLength = default)
+        {
+            commands ??= new ChangeTrackingList<string>();
+
+            return new FunctionShellAction(commands.ToList(), timeoutMs, maxOutputLength, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The FunctionShellCallEnvironment.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalEnvironmentResource"/> and <see cref="ContainerReferenceResource"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellCallEnvironment"/> instance for mocking. </returns>
+        public static FunctionShellCallEnvironment FunctionShellCallEnvironment(string @type = default)
+        {
+            return new UnknownFunctionShellCallEnvironment(new FunctionShellCallEnvironmentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shell call output. </summary>
+        /// <param name="id"> The unique ID of the shell call output. Populated when this item is returned via API. </param>
+        /// <param name="callId"> The unique ID of the shell tool call generated by the model. </param>
+        /// <param name="status"> The status of the shell call output. One of `in_progress`, `completed`, or `incomplete`. </param>
+        /// <param name="output"> An array of shell call output contents. </param>
+        /// <param name="maxOutputLength"></param>
+        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldFunctionShellCallOutput"/> instance for mocking. </returns>
+        public static ItemFieldFunctionShellCallOutput ItemFieldFunctionShellCallOutput(string id = default, string callId = default, LocalShellCallOutputStatusEnum status = default, IEnumerable<FunctionShellCallOutputContent> output = default, long? maxOutputLength = default, string createdBy = default)
+        {
+            output ??= new ChangeTrackingList<FunctionShellCallOutputContent>();
+
+            return new ItemFieldFunctionShellCallOutput(
+                ItemFieldType.ShellCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                status,
+                output.ToList(),
+                maxOutputLength,
+                createdBy);
+        }
+
+        /// <summary> Shell call output content. </summary>
+        /// <param name="stdout"> The standard output that was captured. </param>
+        /// <param name="stderr"> The standard error output that was captured. </param>
+        /// <param name="outcome"> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </param>
+        /// <param name="createdBy"> The identifier of the actor that created the item. </param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellCallOutputContent"/> instance for mocking. </returns>
+        public static FunctionShellCallOutputContent FunctionShellCallOutputContent(string stdout = default, string stderr = default, FunctionShellCallOutputOutcome outcome = default, string createdBy = default)
+        {
+            return new FunctionShellCallOutputContent(stdout, stderr, outcome, createdBy, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Shell call outcome
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcome"/> and <see cref="FunctionShellCallOutputExitOutcome"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellCallOutputOutcome"/> instance for mocking. </returns>
+        public static FunctionShellCallOutputOutcome FunctionShellCallOutputOutcome(string @type = default)
+        {
+            return new UnknownFunctionShellCallOutputOutcome(new FunctionShellCallOutputOutcomeType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Apply patch tool call output. </summary>
+        /// <param name="id"> The unique ID of the apply patch tool call output. Populated when this item is returned via API. </param>
+        /// <param name="callId"> The unique ID of the apply patch tool call generated by the model. </param>
+        /// <param name="status"> The status of the apply patch tool call output. One of `completed` or `failed`. </param>
+        /// <param name="output"></param>
+        /// <param name="createdBy"> The ID of the entity that created this tool call output. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldApplyPatchToolCallOutput"/> instance for mocking. </returns>
+        public static ItemFieldApplyPatchToolCallOutput ItemFieldApplyPatchToolCallOutput(string id = default, string callId = default, ApplyPatchCallOutputStatus status = default, string output = default, string createdBy = default)
+        {
+            return new ItemFieldApplyPatchToolCallOutput(
+                ItemFieldType.ApplyPatchCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                status,
+                output,
+                createdBy);
+        }
+
+        /// <summary> MCP approval request. </summary>
+        /// <param name="id"> The unique ID of the approval request. </param>
+        /// <param name="serverLabel"> The label of the MCP server making the request. </param>
+        /// <param name="name"> The name of the tool to run. </param>
+        /// <param name="arguments"> A JSON string of arguments for the tool. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldMcpApprovalRequest"/> instance for mocking. </returns>
+        public static ItemFieldMcpApprovalRequest ItemFieldMcpApprovalRequest(string id = default, string serverLabel = default, string name = default, string arguments = default)
+        {
+            return new ItemFieldMcpApprovalRequest(
+                ItemFieldType.McpApprovalRequest,
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                name,
+                arguments);
+        }
+
+        /// <summary> MCP approval response. </summary>
+        /// <param name="id"> The unique ID of the approval response. </param>
+        /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
+        /// <param name="approve"> Whether the request was approved. </param>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldMcpApprovalResponseResource"/> instance for mocking. </returns>
+        public static ItemFieldMcpApprovalResponseResource ItemFieldMcpApprovalResponseResource(string id = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        {
+            return new ItemFieldMcpApprovalResponseResource(
+                ItemFieldType.McpApprovalResponse,
+                additionalBinaryDataProperties: null,
+                id,
+                approvalRequestId,
+                approve,
+                reason);
+        }
+
+        /// <summary> MCP tool call. </summary>
+        /// <param name="id"> The unique ID of the tool call. </param>
+        /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
+        /// <param name="name"> The name of the tool that was run. </param>
+        /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
+        /// <param name="output"></param>
+        /// <param name="error"></param>
+        /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
+        /// <param name="approvalRequestId"></param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldMcpToolCall"/> instance for mocking. </returns>
+        public static ItemFieldMcpToolCall ItemFieldMcpToolCall(string id = default, string serverLabel = default, string name = default, string arguments = default, string output = default, IDictionary<string, BinaryData> error = default, MCPToolCallStatus? status = default, string approvalRequestId = default)
+        {
+            error ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ItemFieldMcpToolCall(
+                ItemFieldType.McpCall,
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                name,
+                arguments,
+                output,
+                error,
+                status,
+                approvalRequestId);
+        }
+
+        /// <summary> Custom tool call. </summary>
+        /// <param name="id"> The unique ID of the custom tool call in the OpenAI platform. </param>
+        /// <param name="callId"> An identifier used to map this custom tool call to a tool call output. </param>
+        /// <param name="namespace"> The namespace of the custom tool being called. </param>
+        /// <param name="name"> The name of the custom tool being called. </param>
+        /// <param name="input"> The input for the custom tool call generated by the model. </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldCustomToolCall"/> instance for mocking. </returns>
+        public static ItemFieldCustomToolCall ItemFieldCustomToolCall(string id = default, string callId = default, string @namespace = default, string name = default, string input = default)
+        {
+            return new ItemFieldCustomToolCall(
+                ItemFieldType.CustomToolCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                @namespace,
+                name,
+                input);
+        }
+
+        /// <summary> Custom tool call output. </summary>
+        /// <param name="id"> The unique ID of the custom tool call output in the OpenAI platform. </param>
+        /// <param name="callId"> The call ID, used to map this custom tool call output to a custom tool call. </param>
+        /// <param name="output">
+        /// The output from the custom tool call generated by your code.
+        ///   Can be a string or an list of output content.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ItemFieldCustomToolCallOutput"/> instance for mocking. </returns>
+        public static ItemFieldCustomToolCallOutput ItemFieldCustomToolCallOutput(string id = default, string callId = default, BinaryData output = default)
+        {
+            return new ItemFieldCustomToolCallOutput(ItemFieldType.CustomToolCallOutput, additionalBinaryDataProperties: null, id, callId, output);
+        }
+
+        /// <summary>
+        /// Represents token usage details including input tokens, output tokens,
+        /// a breakdown of output tokens, and the total tokens used.
+        /// </summary>
+        /// <param name="inputTokens"> The number of input tokens. </param>
+        /// <param name="inputTokensDetails"> A detailed breakdown of the input tokens. </param>
+        /// <param name="outputTokens"> The number of output tokens. </param>
+        /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
+        /// <param name="totalTokens"> The total number of tokens used. </param>
+        /// <returns> A new <see cref="OpenAI.ResponseUsage"/> instance for mocking. </returns>
+        public static ResponseUsage ResponseUsage(long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
+        {
+            return new ResponseUsage(
+                inputTokens,
+                inputTokensDetails,
+                outputTokens,
+                outputTokensDetails,
+                totalTokens,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ResponseUsageInputTokensDetails. </summary>
+        /// <param name="cachedTokens"></param>
+        /// <returns> A new <see cref="OpenAI.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default)
+        {
+            return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ResponseUsageOutputTokensDetails. </summary>
+        /// <param name="reasoningTokens"></param>
+        /// <returns> A new <see cref="OpenAI.ResponseUsageOutputTokensDetails"/> instance for mocking. </returns>
+        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = default)
+        {
+            return new ResponseUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>

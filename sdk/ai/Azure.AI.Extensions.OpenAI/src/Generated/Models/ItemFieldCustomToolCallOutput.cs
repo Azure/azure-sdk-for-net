@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Custom tool call output. </summary>
-    internal partial class ItemFieldCustomToolCallOutput : ItemField
+    public partial class ItemFieldCustomToolCallOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCustomToolCallOutput"/>. </summary>
         /// <param name="callId"> The call ID, used to map this custom tool call output to a custom tool call. </param>
@@ -58,7 +58,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InternalFunctionAndCustomToolCallOutput"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="OpenAI.InternalFunctionAndCustomToolCallOutput"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

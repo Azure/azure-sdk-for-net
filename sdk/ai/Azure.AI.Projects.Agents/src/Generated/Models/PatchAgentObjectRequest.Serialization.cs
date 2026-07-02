@@ -6,56 +6,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Speech.Transcription;
 
-namespace Azure.Core.Foundations
+namespace Azure.AI.Projects.Agents
 {
-    /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
-    internal partial class InnerError : IJsonModel<InnerError>
+    /// <summary> The PatchAgentObjectRequest. </summary>
+    internal partial class PatchAgentObjectRequest : IJsonModel<PatchAgentObjectRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InnerError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PatchAgentObjectRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchAgentObjectRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInnerError(document.RootElement, options);
+                        return DeserializePatchAgentObjectRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchAgentObjectRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchAgentObjectRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAISpeechTranscriptionContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchAgentObjectRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PatchAgentObjectRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InnerError IPersistableModel<InnerError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PatchAgentObjectRequest IPersistableModel<PatchAgentObjectRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PatchAgentObjectRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PatchAgentObjectRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -66,20 +65,20 @@ namespace Azure.Core.Foundations
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchAgentObjectRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchAgentObjectRequest)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Code))
+            if (Optional.IsDefined(AgentEndpoint))
             {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
+                writer.WritePropertyName("agent_endpoint"u8);
+                writer.WriteObjectValue(AgentEndpoint, options);
             }
-            if (Optional.IsDefined(Innererror))
+            if (Optional.IsDefined(AgentCard))
             {
-                writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                writer.WritePropertyName("agent_card"u8);
+                writer.WriteObjectValue(AgentCard, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -100,46 +99,50 @@ namespace Azure.Core.Foundations
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InnerError IJsonModel<InnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PatchAgentObjectRequest IJsonModel<PatchAgentObjectRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InnerError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PatchAgentObjectRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchAgentObjectRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchAgentObjectRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInnerError(document.RootElement, options);
+            return DeserializePatchAgentObjectRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InnerError DeserializeInnerError(JsonElement element, ModelReaderWriterOptions options)
+        internal static PatchAgentObjectRequest DeserializePatchAgentObjectRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string code = default;
-            InnerError innererror = default;
+            AgentEndpointConfiguration agentEndpoint = default;
+            AgentCard agentCard = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("code"u8))
-                {
-                    code = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("innererror"u8))
+                if (prop.NameEquals("agent_endpoint"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerError(prop.Value, options);
+                    agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("agent_card"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentCard = AgentCard.DeserializeAgentCard(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +150,7 @@ namespace Azure.Core.Foundations
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InnerError(code, innererror, additionalBinaryDataProperties);
+            return new PatchAgentObjectRequest(agentEndpoint, agentCard, additionalBinaryDataProperties);
         }
     }
 }
