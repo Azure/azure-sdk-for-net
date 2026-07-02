@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
+            Capabilities = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentProperties"/>. </summary>
@@ -42,6 +43,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// </param>
         /// <param name="acceleratorType"> Accelerator type (e.g., H100_80GB). Optional on creation; immutable after creation. </param>
         /// <param name="versionUpgradeOption"> Template auto-upgrade policy. Defaults to OnceNewDefaultVersionAvailable. </param>
+        /// <param name="capabilities">
+        /// Deployment capabilities represented as key-value pairs.
+        /// Example: { assetsV2: "true" }.
+        /// </param>
         /// <param name="computeId"> Foundry compute ARM resource ID for VM-backed managed compute deployments. Required when sku.name is VmManagedCompute; immutable after creation. </param>
         /// <param name="priority"> Scheduling priority for VM-backed managed compute deployments. Immutable after creation. </param>
         /// <param name="acceleratorsPerInstance"> Read-only. Number of accelerators (GPUs) consumed by each model instance, sourced from the deployment template. </param>
@@ -50,12 +55,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningDetails"> Read-only. Status message and timestamp from the last provisioning operation. </param>
         /// <param name="routes"> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeDeploymentProperties(Uri model, string deploymentTemplate, string acceleratorType, DeploymentModelVersionUpgradeOption? versionUpgradeOption, string computeId, string priority, int? acceleratorsPerInstance, int? totalAccelerators, ServiceAccountProvisioningState? provisioningState, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails, CognitiveServicesManagedComputeDeploymentRoutes routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentProperties(Uri model, string deploymentTemplate, string acceleratorType, DeploymentModelVersionUpgradeOption? versionUpgradeOption, IReadOnlyDictionary<string, string> capabilities, string computeId, string priority, int? acceleratorsPerInstance, int? totalAccelerators, ServiceAccountProvisioningState? provisioningState, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails, CognitiveServicesManagedComputeDeploymentRoutes routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             DeploymentTemplate = deploymentTemplate;
             AcceleratorType = acceleratorType;
             VersionUpgradeOption = versionUpgradeOption;
+            Capabilities = capabilities;
             ComputeId = computeId;
             Priority = priority;
             AcceleratorsPerInstance = acceleratorsPerInstance;
@@ -88,6 +94,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Template auto-upgrade policy. Defaults to OnceNewDefaultVersionAvailable. </summary>
         [WirePath("versionUpgradeOption")]
         public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
+
+        /// <summary>
+        /// Deployment capabilities represented as key-value pairs.
+        /// Example: { assetsV2: "true" }.
+        /// </summary>
+        [WirePath("capabilities")]
+        public IReadOnlyDictionary<string, string> Capabilities { get; }
 
         /// <summary> Foundry compute ARM resource ID for VM-backed managed compute deployments. Required when sku.name is VmManagedCompute; immutable after creation. </summary>
         [WirePath("computeId")]

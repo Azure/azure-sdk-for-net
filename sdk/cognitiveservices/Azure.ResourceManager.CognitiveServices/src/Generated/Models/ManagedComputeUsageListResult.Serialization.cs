@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ManagedComputeUsage item in Value)
+                foreach (CognitiveServicesManagedComputeUsage item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IList<ManagedComputeUsage> value = default;
+            IList<CognitiveServicesManagedComputeUsage> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ManagedComputeUsage> array = new List<ManagedComputeUsage>();
+                    List<CognitiveServicesManagedComputeUsage> array = new List<CognitiveServicesManagedComputeUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedComputeUsage.DeserializeManagedComputeUsage(item, options));
+                        array.Add(CognitiveServicesManagedComputeUsage.DeserializeCognitiveServicesManagedComputeUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedComputeUsageListResult(nextLink, value ?? new ChangeTrackingList<ManagedComputeUsage>(), additionalBinaryDataProperties);
+            return new ManagedComputeUsageListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesManagedComputeUsage>(), additionalBinaryDataProperties);
         }
     }
 }

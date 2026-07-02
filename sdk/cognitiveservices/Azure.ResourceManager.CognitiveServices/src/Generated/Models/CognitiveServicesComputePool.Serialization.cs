@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string name = default;
-            VmPriority vmPriority = default;
+            CognitiveServicesVmPriority vmPriority = default;
             string instanceType = default;
             int nodeCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("vmPriority"u8))
                 {
-                    vmPriority = new VmPriority(prop.Value.GetString());
+                    vmPriority = new CognitiveServicesVmPriority(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instanceType"u8))
