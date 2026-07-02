@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.PrivateDns
                     yield break;
                 }
                 RecordSetListResult result = RecordSetListResult.FromResponse(response);
-                yield return Page<PrivateDnsRecordData>.FromValues((IReadOnlyList<PrivateDnsRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PrivateDnsRecordData>.FromValues((IReadOnlyList<PrivateDnsRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ExpressRouteLinkListResult result = ExpressRouteLinkListResult.FromResponse(response);
-                yield return Page<ExpressRouteLinkData>.FromValues((IReadOnlyList<ExpressRouteLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExpressRouteLinkData>.FromValues((IReadOnlyList<ExpressRouteLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

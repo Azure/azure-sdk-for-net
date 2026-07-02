@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 FeatureListResult result = FeatureListResult.FromResponse(response);
-                yield return Page<ComputeLimitFeatureData>.FromValues((IReadOnlyList<ComputeLimitFeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ComputeLimitFeatureData>.FromValues((IReadOnlyList<ComputeLimitFeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 AvailabilitySetListResult result = AvailabilitySetListResult.FromResponse(response);
-                yield return Page<AvailabilitySetData>.FromValues((IReadOnlyList<AvailabilitySetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvailabilitySetData>.FromValues((IReadOnlyList<AvailabilitySetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

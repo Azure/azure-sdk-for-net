@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HealthcareApis
                     yield break;
                 }
                 Models.HealthcareApisIotConnectorCollection result = Models.HealthcareApisIotConnectorCollection.FromResponse(response);
-                yield return Page<HealthcareApisIotConnectorData>.FromValues((IReadOnlyList<HealthcareApisIotConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HealthcareApisIotConnectorData>.FromValues((IReadOnlyList<HealthcareApisIotConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

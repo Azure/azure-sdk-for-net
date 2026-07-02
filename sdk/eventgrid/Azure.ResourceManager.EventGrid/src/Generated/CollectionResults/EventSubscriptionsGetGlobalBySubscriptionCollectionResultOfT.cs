@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
-                yield return Page<EventGridSubscriptionData>.FromValues((IReadOnlyList<EventGridSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventGridSubscriptionData>.FromValues((IReadOnlyList<EventGridSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

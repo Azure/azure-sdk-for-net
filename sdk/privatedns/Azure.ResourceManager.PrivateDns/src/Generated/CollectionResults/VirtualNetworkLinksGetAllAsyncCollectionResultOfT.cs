@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.PrivateDns
                     yield break;
                 }
                 VirtualNetworkLinkListResult result = VirtualNetworkLinkListResult.FromResponse(response);
-                yield return Page<VirtualNetworkLinkData>.FromValues((IReadOnlyList<VirtualNetworkLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualNetworkLinkData>.FromValues((IReadOnlyList<VirtualNetworkLinkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

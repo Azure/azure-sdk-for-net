@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 RackList result = RackList.FromResponse(response);
-                yield return Page<NetworkCloudRackData>.FromValues((IReadOnlyList<NetworkCloudRackData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudRackData>.FromValues((IReadOnlyList<NetworkCloudRackData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

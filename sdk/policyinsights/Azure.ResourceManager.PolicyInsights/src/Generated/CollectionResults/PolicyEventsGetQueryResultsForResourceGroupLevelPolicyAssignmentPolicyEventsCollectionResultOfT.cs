@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.PolicyInsights
                     yield break;
                 }
                 PolicyEventsQueryResults result = PolicyEventsQueryResults.FromResponse(response);
-                yield return Page<PolicyEvent>.FromValues((IReadOnlyList<PolicyEvent>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.OdataNextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<PolicyEvent>.FromValues((IReadOnlyList<PolicyEvent>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

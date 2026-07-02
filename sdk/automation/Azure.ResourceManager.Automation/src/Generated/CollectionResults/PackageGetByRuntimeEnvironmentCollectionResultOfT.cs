@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 PackageListResult result = PackageListResult.FromResponse(response);
-                yield return Page<AutomationPackageData>.FromValues((IReadOnlyList<AutomationPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationPackageData>.FromValues((IReadOnlyList<AutomationPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

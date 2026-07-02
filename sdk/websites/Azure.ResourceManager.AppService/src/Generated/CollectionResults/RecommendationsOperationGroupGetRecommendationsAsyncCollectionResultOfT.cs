@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AppServiceRecommendationListResult result = AppServiceRecommendationListResult.FromResponse(response);
-                yield return Page<AppServiceRecommendation>.FromValues((IReadOnlyList<AppServiceRecommendation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppServiceRecommendation>.FromValues((IReadOnlyList<AppServiceRecommendation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

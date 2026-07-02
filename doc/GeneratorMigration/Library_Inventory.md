@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-06-30 10:42:28 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-07-01 21:31:08 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -23,11 +23,11 @@
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
   - Autorest/Swagger: 35
-  - New Emitter (TypeSpec): 45
-  - Old TypeSpec: 2
+  - New Emitter (TypeSpec): 47
+  - Old TypeSpec: 0
 - Provisioning: 44
-  - Reflection-based generator: 33
-  - TypeSpec-based generator: 9
+  - Reflection-based generator: 32
+  - TypeSpec-based generator: 10
   - No generator: 2
 - No generator: 47
 
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 45 / 47 (95.7%)
+**Migration Status**: 47 / 47 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -66,8 +66,8 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | ✅ |  |
 | healthdataaiservices | Azure.Health.Deidentification | ✅ |  |
 | keyvault | Azure.Security.KeyVault.Administration | ✅ |  |
-| keyvault | Azure.Security.KeyVault.Certificates |  |  |
-| keyvault | Azure.Security.KeyVault.Secrets |  |  |
+| keyvault | Azure.Security.KeyVault.Certificates | ✅ |  |
+| keyvault | Azure.Security.KeyVault.Secrets | ✅ |  |
 | loadtestservice | Azure.Developer.LoadTesting | ✅ |  |
 | monitor | Azure.Monitor.Ingestion | ✅ |  |
 | monitor | Azure.Monitor.OpenTelemetry.Exporter | ✅ |  |
@@ -396,7 +396,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 47
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 9 / 44 migrated to TypeSpec-based generator
+**Migration Status**: 10 / 44 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -435,7 +435,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | Reflection |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | Reflection |
-| search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | Reflection |
+| search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | TypeSpec ✅ |
 | securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | Reflection |
 | servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | Reflection |
 | servicenetworking | Azure.Provisioning.ServiceNetworking | Azure.ResourceManager.ServiceNetworking ✅ | TypeSpec ✅ |

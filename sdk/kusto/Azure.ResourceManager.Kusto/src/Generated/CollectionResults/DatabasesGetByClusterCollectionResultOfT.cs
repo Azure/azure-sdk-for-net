@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Kusto
                     yield break;
                 }
                 DatabaseListResult result = DatabaseListResult.FromResponse(response);
-                yield return Page<KustoDatabaseData>.FromValues((IReadOnlyList<KustoDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<KustoDatabaseData>.FromValues((IReadOnlyList<KustoDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

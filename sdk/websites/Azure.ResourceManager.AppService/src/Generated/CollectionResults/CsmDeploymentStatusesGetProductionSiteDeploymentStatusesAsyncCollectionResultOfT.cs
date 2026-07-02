@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 CsmDeploymentStatusCollection result = CsmDeploymentStatusCollection.FromResponse(response);
-                yield return Page<CsmDeploymentStatusData>.FromValues((IReadOnlyList<CsmDeploymentStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CsmDeploymentStatusData>.FromValues((IReadOnlyList<CsmDeploymentStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

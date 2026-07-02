@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 JobStepListResult result = JobStepListResult.FromResponse(response);
-                yield return Page<SqlServerJobStepData>.FromValues((IReadOnlyList<SqlServerJobStepData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerJobStepData>.FromValues((IReadOnlyList<SqlServerJobStepData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

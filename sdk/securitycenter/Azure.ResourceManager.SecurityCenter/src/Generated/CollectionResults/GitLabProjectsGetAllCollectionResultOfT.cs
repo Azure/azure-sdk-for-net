@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 GitLabProjectListResponse result = GitLabProjectListResponse.FromResponse(response);
-                yield return Page<GitLabProjectData>.FromValues((IReadOnlyList<GitLabProjectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GitLabProjectData>.FromValues((IReadOnlyList<GitLabProjectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

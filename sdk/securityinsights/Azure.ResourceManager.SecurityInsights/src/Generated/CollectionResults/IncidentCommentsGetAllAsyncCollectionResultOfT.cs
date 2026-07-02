@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 IncidentCommentList result = IncidentCommentList.FromResponse(response);
-                yield return Page<SecurityInsightsIncidentCommentData>.FromValues((IReadOnlyList<SecurityInsightsIncidentCommentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsIncidentCommentData>.FromValues((IReadOnlyList<SecurityInsightsIncidentCommentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

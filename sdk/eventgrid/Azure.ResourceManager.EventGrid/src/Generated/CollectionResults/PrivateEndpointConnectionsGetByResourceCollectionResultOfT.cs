@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 EventGridPrivateEndpointConnectionListResult result = EventGridPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<EventGridPrivateEndpointConnectionData>.FromValues((IReadOnlyList<EventGridPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventGridPrivateEndpointConnectionData>.FromValues((IReadOnlyList<EventGridPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

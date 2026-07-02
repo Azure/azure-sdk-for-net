@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 MigrationConfigListResult result = MigrationConfigListResult.FromResponse(response);
-                yield return Page<MigrationConfigurationData>.FromValues((IReadOnlyList<MigrationConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MigrationConfigurationData>.FromValues((IReadOnlyList<MigrationConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

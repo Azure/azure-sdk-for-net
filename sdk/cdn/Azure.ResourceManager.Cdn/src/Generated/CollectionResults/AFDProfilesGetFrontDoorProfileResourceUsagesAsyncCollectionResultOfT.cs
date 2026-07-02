@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 UsagesListResult result = UsagesListResult.FromResponse(response);
-                yield return Page<FrontDoorUsage>.FromValues((IReadOnlyList<FrontDoorUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorUsage>.FromValues((IReadOnlyList<FrontDoorUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 SiteConfigurationSnapshotInfoListResult result = SiteConfigurationSnapshotInfoListResult.FromResponse(response);
-                yield return Page<SiteConfigurationSnapshotInfo>.FromValues((IReadOnlyList<SiteConfigurationSnapshotInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SiteConfigurationSnapshotInfo>.FromValues((IReadOnlyList<SiteConfigurationSnapshotInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 RecipientTransferDetailsListResult result = RecipientTransferDetailsListResult.FromResponse(response);
-                yield return Page<RecipientTransferDetailData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RecipientTransferDetailData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

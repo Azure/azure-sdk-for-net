@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 ThreatIntelligenceInformationList result = ThreatIntelligenceInformationList.FromResponse(response);
-                yield return Page<SecurityInsightsThreatIntelligenceIndicatorBaseData>.FromValues((IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsThreatIntelligenceIndicatorBaseData>.FromValues((IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

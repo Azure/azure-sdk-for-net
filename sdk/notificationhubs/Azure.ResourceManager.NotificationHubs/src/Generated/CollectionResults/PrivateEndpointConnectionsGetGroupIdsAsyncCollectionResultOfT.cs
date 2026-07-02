@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.NotificationHubs
                     yield break;
                 }
                 NotificationHubsPrivateLinkResourceListResult result = NotificationHubsPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<NotificationHubsPrivateLinkResourceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NotificationHubsPrivateLinkResourceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 PolicyList result = PolicyList.FromResponse(response);
-                yield return Page<DevTestLabPolicyData>.FromValues((IReadOnlyList<DevTestLabPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabPolicyData>.FromValues((IReadOnlyList<DevTestLabPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DurableTask
                     yield break;
                 }
                 TaskHubListResult result = TaskHubListResult.FromResponse(response);
-                yield return Page<DurableTaskHubData>.FromValues((IReadOnlyList<DurableTaskHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DurableTaskHubData>.FromValues((IReadOnlyList<DurableTaskHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

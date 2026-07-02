@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ApiCenter
                     yield break;
                 }
                 ServiceListResult result = ServiceListResult.FromResponse(response);
-                yield return Page<ApiCenterServiceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ApiCenterServiceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

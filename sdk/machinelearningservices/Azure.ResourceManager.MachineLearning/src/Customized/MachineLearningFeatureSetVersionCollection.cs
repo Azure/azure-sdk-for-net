@@ -13,10 +13,12 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningFeatureSetVersionCollection
     {
         // Customized: preserve options-object overloads from the previous generated SDK.
+        /// <summary> List versions. <list type="bullet"> <item> <term> Request Path. </term> <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{name}/versions. </description> </item> <item> <term> Operation Id. </term> <description> FeaturesetVersions_List. </description> </item> <item> <term> Default Api Version. </term> <description> 2026-03-15-preview. </description> </item> </list> </summary>
         public virtual AsyncPageable<MachineLearningFeatureSetVersionResource> GetAllAsync(MachineLearningFeatureSetVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
             => GetAllAsync(options?.Skip, options?.Tags, options?.ListViewType, options?.PageSize, options?.VersionName, options?.Version, options?.Description, options?.CreatedBy, options?.Stage, cancellationToken);
 
         // Customized: preserve options-object overloads from the previous generated SDK.
+        /// <summary> List versions. <list type="bullet"> <item> <term> Request Path. </term> <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{name}/versions. </description> </item> <item> <term> Operation Id. </term> <description> FeaturesetVersions_List. </description> </item> <item> <term> Default Api Version. </term> <description> 2026-03-15-preview. </description> </item> </list> </summary>
         public virtual Pageable<MachineLearningFeatureSetVersionResource> GetAll(MachineLearningFeatureSetVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
             => GetAll(options?.Skip, options?.Tags, options?.ListViewType, options?.PageSize, options?.VersionName, options?.Version, options?.Description, options?.CreatedBy, options?.Stage, cancellationToken);
     }
