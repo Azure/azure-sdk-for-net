@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Compute
 
         // Backward compatibility: the previously shipped SDK exposed ArtifactTags as IReadOnlyDictionary.
         // Suppress the generated IDictionary property and keep the read-only return type to avoid a binary break.
+        /// <summary> The artifact tags of a shared gallery resource. </summary>
         public IReadOnlyDictionary<string, string> ArtifactTags
         {
             get

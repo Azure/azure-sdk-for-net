@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
-        /// <summary> Gets the Identity. </summary>
+        /// <summary> Gets or sets the Identity. </summary>
         [CodeGenMember("Identity")]
         [WirePath("identity")]
         [EditorBrowsable(EditorBrowsableState.Never)]
