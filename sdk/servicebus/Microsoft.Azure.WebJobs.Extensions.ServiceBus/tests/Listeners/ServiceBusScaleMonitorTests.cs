@@ -557,9 +557,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var status = _scaleMonitor.GetScaleStatus(context);
             Assert.AreEqual(ScaleVote.None, status.Vote);
 
+            var logs = _loggerProvider.GetAllLogMessages().ToArray();
+            var log = logs.Single(l => l.Level == LogLevel.Warning);
+            Assert.AreEqual($"No metrics available for Service Bus entity '{_entityPath}'. Voting to not scale.", log.FormattedMessage);
+
+            _loggerProvider.ClearAllLogMessages();
+
             // verify the non-generic implementation works properly
             status = ((IScaleMonitor)_scaleMonitor).GetScaleStatus(context);
             Assert.AreEqual(ScaleVote.None, status.Vote);
+
+            logs = _loggerProvider.GetAllLogMessages().ToArray();
+            log = logs.Single(l => l.Level == LogLevel.Warning);
+            Assert.AreEqual($"No metrics available for Service Bus entity '{_entityPath}'. Voting to not scale.", log.FormattedMessage);
         }
 
         [Test]
@@ -848,6 +858,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             var status = _scaleMonitor.GetScaleStatus(context);
             Assert.AreEqual(ScaleVote.None, status.Vote);
+
+            var logs = _loggerProvider.GetAllLogMessages().ToArray();
+            var log = logs.Single(l => l.Level == LogLevel.Warning);
+            Assert.AreEqual($"Insufficient metrics samples for Service Bus entity '{_entityPath}' (2/5). Voting to not scale.", log.FormattedMessage);
         }
     }
 }

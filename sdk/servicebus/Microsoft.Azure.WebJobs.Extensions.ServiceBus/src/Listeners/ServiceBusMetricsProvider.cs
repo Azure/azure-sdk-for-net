@@ -184,7 +184,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             }
 
             // Path for connection strings with no manage claim
-            return CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            var fallbackMetrics = CreateTriggerMetrics(activeMessage, 0, 0, 0, _isListeningOnDeadLetterQueue);
+            _logger.LogInformation($"Fallback metrics for '{_entityPath}': MessageCount={fallbackMetrics.MessageCount}, QueueTime={fallbackMetrics.QueueTime.TotalSeconds:F1}s, PartitionCount={fallbackMetrics.PartitionCount}");
+            return fallbackMetrics;
         }
 
         private async Task<ServiceBusTriggerMetrics> GetQueueMetricsAsync(ServiceBusReceivedMessage message)
@@ -204,7 +206,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             queueProperties = await _administrationClient.Value.GetQueueAsync(_mainQueueName).ConfigureAwait(false);
             partitionCount = queueProperties.EnablePartitioning ? 16 : 0;
 
-            return CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            var metrics = CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            _logger.LogInformation($"Metrics for '{_entityPath}': MessageCount={metrics.MessageCount}, QueueTime={metrics.QueueTime.TotalSeconds:F1}s, PartitionCount={metrics.PartitionCount}");
+            return metrics;
         }
 
         private async Task<ServiceBusTriggerMetrics> GetTopicMetricsAsync(ServiceBusReceivedMessage message)
@@ -224,7 +228,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             topicProperties = await _administrationClient.Value.GetTopicAsync(_topicName).ConfigureAwait(false);
             partitionCount = topicProperties.EnablePartitioning ? 16 : 0;
 
-            return CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            var metrics = CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
+            _logger.LogInformation($"Metrics for '{_entityPath}': MessageCount={metrics.MessageCount}, QueueTime={metrics.QueueTime.TotalSeconds:F1}s, PartitionCount={metrics.PartitionCount}");
+            return metrics;
         }
 
         private bool TimeToLogWarning()
