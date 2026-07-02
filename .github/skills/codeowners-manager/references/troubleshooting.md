@@ -2,7 +2,7 @@
 
 ## My PR to change CODEOWNERS is blocked
 
-Edits to protected sections of the CODEOWNERS file are prohibited. If you want to make changes to a protected section, use MCP tooling described in the [operations reference](operations-reference.md) to make the necessary changes to the data model. If you are unsure which tool to use, start with `azsdk_engsys_codeowner_view` to query the current state and identify which entries need to be modified, then use the appropriate add/remove operations.
+Edits to protected sections of the CODEOWNERS file are prohibited. Treat Client Libraries today, and any future protected sections, as data-model updates that must use this skill's MCP or CLI workflow rather than direct file edits. If you are unsure which tool to use, start with `azsdk_engsys_codeowner_view` to query the current state and identify which entries need to be modified, then use the appropriate add/remove operations.
 
 ## I cannot associate my service label with a package
 

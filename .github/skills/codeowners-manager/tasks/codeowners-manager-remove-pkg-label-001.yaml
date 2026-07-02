@@ -1,4 +1,4 @@
-id: owners-remove-pkg-label-001
+id: codeowners-manager-remove-pkg-label-001
 name: Remove Label from Package
 description: |
   Test that the skill removes a label from a package.

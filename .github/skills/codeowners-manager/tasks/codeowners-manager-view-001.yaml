@@ -1,4 +1,4 @@
-id: owners-view-001
+id: codeowners-manager-view-001
 name: View Package Owners
 description: |
   Test that the skill queries CODEOWNERS for a specific package.

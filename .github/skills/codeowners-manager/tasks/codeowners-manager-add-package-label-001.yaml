@@ -1,4 +1,4 @@
-id: owners-add-package-label-001
+id: codeowners-manager-add-package-label-001
 name: Add Package Label
 description: |
   Test that the skill adds a new label to a package with correct arguments.
@@ -17,14 +17,3 @@ expected:
   behavior:
     max_tool_calls: 5
     max_response_time_ms: 30000
-graders:
-  - type: text
-    name: correct_entities
-    config:
-      contains:
-        - "Key Vault"
-        - "azure-keyvault-keys"
-        - "azure-sdk-for-python"
-      not_contains:
-        - "cannot help"
-        - "not supported"

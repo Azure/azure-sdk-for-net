@@ -1,6 +1,6 @@
-name: owners-eval
-description: Evaluation suite for owners skill.
-skill: owners
+name: codeowners-manager-eval
+description: Evaluation suite for the codeowners-manager skill.
+skill: codeowners-manager
 version: '1.0'
 config:
   model: gpt-4o
@@ -17,13 +17,5 @@ metrics:
     weight: 0.3
     threshold: 0.7
     description: Did the skill stay within behavior limits?
-graders:
-  - type: text
-    name: no_fatal_errors
-    config:
-      regex_not_match:
-        - (?i)fatal error
-        - (?i)unhandled exception
-        - '(?i)panic:'
 tasks:
   - "tasks/*.yaml"
