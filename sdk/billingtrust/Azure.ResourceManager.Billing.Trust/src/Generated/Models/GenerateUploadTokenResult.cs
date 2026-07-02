@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Response containing an upload token for supplemental document uploads. </summary>
-    public partial class GenerateUploadTokenResponse
+    public partial class GenerateUploadTokenResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GenerateUploadTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateUploadTokenResult"/>. </summary>
         /// <param name="token"> The time-bound, principal-bound upload token. </param>
-        internal GenerateUploadTokenResponse(string token)
+        internal GenerateUploadTokenResult(string token)
         {
             Token = token;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenerateUploadTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateUploadTokenResult"/>. </summary>
         /// <param name="token"> The time-bound, principal-bound upload token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateUploadTokenResponse(string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenerateUploadTokenResult(string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

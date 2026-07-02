@@ -15,63 +15,63 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Response containing an upload token for supplemental document uploads. </summary>
-    public partial class GenerateUploadTokenResponse : IJsonModel<GenerateUploadTokenResponse>
+    public partial class GenerateUploadTokenResult : IJsonModel<GenerateUploadTokenResult>
     {
-        /// <summary> Initializes a new instance of <see cref="GenerateUploadTokenResponse"/> for deserialization. </summary>
-        internal GenerateUploadTokenResponse()
+        /// <summary> Initializes a new instance of <see cref="GenerateUploadTokenResult"/> for deserialization. </summary>
+        internal GenerateUploadTokenResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateUploadTokenResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GenerateUploadTokenResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGenerateUploadTokenResponse(document.RootElement, options);
+                        return DeserializeGenerateUploadTokenResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerateUploadTokenResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateUploadTokenResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GenerateUploadTokenResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateUploadTokenResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GenerateUploadTokenResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GenerateUploadTokenResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateUploadTokenResponse IPersistableModel<GenerateUploadTokenResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GenerateUploadTokenResult IPersistableModel<GenerateUploadTokenResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GenerateUploadTokenResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GenerateUploadTokenResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GenerateUploadTokenResponse"/> from. </param>
-        internal static GenerateUploadTokenResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GenerateUploadTokenResult"/> from. </param>
+        internal static GenerateUploadTokenResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGenerateUploadTokenResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGenerateUploadTokenResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GenerateUploadTokenResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GenerateUploadTokenResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateUploadTokenResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateUploadTokenResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateUploadTokenResponse IJsonModel<GenerateUploadTokenResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GenerateUploadTokenResult IJsonModel<GenerateUploadTokenResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateUploadTokenResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GenerateUploadTokenResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateUploadTokenResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateUploadTokenResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateUploadTokenResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenerateUploadTokenResponse(document.RootElement, options);
+            return DeserializeGenerateUploadTokenResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GenerateUploadTokenResponse DeserializeGenerateUploadTokenResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static GenerateUploadTokenResult DeserializeGenerateUploadTokenResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenerateUploadTokenResponse(token, additionalBinaryDataProperties);
+            return new GenerateUploadTokenResult(token, additionalBinaryDataProperties);
         }
     }
 }

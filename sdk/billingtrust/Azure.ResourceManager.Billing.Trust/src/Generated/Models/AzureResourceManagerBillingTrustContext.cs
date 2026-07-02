@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Billing.Trust
     [ModelReaderWriterBuildable(typeof(EduQualificationRulePatchProperties))]
     [ModelReaderWriterBuildable(typeof(EduQualificationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(ExternalId))]
-    [ModelReaderWriterBuildable(typeof(GenerateUploadTokenResponse))]
+    [ModelReaderWriterBuildable(typeof(GenerateUploadTokenResult))]
     [ModelReaderWriterBuildable(typeof(InitialRuleValueBase))]
     [ModelReaderWriterBuildable(typeof(RegistrationNumber))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]

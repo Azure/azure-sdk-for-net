@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GenerateUploadTokenResponse>> GetUploadTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateUploadTokenResult>> GetUploadTokenAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.GetUploadToken");
             scope.Start();
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _assessmentsRestClient.CreateGetUploadTokenRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GenerateUploadTokenResponse> response = Response.FromValue(GenerateUploadTokenResponse.FromResponse(result), result);
+                Response<GenerateUploadTokenResult> response = Response.FromValue(GenerateUploadTokenResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GenerateUploadTokenResponse> GetUploadToken(CancellationToken cancellationToken = default)
+        public virtual Response<GenerateUploadTokenResult> GetUploadToken(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.GetUploadToken");
             scope.Start();
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _assessmentsRestClient.CreateGetUploadTokenRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GenerateUploadTokenResponse> response = Response.FromValue(GenerateUploadTokenResponse.FromResponse(result), result);
+                Response<GenerateUploadTokenResult> response = Response.FromValue(GenerateUploadTokenResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

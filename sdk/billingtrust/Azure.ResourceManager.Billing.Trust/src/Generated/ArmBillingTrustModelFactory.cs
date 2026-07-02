@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <param name="token"> The time-bound, principal-bound upload token. </param>
-        /// <returns> A new <see cref="Models.GenerateUploadTokenResponse"/> instance for mocking. </returns>
-        public static GenerateUploadTokenResponse GenerateUploadTokenResponse(string token = default)
+        /// <returns> A new <see cref="Models.GenerateUploadTokenResult"/> instance for mocking. </returns>
+        public static GenerateUploadTokenResult GenerateUploadTokenResult(string token = default)
         {
-            return new GenerateUploadTokenResponse(token, default);
+            return new GenerateUploadTokenResult(token, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
