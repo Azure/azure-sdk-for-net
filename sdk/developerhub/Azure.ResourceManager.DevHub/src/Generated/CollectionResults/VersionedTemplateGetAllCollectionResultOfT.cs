@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DevHub
                     yield break;
                 }
                 VersionedTemplateListResult result = VersionedTemplateListResult.FromResponse(response);
-                yield return Page<DevHubVersionedTemplateData>.FromValues((IReadOnlyList<DevHubVersionedTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevHubVersionedTemplateData>.FromValues((IReadOnlyList<DevHubVersionedTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

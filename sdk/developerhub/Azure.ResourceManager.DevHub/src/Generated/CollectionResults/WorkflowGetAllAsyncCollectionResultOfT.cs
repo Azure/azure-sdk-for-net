@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DevHub
                     yield break;
                 }
                 WorkflowListResult result = WorkflowListResult.FromResponse(response);
-                yield return Page<DevHubWorkflowData>.FromValues((IReadOnlyList<DevHubWorkflowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevHubWorkflowData>.FromValues((IReadOnlyList<DevHubWorkflowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.DevHub
                     yield break;
                 }
                 IacProfileListResult result = IacProfileListResult.FromResponse(response);
-                yield return Page<IacProfileData>.FromValues((IReadOnlyList<IacProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IacProfileData>.FromValues((IReadOnlyList<IacProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

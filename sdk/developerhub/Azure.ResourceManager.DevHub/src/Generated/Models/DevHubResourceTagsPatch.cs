@@ -12,21 +12,21 @@ using Azure.ResourceManager.DevHub;
 namespace Azure.ResourceManager.DevHub.Models
 {
     /// <summary> Resource tags. </summary>
-    public partial class DevHubTagsPatch
+    public partial class DevHubResourceTagsPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevHubTagsPatch"/>. </summary>
-        public DevHubTagsPatch()
+        /// <summary> Initializes a new instance of <see cref="DevHubResourceTagsPatch"/>. </summary>
+        public DevHubResourceTagsPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevHubTagsPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevHubResourceTagsPatch"/>. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevHubTagsPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevHubResourceTagsPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
