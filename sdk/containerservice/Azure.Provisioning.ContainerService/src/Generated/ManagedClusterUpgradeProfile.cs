@@ -63,18 +63,13 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ManagedClusterUpgradeProfileProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -98,15 +93,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.ControlPlaneProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterUpgradeProfileProperties();
-                }
-                Properties.ControlPlaneProfile = value;
+                return Properties.ControlPlaneProfile;
             }
         }
 
@@ -115,15 +102,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.AgentPoolProfiles;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterUpgradeProfileProperties();
-                }
-                Properties.AgentPoolProfiles = value;
+                return Properties.AgentPoolProfiles;
             }
         }
 

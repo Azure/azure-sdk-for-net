@@ -62,18 +62,13 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public DeletedKeyVaultProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 

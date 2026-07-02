@@ -66,18 +66,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal DetectorResponseProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -91,18 +86,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
             {
                 Initialize();
                 return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
             }
         }
 
@@ -126,15 +116,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties is null ? default : Properties.Value;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DetectorResponseProperties();
-                }
-                Properties.Value = value;
+                return Properties.Value;
             }
         }
 

@@ -63,18 +63,13 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal AgentPoolUpgradeProfileProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -98,15 +93,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.KubernetesVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AgentPoolUpgradeProfileProperties();
-                }
-                Properties.KubernetesVersion = value;
+                return Properties.KubernetesVersion;
             }
         }
 
@@ -115,15 +102,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.OSType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AgentPoolUpgradeProfileProperties();
-                }
-                Properties.OSType = value;
+                return Properties.OSType;
             }
         }
 
@@ -132,15 +111,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.Upgrades;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AgentPoolUpgradeProfileProperties();
-                }
-                Properties.Upgrades = value;
+                return Properties.Upgrades;
             }
         }
 
@@ -149,15 +120,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.LatestNodeImageVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AgentPoolUpgradeProfileProperties();
-                }
-                Properties.LatestNodeImageVersion = value;
+                return Properties.LatestNodeImageVersion;
             }
         }
 

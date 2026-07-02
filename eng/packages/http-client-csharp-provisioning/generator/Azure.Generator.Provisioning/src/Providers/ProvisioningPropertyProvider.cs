@@ -24,6 +24,9 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Whether this property is output-only (read-only in Bicep).</summary>
         public bool IsOutput { get; }
 
+        /// <summary>Whether this property should expose a public setter.</summary>
+        public bool IsSettable { get; }
+
         /// <summary>Whether this property is required.</summary>
         public bool IsRequired { get; }
 
@@ -38,6 +41,7 @@ namespace Azure.Generator.Provisioning.Providers
             TypeProvider enclosingType,
             string[] bicepPath,
             bool isOutput,
+            bool isSettable,
             bool isRequired,
             string? defaultValue)
             : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
@@ -45,6 +49,7 @@ namespace Azure.Generator.Provisioning.Providers
             BackingField = backingField;
             BicepPath = bicepPath;
             IsOutput = isOutput;
+            IsSettable = isSettable;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
         }
@@ -57,6 +62,7 @@ namespace Azure.Generator.Provisioning.Providers
             string resolvedName,
             CSharpType bicepType,
             bool isOutput,
+            bool isSettable,
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
@@ -75,7 +81,7 @@ namespace Azure.Generator.Provisioning.Providers
             ];
 
             MethodPropertyBody body;
-            if (isOutput)
+            if (!isSettable)
             {
                 body = new MethodPropertyBody(getter);
             }
@@ -100,7 +106,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             return new ProvisioningPropertyProvider(
                 field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isRequired, defaultValue);
+                bicepPath, isOutput, isSettable, isRequired, defaultValue);
         }
     }
 }
