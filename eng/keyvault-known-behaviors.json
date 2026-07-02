@@ -1,0 +1,241 @@
+[
+  {
+    "id": "KV-WAD-001",
+    "name": "Soft-delete recovery window conflict",
+    "category": "lifecycle",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "409.*conflict.*(?:delete|recover|purge|soft)",
+      "(?:soft.?delete|recover|purge).*409",
+      "conflict.*(?:already exists|soft.?delete|recovery)",
+      "(?:deleted|purged).*(?:vault|secret|key|certificate).*(?:same name|already|conflict)"
+    ],
+    "explanation": "Azure Key Vault uses soft-delete by default. When a vault or object is deleted, it enters a recovery window. During this period, creating a new resource with the same name can return HTTP 409 Conflict. This is intended behavior to protect against accidental data loss.",
+    "resolution": "Purge the soft-deleted resource first, recover it, or wait for the retention period to expire.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview",
+      "https://learn.microsoft.com/azure/key-vault/general/key-vault-recovery"
+    ]
+  },
+  {
+    "id": "KV-WAD-002",
+    "name": "Throttling at vault operation limits",
+    "category": "limits",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "429.*(?:too many|throttl|rate.?limit)",
+      "(?:throttl|rate.?limit|too many requests).*429",
+      "(?:throttl|rate.?limit).*(?:key.?vault|secret|key|certificate)",
+      "(?:10|ten)\\s*(?:ops?|operations?|requests?)\\s*(?:per|/)\\s*sec"
+    ],
+    "explanation": "Azure Key Vault enforces service limits. Exceeding those limits can return HTTP 429 Too Many Requests. This is intended service protection behavior.",
+    "resolution": "Use retry with exponential backoff, cache frequently-read secrets or keys, and distribute high-volume workloads when needed.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/service-limits",
+      "https://learn.microsoft.com/azure/key-vault/general/overview-throttling"
+    ]
+  },
+  {
+    "id": "KV-WAD-003",
+    "name": "Certificate import key-certificate mismatch",
+    "category": "certificates",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "400.*(?:import|certificate).*(?:mismatch|invalid|key.*cert|cert.*key|private.?key)",
+      "(?:import|merge).*certif.*(?:mismatch|doesn.t match|invalid|bad)",
+      "(?:private.?key|public.?key).*(?:does not match|mismatch|invalid).*certif",
+      "certif.*import.*(?:400|bad request)"
+    ],
+    "explanation": "When importing a certificate into Key Vault, the private key must match the certificate. A mismatch returns HTTP 400 Bad Request as expected validation behavior.",
+    "resolution": "Verify the PFX or PEM contains the correct matching private key and certificate chain.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/certificates/how-to-import-certificate",
+      "https://learn.microsoft.com/azure/key-vault/certificates/about-certificates"
+    ]
+  },
+  {
+    "id": "KV-WAD-004",
+    "name": "Access policies replaced on ARM deployment",
+    "category": "authorization",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "access.?polic.*(?:replace|overwrite|overwrit|lost|missing|reset|gone|removed).*(?:arm|template|bicep|terraform|deploy)",
+      "(?:arm|template|bicep|terraform|deploy).*access.?polic.*(?:replace|overwrite|lost|reset)",
+      "(?:deployment|deploy).*(?:lost|removed|cleared).*access.?polic",
+      "access.?polic.*(?:not merge|not merged|replace.*not.*merge)"
+    ],
+    "explanation": "When deploying a Key Vault via ARM templates, Bicep, or Terraform, the access policies property is treated as a full replacement, not a merge. If the template does not include all existing access policies, the unlisted ones are removed.",
+    "resolution": "Migrate to Azure RBAC for Key Vault data plane access, include all existing access policies in the template, or use the accessPolicies sub-resource for incremental updates.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/assign-access-policy",
+      "https://learn.microsoft.com/azure/key-vault/general/rbac-migration"
+    ]
+  },
+  {
+    "id": "KV-WAD-005",
+    "name": "Firewall blocks access from unexpected IP",
+    "category": "networking",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "403.*(?:forbidden|firewall|network|ip|vnet|public.?access)",
+      "(?:firewall|network.?rule|ip.?rule|vnet).*(?:403|forbidden|blocked|denied|access)",
+      "(?:public.?access|public.?network).*(?:disabled|denied|blocked|403)",
+      "(?:client.?ip|source.?ip|your.?ip).*(?:not.*allow|blocked|denied)"
+    ],
+    "explanation": "When Key Vault firewall rules are enabled, requests from IPs or VNets not in the allow list can return HTTP 403 Forbidden. This is intended security behavior.",
+    "resolution": "Add the client IP or VNet to the firewall allow list, use Private Endpoint, or configure trusted service access when appropriate.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/network-security",
+      "https://learn.microsoft.com/azure/key-vault/general/overview-vnet-service-endpoints"
+    ]
+  },
+  {
+    "id": "KV-WAD-006",
+    "name": "RBAC role assignment propagation delay",
+    "category": "authorization",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:403|forbidden|access denied).*(?:recent|just|new).*(?:role|rbac|assignment|permission)",
+      "(?:role|rbac|assignment|permission).*(?:recent|just|new).*(?:403|forbidden|access denied)",
+      "(?:propagat|delay|take.*time).*(?:role|rbac|permission|assignment)"
+    ],
+    "explanation": "Azure RBAC changes can take time to propagate. A user or managed identity may receive HTTP 403 shortly after a role assignment even though the assignment is correct.",
+    "resolution": "Wait for RBAC propagation, verify the identity and scope, and retry the operation after propagation completes.",
+    "docs": [
+      "https://learn.microsoft.com/azure/role-based-access-control/troubleshooting"
+    ]
+  },
+  {
+    "id": "KV-WAD-007",
+    "name": "Wrong token audience for Key Vault",
+    "category": "authentication",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:401|unauthorized|unauthenticated).*(?:audience|resource|scope|token)",
+      "(?:token|audience|resource|scope).*(?:vault.azure.net|key.?vault).*(?:wrong|invalid|incorrect)",
+      "(?:https://vault.azure.net|vault.azure.net).*(?:audience|scope|resource)"
+    ],
+    "explanation": "Key Vault data-plane requests require a token for the Key Vault audience. A token for the wrong resource or scope can result in HTTP 401.",
+    "resolution": "Request a token for the Key Vault data-plane audience and verify the credential is configured for the correct cloud.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/authentication"
+    ]
+  },
+  {
+    "id": "KV-WAD-008",
+    "name": "Wrong tenant or identity used for authorization",
+    "category": "authentication",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:401|403|forbidden|unauthorized).*(?:wrong|incorrect|different).*(?:tenant|identity|client|principal)",
+      "(?:tenant|identity|client id|principal).*(?:mismatch|wrong|incorrect).*(?:401|403|forbidden|unauthorized)",
+      "(?:DefaultAzureCredential|ManagedIdentityCredential).*(?:wrong|unexpected).*(?:tenant|identity|account)"
+    ],
+    "explanation": "Authentication can succeed with an unexpected tenant or identity, but Key Vault authorization can still fail because permissions were granted to a different principal.",
+    "resolution": "Verify the tenant, client ID, managed identity, and object ID that are actually used by the application.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/authentication",
+      "https://learn.microsoft.com/dotnet/azure/sdk/authentication"
+    ]
+  },
+  {
+    "id": "KV-WAD-009",
+    "name": "Purge protection prevents immediate permanent deletion",
+    "category": "lifecycle",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:purge protection|purge.?protected).*(?:cannot|can't|unable|disable|delete|purge)",
+      "(?:cannot|can't|unable).*(?:purge|permanently delete).*(?:purge protection|retention)",
+      "(?:retention|recoverable).*(?:prevents|blocks).*(?:purge|delete)"
+    ],
+    "explanation": "When purge protection is enabled, Key Vault prevents immediate permanent deletion during the retention period. This is intended data-protection behavior.",
+    "resolution": "Plan for the retention period and avoid relying on immediate name reuse or permanent deletion when purge protection is enabled.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/soft-delete-overview"
+    ]
+  },
+  {
+    "id": "KV-WAD-010",
+    "name": "Private endpoint DNS misconfiguration",
+    "category": "networking",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:private endpoint|privatelink|private link).*(?:dns|resolution|resolve|403|timeout|network)",
+      "(?:dns|resolution|resolve).*(?:privatelink|private endpoint|private link).*(?:key.?vault|vault)",
+      "(?:public endpoint|private endpoint).*(?:wrong|incorrect).*(?:dns|route|network)"
+    ],
+    "explanation": "Key Vault private endpoint access depends on correct DNS resolution. Misconfigured DNS can send traffic to the wrong endpoint or fail access checks.",
+    "resolution": "Verify private DNS zone configuration and confirm the vault hostname resolves to the expected private endpoint IP from the client network.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/private-link-service"
+    ]
+  },
+  {
+    "id": "KV-WAD-011",
+    "name": "Managed identity is not enabled or not granted access",
+    "category": "authentication",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:managed identity|msi).*(?:not enabled|disabled|not configured|403|401|forbidden|unauthorized)",
+      "(?:403|401|forbidden|unauthorized).*(?:managed identity|msi)",
+      "(?:app service|function|vm|aks).*(?:identity).*(?:key.?vault|secret|403|401)"
+    ],
+    "explanation": "A managed identity must be enabled on the hosting resource and granted Key Vault data-plane access before it can read secrets, keys, or certificates.",
+    "resolution": "Verify the managed identity is enabled, confirm the identity used at runtime, and grant the required Key Vault role or access policy.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/authentication",
+      "https://learn.microsoft.com/azure/app-service/overview-managed-identity"
+    ]
+  },
+  {
+    "id": "KV-WAD-012",
+    "name": "RBAC and access policy authorization model mismatch",
+    "category": "authorization",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:rbac|access polic).*(?:mode|permission model|authorization model).*(?:wrong|mismatch|confus|not working)",
+      "(?:using|enabled).*(?:rbac).*(?:but|however).*(?:access polic)",
+      "(?:using|enabled).*(?:access polic).*(?:but|however).*(?:rbac)"
+    ],
+    "explanation": "Key Vault can use either Azure RBAC or vault access policies for data-plane authorization. Configuring permissions in the inactive model can result in access failures.",
+    "resolution": "Check the vault permission model and configure either Azure RBAC roles or access policies according to the active model.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/general/rbac-guide",
+      "https://learn.microsoft.com/azure/key-vault/general/rbac-migration"
+    ]
+  },
+  {
+    "id": "KV-WAD-013",
+    "name": "Disabled or expired secret, key, or certificate",
+    "category": "object-state",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:secret|key|certificate).*(?:disabled|expired|not enabled)",
+      "(?:disabled|expired|not enabled).*(?:secret|key|certificate)",
+      "(?:operation|request).*(?:not permitted|forbidden).*(?:disabled|expired)"
+    ],
+    "explanation": "Key Vault objects can be disabled or expired. Operations against disabled or expired objects can fail even when the caller has permissions.",
+    "resolution": "Check the object attributes, enable the object if appropriate, or update its expiration settings.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/secrets/about-secrets",
+      "https://learn.microsoft.com/azure/key-vault/keys/about-keys"
+    ]
+  },
+  {
+    "id": "KV-WAD-014",
+    "name": "Managed HSM endpoint used with vault client or vault endpoint used with HSM client",
+    "category": "endpoint",
+    "safeToAutoFlag": true,
+    "patterns": [
+      "(?:managed hsm|mhsm|hsm).*(?:vault client|SecretClient|CertificateClient|wrong endpoint)",
+      "(?:vault.azure.net|managedhsm.azure.net).*(?:wrong|incorrect|mismatch).*(?:client|endpoint)",
+      "(?:KeyClient|CryptographyClient).*(?:managed hsm|hsm).*(?:endpoint|uri)"
+    ],
+    "explanation": "Managed HSM and standard Key Vault use different endpoint types and supported APIs. Using the wrong client or endpoint can produce failures that are expected configuration errors.",
+    "resolution": "Use the client and endpoint type that match the resource: standard vault clients for vault endpoints, and the supported key/crypto clients for Managed HSM endpoints.",
+    "docs": [
+      "https://learn.microsoft.com/azure/key-vault/managed-hsm/overview",
+      "https://learn.microsoft.com/azure/key-vault/general/about-keys-secrets-certificates"
+    ]
+  }
+]
