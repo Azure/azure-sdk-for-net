@@ -14,6 +14,24 @@ param(
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = 'Stop'
 
+if ($env:GITHUB_ACTIONS -eq 'true')
+{
+    $tokenVariables = @(
+        'GITHUB_TOKEN',
+        'GH_TOKEN',
+        'GH_ENTERPRISE_TOKEN',
+        'GITHUB_ENTERPRISE_TOKEN',
+        'COPILOT_GITHUB_TOKEN',
+        'GH_AW_GITHUB_TOKEN',
+        'GH_AW_GITHUB_MCP_SERVER_TOKEN'
+    )
+
+    foreach ($variable in $tokenVariables)
+    {
+        [System.Environment]::SetEnvironmentVariable($variable, $null, 'Process')
+    }
+}
+
 $resolvedPackagePath = (Resolve-Path -LiteralPath $PackagePath).Path
 $project = Get-ChildItem -LiteralPath (Join-Path $resolvedPackagePath 'src') -Filter '*.csproj' -File |
     Select-Object -First 1

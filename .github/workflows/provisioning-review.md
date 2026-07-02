@@ -15,7 +15,7 @@ on:
 if: |
   github.event_name == 'workflow_dispatch' ||
   (github.event_name == 'check_run' && github.event.check_run.name == 'net - pullrequest' && github.event.check_run.conclusion == 'failure' && github.event.check_run.pull_requests[0]) ||
-  (github.event.pull_request && !github.event.pull_request.draft)
+  (github.event.pull_request && !github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository)
 description: "Review Azure SDK for .NET provisioning library PRs using checked-in provisioning review guidance"
 checkout:
   sparse-checkout: |
@@ -158,7 +158,7 @@ This workflow runs automatically when a pull request modifies an `Azure.Provisio
 
 ## Step 0 - Validate the PR
 
-Fetch the pull request details. If the PR is in draft state, use `noop` and stop.
+Fetch the pull request details. If the PR is in draft state, use `noop` and stop. If the PR head repository is not `${{ github.repository }}`, use `noop` and stop; do not run schema extraction for forked PRs.
 
 If this workflow was triggered by `check_run`, compare `github.event.check_run.head_sha` against the PR's current head SHA. If they differ, the failing check belongs to a superseded commit — use `noop` and stop rather than posting stale feedback.
 
