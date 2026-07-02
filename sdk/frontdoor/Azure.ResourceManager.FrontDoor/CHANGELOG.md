@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Regenerated the SDK from TypeSpec after simplifying Front Door C# customizations while preserving the existing public API surface and serialization behavior.
+
 ## 1.4.2 (2026-06-06)
 
 ### Other Changes

@@ -1,0 +1,146 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using Azure.ResourceManager.FrontDoor.Models;
+using System.Collections.Generic;
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
+namespace Azure.ResourceManager.FrontDoor
+{
+    // The shipped SDK inherited ResourceData. This partial restores that base type after
+    // removing the spec-side alternateType for BasicResource.
+    public partial class FrontDoorRulesEngineData : ResourceData
+    {
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RulesEngineProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+        // This method body is copied from the generated PersistableModelCreateCore; the customization changes
+        // only the return type from FrontDoorRulesEngineData to ResourceData so it matches ResourceData.
+        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFrontDoorRulesEngineData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        // This method body is copied from the generated JsonModelWriteCore; the customization changes
+        // the method modifier from "virtual" to "override" and calls the restored ResourceData
+        // base writer so inherited resource fields keep their previous wire shape.
+        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        // This method body is copied from the generated JsonModelCreateCore; the customization changes
+        // only the return type from FrontDoorRulesEngineData to ResourceData so it matches ResourceData.
+        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60297 is fixed.
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorRulesEngineData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorRulesEngineData(document.RootElement, options);
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorRulesEngineData IPersistableModel<FrontDoorRulesEngineData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontDoorRulesEngineData)PersistableModelCreateCore(data, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontDoorRulesEngineData IJsonModel<FrontDoorRulesEngineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontDoorRulesEngineData)JsonModelCreateCore(ref reader, options);
+        internal static FrontDoorRulesEngineData DeserializeFrontDoorRulesEngineData(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            RulesEngineProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (FrontDoorSerializationHelpers.TryReadResourceDataProperty(prop, options, ref id, ref name, ref resourceType, ref systemData))
+                {
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind != JsonValueKind.Null)
+                    {
+                        properties = RulesEngineProperties.DeserializeRulesEngineProperties(prop.Value, options);
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new FrontDoorRulesEngineData(id, name, resourceType, systemData, properties, additionalBinaryDataProperties);
+        }
+    }
+}
