@@ -1,0 +1,6 @@
+directory: specification/domainservices/resource-manager/Microsoft.AAD/DomainServices
+commit: dc9ad054a98c1f46a62a8a76ae5411c37bcee031
+repo: cxznmhdcxz/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
