@@ -68,7 +68,16 @@ safe-outputs:
 
               const owner = context.repo.owner;
               const repo = context.repo.repo;
-              const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+              let pr;
+              try {
+                ({ data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber }));
+              } catch (error) {
+                if (error.status === 404) {
+                  core.info(`Pull request ${owner}/${repo}#${prNumber} was not found; skipping stale review dismissal.`);
+                  return;
+                }
+                throw error;
+              }
               const headSha = pr.head.sha;
               const workflowName = process.env.REVIEW_WORKFLOW_NAME || 'Azure .NET Provisioning SDK PR Review';
 
