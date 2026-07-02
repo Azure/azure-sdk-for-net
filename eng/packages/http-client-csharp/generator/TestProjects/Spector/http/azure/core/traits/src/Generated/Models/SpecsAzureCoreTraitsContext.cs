@@ -7,9 +7,13 @@
 
 using System.ClientModel.Primitives;
 using Azure;
+using Azure.Core.Foundations;
 
 namespace Specs.Azure.Core.Traits
 {
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(User))]
     [ModelReaderWriterBuildable(typeof(UserActionParam))]
