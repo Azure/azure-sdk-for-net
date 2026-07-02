@@ -128,6 +128,54 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ResourceDataModelWithCustomTrackedResourceBaseOverridesSerialization()
+        {
+            var trackedResourceModel = InputFactory.Model(
+                "TrackedResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String)),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var resourceModel = InputFactory.Model(
+                "FrontDoor",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String)),
+                    InputFactory.Property("properties", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [trackedResourceModel, resourceModel]);
+
+            var resourceDataModel = new ResourceDataModelProvider(resourceModel);
+            ManagementMockHelpers.SetCustomCodeView(resourceDataModel, new TrackedResourceDataCustomCodeView("FrontDoorData"));
+            var serialization = resourceDataModel.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+
+            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
+                new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
+
+            var visitor = new TestableSerializationVisitor();
+            foreach (var method in serialization.Methods)
+            {
+                visitor.InvokeVisitMethod(method);
+            }
+            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
+
+            Assert.That(resourceDataModel.BaseType?.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
+            Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
+            Assert.That(serializationContent, Does.Not.Contain("protected virtual void JsonModelWriteCore"));
+        }
+
+        [Test]
         public void ResourceDataReferencesUseRootNamespaceForEquivalentInputModelInstances()
         {
             var (client, models) = InputResourceData.ClientWithResource();
@@ -270,6 +318,13 @@ namespace Azure.Generator.Mgmt.Tests
             protected override string BuildName() => "ResponseTypeData";
             protected override string BuildNamespace() => "Samples.Models";
             protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
+        }
+
+        private class TrackedResourceDataCustomCodeView(string name) : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
+            protected override string BuildName() => name;
+            protected override string BuildRelativeFilePath() => $"{name}.cs";
         }
     }
 }
