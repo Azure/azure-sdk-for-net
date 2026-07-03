@@ -333,14 +333,14 @@ namespace Azure.ResourceManager.Education
         /// Redeem invite code to join a redeemable lab
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.RedeemInvitationCodeAsync(RedeemRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.RedeemInvitationCodeAsync(EducationRedeemContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response> RedeemInvitationCodeAsync(this TenantResource tenantResource, RedeemRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response> RedeemInvitationCodeAsync(this TenantResource tenantResource, EducationRedeemContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -351,14 +351,14 @@ namespace Azure.ResourceManager.Education
         /// Redeem invite code to join a redeemable lab
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.RedeemInvitationCode(RedeemRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationTenantResource.RedeemInvitationCode(EducationRedeemContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response RedeemInvitationCode(this TenantResource tenantResource, RedeemRequest content, CancellationToken cancellationToken = default)
+        public static Response RedeemInvitationCode(this TenantResource tenantResource, EducationRedeemContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

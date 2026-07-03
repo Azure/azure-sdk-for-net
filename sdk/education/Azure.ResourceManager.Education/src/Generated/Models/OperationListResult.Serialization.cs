@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Operation item in Value)
+                foreach (EducationOperationInfo item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Education.Models
             {
                 return null;
             }
-            IReadOnlyList<Operation> value = default;
+            IReadOnlyList<EducationOperationInfo> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Operation> array = new List<Operation>();
+                    List<EducationOperationInfo> array = new List<EducationOperationInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Operation.DeserializeOperation(item, options));
+                        array.Add(EducationOperationInfo.DeserializeEducationOperationInfo(item, options));
                     }
                     value = array;
                     continue;

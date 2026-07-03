@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Grant detail properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrantDetailsData(string id, string name, ResourceType resourceType, SystemData systemData, GrantDetailProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal GrantDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GrantDetailProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

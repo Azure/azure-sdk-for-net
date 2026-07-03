@@ -12,17 +12,17 @@ using Azure.ResourceManager.Education;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> redeem request. </summary>
-    public partial class RedeemRequest
+    public partial class EducationRedeemContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedeemRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationRedeemContent"/>. </summary>
         /// <param name="redeemCode"> redeem code. </param>
         /// <param name="firstName"> first name of requester. </param>
         /// <param name="lastName"> last name of requester. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redeemCode"/>, <paramref name="firstName"/> or <paramref name="lastName"/> is null. </exception>
-        public RedeemRequest(string redeemCode, string firstName, string lastName)
+        public EducationRedeemContent(string redeemCode, string firstName, string lastName)
         {
             Argument.AssertNotNull(redeemCode, nameof(redeemCode));
             Argument.AssertNotNull(firstName, nameof(firstName));
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Education.Models
             LastName = lastName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedeemRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationRedeemContent"/>. </summary>
         /// <param name="redeemCode"> redeem code. </param>
         /// <param name="firstName"> first name of requester. </param>
         /// <param name="lastName"> last name of requester. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedeemRequest(string redeemCode, string firstName, string lastName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EducationRedeemContent(string redeemCode, string firstName, string lastName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RedeemCode = redeemCode;
             FirstName = firstName;

@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> REST API Operation. </summary>
-    public partial class Operation
+    public partial class EducationOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Operation"/>. </summary>
-        internal Operation()
+        /// <summary> Initializes a new instance of <see cref="EducationOperationInfo"/>. </summary>
+        internal EducationOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Operation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationOperationInfo"/>. </summary>
         /// <param name="name"> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </param>
         /// <param name="isDataAction"> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. </param>
         /// <param name="display"> Localized display information for this particular operation. </param>
         /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </param>
         /// <param name="actionType"> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Operation(string name, bool? isDataAction, OperationDisplay display, Origin? origin, ActionType? actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EducationOperationInfo(string name, bool? isDataAction, OperationDisplay display, Origin? origin, ActionType? actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDataAction = isDataAction;

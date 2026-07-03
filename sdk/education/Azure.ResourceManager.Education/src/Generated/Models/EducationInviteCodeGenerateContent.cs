@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> invite code generate request. </summary>
-    public partial class InviteCodeGenerateRequest
+    public partial class EducationInviteCodeGenerateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InviteCodeGenerateRequest"/>. </summary>
-        public InviteCodeGenerateRequest()
+        /// <summary> Initializes a new instance of <see cref="EducationInviteCodeGenerateContent"/>. </summary>
+        public EducationInviteCodeGenerateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InviteCodeGenerateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationInviteCodeGenerateContent"/>. </summary>
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InviteCodeGenerateRequest(float? maxStudentCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EducationInviteCodeGenerateContent(float? maxStudentCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxStudentCount = maxStudentCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

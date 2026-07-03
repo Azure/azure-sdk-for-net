@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="onlyUpdateStudentCountParameter"> set this flag to true if you want to update student count without generating a new invite code. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<LabDetailsResource>> GenerateInviteCodeAsync(InviteCodeGenerateRequest content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabDetailsResource>> GenerateInviteCodeAsync(EducationInviteCodeGenerateContent content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, InviteCodeGenerateRequest.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
+                HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="onlyUpdateStudentCountParameter"> set this flag to true if you want to update student count without generating a new invite code. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<LabDetailsResource> GenerateInviteCode(InviteCodeGenerateRequest content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
+        public virtual Response<LabDetailsResource> GenerateInviteCode(EducationInviteCodeGenerateContent content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, InviteCodeGenerateRequest.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
+                HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
                 if (response.Value == null)

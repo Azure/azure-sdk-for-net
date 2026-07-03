@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Education.Models
         /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
         internal OperationListResult()
         {
-            Value = new ChangeTrackingList<Operation>();
+            Value = new ChangeTrackingList<EducationOperationInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
         /// <param name="value"> The Operation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationListResult(IReadOnlyList<Operation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationListResult(IReadOnlyList<EducationOperationInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Education.Models
         }
 
         /// <summary> The Operation items on this page. </summary>
-        public IReadOnlyList<Operation> Value { get; }
+        public IReadOnlyList<EducationOperationInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

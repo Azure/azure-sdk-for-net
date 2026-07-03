@@ -14,67 +14,62 @@ using Azure.ResourceManager.Education;
 
 namespace Azure.ResourceManager.Education.Models
 {
-    /// <summary> redeem request. </summary>
-    public partial class RedeemRequest : IJsonModel<RedeemRequest>
+    /// <summary> invite code generate request. </summary>
+    public partial class EducationInviteCodeGenerateContent : IJsonModel<EducationInviteCodeGenerateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="RedeemRequest"/> for deserialization. </summary>
-        internal RedeemRequest()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedeemRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EducationInviteCodeGenerateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedeemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationInviteCodeGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRedeemRequest(document.RootElement, options);
+                        return DeserializeEducationInviteCodeGenerateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedeemRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationInviteCodeGenerateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedeemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationInviteCodeGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEducationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RedeemRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationInviteCodeGenerateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedeemRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EducationInviteCodeGenerateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RedeemRequest IPersistableModel<RedeemRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EducationInviteCodeGenerateContent IPersistableModel<EducationInviteCodeGenerateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedeemRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EducationInviteCodeGenerateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="redeemRequest"> The <see cref="RedeemRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RedeemRequest redeemRequest)
+        /// <param name="educationInviteCodeGenerateContent"> The <see cref="EducationInviteCodeGenerateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EducationInviteCodeGenerateContent educationInviteCodeGenerateContent)
         {
-            if (redeemRequest == null)
+            if (educationInviteCodeGenerateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(redeemRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(educationInviteCodeGenerateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RedeemRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EducationInviteCodeGenerateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,17 +80,16 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedeemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationInviteCodeGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedeemRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationInviteCodeGenerateContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("redeemCode"u8);
-            writer.WriteStringValue(RedeemCode);
-            writer.WritePropertyName("firstName"u8);
-            writer.WriteStringValue(FirstName);
-            writer.WritePropertyName("lastName"u8);
-            writer.WriteStringValue(LastName);
+            if (Optional.IsDefined(MaxStudentCount))
+            {
+                writer.WritePropertyName("maxStudentCount"u8);
+                writer.WriteNumberValue(MaxStudentCount.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -115,48 +109,40 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RedeemRequest IJsonModel<RedeemRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EducationInviteCodeGenerateContent IJsonModel<EducationInviteCodeGenerateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedeemRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EducationInviteCodeGenerateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedeemRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationInviteCodeGenerateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedeemRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationInviteCodeGenerateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedeemRequest(document.RootElement, options);
+            return DeserializeEducationInviteCodeGenerateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RedeemRequest DeserializeRedeemRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static EducationInviteCodeGenerateContent DeserializeEducationInviteCodeGenerateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string redeemCode = default;
-            string firstName = default;
-            string lastName = default;
+            float? maxStudentCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("redeemCode"u8))
+                if (prop.NameEquals("maxStudentCount"u8))
                 {
-                    redeemCode = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("firstName"u8))
-                {
-                    firstName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("lastName"u8))
-                {
-                    lastName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxStudentCount = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +150,7 @@ namespace Azure.ResourceManager.Education.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RedeemRequest(redeemCode, firstName, lastName, additionalBinaryDataProperties);
+            return new EducationInviteCodeGenerateContent(maxStudentCount, additionalBinaryDataProperties);
         }
     }
 }

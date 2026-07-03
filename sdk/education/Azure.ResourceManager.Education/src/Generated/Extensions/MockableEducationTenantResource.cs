@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> RedeemInvitationCodeAsync(RedeemRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RedeemInvitationCodeAsync(EducationRedeemContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Education.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(RedeemRequest.ToRequestContent(content), context);
+                HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(EducationRedeemContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response RedeemInvitationCode(RedeemRequest content, CancellationToken cancellationToken = default)
+        public virtual Response RedeemInvitationCode(EducationRedeemContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Education.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(RedeemRequest.ToRequestContent(content), context);
+                HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(EducationRedeemContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

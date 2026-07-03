@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="redeemCode"> redeem code. </param>
         /// <param name="firstName"> first name of requester. </param>
         /// <param name="lastName"> last name of requester. </param>
-        /// <returns> A new <see cref="Models.RedeemRequest"/> instance for mocking. </returns>
-        public static RedeemRequest RedeemRequest(string redeemCode = default, string firstName = default, string lastName = default)
+        /// <returns> A new <see cref="Models.EducationRedeemContent"/> instance for mocking. </returns>
+        public static EducationRedeemContent EducationRedeemContent(string redeemCode = default, string firstName = default, string lastName = default)
         {
-            return new RedeemRequest(redeemCode, firstName, lastName, default);
+            return new EducationRedeemContent(redeemCode, firstName, lastName, default);
         }
 
         /// <param name="value"> The Operation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.OperationListResult"/> instance for mocking. </returns>
-        public static OperationListResult OperationListResult(IEnumerable<Operation> value = default, Uri nextLink = default)
+        public static OperationListResult OperationListResult(IEnumerable<EducationOperationInfo> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<Operation>();
+            value ??= new ChangeTrackingList<EducationOperationInfo>();
 
-            return new OperationListResult((value ?? new ChangeTrackingList<Operation>()).ToList(), nextLink, default);
+            return new OperationListResult((value ?? new ChangeTrackingList<EducationOperationInfo>()).ToList(), nextLink, default);
         }
 
         /// <param name="name"> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </param>
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="display"> Localized display information for this particular operation. </param>
         /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </param>
         /// <param name="actionType"> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
-        /// <returns> A new <see cref="Models.Operation"/> instance for mocking. </returns>
-        public static Operation Operation(string name = default, bool? isDataAction = default, OperationDisplay display = default, Origin? origin = default, ActionType? actionType = default)
+        /// <returns> A new <see cref="Models.EducationOperationInfo"/> instance for mocking. </returns>
+        public static EducationOperationInfo EducationOperationInfo(string name = default, bool? isDataAction = default, OperationDisplay display = default, Origin? origin = default, ActionType? actionType = default)
         {
-            return new Operation(
+            return new EducationOperationInfo(
                 name,
                 isDataAction,
                 display,
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="status"> Grant status. </param>
         /// <param name="allocatedBudget"> allocated budget. </param>
         /// <returns> A new <see cref="Education.GrantDetailsData"/> instance for mocking. </returns>
-        public static GrantDetailsData GrantDetailsData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Amount offerCap = default, DateTimeOffset? effectiveOn = default, GrantType? offerType = default, DateTimeOffset? expireOn = default, GrantStatus? status = default, Amount allocatedBudget = default)
+        public static GrantDetailsData GrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Amount offerCap = default, DateTimeOffset? effectiveOn = default, GrantType? offerType = default, DateTimeOffset? expireOn = default, GrantStatus? status = default, Amount allocatedBudget = default)
         {
             return new GrantDetailsData(
                 id,
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Education.Models
         }
 
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
-        /// <returns> A new <see cref="Models.InviteCodeGenerateRequest"/> instance for mocking. </returns>
-        public static InviteCodeGenerateRequest InviteCodeGenerateRequest(float? maxStudentCount = default)
+        /// <returns> A new <see cref="Models.EducationInviteCodeGenerateContent"/> instance for mocking. </returns>
+        public static EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(float? maxStudentCount = default)
         {
-            return new InviteCodeGenerateRequest(maxStudentCount, default);
+            return new EducationInviteCodeGenerateContent(maxStudentCount, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="email"> join request email. </param>
         /// <param name="status"> Join request status. </param>
         /// <returns> A new <see cref="Education.JoinRequestDetailsData"/> instance for mocking. </returns>
-        public static JoinRequestDetailsData JoinRequestDetailsData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, JoinRequestStatus? status = default)
+        public static JoinRequestDetailsData JoinRequestDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, JoinRequestStatus? status = default)
         {
             return new JoinRequestDetailsData(
                 id,
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
         /// <returns> A new <see cref="Education.StudentDetailsData"/> instance for mocking. </returns>
-        public static StudentDetailsData StudentDetailsData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, Amount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
+        public static StudentDetailsData StudentDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, Amount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
         {
             return new StudentDetailsData(
                 id,
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> User Added Date. </param>
         /// <param name="labScope"> Lab Scope. /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default. </param>
         /// <returns> A new <see cref="Education.StudentLabDetailsData"/> instance for mocking. </returns>
-        public static StudentLabDetailsData StudentLabDetailsData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, DateTimeOffset? expireOn = default, StudentRole? role = default, Amount budget = default, string subscriptionId = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string labScope = default)
+        public static StudentLabDetailsData StudentLabDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, DateTimeOffset? expireOn = default, StudentRole? role = default, Amount budget = default, string subscriptionId = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string labScope = default)
         {
             return new StudentLabDetailsData(
                 id,
