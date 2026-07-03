@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DomainServices.Tests
         }
 
         [Test]
-        public async Task DomainServiceCrudLifecycle()
+        public async Task CRUD()
         {
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
             DomainServiceCollection collection = resourceGroup.GetDomainServices();
