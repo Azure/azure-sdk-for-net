@@ -1,6 +1,7 @@
-# Sample 1: Getting Started — Load Optimization Options
+# Sample 1: Getting Started — Resolve Optimization Config
 
-This sample shows how to load agent optimization options using the priority waterfall.
+This sample shows how to resolve an agent's optimization configuration using
+`AgentOptimizationClient.ResolveOptions`.
 
 ## Prerequisites
 
@@ -8,59 +9,68 @@ This sample shows how to load agent optimization options using the priority wate
 dotnet add package Azure.AI.AgentServer.Optimization --prerelease
 ```
 
-## Load options with defaults
+Set the environment variable that identifies the candidate to resolve:
 
-The loader resolves configuration from the highest-priority available source:
-resolver API → inline JSON → local candidate directory → local baseline directory.
+```bash
+export OPTIMIZATION_CANDIDATE_ID="<your-candidate-id>"
+```
+
+## Resolve config with the client
+
+The client calls the optimization API with an env-var fallback
+(`OPTIMIZATION_CONFIG` inline JSON) when the API is unreachable:
 
 ```C# Snippet:Optimization_ReadMe_Load
-OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync();
+using Azure.AI.AgentServer.Optimization;
+using Azure.Identity;
 
-if (options is not null)
+var client = new AgentOptimizationClient(
+    new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"),
+    new DefaultAzureCredential());
+
+string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? config = client.ResolveOptions(candidateId);
+
+if (config is not null)
 {
-    Console.WriteLine($"Source: {options.Source}");
-    Console.WriteLine($"Instructions: {options.Instructions}");
-    Console.WriteLine($"Model: {options.Model}");
+    Console.WriteLine($"Model: {config.Model}");
+    Console.WriteLine($"Instructions: {config.Instructions}");
+    Console.WriteLine($"Temperature: {config.Temperature}");
 }
 ```
 
-## Load options with a custom token provider
+## Resolve config via IConfiguration (DI integration)
 
-When the resolver API requires authentication, provide an `AuthenticationTokenProvider`:
+Instead of calling the client directly, you can plug in the optimization
+source so the resolved config participates in the standard configuration
+pipeline:
 
-```C# Snippet:Optimization_ReadMe_LoadWithTokenProvider
-LoadOptions loadOptions = new LoadOptions
-{
-    TokenProvider = new MyTokenProvider(),
-};
+```C# Snippet:Optimization_ReadMe_IConfiguration
+using Azure.AI.AgentServer.Optimization;
+using Microsoft.Extensions.Configuration;
 
-OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync(loadOptions);
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddOptimizationConfigSource("AgentOptimization")
+    .Build();
+
+CandidateDeployConfig? config = configuration.GetOptimizationConfig();
+Console.WriteLine($"Model: {config?.Model}");
 ```
 
-Where `MyTokenProvider` is your `AuthenticationTokenProvider` implementation:
+`"AgentOptimization"` is the configuration section that
+`AgentOptimizationClientSettings` is bound from (endpoint, credential, options).
+The resolved `CandidateDeployConfig` is projected into the default
+`AgentOptimization` section so you can read it with `GetOptimizationConfig()`.
 
-```C# Snippet:Optimization_ReadMe_TokenProvider
-private sealed class MyTokenProvider : AuthenticationTokenProvider
-{
-    public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => new(properties);
+## Use resolved config to build an agent
 
-    public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+Once resolved, use the config to set your agent's system prompt and model:
 
-    public override ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
-}
-```
+```C# Snippet:Optimization_Sample1_UseConfig
+CandidateDeployConfig? config = client.ResolveOptions(candidateId);
 
-## Use loaded options to configure an agent
-
-Once loaded, use the options to configure your agent's system prompt, model, and tools:
-
-```C# Snippet:Optimization_Sample1_UseOptions
-OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync();
-
-string instructions = options?.Instructions ?? "You are a helpful assistant.";
-string model = options?.Model ?? "gpt-4o-mini";
+string instructions = config?.Instructions ?? "You are a helpful assistant.";
+string model = config?.Model ?? "gpt-4o-mini";
 
 Console.WriteLine($"Using model: {model}");
 Console.WriteLine($"Instructions length: {instructions.Length} chars");
@@ -70,5 +80,5 @@ Console.WriteLine($"Instructions length: {instructions.Length} chars");
 
 For complete runnable applications that deploy to Azure AI Foundry and run optimization:
 
-- [Procedural sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-procedural) — calls `LoadAsync()` directly
+- [Procedural sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-procedural) — calls `ResolveOptionsAsync()` directly
 - [DI sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-di) — integrates with `IConfiguration`
