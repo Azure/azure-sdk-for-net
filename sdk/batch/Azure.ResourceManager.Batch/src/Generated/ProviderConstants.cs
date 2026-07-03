@@ -13,6 +13,5 @@ namespace Azure.ResourceManager.Batch
     {
         /// <summary> Gets the DefaultProviderNamespace. </summary>
         public static string DefaultProviderNamespace { get; } = ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
-        public static string IntentionalCiFailure => ;
     }
 }
