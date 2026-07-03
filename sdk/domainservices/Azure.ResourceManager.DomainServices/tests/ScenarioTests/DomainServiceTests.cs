@@ -14,11 +14,12 @@ namespace Azure.ResourceManager.DomainServices.Tests
         {
         }
 
-        // Live-only: the onboarded api-version (2025-10-01-preview) is not yet deployed to ARM,
-        // so this read-only list cannot be recorded for playback. It can be recorded once the
-        // preview api-version (or the stable 2025-10-01) is the generation target.
+        // Marked [Ignore] because the onboarded api-version (2025-10-01-preview) is not yet
+        // deployed to ARM, so the call fails live and cannot be recorded for playback. Remove
+        // the [Ignore] and record once a deployed api-version is the generation target.
         [Test]
-        [LiveOnly]
+        [RecordedTest]
+        [Ignore("api-version 2025-10-01-preview is not deployed to ARM; service supports up to stable 2025-10-01.")]
         public async Task List()
         {
             // Read-only: list all Domain Services in the subscription. The result may be empty,
