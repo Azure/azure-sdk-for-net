@@ -82,10 +82,6 @@ safe-outputs:
               const owner = context.repo.owner;
               const repo = context.repo.repo;
               const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
-              if (pr.head.repo?.full_name !== `${owner}/${repo}`) {
-                core.info(`Skipping check run publication for fork PR #${prNumber}; head repository is ${pr.head.repo?.full_name || '<unknown>'}.`);
-                return;
-              }
 
               let headSha = (process.env.TARGET_HEAD_SHA || '').trim();
               if (headSha && headSha !== pr.head.sha) {
@@ -249,7 +245,7 @@ Then check CI status: list the check runs and commit statuses for the PR head co
   1. Apply only `.github/skills/analyze-ci-failures/SKILL.md` to diagnose failures.
   2. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions.
   3. Post the result with the `add_comment` safe-output tool. The comment must use the skill's `## 🔍 CI Failure Analysis for PR #<number>` header.
-  4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on same-repository PR heads.
+  4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on PR heads.
   5. Stop. Do not run the management SDK review, do not run the low-risk preflight, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
 - If `github.event.inputs.check_run_conclusion` is `success`, skip the status check — CI success is already confirmed. Proceed with the management SDK review normally.
 - If CI checks have failed (on other triggers), apply the same **CI failure analysis only** path as above and stop before the management SDK review.
@@ -348,7 +344,7 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Use `COMMENT` if no blocking issue was found.
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
-- After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on same-repository PR heads.
+- After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on PR heads.
 
 The review body should contain:
 
