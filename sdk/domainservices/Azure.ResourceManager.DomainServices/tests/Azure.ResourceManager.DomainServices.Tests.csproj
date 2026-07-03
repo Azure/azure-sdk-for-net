@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DomainServices.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
 
   <ItemGroup>

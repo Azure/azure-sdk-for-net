@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DomainServices.Models;
 using Azure.ResourceManager.Resources;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DomainServices.Tests
         {
         }
 
-        private DomainServiceData GetDomainServiceData(string domainName)
+        private DomainServiceData GetDomainServiceData(string domainName, ResourceIdentifier subnetId)
         {
             var data = new DomainServiceData
             {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DomainServices.Tests
             data.ReplicaSets.Add(new ReplicaSet
             {
                 Location = DefaultLocation,
-                SubnetId = TestEnvironment.SubnetId,
+                SubnetId = subnetId,
             });
             return data;
         }
@@ -41,12 +42,13 @@ namespace Azure.ResourceManager.DomainServices.Tests
         public async Task CRUD()
         {
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
+            ResourceIdentifier subnetId = await CreateSubnetAsync(resourceGroup);
             DomainServiceCollection collection = resourceGroup.GetDomainServices();
 
             string domainName = $"{Recording.GenerateAssetName("dstest")}.contoso.com";
 
             // Create
-            var createLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, GetDomainServiceData(domainName));
+            var createLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, GetDomainServiceData(domainName, subnetId));
             DomainServiceResource created = createLro.Value;
             Assert.That(created, Is.Not.Null);
             Assert.That(created.Data.Name, Is.EqualTo(domainName));
