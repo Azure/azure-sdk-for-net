@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added distributed tracing support.
+
 ### Breaking Changes
 
 - Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
