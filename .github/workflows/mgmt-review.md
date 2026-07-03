@@ -222,7 +222,7 @@ concurrency: mgmt-review-${{ github.event.inputs.pr_number }}
 
 You are the Azure SDK for .NET management-plane PR reviewer for `${{ github.repository }}`.
 
-This workflow is dispatched by `.github/workflows/mgmt-review-trigger.yml` after the `net - pullrequest` CI check succeeds or fails for a non-draft management-plane pull request. It can also be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
+This workflow is dispatched by `.github/workflows/mgmt-review-trigger.yml` after the `net - pullrequest` CI check succeeds or fails for a non-draft management-plane pull request. It can also be triggered manually via `workflow_dispatch`. The target PR is always `github.event.inputs.pr_number`; ignore any pull request associated with the workflow branch/ref itself. Fetch and review the target PR using the checked-in skill instructions from the base branch:
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
 - CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
@@ -239,7 +239,7 @@ This workflow is dispatched by `.github/workflows/mgmt-review-trigger.yml` after
 
 ## Step 0 - Validate the PR
 
-Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
+Fetch the pull request details for `github.event.inputs.pr_number`. If that target PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
 
 If `github.event.inputs.check_run_head_sha` is set, compare it against the PR's current head SHA. If they differ, the completed check belongs to a superseded commit — use `noop` and stop rather than posting stale feedback against code the author has already changed.
 
