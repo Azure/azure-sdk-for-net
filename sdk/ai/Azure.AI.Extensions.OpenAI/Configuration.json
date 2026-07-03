@@ -1,6 +1,0 @@
-{
-  "package-name": "Azure.AI.Extensions.OpenAI",
-  "plugins": [
-    "D:/git/sdk-repos/azure-sdk-for-net/sdk/ai/codegen"
-  ]
-}

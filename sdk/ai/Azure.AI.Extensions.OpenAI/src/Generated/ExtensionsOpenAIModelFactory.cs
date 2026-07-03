@@ -511,21 +511,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new MemorySearchOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// A built-in tool that schedules the agent to re-invoke itself after a delay.
-        /// The model passes a single `minutes` argument (positive integer) when calling
-        /// this tool. The service creates a one-shot timer routine that fires after the
-        /// specified delay and re-invokes the agent on the same conversation thread.
-        /// No pre-created routine is required.
-        /// </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <returns> A new <see cref="OpenAI.ReminderPreviewTool"/> instance for mocking. </returns>
-        public static ReminderPreviewTool ReminderPreviewTool(string name = default, string description = default)
-        {
-            return new ReminderPreviewTool("reminder_preview", name, description, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A web search configuration for bing custom search. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>

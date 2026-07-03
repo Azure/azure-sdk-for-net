@@ -82,7 +82,6 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ProjectConversation))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationCreationOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationUpdateOptions))]
-    [ModelReaderWriterBuildable(typeof(ReminderPreviewTool))]
     [ModelReaderWriterBuildable(typeof(ResponseInputTokenUsageDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseMessageAnnotation))]
     [ModelReaderWriterBuildable(typeof(ResponseOutputTokenUsageDetails))]
