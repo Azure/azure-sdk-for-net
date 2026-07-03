@@ -1,5 +1,7 @@
 # Microsoft Azure Batch management client library for .NET
 
+<!-- Temporary marker for mgmt-review success-flow validation. -->
+
 Use Microsoft Azure Batch to run large-scale parallel and high-performance computing (HPC) batch jobs efficiently in Azure. Azure Batch creates and manages a pool of compute nodes (virtual machines), installs the applications you want to run, and schedules jobs to run on the nodes. 
 
 This library supports managing Microsoft Azure Batch resources.
