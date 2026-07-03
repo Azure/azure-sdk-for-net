@@ -695,6 +695,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetPolicyArcAssignments(scope).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="DeleteFinalResultTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeleteFinalResultTestResource"/> object. </returns>
+        public virtual DeleteFinalResultTestResource GetDeleteFinalResultTestResource(ResourceIdentifier id)
+        {
+            DeleteFinalResultTestResource.ValidateResourceId(id);
+            return new DeleteFinalResultTestResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CustomBaseTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomBaseTypeResource"/> object. </returns>
