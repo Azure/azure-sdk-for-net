@@ -43,6 +43,9 @@ network:
     - github
 safe-outputs:
   report-failure-as-issue: false
+  add-comment:
+    max: 1
+    target: "${{ github.event.inputs.pr_number }}"
   create-pull-request-review-comment:
     max: 100
     target: "${{ github.event.inputs.pr_number }}"
@@ -242,9 +245,14 @@ If `github.event.inputs.check_run_head_sha` is set, compare it against the PR's 
 
 Then check CI status: list the check runs and commit statuses for the PR head commit.
 
-- If `github.event.inputs.check_run_conclusion` is `failure`, skip the status check — CI failure is already confirmed. Go directly to failure analysis: apply the CI failure analysis skill (`.github/skills/analyze-ci-failures/SKILL.md`) to diagnose failures. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions in your review. Link to `github.event.inputs.check_run_url` when present so authors can navigate directly to the failure logs.
+- If `github.event.inputs.check_run_conclusion` is `failure`, skip the status check — CI failure is already confirmed. Go directly to **CI failure analysis only**:
+  1. Apply only `.github/skills/analyze-ci-failures/SKILL.md` to diagnose failures.
+  2. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions.
+  3. Post the result with the `add_comment` safe-output tool. The comment must use the skill's `## 🔍 CI Failure Analysis for PR #<number>` header.
+  4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on same-repository PR heads.
+  5. Stop. Do not run the management SDK review, do not run the low-risk preflight, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
 - If `github.event.inputs.check_run_conclusion` is `success`, skip the status check — CI success is already confirmed. Proceed with the management SDK review normally.
-- If CI checks have failed (on other triggers), apply the same CI failure analysis skill as above.
+- If CI checks have failed (on other triggers), apply the same **CI failure analysis only** path as above and stop before the management SDK review.
 - If CI checks have passed, proceed with the review normally.
 - If CI checks are still in progress (`queued` or `in_progress`), proceed with the naming and API review but note in the review summary that CI results are pending and cannot be analyzed yet.
 
