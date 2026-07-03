@@ -1,4 +1,4 @@
-# Azure.ResourceManager.Billing.Trust management client library for .NET
+# Microsoft Azure Billing Trust management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
