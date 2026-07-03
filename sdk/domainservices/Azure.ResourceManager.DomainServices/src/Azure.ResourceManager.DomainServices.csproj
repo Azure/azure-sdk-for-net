@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.ResourceManager.DomainServices client library for developing .NET applications with rich experience.</Description>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.AAD.</Description>
     <AssemblyTitle>SDK Code Generation Azure.ResourceManager.DomainServices</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.ResourceManager.DomainServices</PackageTags>
+    <PackageTags>azure;management;arm;resource manager;domainservices</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 </Project>
