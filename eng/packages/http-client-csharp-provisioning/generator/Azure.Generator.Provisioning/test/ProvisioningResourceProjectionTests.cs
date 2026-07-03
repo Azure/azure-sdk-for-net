@@ -164,7 +164,7 @@ namespace Azure.Generator.Provisioning.Tests
                 singletonResourceName: "default");
             var mixedNullResource = CreateMetadata(
                 model,
-                "/providers/Microsoft.Test/widgets/{widgetName}/children/default",
+                "/providers/Microsoft.Test/widgets/{widgetName}/children/{childName}",
                 "Microsoft.Test/widgets/children",
                 ResourceScope.Tenant,
                 ["2024-01-01"]);

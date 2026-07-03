@@ -196,7 +196,7 @@ namespace Azure.Generator.Provisioning.Providers
             var properties = new List<PropertyProvider>();
             foreach (var propInfo in _allProperties)
             {
-                var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(propInfo.Property, this);
+                var property = CreateProperty(propInfo);
                 if (property != null)
                     properties.Add(property);
             }
@@ -501,6 +501,7 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     defaultValue = _resourceProjection.SingletonResourceName;
                     isOutput = true;
+                    isRequired = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -514,6 +515,23 @@ namespace Azure.Generator.Provisioning.Providers
 
                 result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
             }
+        }
+
+        private PropertyProvider? CreateProperty(ResourcePropertyInfo propInfo)
+        {
+            if (propInfo.DefaultValue is null)
+            {
+                return CodeModelGenerator.Instance.TypeFactory.CreateProperty(propInfo.Property, this);
+            }
+
+            return ProvisioningPropertyProvider.Create(
+                propInfo.PropertyName,
+                propInfo.TypeOverride ?? GetPropertyType(propInfo.Property),
+                propInfo.IsOutput,
+                propInfo.IsRequired,
+                propInfo.BicepPath,
+                propInfo.DefaultValue,
+                this);
         }
 
         // ── Method builders ──────────────────────────────────────────
