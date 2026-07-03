@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DomainServices.Models;
 using Azure.ResourceManager.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.DomainServices
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DomainServiceProperties properties, IDictionary<string, string> tags, string location, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DomainServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DomainServiceProperties properties, IDictionary<string, string> tags, AzureLocation? location, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Tags = tags;
@@ -51,10 +52,10 @@ namespace Azure.ResourceManager.DomainServices
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Resource etag. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Data Model Version. </summary>
         public int? Version

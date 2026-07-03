@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <returns> A new <see cref="DomainServices.DomainServiceData"/> instance for mocking. </returns>
-        public static DomainServiceData DomainServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string tenantId = default, string domainName = default, string deploymentId = default, string syncOwner = default, string syncApplicationId = default, IEnumerable<ReplicaSet> replicaSets = default, LdapsSettings ldapsSettings = default, ResourceForestSettings resourceForestSettings = default, DomainSecuritySettings domainSecuritySettings = default, string domainConfigurationType = default, string sku = default, FilteredSync? filteredSync = default, SyncScope? syncScope = default, NotificationSettings notificationSettings = default, MigrationProperties migrationProperties = default, string provisioningState = default, ConfigDiagnostics configDiagnostics = default, IDictionary<string, string> tags = default, string location = default, string eTag = default)
+        public static DomainServiceData DomainServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string tenantId = default, string domainName = default, string deploymentId = default, string syncOwner = default, string syncApplicationId = default, IEnumerable<ReplicaSet> replicaSets = default, LdapsSettings ldapsSettings = default, ResourceForestSettings resourceForestSettings = default, DomainSecuritySettings domainSecuritySettings = default, string domainConfigurationType = default, string sku = default, FilteredSync? filteredSync = default, SyncScope? syncScope = default, NotificationSettings notificationSettings = default, MigrationProperties migrationProperties = default, string provisioningState = default, ConfigDiagnostics configDiagnostics = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="externalAccessIpAddress"> External access ip address. </param>
         /// <param name="serviceStatus"> Status of Domain Service instance. </param>
         /// <param name="selfUnsuspendCounter"> Number of times the customer has self-resumed the domain service. Valid values range from 0 to 5, where 5 is the maximum allowed count before further self-resume is denied and support intervention is required. </param>
-        /// <param name="healthLastEvaluated"> Last domain evaluation run DateTime. </param>
+        /// <param name="healthLastEvaluatedOn"> Last domain evaluation run DateTime. </param>
         /// <param name="healthMonitors"> List of Domain Health Monitors. </param>
         /// <param name="healthAlerts"> List of Domain Health Alerts. </param>
         /// <returns> A new <see cref="Models.ReplicaSet"/> instance for mocking. </returns>
-        public static ReplicaSet ReplicaSet(string replicaSetId = default, string location = default, string vnetSiteId = default, string subnetId = default, IEnumerable<string> domainControllerIpAddress = default, string externalAccessIpAddress = default, string serviceStatus = default, int? selfUnsuspendCounter = default, DateTimeOffset? healthLastEvaluated = default, IEnumerable<HealthMonitor> healthMonitors = default, IEnumerable<HealthAlert> healthAlerts = default)
+        public static ReplicaSet ReplicaSet(string replicaSetId = default, AzureLocation? location = default, string vnetSiteId = default, string subnetId = default, IEnumerable<string> domainControllerIpAddress = default, string externalAccessIpAddress = default, string serviceStatus = default, int? selfUnsuspendCounter = default, DateTimeOffset? healthLastEvaluatedOn = default, IEnumerable<HealthMonitor> healthMonitors = default, IEnumerable<HealthAlert> healthAlerts = default)
         {
             domainControllerIpAddress ??= new ChangeTrackingList<string>();
             healthMonitors ??= new ChangeTrackingList<HealthMonitor>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 externalAccessIpAddress,
                 serviceStatus,
                 selfUnsuspendCounter,
-                healthLastEvaluated,
+                healthLastEvaluatedOn,
                 (healthMonitors ?? new ChangeTrackingList<HealthMonitor>()).ToList(),
                 (healthAlerts ?? new ChangeTrackingList<HealthAlert>()).ToList(),
                 default);
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="name"> Health Alert Name. </param>
         /// <param name="issue"> Health Alert Issue. </param>
         /// <param name="severity"> Health Alert Severity. </param>
-        /// <param name="raised"> Health Alert Raised DateTime. </param>
-        /// <param name="lastDetected"> Health Alert Last Detected DateTime. </param>
+        /// <param name="raisedOn"> Health Alert Raised DateTime. </param>
+        /// <param name="lastDetectedOn"> Health Alert Last Detected DateTime. </param>
         /// <param name="resolutionUri"> Health Alert TSG Link. </param>
         /// <returns> A new <see cref="Models.HealthAlert"/> instance for mocking. </returns>
-        public static HealthAlert HealthAlert(string id = default, string name = default, string issue = default, string severity = default, DateTimeOffset? raised = default, DateTimeOffset? lastDetected = default, string resolutionUri = default)
+        public static HealthAlert HealthAlert(string id = default, string name = default, string issue = default, string severity = default, DateTimeOffset? raisedOn = default, DateTimeOffset? lastDetectedOn = default, string resolutionUri = default)
         {
             return new HealthAlert(
                 id,
                 name,
                 issue,
                 severity,
-                raised,
-                lastDetected,
+                raisedOn,
+                lastDetectedOn,
                 resolutionUri,
                 default);
         }
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="pfxCertificatePassword"> The password to decrypt the provided Secure LDAP certificate pfx file. </param>
         /// <param name="publicCertificate"> Public certificate used to configure secure ldap. </param>
         /// <param name="certificateThumbprint"> Thumbprint of configure ldaps certificate. </param>
-        /// <param name="certificateNotAfter"> NotAfter DateTime of configure ldaps certificate. </param>
+        /// <param name="certificateNotAfterOn"> NotAfter DateTime of configure ldaps certificate. </param>
         /// <param name="externalAccess"> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </param>
         /// <returns> A new <see cref="Models.LdapsSettings"/> instance for mocking. </returns>
-        public static LdapsSettings LdapsSettings(Ldaps? ldaps = default, string pfxCertificate = default, string pfxCertificatePassword = default, string publicCertificate = default, string certificateThumbprint = default, DateTimeOffset? certificateNotAfter = default, ExternalAccess? externalAccess = default)
+        public static LdapsSettings LdapsSettings(Ldaps? ldaps = default, string pfxCertificate = default, string pfxCertificatePassword = default, string publicCertificate = default, string certificateThumbprint = default, DateTimeOffset? certificateNotAfterOn = default, ExternalAccess? externalAccess = default)
         {
             return new LdapsSettings(
                 ldaps,
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 pfxCertificatePassword,
                 publicCertificate,
                 certificateThumbprint,
-                certificateNotAfter,
+                certificateNotAfterOn,
                 externalAccess,
                 default);
         }
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new MigrationProgress(completionPercentage, progressMessage, default);
         }
 
-        /// <param name="lastExecuted"> Last domain configuration diagnostics DateTime. </param>
+        /// <param name="lastExecutedOn"> Last domain configuration diagnostics DateTime. </param>
         /// <param name="validatorResults"> List of Configuration Diagnostics validator results. </param>
         /// <returns> A new <see cref="Models.ConfigDiagnostics"/> instance for mocking. </returns>
-        public static ConfigDiagnostics ConfigDiagnostics(DateTimeOffset? lastExecuted = default, IEnumerable<ConfigDiagnosticsValidatorResult> validatorResults = default)
+        public static ConfigDiagnostics ConfigDiagnostics(DateTimeOffset? lastExecutedOn = default, IEnumerable<ConfigDiagnosticsValidatorResult> validatorResults = default)
         {
             validatorResults ??= new ChangeTrackingList<ConfigDiagnosticsValidatorResult>();
 
-            return new ConfigDiagnostics(lastExecuted, (validatorResults ?? new ChangeTrackingList<ConfigDiagnosticsValidatorResult>()).ToList(), default);
+            return new ConfigDiagnostics(lastExecutedOn, (validatorResults ?? new ChangeTrackingList<ConfigDiagnosticsValidatorResult>()).ToList(), default);
         }
 
         /// <param name="validatorId"> Validator identifier. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="status"> Status for individual validator after running diagnostics. </param>
         /// <param name="issues"> List of resource config validation issues. </param>
         /// <returns> A new <see cref="Models.ConfigDiagnosticsValidatorResult"/> instance for mocking. </returns>
-        public static ConfigDiagnosticsValidatorResult ConfigDiagnosticsValidatorResult(string validatorId = default, string replicaSetSubnetDisplayName = default, Status? status = default, IEnumerable<ConfigDiagnosticsValidatorResultIssue> issues = default)
+        public static ConfigDiagnosticsValidatorResult ConfigDiagnosticsValidatorResult(string validatorId = default, string replicaSetSubnetDisplayName = default, DomainServiceValidatorStatus? status = default, IEnumerable<ConfigDiagnosticsValidatorResultIssue> issues = default)
         {
             issues ??= new ChangeTrackingList<ConfigDiagnosticsValidatorResultIssue>();
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <returns> A new <see cref="DomainServices.OuContainerData"/> instance for mocking. </returns>
-        public static OuContainerData OuContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string tenantId = default, string domainName = default, string deploymentId = default, string containerId = default, IEnumerable<OuContainerCreateOrUpdateContent> accounts = default, string serviceStatus = default, string distinguishedName = default, string provisioningState = default, IDictionary<string, string> tags = default, string location = default, string eTag = default)
+        public static OuContainerData OuContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string tenantId = default, string domainName = default, string deploymentId = default, string containerId = default, IEnumerable<OuContainerCreateOrUpdateContent> accounts = default, string serviceStatus = default, string distinguishedName = default, string provisioningState = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

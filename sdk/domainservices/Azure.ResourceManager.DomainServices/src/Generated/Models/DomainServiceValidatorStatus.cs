@@ -12,7 +12,7 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Status for individual validator after running diagnostics. </summary>
-    public readonly partial struct Status : IEquatable<Status>
+    public readonly partial struct DomainServiceValidatorStatus : IEquatable<DomainServiceValidatorStatus>
     {
         private readonly string _value;
         /// <summary> None. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <summary> Skipped. </summary>
         private const string SkippedValue = "Skipped";
 
-        /// <summary> Initializes a new instance of <see cref="Status"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceValidatorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Status(string value)
+        public DomainServiceValidatorStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.DomainServices.Models
         }
 
         /// <summary> None. </summary>
-        public static Status None { get; } = new Status(NoneValue);
+        public static DomainServiceValidatorStatus None { get; } = new DomainServiceValidatorStatus(NoneValue);
 
         /// <summary> Running. </summary>
-        public static Status Running { get; } = new Status(RunningValue);
+        public static DomainServiceValidatorStatus Running { get; } = new DomainServiceValidatorStatus(RunningValue);
 
         /// <summary> OK. </summary>
-        public static Status OK { get; } = new Status(OKValue);
+        public static DomainServiceValidatorStatus OK { get; } = new DomainServiceValidatorStatus(OKValue);
 
         /// <summary> Failure. </summary>
-        public static Status Failure { get; } = new Status(FailureValue);
+        public static DomainServiceValidatorStatus Failure { get; } = new DomainServiceValidatorStatus(FailureValue);
 
         /// <summary> Warning. </summary>
-        public static Status Warning { get; } = new Status(WarningValue);
+        public static DomainServiceValidatorStatus Warning { get; } = new DomainServiceValidatorStatus(WarningValue);
 
         /// <summary> Skipped. </summary>
-        public static Status Skipped { get; } = new Status(SkippedValue);
+        public static DomainServiceValidatorStatus Skipped { get; } = new DomainServiceValidatorStatus(SkippedValue);
 
-        /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DomainServiceValidatorStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Status left, Status right) => left.Equals(right);
+        public static bool operator ==(DomainServiceValidatorStatus left, DomainServiceValidatorStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DomainServiceValidatorStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Status left, Status right) => !left.Equals(right);
+        public static bool operator !=(DomainServiceValidatorStatus left, DomainServiceValidatorStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DomainServiceValidatorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Status(string value) => new Status(value);
+        public static implicit operator DomainServiceValidatorStatus(string value) => new DomainServiceValidatorStatus(value);
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DomainServiceValidatorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Status?(string value) => value == null ? null : new Status(value);
+        public static implicit operator DomainServiceValidatorStatus?(string value) => value == null ? null : new DomainServiceValidatorStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Status other && Equals(other);
+        public override bool Equals(object obj) => obj is DomainServiceValidatorStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Status other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DomainServiceValidatorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

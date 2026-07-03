@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DomainServices.Models
                 writer.WritePropertyName("certificateThumbprint"u8);
                 writer.WriteStringValue(CertificateThumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(CertificateNotAfter))
+            if (options.Format != "W" && Optional.IsDefined(CertificateNotAfterOn))
             {
                 writer.WritePropertyName("certificateNotAfter"u8);
-                writer.WriteStringValue(CertificateNotAfter.Value, "O");
+                writer.WriteStringValue(CertificateNotAfterOn.Value, "O");
             }
             if (Optional.IsDefined(ExternalAccess))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             string pfxCertificatePassword = default;
             string publicCertificate = default;
             string certificateThumbprint = default;
-            DateTimeOffset? certificateNotAfter = default;
+            DateTimeOffset? certificateNotAfterOn = default;
             ExternalAccess? externalAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    certificateNotAfter = prop.Value.GetDateTimeOffset("O");
+                    certificateNotAfterOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("externalAccess"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 pfxCertificatePassword,
                 publicCertificate,
                 certificateThumbprint,
-                certificateNotAfter,
+                certificateNotAfterOn,
                 externalAccess,
                 additionalBinaryDataProperties);
         }

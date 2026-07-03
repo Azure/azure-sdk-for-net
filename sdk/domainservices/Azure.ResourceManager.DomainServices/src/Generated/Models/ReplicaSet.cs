@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DomainServices;
 
 namespace Azure.ResourceManager.DomainServices.Models
@@ -34,11 +35,11 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="externalAccessIpAddress"> External access ip address. </param>
         /// <param name="serviceStatus"> Status of Domain Service instance. </param>
         /// <param name="selfUnsuspendCounter"> Number of times the customer has self-resumed the domain service. Valid values range from 0 to 5, where 5 is the maximum allowed count before further self-resume is denied and support intervention is required. </param>
-        /// <param name="healthLastEvaluated"> Last domain evaluation run DateTime. </param>
+        /// <param name="healthLastEvaluatedOn"> Last domain evaluation run DateTime. </param>
         /// <param name="healthMonitors"> List of Domain Health Monitors. </param>
         /// <param name="healthAlerts"> List of Domain Health Alerts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaSet(string replicaSetId, string location, string vnetSiteId, string subnetId, IReadOnlyList<string> domainControllerIpAddress, string externalAccessIpAddress, string serviceStatus, int? selfUnsuspendCounter, DateTimeOffset? healthLastEvaluated, IReadOnlyList<HealthMonitor> healthMonitors, IReadOnlyList<HealthAlert> healthAlerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReplicaSet(string replicaSetId, AzureLocation? location, string vnetSiteId, string subnetId, IReadOnlyList<string> domainControllerIpAddress, string externalAccessIpAddress, string serviceStatus, int? selfUnsuspendCounter, DateTimeOffset? healthLastEvaluatedOn, IReadOnlyList<HealthMonitor> healthMonitors, IReadOnlyList<HealthAlert> healthAlerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicaSetId = replicaSetId;
             Location = location;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             ExternalAccessIpAddress = externalAccessIpAddress;
             ServiceStatus = serviceStatus;
             SelfUnsuspendCounter = selfUnsuspendCounter;
-            HealthLastEvaluated = healthLastEvaluated;
+            HealthLastEvaluatedOn = healthLastEvaluatedOn;
             HealthMonitors = healthMonitors;
             HealthAlerts = healthAlerts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public string ReplicaSetId { get; }
 
         /// <summary> Virtual network location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Virtual network site id. </summary>
         public string VnetSiteId { get; }
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public int? SelfUnsuspendCounter { get; }
 
         /// <summary> Last domain evaluation run DateTime. </summary>
-        public DateTimeOffset? HealthLastEvaluated { get; }
+        public DateTimeOffset? HealthLastEvaluatedOn { get; }
 
         /// <summary> List of Domain Health Monitors. </summary>
         public IReadOnlyList<HealthMonitor> HealthMonitors { get; }

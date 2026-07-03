@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="status"> Status for individual validator after running diagnostics. </param>
         /// <param name="issues"> List of resource config validation issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigDiagnosticsValidatorResult(string validatorId, string replicaSetSubnetDisplayName, Status? status, IList<ConfigDiagnosticsValidatorResultIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigDiagnosticsValidatorResult(string validatorId, string replicaSetSubnetDisplayName, DomainServiceValidatorStatus? status, IList<ConfigDiagnosticsValidatorResultIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidatorId = validatorId;
             ReplicaSetSubnetDisplayName = replicaSetSubnetDisplayName;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public string ReplicaSetSubnetDisplayName { get; set; }
 
         /// <summary> Status for individual validator after running diagnostics. </summary>
-        public Status? Status { get; set; }
+        public DomainServiceValidatorStatus? Status { get; set; }
 
         /// <summary> List of resource config validation issues. </summary>
         public IList<ConfigDiagnosticsValidatorResultIssue> Issues { get; }

@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.DomainServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigDiagnostics"/>. </summary>
-        /// <param name="lastExecuted"> Last domain configuration diagnostics DateTime. </param>
+        /// <param name="lastExecutedOn"> Last domain configuration diagnostics DateTime. </param>
         /// <param name="validatorResults"> List of Configuration Diagnostics validator results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigDiagnostics(DateTimeOffset? lastExecuted, IList<ConfigDiagnosticsValidatorResult> validatorResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigDiagnostics(DateTimeOffset? lastExecutedOn, IList<ConfigDiagnosticsValidatorResult> validatorResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastExecuted = lastExecuted;
+            LastExecutedOn = lastExecutedOn;
             ValidatorResults = validatorResults;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Last domain configuration diagnostics DateTime. </summary>
-        public DateTimeOffset? LastExecuted { get; set; }
+        public DateTimeOffset? LastExecutedOn { get; set; }
 
         /// <summary> List of Configuration Diagnostics validator results. </summary>
         public IList<ConfigDiagnosticsValidatorResult> ValidatorResults { get; }

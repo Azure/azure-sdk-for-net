@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="name"> Health Alert Name. </param>
         /// <param name="issue"> Health Alert Issue. </param>
         /// <param name="severity"> Health Alert Severity. </param>
-        /// <param name="raised"> Health Alert Raised DateTime. </param>
-        /// <param name="lastDetected"> Health Alert Last Detected DateTime. </param>
+        /// <param name="raisedOn"> Health Alert Raised DateTime. </param>
+        /// <param name="lastDetectedOn"> Health Alert Last Detected DateTime. </param>
         /// <param name="resolutionUri"> Health Alert TSG Link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthAlert(string id, string name, string issue, string severity, DateTimeOffset? raised, DateTimeOffset? lastDetected, string resolutionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthAlert(string id, string name, string issue, string severity, DateTimeOffset? raisedOn, DateTimeOffset? lastDetectedOn, string resolutionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Issue = issue;
             Severity = severity;
-            Raised = raised;
-            LastDetected = lastDetected;
+            RaisedOn = raisedOn;
+            LastDetectedOn = lastDetectedOn;
             ResolutionUri = resolutionUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         public string Severity { get; }
 
         /// <summary> Health Alert Raised DateTime. </summary>
-        public DateTimeOffset? Raised { get; }
+        public DateTimeOffset? RaisedOn { get; }
 
         /// <summary> Health Alert Last Detected DateTime. </summary>
-        public DateTimeOffset? LastDetected { get; }
+        public DateTimeOffset? LastDetectedOn { get; }
 
         /// <summary> Health Alert TSG Link. </summary>
         public string ResolutionUri { get; }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DomainServices;
 
 namespace Azure.ResourceManager.DomainServices.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(VnetSiteId))
             {
@@ -124,10 +125,10 @@ namespace Azure.ResourceManager.DomainServices.Models
                 writer.WritePropertyName("selfUnsuspendCounter"u8);
                 writer.WriteNumberValue(SelfUnsuspendCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthLastEvaluated))
+            if (options.Format != "W" && Optional.IsDefined(HealthLastEvaluatedOn))
             {
                 writer.WritePropertyName("healthLastEvaluated"u8);
-                writer.WriteStringValue(HealthLastEvaluated.Value, "R");
+                writer.WriteStringValue(HealthLastEvaluatedOn.Value, "R");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HealthMonitors))
             {
@@ -192,14 +193,14 @@ namespace Azure.ResourceManager.DomainServices.Models
                 return null;
             }
             string replicaSetId = default;
-            string location = default;
+            AzureLocation? location = default;
             string vnetSiteId = default;
             string subnetId = default;
             IReadOnlyList<string> domainControllerIpAddress = default;
             string externalAccessIpAddress = default;
             string serviceStatus = default;
             int? selfUnsuspendCounter = default;
-            DateTimeOffset? healthLastEvaluated = default;
+            DateTimeOffset? healthLastEvaluatedOn = default;
             IReadOnlyList<HealthMonitor> healthMonitors = default;
             IReadOnlyList<HealthAlert> healthAlerts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -212,7 +213,11 @@ namespace Azure.ResourceManager.DomainServices.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vnetSiteId"u8))
@@ -271,7 +276,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    healthLastEvaluated = prop.Value.GetDateTimeOffset("R");
+                    healthLastEvaluatedOn = prop.Value.GetDateTimeOffset("R");
                     continue;
                 }
                 if (prop.NameEquals("healthMonitors"u8))
@@ -316,7 +321,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 externalAccessIpAddress,
                 serviceStatus,
                 selfUnsuspendCounter,
-                healthLastEvaluated,
+                healthLastEvaluatedOn,
                 healthMonitors ?? new ChangeTrackingList<HealthMonitor>(),
                 healthAlerts ?? new ChangeTrackingList<HealthAlert>(),
                 additionalBinaryDataProperties);

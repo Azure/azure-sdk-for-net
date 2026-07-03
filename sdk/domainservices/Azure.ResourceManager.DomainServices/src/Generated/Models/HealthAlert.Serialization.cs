@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.DomainServices.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Raised))
+            if (options.Format != "W" && Optional.IsDefined(RaisedOn))
             {
                 writer.WritePropertyName("raised"u8);
-                writer.WriteStringValue(Raised.Value, "O");
+                writer.WriteStringValue(RaisedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastDetected))
+            if (options.Format != "W" && Optional.IsDefined(LastDetectedOn))
             {
                 writer.WritePropertyName("lastDetected"u8);
-                writer.WriteStringValue(LastDetected.Value, "O");
+                writer.WriteStringValue(LastDetectedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ResolutionUri))
             {
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.DomainServices.Models
             string name = default;
             string issue = default;
             string severity = default;
-            DateTimeOffset? raised = default;
-            DateTimeOffset? lastDetected = default;
+            DateTimeOffset? raisedOn = default;
+            DateTimeOffset? lastDetectedOn = default;
             string resolutionUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    raised = prop.Value.GetDateTimeOffset("O");
+                    raisedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastDetected"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    lastDetected = prop.Value.GetDateTimeOffset("O");
+                    lastDetectedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resolutionUri"u8))
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.DomainServices.Models
                 name,
                 issue,
                 severity,
-                raised,
-                lastDetected,
+                raisedOn,
+                lastDetectedOn,
                 resolutionUri,
                 additionalBinaryDataProperties);
         }

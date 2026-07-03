@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="pfxCertificatePassword"> The password to decrypt the provided Secure LDAP certificate pfx file. </param>
         /// <param name="publicCertificate"> Public certificate used to configure secure ldap. </param>
         /// <param name="certificateThumbprint"> Thumbprint of configure ldaps certificate. </param>
-        /// <param name="certificateNotAfter"> NotAfter DateTime of configure ldaps certificate. </param>
+        /// <param name="certificateNotAfterOn"> NotAfter DateTime of configure ldaps certificate. </param>
         /// <param name="externalAccess"> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapsSettings(Ldaps? ldaps, string pfxCertificate, string pfxCertificatePassword, string publicCertificate, string certificateThumbprint, DateTimeOffset? certificateNotAfter, ExternalAccess? externalAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapsSettings(Ldaps? ldaps, string pfxCertificate, string pfxCertificatePassword, string publicCertificate, string certificateThumbprint, DateTimeOffset? certificateNotAfterOn, ExternalAccess? externalAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ldaps = ldaps;
             PfxCertificate = pfxCertificate;
             PfxCertificatePassword = pfxCertificatePassword;
             PublicCertificate = publicCertificate;
             CertificateThumbprint = certificateThumbprint;
-            CertificateNotAfter = certificateNotAfter;
+            CertificateNotAfterOn = certificateNotAfterOn;
             ExternalAccess = externalAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public string CertificateThumbprint { get; }
 
         /// <summary> NotAfter DateTime of configure ldaps certificate. </summary>
-        public DateTimeOffset? CertificateNotAfter { get; }
+        public DateTimeOffset? CertificateNotAfterOn { get; }
 
         /// <summary> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </summary>
         public ExternalAccess? ExternalAccess { get; set; }

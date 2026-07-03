@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             }
             string validatorId = default;
             string replicaSetSubnetDisplayName = default;
-            Status? status = default;
+            DomainServiceValidatorStatus? status = default;
             IList<ConfigDiagnosticsValidatorResultIssue> issues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    status = new Status(prop.Value.GetString());
+                    status = new DomainServiceValidatorStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("issues"u8))

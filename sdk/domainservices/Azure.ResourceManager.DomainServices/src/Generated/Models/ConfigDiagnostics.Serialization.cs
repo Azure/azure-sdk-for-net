@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DomainServices.Models
             {
                 throw new FormatException($"The model {nameof(ConfigDiagnostics)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LastExecuted))
+            if (Optional.IsDefined(LastExecutedOn))
             {
                 writer.WritePropertyName("lastExecuted"u8);
-                writer.WriteStringValue(LastExecuted.Value, "R");
+                writer.WriteStringValue(LastExecutedOn.Value, "R");
             }
             if (Optional.IsCollectionDefined(ValidatorResults))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             {
                 return null;
             }
-            DateTimeOffset? lastExecuted = default;
+            DateTimeOffset? lastExecutedOn = default;
             IList<ConfigDiagnosticsValidatorResult> validatorResults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    lastExecuted = prop.Value.GetDateTimeOffset("R");
+                    lastExecutedOn = prop.Value.GetDateTimeOffset("R");
                     continue;
                 }
                 if (prop.NameEquals("validatorResults"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConfigDiagnostics(lastExecuted, validatorResults ?? new ChangeTrackingList<ConfigDiagnosticsValidatorResult>(), additionalBinaryDataProperties);
+            return new ConfigDiagnostics(lastExecutedOn, validatorResults ?? new ChangeTrackingList<ConfigDiagnosticsValidatorResult>(), additionalBinaryDataProperties);
         }
     }
 }

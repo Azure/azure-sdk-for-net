@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DomainServices
         public string DomainConfigurationType { get { throw null; } set { } }
         public string DomainName { get { throw null; } set { } }
         public Azure.ResourceManager.DomainServices.Models.DomainSecuritySettings DomainSecuritySettings { get { throw null; } set { } }
-        public string ETag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.DomainServices.Models.FilteredSync? FilteredSync { get { throw null; } set { } }
         public Azure.ResourceManager.DomainServices.Models.LdapsSettings LdapsSettings { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.DomainServices.Models.MigrationProperties MigrationProperties { get { throw null; } }
         public Azure.ResourceManager.DomainServices.Models.NotificationSettings NotificationSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.DomainServices
         public string DeploymentId { get { throw null; } }
         public string DistinguishedName { get { throw null; } }
         public string DomainName { get { throw null; } }
-        public string ETag { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -184,22 +184,22 @@ namespace Azure.ResourceManager.DomainServices.Models
 {
     public static partial class ArmDomainServicesModelFactory
     {
-        public static Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics ConfigDiagnostics(System.DateTimeOffset? lastExecuted = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResult> validatorResults = null) { throw null; }
-        public static Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResult ConfigDiagnosticsValidatorResult(string validatorId = null, string replicaSetSubnetDisplayName = null, Azure.ResourceManager.DomainServices.Models.Status? status = default(Azure.ResourceManager.DomainServices.Models.Status?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResultIssue> issues = null) { throw null; }
+        public static Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics ConfigDiagnostics(System.DateTimeOffset? lastExecutedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResult> validatorResults = null) { throw null; }
+        public static Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResult ConfigDiagnosticsValidatorResult(string validatorId = null, string replicaSetSubnetDisplayName = null, Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus? status = default(Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResultIssue> issues = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResultIssue ConfigDiagnosticsValidatorResultIssue(string id = null, System.Collections.Generic.IEnumerable<string> descriptionParams = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.DomainSecuritySettings DomainSecuritySettings(Azure.ResourceManager.DomainServices.Models.NtlmV1? ntlmV1 = default(Azure.ResourceManager.DomainServices.Models.NtlmV1?), Azure.ResourceManager.DomainServices.Models.TlsV1? tlsV1 = default(Azure.ResourceManager.DomainServices.Models.TlsV1?), Azure.ResourceManager.DomainServices.Models.SyncNtlmPasswords? syncNtlmPasswords = default(Azure.ResourceManager.DomainServices.Models.SyncNtlmPasswords?), Azure.ResourceManager.DomainServices.Models.SyncKerberosPasswords? syncKerberosPasswords = default(Azure.ResourceManager.DomainServices.Models.SyncKerberosPasswords?), Azure.ResourceManager.DomainServices.Models.SyncOnPremPasswords? syncOnPremPasswords = default(Azure.ResourceManager.DomainServices.Models.SyncOnPremPasswords?), Azure.ResourceManager.DomainServices.Models.KerberosRc4Encryption? kerberosRc4Encryption = default(Azure.ResourceManager.DomainServices.Models.KerberosRc4Encryption?), Azure.ResourceManager.DomainServices.Models.KerberosArmoring? kerberosArmoring = default(Azure.ResourceManager.DomainServices.Models.KerberosArmoring?), Azure.ResourceManager.DomainServices.Models.LdapSigning? ldapSigning = default(Azure.ResourceManager.DomainServices.Models.LdapSigning?), Azure.ResourceManager.DomainServices.Models.ChannelBinding? channelBinding = default(Azure.ResourceManager.DomainServices.Models.ChannelBinding?), Azure.ResourceManager.DomainServices.Models.SyncOnPremSamAccountName? syncOnPremSamAccountName = default(Azure.ResourceManager.DomainServices.Models.SyncOnPremSamAccountName?)) { throw null; }
-        public static Azure.ResourceManager.DomainServices.DomainServiceData DomainServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? version = default(int?), string tenantId = null, string domainName = null, string deploymentId = null, string syncOwner = null, string syncApplicationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ReplicaSet> replicaSets = null, Azure.ResourceManager.DomainServices.Models.LdapsSettings ldapsSettings = null, Azure.ResourceManager.DomainServices.Models.ResourceForestSettings resourceForestSettings = null, Azure.ResourceManager.DomainServices.Models.DomainSecuritySettings domainSecuritySettings = null, string domainConfigurationType = null, string sku = null, Azure.ResourceManager.DomainServices.Models.FilteredSync? filteredSync = default(Azure.ResourceManager.DomainServices.Models.FilteredSync?), Azure.ResourceManager.DomainServices.Models.SyncScope? syncScope = default(Azure.ResourceManager.DomainServices.Models.SyncScope?), Azure.ResourceManager.DomainServices.Models.NotificationSettings notificationSettings = null, Azure.ResourceManager.DomainServices.Models.MigrationProperties migrationProperties = null, string provisioningState = null, Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics configDiagnostics = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, string eTag = null) { throw null; }
+        public static Azure.ResourceManager.DomainServices.DomainServiceData DomainServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? version = default(int?), string tenantId = null, string domainName = null, string deploymentId = null, string syncOwner = null, string syncApplicationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ReplicaSet> replicaSets = null, Azure.ResourceManager.DomainServices.Models.LdapsSettings ldapsSettings = null, Azure.ResourceManager.DomainServices.Models.ResourceForestSettings resourceForestSettings = null, Azure.ResourceManager.DomainServices.Models.DomainSecuritySettings domainSecuritySettings = null, string domainConfigurationType = null, string sku = null, Azure.ResourceManager.DomainServices.Models.FilteredSync? filteredSync = default(Azure.ResourceManager.DomainServices.Models.FilteredSync?), Azure.ResourceManager.DomainServices.Models.SyncScope? syncScope = default(Azure.ResourceManager.DomainServices.Models.SyncScope?), Azure.ResourceManager.DomainServices.Models.NotificationSettings notificationSettings = null, Azure.ResourceManager.DomainServices.Models.MigrationProperties migrationProperties = null, string provisioningState = null, Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics configDiagnostics = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.DomainServiceUnsuspendResult DomainServiceUnsuspendResult(string message = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.ForestTrust ForestTrust(string trustedDomainFqdn = null, string trustDirection = null, string friendlyName = null, string remoteDnsIps = null, string trustPassword = null) { throw null; }
-        public static Azure.ResourceManager.DomainServices.Models.HealthAlert HealthAlert(string id = null, string name = null, string issue = null, string severity = null, System.DateTimeOffset? raised = default(System.DateTimeOffset?), System.DateTimeOffset? lastDetected = default(System.DateTimeOffset?), string resolutionUri = null) { throw null; }
+        public static Azure.ResourceManager.DomainServices.Models.HealthAlert HealthAlert(string id = null, string name = null, string issue = null, string severity = null, System.DateTimeOffset? raisedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastDetectedOn = default(System.DateTimeOffset?), string resolutionUri = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.HealthMonitor HealthMonitor(string id = null, string name = null, string details = null) { throw null; }
-        public static Azure.ResourceManager.DomainServices.Models.LdapsSettings LdapsSettings(Azure.ResourceManager.DomainServices.Models.Ldaps? ldaps = default(Azure.ResourceManager.DomainServices.Models.Ldaps?), string pfxCertificate = null, string pfxCertificatePassword = null, string publicCertificate = null, string certificateThumbprint = null, System.DateTimeOffset? certificateNotAfter = default(System.DateTimeOffset?), Azure.ResourceManager.DomainServices.Models.ExternalAccess? externalAccess = default(Azure.ResourceManager.DomainServices.Models.ExternalAccess?)) { throw null; }
+        public static Azure.ResourceManager.DomainServices.Models.LdapsSettings LdapsSettings(Azure.ResourceManager.DomainServices.Models.Ldaps? ldaps = default(Azure.ResourceManager.DomainServices.Models.Ldaps?), string pfxCertificate = null, string pfxCertificatePassword = null, string publicCertificate = null, string certificateThumbprint = null, System.DateTimeOffset? certificateNotAfterOn = default(System.DateTimeOffset?), Azure.ResourceManager.DomainServices.Models.ExternalAccess? externalAccess = default(Azure.ResourceManager.DomainServices.Models.ExternalAccess?)) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.MigrationProgress MigrationProgress(double? completionPercentage = default(double?), string progressMessage = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.MigrationProperties MigrationProperties(string oldSubnetId = null, string oldVnetSiteId = null, Azure.ResourceManager.DomainServices.Models.MigrationProgress migrationProgress = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.NotificationSettings NotificationSettings(Azure.ResourceManager.DomainServices.Models.NotifyGlobalAdmins? notifyGlobalAdmins = default(Azure.ResourceManager.DomainServices.Models.NotifyGlobalAdmins?), Azure.ResourceManager.DomainServices.Models.NotifyDcAdmins? notifyDcAdmins = default(Azure.ResourceManager.DomainServices.Models.NotifyDcAdmins?), System.Collections.Generic.IEnumerable<string> additionalRecipients = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.OuContainerCreateOrUpdateContent OuContainerCreateOrUpdateContent(string accountName = null, string spn = null, string password = null) { throw null; }
-        public static Azure.ResourceManager.DomainServices.OuContainerData OuContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string tenantId = null, string domainName = null, string deploymentId = null, string containerId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.OuContainerCreateOrUpdateContent> accounts = null, string serviceStatus = null, string distinguishedName = null, string provisioningState = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, string eTag = null) { throw null; }
-        public static Azure.ResourceManager.DomainServices.Models.ReplicaSet ReplicaSet(string replicaSetId = null, string location = null, string vnetSiteId = null, string subnetId = null, System.Collections.Generic.IEnumerable<string> domainControllerIpAddress = null, string externalAccessIpAddress = null, string serviceStatus = null, int? selfUnsuspendCounter = default(int?), System.DateTimeOffset? healthLastEvaluated = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.HealthMonitor> healthMonitors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.HealthAlert> healthAlerts = null) { throw null; }
+        public static Azure.ResourceManager.DomainServices.OuContainerData OuContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string tenantId = null, string domainName = null, string deploymentId = null, string containerId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.OuContainerCreateOrUpdateContent> accounts = null, string serviceStatus = null, string distinguishedName = null, string provisioningState = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.DomainServices.Models.ReplicaSet ReplicaSet(string replicaSetId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string vnetSiteId = null, string subnetId = null, System.Collections.Generic.IEnumerable<string> domainControllerIpAddress = null, string externalAccessIpAddress = null, string serviceStatus = null, int? selfUnsuspendCounter = default(int?), System.DateTimeOffset? healthLastEvaluatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.HealthMonitor> healthMonitors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.HealthAlert> healthAlerts = null) { throw null; }
         public static Azure.ResourceManager.DomainServices.Models.ResourceForestSettings ResourceForestSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DomainServices.Models.ForestTrust> settings = null, string resourceForest = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DomainServices.Models
     public partial class ConfigDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics>
     {
         public ConfigDiagnostics() { }
-        public System.DateTimeOffset? LastExecuted { get { throw null; } set { } }
+        public System.DateTimeOffset? LastExecutedOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResult> ValidatorResults { get { throw null; } }
         protected virtual Azure.ResourceManager.DomainServices.Models.ConfigDiagnostics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public ConfigDiagnosticsValidatorResult() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResultIssue> Issues { get { throw null; } }
         public string ReplicaSetSubnetDisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.DomainServices.Models.Status? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus? Status { get { throw null; } set { } }
         public string ValidatorId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DomainServices.Models.ConfigDiagnosticsValidatorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -304,6 +304,27 @@ namespace Azure.ResourceManager.DomainServices.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DomainServices.Models.DomainServiceUnsuspendResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DomainServiceValidatorStatus : System.IEquatable<Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DomainServiceValidatorStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus Failure { get { throw null; } }
+        public static Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus None { get { throw null; } }
+        public static Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus OK { get { throw null; } }
+        public static Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus Skipped { get { throw null; } }
+        public static Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus left, Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus left, Azure.ResourceManager.DomainServices.Models.DomainServiceValidatorStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExternalAccess : System.IEquatable<Azure.ResourceManager.DomainServices.Models.ExternalAccess>
     {
         private readonly object _dummy;
@@ -360,9 +381,9 @@ namespace Azure.ResourceManager.DomainServices.Models
         internal HealthAlert() { }
         public string Id { get { throw null; } }
         public string Issue { get { throw null; } }
-        public System.DateTimeOffset? LastDetected { get { throw null; } }
+        public System.DateTimeOffset? LastDetectedOn { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? Raised { get { throw null; } }
+        public System.DateTimeOffset? RaisedOn { get { throw null; } }
         public string ResolutionUri { get { throw null; } }
         public string Severity { get { throw null; } }
         protected virtual Azure.ResourceManager.DomainServices.Models.HealthAlert JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -462,7 +483,7 @@ namespace Azure.ResourceManager.DomainServices.Models
     public partial class LdapsSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DomainServices.Models.LdapsSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DomainServices.Models.LdapsSettings>
     {
         public LdapsSettings() { }
-        public System.DateTimeOffset? CertificateNotAfter { get { throw null; } }
+        public System.DateTimeOffset? CertificateNotAfterOn { get { throw null; } }
         public string CertificateThumbprint { get { throw null; } }
         public Azure.ResourceManager.DomainServices.Models.ExternalAccess? ExternalAccess { get { throw null; } set { } }
         public Azure.ResourceManager.DomainServices.Models.Ldaps? Ldaps { get { throw null; } set { } }
@@ -599,9 +620,9 @@ namespace Azure.ResourceManager.DomainServices.Models
         public System.Collections.Generic.IReadOnlyList<string> DomainControllerIpAddress { get { throw null; } }
         public string ExternalAccessIpAddress { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DomainServices.Models.HealthAlert> HealthAlerts { get { throw null; } }
-        public System.DateTimeOffset? HealthLastEvaluated { get { throw null; } }
+        public System.DateTimeOffset? HealthLastEvaluatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DomainServices.Models.HealthMonitor> HealthMonitors { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string ReplicaSetId { get { throw null; } }
         public int? SelfUnsuspendCounter { get { throw null; } }
         public string ServiceStatus { get { throw null; } }
@@ -631,27 +652,6 @@ namespace Azure.ResourceManager.DomainServices.Models
         Azure.ResourceManager.DomainServices.Models.ResourceForestSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DomainServices.Models.ResourceForestSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DomainServices.Models.ResourceForestSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DomainServices.Models.ResourceForestSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.DomainServices.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.DomainServices.Models.Status Failure { get { throw null; } }
-        public static Azure.ResourceManager.DomainServices.Models.Status None { get { throw null; } }
-        public static Azure.ResourceManager.DomainServices.Models.Status OK { get { throw null; } }
-        public static Azure.ResourceManager.DomainServices.Models.Status Running { get { throw null; } }
-        public static Azure.ResourceManager.DomainServices.Models.Status Skipped { get { throw null; } }
-        public static Azure.ResourceManager.DomainServices.Models.Status Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DomainServices.Models.Status other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DomainServices.Models.Status left, Azure.ResourceManager.DomainServices.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DomainServices.Models.Status (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.DomainServices.Models.Status? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DomainServices.Models.Status left, Azure.ResourceManager.DomainServices.Models.Status right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SyncKerberosPasswords : System.IEquatable<Azure.ResourceManager.DomainServices.Models.SyncKerberosPasswords>
