@@ -4,7 +4,7 @@
     <TypeSpecInput Condition="Exists('$(MSBuildProjectDirectory)/../tsp-location.yaml') and $(MSBuildProjectDirectory.EndsWith('src'))">$(MSBuildProjectDirectory)/../tsp-location.yaml</TypeSpecInput>
     <_TspClientDir>$(MSBuildThisFileDirectory)common/tsp-client</_TspClientDir>
     <_TypeSpecProjectGenerateCommand>npm exec --prefix $(_TspClientDir) --no -- tsp-client generate --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectGenerateCommand>
-    <_TypeSpecProjectSyncAndGenerateCommand>npm exec --prefix $(_TspClientDir) --no -- tsp-client update --no-prompt --output-dir $(MSBuildProjectDirectory)/../</_TypeSpecProjectSyncAndGenerateCommand>
+    <_TypeSpecProjectSyncAndGenerateCommand>npm exec --prefix $(_TspClientDir) --no -- tsp-client update --no-prompt --output-dir $(MSBuildProjectDirectory)/../&gt; $(MSBuildProjectDirectory)/../codeGeneration.log 2&gt;&amp;1 </_TypeSpecProjectSyncAndGenerateCommand>
     <_SaveInputs Condition="'$(SaveInputs)' == 'true'">--save-inputs</_SaveInputs>
     <_Trace Condition="'$(Trace)' == 'true'">--trace @typespec/http-client-csharp @azure-typespec/http-client-csharp @azure-typespec/http-client-csharp-mgmt --debug</_Trace>
     <!-- Here we append the generate-test-project configuration to TypespecAdditionalOptions if it is specified -->
