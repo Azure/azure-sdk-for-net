@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateSkillVersionRequest. </summary>
     internal partial class CreateSkillVersionRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
