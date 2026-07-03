@@ -94,6 +94,40 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the Description. </summary>
+        public BicepValue<string> Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> SkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.SkuName = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ProfileRevision. </summary>
         protected override void DefineProvisionableProperties()
         {

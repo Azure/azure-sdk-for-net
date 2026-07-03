@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WebAppDeploymentListResult result = WebAppDeploymentListResult.FromResponse(response);
-                yield return Page<WebAppDeploymentData>.FromValues((IReadOnlyList<WebAppDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebAppDeploymentData>.FromValues((IReadOnlyList<WebAppDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

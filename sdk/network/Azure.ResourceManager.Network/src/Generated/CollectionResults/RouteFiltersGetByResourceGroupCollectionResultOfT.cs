@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 RouteFilterListResult result = RouteFilterListResult.FromResponse(response);
-                yield return Page<RouteFilterData>.FromValues((IReadOnlyList<RouteFilterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RouteFilterData>.FromValues((IReadOnlyList<RouteFilterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -53,8 +53,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 DuplicatePropertyTestListResult result = DuplicatePropertyTestListResult.FromResponse(response);
-                yield return Page<DuplicatePropertyTestData>.FromValues((IReadOnlyList<DuplicatePropertyTestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DuplicatePropertyTestData>.FromValues((IReadOnlyList<DuplicatePropertyTestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

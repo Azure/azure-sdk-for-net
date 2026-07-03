@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Quantum
                     yield break;
                 }
                 QuantumSuiteOfferListResult result = QuantumSuiteOfferListResult.FromResponse(response);
-                yield return Page<QuantumSuiteOffer>.FromValues((IReadOnlyList<QuantumSuiteOffer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<QuantumSuiteOffer>.FromValues((IReadOnlyList<QuantumSuiteOffer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

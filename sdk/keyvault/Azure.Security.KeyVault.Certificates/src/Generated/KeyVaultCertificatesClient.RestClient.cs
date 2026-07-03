@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/certificates/contacts/", false);
+            uri.AppendPath("/certificates/contacts", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -115,7 +115,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/certificates/contacts/", false);
+            uri.AppendPath("/certificates/contacts", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -132,7 +132,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/certificates/contacts/", false);
+            uri.AppendPath("/certificates/contacts", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -149,7 +149,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/certificates/issuers/", false);
+            uri.AppendPath("/certificates/issuers", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -639,7 +639,6 @@ namespace Azure.Security.KeyVault.Certificates
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 

@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 WorkspaceManagerConfigurationList result = WorkspaceManagerConfigurationList.FromResponse(response);
-                yield return Page<WorkspaceManagerConfigurationData>.FromValues((IReadOnlyList<WorkspaceManagerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkspaceManagerConfigurationData>.FromValues((IReadOnlyList<WorkspaceManagerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
