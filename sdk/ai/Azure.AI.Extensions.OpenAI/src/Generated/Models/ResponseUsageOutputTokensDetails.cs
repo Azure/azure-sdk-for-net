@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponseUsageOutputTokensDetails. </summary>
-    internal partial class ResponseUsageOutputTokensDetails
+    public partial class ResponseUsageOutputTokensDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

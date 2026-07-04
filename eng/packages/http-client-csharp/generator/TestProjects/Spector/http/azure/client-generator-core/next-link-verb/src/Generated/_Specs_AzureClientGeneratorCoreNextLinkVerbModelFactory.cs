@@ -5,13 +5,10 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
 {
     public static partial class _Specs_AzureClientGeneratorCoreNextLinkVerbModelFactory
     {
-
         public static Test Test(string id = default) => throw null;
     }
 }

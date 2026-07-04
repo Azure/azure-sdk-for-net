@@ -3,10 +3,8 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -16,7 +14,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProjectsAgentsModelFactory
     {
-
         /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be

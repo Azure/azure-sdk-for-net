@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch tool call. </summary>
-    internal partial class ItemFieldApplyPatchToolCall : ItemField
+    public partial class ItemFieldApplyPatchToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldApplyPatchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the apply patch tool call. Populated when this item is returned via API. </param>

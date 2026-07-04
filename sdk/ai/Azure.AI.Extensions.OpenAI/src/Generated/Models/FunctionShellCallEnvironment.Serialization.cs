@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalEnvironmentResource"/> and <see cref="ContainerReferenceResource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellCallEnvironment))]
-    internal abstract partial class FunctionShellCallEnvironment : IJsonModel<FunctionShellCallEnvironment>
+    public abstract partial class FunctionShellCallEnvironment : IJsonModel<FunctionShellCallEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallEnvironment"/> for deserialization. </summary>
         internal FunctionShellCallEnvironment()

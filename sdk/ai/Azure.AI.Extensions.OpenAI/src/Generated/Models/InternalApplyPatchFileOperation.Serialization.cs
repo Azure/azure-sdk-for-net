@@ -8,8 +8,12 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    /// <summary>
+    /// Apply patch operation
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownInternalApplyPatchFileOperation))]
-    internal abstract partial class InternalApplyPatchFileOperation : IJsonModel<InternalApplyPatchFileOperation>
+    public abstract partial class InternalApplyPatchFileOperation : IJsonModel<InternalApplyPatchFileOperation>
     {
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchFileOperation"/> for deserialization. </summary>
         internal InternalApplyPatchFileOperation()

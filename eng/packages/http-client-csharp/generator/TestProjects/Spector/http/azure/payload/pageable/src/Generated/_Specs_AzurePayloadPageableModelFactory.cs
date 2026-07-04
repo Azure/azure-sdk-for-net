@@ -5,15 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Specs.Azure.Payload.Pageable
 {
     public static partial class _Specs_AzurePayloadPageableModelFactory
     {
-
         public static User User(string name = default) => throw null;
     }
 }

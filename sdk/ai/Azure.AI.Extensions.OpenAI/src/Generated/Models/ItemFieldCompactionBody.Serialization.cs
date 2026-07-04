@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Compaction item. </summary>
-    internal partial class ItemFieldCompactionBody : ItemField, IJsonModel<ItemFieldCompactionBody>
+    public partial class ItemFieldCompactionBody : ItemField, IJsonModel<ItemFieldCompactionBody>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCompactionBody"/> for deserialization. </summary>
         internal ItemFieldCompactionBody()

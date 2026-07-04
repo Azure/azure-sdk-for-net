@@ -8,10 +8,14 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Core;
+using Azure.Core.Foundations;
 
 namespace Specs.Azure.Core.Page
 {
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(FirstItem))]
+    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(ListItemInputBody))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondItem))]

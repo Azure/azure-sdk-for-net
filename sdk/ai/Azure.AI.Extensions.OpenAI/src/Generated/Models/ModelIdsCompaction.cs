@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Model ID used to generate the response, like `gpt-5` or `o3`. OpenAI offers a wide range of models with different capabilities, performance characteristics, and price points. Refer to the [model guide](/docs/models) to browse and compare available models. </summary>
-    internal readonly partial struct ModelIdsCompaction : IEquatable<ModelIdsCompaction>
+    public readonly partial struct ModelIdsCompaction : IEquatable<ModelIdsCompaction>
     {
         private readonly string _value;
         private const string Gpt54Value = "gpt-5.4";

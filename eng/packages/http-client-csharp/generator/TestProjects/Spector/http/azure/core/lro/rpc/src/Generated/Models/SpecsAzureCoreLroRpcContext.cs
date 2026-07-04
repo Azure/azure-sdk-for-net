@@ -8,11 +8,15 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Core;
+using Azure.Core.Foundations;
 
 namespace Specs.Azure.Core.Lro.Rpc
 {
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(GenerationOptions))]
     [ModelReaderWriterBuildable(typeof(GenerationResult))]
+    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class SpecsAzureCoreLroRpcContext : ModelReaderWriterContext
     {

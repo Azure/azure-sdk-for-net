@@ -7,7 +7,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal abstract partial class InternalMessageContent
+    /// <summary>
+    /// A content part that makes up an input or output item.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InternalSummaryTextObject"/>.
+    /// </summary>
+    public abstract partial class InternalMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

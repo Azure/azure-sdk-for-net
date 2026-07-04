@@ -8,8 +8,12 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    /// <summary>
+    /// A content part that makes up an input or output item.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InternalSummaryTextObject"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownInternalMessageContent))]
-    internal abstract partial class InternalMessageContent : IJsonModel<InternalMessageContent>
+    public abstract partial class InternalMessageContent : IJsonModel<InternalMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="InternalMessageContent"/> for deserialization. </summary>
         internal InternalMessageContent()

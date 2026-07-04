@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum InputItemCodeInterpreterToolCallStatus
+    public enum InputItemCodeInterpreterToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum MCPToolCallStatus
+    public enum MCPToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

@@ -4,6 +4,7 @@
 
 using System.ClientModel.Primitives;
 using OpenAI;
+using TypeSpec.Http;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -77,6 +78,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolboxTool))]
+    [ModelReaderWriterBuildable(typeof(File))]
     [ModelReaderWriterBuildable(typeof(FileSearchToolboxTool))]
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
@@ -147,6 +149,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(OptimizationOptions))]
     [ModelReaderWriterBuildable(typeof(OptimizationReferenceDatasetInput))]
     [ModelReaderWriterBuildable(typeof(OtlpTelemetryEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PatchAgentObjectRequest))]
     [ModelReaderWriterBuildable(typeof(PatchAgentOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectAgentSession))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentDefinition))]
@@ -219,6 +222,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(UnknownVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(UpdateSkillRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateToolboxRequest))]
+    [ModelReaderWriterBuildable(typeof(UpdateToolboxRequest1))]
     [ModelReaderWriterBuildable(typeof(VersionIndicator))]
     [ModelReaderWriterBuildable(typeof(VersionRefIndicator))]
     [ModelReaderWriterBuildable(typeof(VersionSelectionRule))]

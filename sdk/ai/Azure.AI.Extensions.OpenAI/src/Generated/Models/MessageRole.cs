@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum MessageRole
+    public enum MessageRole
     {
         /// <summary> Unknown. </summary>
         Unknown,

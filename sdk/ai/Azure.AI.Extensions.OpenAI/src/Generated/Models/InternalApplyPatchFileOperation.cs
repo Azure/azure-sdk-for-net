@@ -7,7 +7,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal abstract partial class InternalApplyPatchFileOperation
+    /// <summary>
+    /// Apply patch operation
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// </summary>
+    public abstract partial class InternalApplyPatchFileOperation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

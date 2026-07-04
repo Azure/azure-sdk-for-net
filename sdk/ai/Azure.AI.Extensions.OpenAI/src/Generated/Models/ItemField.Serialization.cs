@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemFieldMessage"/>, <see cref="ItemFieldFunctionToolCall"/>, <see cref="ItemFieldToolSearchCall"/>, <see cref="ItemFieldToolSearchOutput"/>, <see cref="ItemFieldFunctionToolCallOutput"/>, <see cref="ItemFieldFileSearchToolCall"/>, <see cref="ItemFieldWebSearchToolCall"/>, <see cref="ItemFieldImageGenToolCall"/>, <see cref="ItemFieldComputerToolCall"/>, <see cref="ItemFieldComputerToolCallOutput"/>, <see cref="ItemFieldReasoningItem"/>, <see cref="ItemFieldCompactionBody"/>, <see cref="ItemFieldCodeInterpreterToolCall"/>, <see cref="ItemFieldLocalShellToolCall"/>, <see cref="ItemFieldLocalShellToolCallOutput"/>, <see cref="ItemFieldFunctionShellCall"/>, <see cref="ItemFieldFunctionShellCallOutput"/>, <see cref="ItemFieldApplyPatchToolCall"/>, <see cref="ItemFieldApplyPatchToolCallOutput"/>, <see cref="ItemFieldMcpListTools"/>, <see cref="ItemFieldMcpApprovalRequest"/>, <see cref="ItemFieldMcpApprovalResponseResource"/>, <see cref="ItemFieldMcpToolCall"/>, <see cref="ItemFieldCustomToolCall"/>, and <see cref="ItemFieldCustomToolCallOutput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItemField))]
-    internal abstract partial class ItemField : IJsonModel<ItemField>
+    public abstract partial class ItemField : IJsonModel<ItemField>
     {
         /// <summary> Initializes a new instance of <see cref="ItemField"/> for deserialization. </summary>
         internal ItemField()
