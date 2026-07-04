@@ -415,7 +415,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        message.ApplicationProperties[pair.Key.ToString()] = propertyValue;
+                        message.ApplicationProperties[GetStringKey(pair.Key)] = propertyValue;
                     }
                 }
             }
@@ -428,7 +428,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        message.MessageAnnotations[pair.Key.ToString()] = propertyValue;
+                        message.MessageAnnotations[GetStringKey(pair.Key)] = propertyValue;
                     }
                 }
             }
@@ -441,7 +441,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        message.DeliveryAnnotations[pair.Key.ToString()] = eventValue;
+                        message.DeliveryAnnotations[GetStringKey(pair.Key)] = eventValue;
                     }
                 }
             }
@@ -454,7 +454,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        message.Footer[pair.Key.ToString()] = eventValue;
+                        message.Footer[GetStringKey(pair.Key)] = eventValue;
                     }
                 }
             }
@@ -636,7 +636,7 @@ namespace Azure.Core.Amqp.Shared
 
                         foreach (var pair in map)
                         {
-                            dict.Add(pair.Key.ToString(), pair.Value);
+                            dict.Add(GetStringKey(pair.Key), pair.Value);
                         }
 
                         convertedPropertyValue = dict;
@@ -796,6 +796,29 @@ namespace Azure.Core.Amqp.Shared
                     propertyName,
                     pair.Key,
                     pair.Value?.GetType().Name));
+        }
+
+        /// <summary>
+        ///   Extracts the string value from a <see cref="MapKey" />, short-circuiting through the
+        ///   <see cref="AmqpSymbol" /> wrapper to avoid the virtual dispatch and struct copies
+        ///   incurred by <see cref="MapKey.ToString()" />.
+        /// </summary>
+        ///
+        /// <param name="key">The <see cref="MapKey" /> to extract the string from.</param>
+        ///
+        /// <returns>The string value of the key.</returns>
+        ///
+        /// <remarks>
+        ///   AMQP map keys are always <see cref="AmqpSymbol" /> values wrapped in a <see cref="MapKey" />.
+        ///   Calling <see cref="MapKey.ToString()" /> goes through three virtual dispatches
+        ///   (MapKey.ToString → key.ToString → AmqpSymbol.ToString) and copies both struct wrappers
+        ///   onto the evaluation stack. This helper replaces that chain with a single type test and
+        ///   a direct field read.
+        /// </remarks>
+        ///
+        private static string GetStringKey(MapKey key)
+        {
+            return key.Key is AmqpSymbol symbol ? symbol.Value : key.ToString();
         }
 
         /// <summary>
