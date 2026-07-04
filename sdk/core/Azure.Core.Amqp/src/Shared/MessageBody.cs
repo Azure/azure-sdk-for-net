@@ -32,7 +32,7 @@ namespace Azure.Core.Amqp
 
         public static MessageBody FromDataSegments(IEnumerable<Data> segments)
         {
-            // AMQP library almost always returns List<Data> or Data[] and in many cases there is only a single segment.
+            // AMQP library almost always returns List<Data> or Data[], and in many cases there is only a single segment.
             // We can optimize for that case to avoid unnecessary copying and allocations.
             if (segments is not IList<Data> { Count: 1 } single)
             {
