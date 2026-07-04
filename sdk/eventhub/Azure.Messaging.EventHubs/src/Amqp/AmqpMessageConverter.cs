@@ -421,6 +421,5 @@ namespace Azure.Messaging.EventHubs.Amqp
                 message.MessageAnnotations.Map[AmqpProperty.ProducerOwnerLevel] = ownerLevel;
             }
         }
-
     }
 }
