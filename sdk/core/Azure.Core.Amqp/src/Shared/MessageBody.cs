@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -214,6 +215,7 @@ namespace Azure.Core.Amqp
                 }
             }
 
+            [DoesNotReturn]
             private static ReadOnlyMemory<byte> ThrowArgumentOutOfRange(string paramName)
             {
                 throw new ArgumentOutOfRangeException(paramName, "Provided data segment is not compatible.");
