@@ -750,11 +750,13 @@ namespace Azure.Core.Amqp.Shared
                 return false;
             }
 
-            var bodyContent = source.SequenceBody is IReadOnlyCollection<AmqpSequence> coll
+            var sequenceBodySections = source.SequenceBody;
+
+            var bodyContent = sequenceBodySections is IReadOnlyCollection<AmqpSequence> coll
                 ? new List<IList<object>>(coll.Count)
                 : new List<IList<object>>();
 
-            foreach (var item in source.SequenceBody)
+            foreach (var item in sequenceBodySections)
             {
                 bodyContent.Add((IList<object>)item.List);
             }
