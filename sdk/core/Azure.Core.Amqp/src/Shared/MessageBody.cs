@@ -131,10 +131,16 @@ namespace Azure.Core.Amqp
 
             internal EagerCopyingSingleSegmentMessageBody(ReadOnlyMemory<byte> segment)
             {
-                _writer = new ArrayBufferWriter<byte>(segment.Length);
-                var memory = _writer.GetMemory(segment.Length);
-                segment.CopyTo(memory);
-                _writer.Advance(segment.Length);
+                _writer = segment.Length > 0
+                    ? new ArrayBufferWriter<byte>(segment.Length)
+                    : new ArrayBufferWriter<byte>();
+
+                if (segment.Length > 0)
+                {
+                    var memory = _writer.GetMemory(segment.Length);
+                    segment.CopyTo(memory);
+                    _writer.Advance(segment.Length);
+                }
             }
 
             protected override ReadOnlyMemory<byte> WrittenMemory => _writer.WrittenMemory;
