@@ -60,6 +60,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         [Test]
+        public void ManagesSingleAmqpDataSegmentByCopyingEagerly()
+        {
+            byte[] segment = new byte[] { 1, 2, 3 };
+
+            var message = new AmqpMessageBody(MessageBody.FromDataSegments(new[]
+            {
+                new Data { Value = new ArraySegment<byte>(segment) }
+            }));
+
+            message.TryGetData(out var body);
+
+            var firstSegment = body.ElementAt(0);
+            ReadOnlyMemory<byte> fromReadOnlyMemorySegments = MessageBody.FromReadOnlyMemorySegments(body);
+            ReadOnlyMemory<byte> convertedASecondTime = MessageBody.FromReadOnlyMemorySegments(body);
+
+            Assert.AreEqual(segment, firstSegment.ToArray(), "The segment content should match.");
+            Assert.IsFalse(segment.Equals(firstSegment), "The segment should be a copy, not the original reference.");
+            Assert.AreEqual(segment, fromReadOnlyMemorySegments.ToArray(), "The unified segments should match.");
+            Assert.IsTrue(fromReadOnlyMemorySegments.Equals(convertedASecondTime), "The unified segments should match when converted a second time.");
+        }
+
+        [Test]
         public void ManagesMultipleAmqpDataSegmentsByCopyingEagerly()
         {
             byte[] firstSegment = new byte[] { 1, 2, 3 };

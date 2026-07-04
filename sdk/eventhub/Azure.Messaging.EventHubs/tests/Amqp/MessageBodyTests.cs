@@ -66,6 +66,33 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies behavior of the <see cref="MessageBody" /> when a single
+        ///   <see cref="Data" /> segment is specified and copying is eager.
+        /// </summary>
+        ///
+        [Test]
+        public void ManagesSingleAmqpDataSegmentByCopyingEagerly()
+        {
+            var segment = new byte[] { 1, 2, 3 };
+
+            var message = new AmqpMessageBody(MessageBody.FromDataSegments(new[]
+            {
+                new Data { Value = new ArraySegment<byte>(segment) }
+            }));
+
+            message.TryGetData(out var body);
+
+            var firstSegment = body.ElementAt(0);
+            var fromReadOnlyMemorySegments = (ReadOnlyMemory<byte>)MessageBody.FromReadOnlyMemorySegments(body);
+            var convertedASecondTime = (ReadOnlyMemory<byte>)MessageBody.FromReadOnlyMemorySegments(body);
+
+            Assert.That(firstSegment.ToArray(), Is.EquivalentTo(segment), "The segment content should match.");
+            Assert.That(firstSegment, Is.Not.EqualTo(segment), "The segment should be a copy, not the original reference.");
+            Assert.That(fromReadOnlyMemorySegments.ToArray(), Is.EquivalentTo(segment), "The unified segments should match.");
+            Assert.That(convertedASecondTime, Is.EqualTo(fromReadOnlyMemorySegments), "The unified segments should match when converted a second time.");
+        }
+
+        /// <summary>
         ///   Verifies behavior of the <see cref="MessageBody" /> when multiple
         ///   <see cref="Data" /> segments are specified and copying is eager.
         /// </summary>
