@@ -32,7 +32,22 @@ namespace Azure.Core.Amqp
 
         public static MessageBody FromDataSegments(IEnumerable<Data> segments)
         {
-            return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
+            // AMQP library almost always returns List<Data> or Data[] and in many cases there is only a single segment.
+            // We can optimize for that case to avoid unnecessary copying and allocations.
+            if (segments is not IList<Data> { Count: 1 } single)
+            {
+                return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
+            }
+
+            var data = single[0];
+            var rom = data.Value switch
+            {
+                byte[] bytes => (ReadOnlyMemory<byte>)bytes,
+                ArraySegment<byte> seg => seg,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
+            return new EagerCopyingSingleSegmentMessageBody(rom);
+
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -106,8 +121,32 @@ namespace Azure.Core.Amqp
         }
 
         /// <summary>
+        /// Eagerly copies the provided data segment into a single continuous buffer.
+        /// Important for the receive path to make sure the buffers managed by the underlying AMQP library can be released on dispose.
+        /// </summary>
+        private sealed class EagerCopyingSingleSegmentMessageBody : MessageBody
+        {
+            private readonly ArrayBufferWriter<byte> _writer;
+
+            internal EagerCopyingSingleSegmentMessageBody(ReadOnlyMemory<byte> segment)
+            {
+                _writer = new ArrayBufferWriter<byte>(segment.Length);
+                var memory = _writer.GetMemory(segment.Length);
+                segment.CopyTo(memory);
+                _writer.Advance(segment.Length);
+            }
+
+            protected override ReadOnlyMemory<byte> WrittenMemory => _writer.WrittenMemory;
+
+            public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
+            {
+                yield return _writer.WrittenMemory;
+            }
+        }
+
+        /// <summary>
         /// Eagerly copies the provided data segments into a single continuous buffer while still keeping around a list of the individual copied segments.
-        /// Important for the receive path in order to make sure the buffers managed by the underlying AMQP library can be released on dispose.
+        /// Important for the receive path to make sure the buffers managed by the underlying AMQP library can be released on dispose.
         /// </summary>
         private sealed class EagerCopyingMessageBody : MessageBody
         {
