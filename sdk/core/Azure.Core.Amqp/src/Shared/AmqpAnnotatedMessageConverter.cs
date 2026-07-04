@@ -847,7 +847,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns>The <see cref="ArraySegment{T}" /> containing the stream data.</returns>
         ///
-        private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
+        internal static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
             switch (stream)
             {
