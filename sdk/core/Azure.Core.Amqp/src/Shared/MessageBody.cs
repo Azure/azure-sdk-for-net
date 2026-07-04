@@ -40,15 +40,7 @@ namespace Azure.Core.Amqp
                 return new EagerCopyingMessageBody(segments ?? Enumerable.Empty<Data>());
             }
 
-            var data = single[0];
-            var rom = data.Value switch
-            {
-                byte[] bytes => (ReadOnlyMemory<byte>)bytes,
-                ArraySegment<byte> seg => seg,
-                _ => ReadOnlyMemory<byte>.Empty
-            };
-            return new EagerCopyingSingleSegmentMessageBody(rom);
-
+            return new EagerCopyingSingleSegmentMessageBody(GetDataMemory(single[0]));
         }
 
         protected abstract ReadOnlyMemory<byte> WrittenMemory { get; }
@@ -64,6 +56,14 @@ namespace Azure.Core.Amqp
         {
             return memory.WrittenMemory;
         }
+
+        private static ReadOnlyMemory<byte> GetDataMemory(Data data) =>
+            data.Value switch
+            {
+                byte[] bytes => (ReadOnlyMemory<byte>)bytes,
+                ArraySegment<byte> seg => seg,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
 
         /// <summary>
         /// Wraps a single data segment into an enumerable like type without copying to optimize for the most commonly used
@@ -184,12 +184,7 @@ namespace Azure.Core.Amqp
                     ReadOnlyMemory<byte> dataToAppend = segment switch
                     {
                         ReadOnlyMemory<byte> romSegment => romSegment,
-                        Data data => data.Value switch
-                        {
-                            byte[] byteArray => byteArray,
-                            ArraySegment<byte> arraySegment => arraySegment,
-                            _ => ReadOnlyMemory<byte>.Empty
-                        },
+                        Data data => GetDataMemory(data),
                         _ => ThrowArgumentOutOfRange(nameof(segment))
                     };
                     length += dataToAppend.Length;
