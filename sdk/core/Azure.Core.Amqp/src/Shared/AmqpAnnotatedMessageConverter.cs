@@ -870,7 +870,8 @@ namespace Azure.Core.Amqp.Shared
 
                 default:
                     {
-                        int capacity = stream.CanSeek ? (int)(stream.Length - stream.Position) : StreamBufferSizeInBytes;
+                        long remaining = stream.CanSeek ? Math.Max(stream.Length - stream.Position, 0) : StreamBufferSizeInBytes;
+                        int capacity = remaining > 0 ? (int)Math.Min(remaining, int.MaxValue) : StreamBufferSizeInBytes;
                         using var memStreamCopy = new MemoryStream(capacity);
                         stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
                         if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
